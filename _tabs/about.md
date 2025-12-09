@@ -35,14 +35,6 @@ JavaScript | Python | HTML/CSS | Node.js | React | Laravel
 **Development Tools & Platforms**  
 Linux | Figma | Git | VS Code
 
-### GitHub Activity
-
-<div align="center">
-  
-![GitHub Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=yourusername&theme=github-compact&hide_border=true&area=true)
-
-</div>
-
 ## Current Focus
 
 - Advancing expertise in penetration testing and security operations
@@ -58,18 +50,11 @@ Connect with me to discuss collaboration opportunities, cybersecurity topics, or
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)
 
-<div align="center">
-
-![GitHub Snake Animation](https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.svg)
-
-</div>
 
 ---
 
 <div align="center">
 
-### "Security is not a product, but a process." - Bruce Schneier
-
-*Explore my repositories and feel free to reach out for collaboration opportunities.*
+"Security is not a product, but a process." - Bruce Schneier
 
 </div>
