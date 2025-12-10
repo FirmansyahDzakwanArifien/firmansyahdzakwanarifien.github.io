@@ -1,7 +1,8 @@
 ---
-title: Journey Through System Administration - Jarvis Camp & Red Hat RH134
+title: Jarvis Camp & Red Hat RH134
 author: Cyphera
 date: 2025-11-25 04:24:00 +0800
+description: Journey Through System Administration - Jarvis Camp & Red Hat RH134.
 categories: [Learning, Certification]
 tags: [linux, redhat, system-administration, bootcamp, rhcsa]
 ---
