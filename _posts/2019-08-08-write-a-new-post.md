@@ -1,9 +1,9 @@
 ---
-title: Writing a New Post
-author: cotes
-date: 2019-08-08 14:10:00 +0800
+title: Guide & Notes
+author: Firmansyah Dzakwan Arifien
+date: 2025-11-11 00:00:00 +0800
 categories: [Blogging, Tutorial]
-tags: [writing]
+tags: [Guidere]
 render_with_liquid: false
 ---
 
@@ -507,3 +507,371 @@ Then you can use it like other markdown languages: surround the graph code with 
 ## Learn More
 
 For more knowledge about Jekyll posts, visit the [Jekyll Docs: Posts](https://jekyllrb.com/docs/posts/).
+
+---
+title: Getting Started
+description: >-
+  Get started with Chirpy basics in this comprehensive overview.
+  You will learn how to install, configure, and use your first Chirpy-based website, as well as deploy it to a web server.
+
+## Creating a Site Repository
+
+When creating your site repository, you have two options depending on your needs:
+
+### Option 1. Using the Starter (Recommended)
+
+This approach simplifies upgrades, isolates unnecessary files, and is perfect for users who want to focus on writing with minimal configuration.
+
+1. Sign in to GitHub and navigate to the [**starter**][starter].
+2. Click the <kbd>Use this template</kbd> button and then select <kbd>Create a new repository</kbd>.
+3. Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
+
+### Option 2. Forking the Theme
+
+This approach is convenient for modifying features or UI design, but presents challenges during upgrades. So don't try this unless you are familiar with Jekyll and plan to heavily modify this theme.
+
+1. Sign in to GitHub.
+2. [Fork the theme repository](https://github.com/cotes2020/jekyll-theme-chirpy/fork).
+3. Name the new repository `<username>.github.io`, replacing `username` with your lowercase GitHub username.
+
+## Setting up the Environment
+
+Once your repository is created, it's time to set up your development environment. There are two primary methods:
+
+### Using Dev Containers (Recommended for Windows)
+
+Dev Containers offer an isolated environment using Docker, which prevents conflicts with your system and ensures all dependencies are managed within the container.
+
+**Steps**:
+
+1. Install Docker:
+   - On Windows/macOS, install [Docker Desktop][docker-desktop].
+   - On Linux, install [Docker Engine][docker-engine].
+2. Install [VS Code][vscode] and the [Dev Containers extension][dev-containers].
+3. Clone your repository:
+   - For Docker Desktop: Start VS Code and [clone your repo in a container volume][dc-clone-in-vol].
+   - For Docker Engine: Clone your repo locally, then [open it in a container][dc-open-in-container] via VS Code.
+4. Wait for the Dev Containers setup to complete.
+
+### Setting up Natively (Recommended for Unix-like OS)
+
+For Unix-like systems, you can set up the environment natively for optimal performance, though you can also use Dev Containers as an alternative.
+
+**Steps**:
+
+1. Follow the [Jekyll installation guide](https://jekyllrb.com/docs/installation/) to install Jekyll and ensure [Git](https://git-scm.com/) is installed.
+2. Clone your repository to your local machine.
+3. If you forked the theme, install [Node.js][nodejs] and run `bash tools/init.sh` in the root directory to initialize the repository.
+4. Run command `bundle` in the root of your repository to install the dependencies.
+
+## Usage
+
+### Start the Jekyll Server
+
+To run the site locally, use the following command:
+
+```terminal
+$ bundle exec jekyll serve
+```
+
+> If you are using Dev Containers, you must run that command in the **VS Code** Terminal.
+{: .prompt-info }
+
+After a few seconds, the local server will be available at <http://127.0.0.1:4000>.
+
+### Configuration
+
+Update the variables in `_config.yml`{: .filepath} as needed. Some typical options include:
+
+- `url`
+- `avatar`
+- `timezone`
+- `lang`
+
+### Social Contact Options
+
+Social contact options are displayed at the bottom of the sidebar. You can enable or disable specific contacts in the `_data/contact.yml`{: .filepath} file.
+
+### Customizing the Stylesheet
+
+To customize the stylesheet, copy the theme's `assets/css/jekyll-theme-chirpy.scss`{: .filepath} file to the same path in your Jekyll site, and add your custom styles at the end of the file.
+
+### Customizing Static Assets
+
+Static assets configuration was introduced in version `5.1.0`. The CDN of the static assets is defined in `_data/origin/cors.yml`{: .filepath }. You can replace some of them based on the network conditions in the region where your website is published.
+
+If you prefer to self-host the static assets, refer to the [_chirpy-static-assets_](https://github.com/cotes2020/chirpy-static-assets#readme) repository.
+
+## Deployment
+
+Before deploying, check the `_config.yml`{: .filepath} file and ensure the `url` is configured correctly. If you prefer a [**project site**](https://help.github.com/en/github/working-with-github-pages/about-github-pages#types-of-github-pages-sites) and don't use a custom domain, or if you want to visit your website with a base URL on a web server other than **GitHub Pages**, remember to set the `baseurl` to your project name, starting with a slash, e.g., `/project-name`.
+
+Now you can choose _ONE_ of the following methods to deploy your Jekyll site.
+
+### Deploy Using Github Actions
+
+Prepare the following:
+
+- If you're on the GitHub Free plan, keep your site repository public.
+- If you have committed `Gemfile.lock`{: .filepath} to the repository, and your local machine is not running Linux, update the platform list of the lock file:
+
+  ```console
+  $ bundle lock --add-platform x86_64-linux
+  ```
+
+Next, configure the _Pages_ service:
+
+1. Go to your repository on GitHub. Select the _Settings_ tab, then click _Pages_ in the left navigation bar. In the **Source** section (under _Build and deployment_), select [**GitHub Actions**][pages-workflow-src] from the dropdown menu.  
+   ![Build source](pages-source-light.png){: .light .border .normal w='375' h='140' }
+   ![Build source](pages-source-dark.png){: .dark .normal w='375' h='140' }
+
+2. Push any commits to GitHub to trigger the _Actions_ workflow. In the _Actions_ tab of your repository, you should see the workflow _Build and Deploy_ running. Once the build is complete and successful, the site will be deployed automatically.
+
+You can now visit the URL provided by GitHub to access your site.
+
+### Manual Build and Deployment
+
+For self-hosted servers, you will need to build the site on your local machine and then upload the site files to the server.
+
+Navigate to the root of the source project, and build your site with the following command:
+
+```console
+$ JEKYLL_ENV=production bundle exec jekyll b
+```
+
+Unless you specified the output path, the generated site files will be placed in the `_site`{: .filepath} folder of the project's root directory. Upload these files to your target server.
+
+[nodejs]: https://nodejs.org/
+[starter]: https://github.com/cotes2020/chirpy-starter
+[pages-workflow-src]: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow
+[docker-desktop]: https://www.docker.com/products/docker-desktop/
+[docker-engine]: https://docs.docker.com/engine/install/
+[vscode]: https://code.visualstudio.com/
+[dev-containers]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+[dc-clone-in-vol]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume
+[dc-open-in-container]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-an-existing-folder-in-a-container
+
+
+---
+title: Text and Typography
+description: Examples of text, typography, math equations, diagrams, flowcharts, pictures, videos, and more.
+
+## Headings
+
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+# H1 — heading
+{: .mt-4 .mb-0 }
+
+## H2 — heading
+{: data-toc-skip='' .mt-4 .mb-0 }
+
+### H3 — heading
+{: data-toc-skip='' .mt-4 .mb-0 }
+
+#### H4 — heading
+{: data-toc-skip='' .mt-4 }
+<!-- markdownlint-restore -->
+
+## Paragraph
+
+Quisque egestas convallis ipsum, ut sollicitudin risus tincidunt a. Maecenas interdum malesuada egestas. Duis consectetur porta risus, sit amet vulputate urna facilisis ac. Phasellus semper dui non purus ultrices sodales. Aliquam ante lorem, ornare a feugiat ac, finibus nec mauris. Vivamus ut tristique nisi. Sed vel leo vulputate, efficitur risus non, posuere mi. Nullam tincidunt bibendum rutrum. Proin commodo ornare sapien. Vivamus interdum diam sed sapien blandit, sit amet aliquam risus mattis. Nullam arcu turpis, mollis quis laoreet at, placerat id nibh. Suspendisse venenatis eros eros.
+
+## Lists
+
+### Ordered list
+
+1. Firstly
+2. Secondly
+3. Thirdly
+
+### Unordered list
+
+- Chapter
+  - Section
+    - Paragraph
+
+### ToDo list
+
+- [ ] Job
+  - [x] Step 1
+  - [x] Step 2
+  - [ ] Step 3
+
+### Description list
+
+Sun
+: the star around which the earth orbits
+
+Moon
+: the natural satellite of the earth, visible by reflected light from the sun
+
+## Block Quote
+
+> This line shows the _block quote_.
+
+## Prompts
+
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+> An example showing the `tip` type prompt.
+{: .prompt-tip }
+
+> An example showing the `info` type prompt.
+{: .prompt-info }
+
+> An example showing the `warning` type prompt.
+{: .prompt-warning }
+
+> An example showing the `danger` type prompt.
+{: .prompt-danger }
+<!-- markdownlint-restore -->
+
+## Tables
+
+| Company                      | Contact          | Country |
+| :--------------------------- | :--------------- | ------: |
+| Alfreds Futterkiste          | Maria Anders     | Germany |
+| Island Trading               | Helen Bennett    |      UK |
+| Magazzini Alimentari Riuniti | Giovanni Rovelli |   Italy |
+
+## Links
+
+<http://127.0.0.1:4000>
+
+## Footnote
+
+Click the hook will locate the footnote[^footnote], and here is another footnote[^fn-nth-2].
+
+## Inline code
+
+This is an example of `Inline Code`.
+
+## Filepath
+
+Here is the `/path/to/the/file.extend`{: .filepath}.
+
+## Code blocks
+
+### Common
+
+```text
+This is a common code snippet, without syntax highlight and line number.
+```
+
+### Specific Language
+
+```bash
+if [ $? -ne 0 ]; then
+  echo "The command was not successful.";
+  #do the needful / exit
+fi;
+```
+
+### Specific filename
+
+```sass
+@import
+  "colors/light-typography",
+  "colors/dark-typography";
+```
+{: file='_sass/jekyll-theme-chirpy.scss'}
+
+## Mathematics
+
+The mathematics powered by [**MathJax**](https://www.mathjax.org/):
+
+$$
+\begin{equation}
+  \sum_{n=1}^\infty 1/n^2 = \frac{\pi^2}{6}
+  \label{eq:series}
+\end{equation}
+$$
+
+We can reference the equation as \eqref{eq:series}.
+
+When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
+
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
+
+## Mermaid SVG
+
+```mermaid
+ gantt
+  title  Adding GANTT diagram functionality to mermaid
+  apple :a, 2017-07-20, 1w
+  banana :crit, b, 2017-07-23, 1d
+  cherry :active, c, after b a, 1d
+```
+
+## Images
+
+### Default (with caption)
+
+![Desktop View](/posts/20190808/mockup.png){: width="972" height="589" }
+_Full screen width and center alignment_
+
+### Left aligned
+
+![Desktop View](/posts/20190808/mockup.png){: width="972" height="589" .w-75 .normal}
+
+### Float to left
+
+![Desktop View](/posts/20190808/mockup.png){: width="972" height="589" .w-50 .left}
+Praesent maximus aliquam sapien. Sed vel neque in dolor pulvinar auctor. Maecenas pharetra, sem sit amet interdum posuere, tellus lacus eleifend magna, ac lobortis felis ipsum id sapien. Proin ornare rutrum metus, ac convallis diam volutpat sit amet. Phasellus volutpat, elit sit amet tincidunt mollis, felis mi scelerisque mauris, ut facilisis leo magna accumsan sapien. In rutrum vehicula nisl eget tempor. Nullam maximus ullamcorper libero non maximus. Integer ultricies velit id convallis varius. Praesent eu nisl eu urna finibus ultrices id nec ex. Mauris ac mattis quam. Fusce aliquam est nec sapien bibendum, vitae malesuada ligula condimentum.
+
+### Float to right
+
+![Desktop View](/posts/20190808/mockup.png){: width="972" height="589" .w-50 .right}
+Praesent maximus aliquam sapien. Sed vel neque in dolor pulvinar auctor. Maecenas pharetra, sem sit amet interdum posuere, tellus lacus eleifend magna, ac lobortis felis ipsum id sapien. Proin ornare rutrum metus, ac convallis diam volutpat sit amet. Phasellus volutpat, elit sit amet tincidunt mollis, felis mi scelerisque mauris, ut facilisis leo magna accumsan sapien. In rutrum vehicula nisl eget tempor. Nullam maximus ullamcorper libero non maximus. Integer ultricies velit id convallis varius. Praesent eu nisl eu urna finibus ultrices id nec ex. Mauris ac mattis quam. Fusce aliquam est nec sapien bibendum, vitae malesuada ligula condimentum.
+
+### Dark/Light mode & Shadow
+
+The image below will toggle dark/light mode based on theme preference, notice it has shadows.
+
+![light mode only](/posts/20190808/devtools-light.png){: .light .w-75 .shadow .rounded-10 w='1212' h='668' }
+![dark mode only](/posts/20190808/devtools-dark.png){: .dark .w-75 .shadow .rounded-10 w='1212' h='668' }
+
+## Video
+
+{% include embed/youtube.html id='Balreaj8Yqs' %}
+
+## Reverse Footnote
+
+[^footnote]: The footnote source
+[^fn-nth-2]: The 2nd footnote source
+
+---
+
+title: Customize the Favicon
+
+The [favicons](https://www.favicon-generator.org/about/) of [**Chirpy**](https://github.com/cotes2020/jekyll-theme-chirpy/) are placed in the directory `assets/img/favicons/`{: .filepath}. You may want to replace them with your own. The following sections will guide you to create and replace the default favicons.
+
+## Generate the favicon
+
+Prepare a square image (PNG, JPG, or SVG) with a size of 512x512 or more, and then go to the online tool [**Real Favicon Generator**](https://realfavicongenerator.net/) and click the button <kbd>Pick your favicon image</kbd> to upload your image file.
+
+In the next step, the webpage will show all usage scenarios. You can keep the default options, scroll to the bottom of the page, and click the button <kbd>Next →</kbd> to generate the favicon.
+
+## Download & Replace
+
+Download the generated package, unzip and delete the following file(s) from the extracted files:
+
+- `site.webmanifest`{: .filepath}
+
+And then copy the remaining image files (`.PNG`{: .filepath}, `.ICO`{: .filepath} and `.SVG`{: .filepath}) to cover the original files in the directory `assets/img/favicons/`{: .filepath} of your Jekyll site. If your Jekyll site doesn't have this directory yet, just create one.
+
+The following table will help you understand the changes to the favicon files:
+
+| File(s) | From Online Tool | From Chirpy |
+| ------- | :--------------: | :---------: |
+| `*.PNG` |        ✓         |      ✗      |
+| `*.ICO` |        ✓         |      ✗      |
+| `*.SVG` |        ✓         |      ✗      |
+
+
+<!-- markdownlint-disable-next-line -->
+>  ✓ means keep, ✗ means delete.
+{: .prompt-info }
+
+The next time you build the site, the favicon will be replaced with a customized edition.
