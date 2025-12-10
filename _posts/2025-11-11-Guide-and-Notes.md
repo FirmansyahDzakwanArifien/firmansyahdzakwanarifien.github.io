@@ -1,6 +1,6 @@
 ---
 title: Guide & Notes
-author: Firmansyah Dzakwan Arifien
+author: Cyphera
 date: 2025-11-11 00:00:00 +0800
 categories: [Blogging, Tutorial]
 tags: [Guidere]
@@ -509,8 +509,8 @@ Then you can use it like other markdown languages: surround the graph code with 
 For more knowledge about Jekyll posts, visit the [Jekyll Docs: Posts](https://jekyllrb.com/docs/posts/).
 
 ---
-title: Getting Started
-description: >-
+# Getting Started
+## description: >-
   Get started with Chirpy basics in this comprehensive overview.
   You will learn how to install, configure, and use your first Chirpy-based website, as well as deploy it to a web server.
 
@@ -652,8 +652,8 @@ Unless you specified the output path, the generated site files will be placed in
 [dc-open-in-container]: https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-an-existing-folder-in-a-container
 
 
----
-title: Text and Typography
+
+# Text and Typography
 description: Examples of text, typography, math equations, diagrams, flowcharts, pictures, videos, and more.
 
 ## Headings
@@ -843,7 +843,7 @@ The image below will toggle dark/light mode based on theme preference, notice it
 
 ---
 
-title: Customize the Favicon
+# Customize the Favicon
 
 The [favicons](https://www.favicon-generator.org/about/) of [**Chirpy**](https://github.com/cotes2020/jekyll-theme-chirpy/) are placed in the directory `assets/img/favicons/`{: .filepath}. You may want to replace them with your own. The following sections will guide you to create and replace the default favicons.
 
