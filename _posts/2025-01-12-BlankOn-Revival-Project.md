@@ -73,8 +73,6 @@ Location: Depok, Indonesia
 Contact:
   Email: fdzak01@gmail.com
   Telegram: @fdzak01
-  GPG Key: 65C4F8CCA44402DDCE9EB9985F3D6D9F31A402B6
-  SSH Key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNEXiJMxT7AOrPtcgfeDXa0LPwKfzGAbamdUXaLslup
 ```
 
 My work focuses on:
