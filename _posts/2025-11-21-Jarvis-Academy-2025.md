@@ -5,6 +5,9 @@ date: 2025-11-25 04:24:00 +0800
 description: Journey Through System Administration - Jarvis Camp & Red Hat RH134.
 categories: [Learning, Certification]
 tags: [linux, redhat, system-administration, bootcamp, rhcsa]
+image:
+  path: /assets/img/posts/rha134.png
+  alt: Red Hat System Administration II (RH134-RHA) - Ver. 9.3
 ---
 
 ## Introduction

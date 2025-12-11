@@ -1,0 +1,230 @@
+---
+title: Joining BlankOn Revival - Contributing to Indonesia's Open Source Linux Distribution
+author: Cyphera
+date: 2025-12-11 10:00:00 +0800
+categories: [Open Source, Linux Distribution]
+tags: [blankon, linux, debian, open-source, indonesia, infrastructure, foss]
+image:
+  path: /assets/img/posts/blankon2.png
+  alt: BlankOn Linux - Buatan Indonesia
+---
+
+## Introduction
+
+I'm excited to share that I've recently joined the **BlankOn Revival Project** as a core contributor in the **Infrastructure Team**. BlankOn Linux is Indonesia's very own GNU/Linux distribution, designed specifically for Indonesian users with localized features and cultural elements that make computing more accessible to our communities.
+
+![Buatan Indonesia](https://raw.githubusercontent.com/BlankOn/wiki/master/Assets/Images/buatan-indonesia.png)
+_BlankOn - Proudly Made in Indonesia_
+
+## About BlankOn Linux
+
+BlankOn Linux is not just another Linux distribution—it's a movement toward digital independence and technical competency in Indonesia. The name "BlankOn" itself carries a profound philosophy: the transformation from **blank** (empty) to **on** (filled/enlightened), representing the journey from unawareness to awareness, from consumer to producer.
+
+### The Philosophy Behind BlankOn
+
+The project embodies a powerful vision: transforming Indonesians from mere consumers of technology to producers and innovators. It's about changing the mindset from dependency on foreign products to creating our own solutions.
+
+> **Blank → On**: The journey from emptiness to enlightenment, from consumer mentality to producer mentality.
+{: .prompt-info }
+
+### BlankOn's Relationship with Debian
+
+BlankOn is a **Debian derivative distribution** that maintains 100% compatibility with Debian. This means:
+- Applications for Debian can run on BlankOn
+- BlankOn-specific applications can be installed on Debian
+- BlankOn can be installed on top of existing Debian systems
+- It's not just a remaster—it has its own packages and repositories
+
+## The Mission: Building an Open Source Ecosystem
+
+The BlankOn Project aims to develop a comprehensive ecosystem around free and open-source software by:
+
+1. **Enhancing Local Talent**: Building competency in FOSS development—from technical aspects like application development and Linux distribution to non-technical skills like leadership and community building
+
+2. **Creating a Self-Sustaining Ecosystem**: Bringing together individuals, educational institutions, companies, and organizations (nonprofit, commercial, and governmental) that use BlankOn as their foundation
+
+3. **Transforming Mindsets**: Converting people from consumers to producers and innovators, encouraging them to create code, ideas, artwork, and profitable business ventures
+
+4. **Perpetual Innovation**: Creating a perpetual motion of innovation that feeds back into the BlankOn project through funding, feedback, and manpower
+
+![Mental Transformation](https://raw.githubusercontent.com/BlankOn/wiki/master/Assets/Images/produk-luar-negeri.png)
+_From Import-Dependent..._
+
+![Local Production](https://raw.githubusercontent.com/BlankOn/wiki/master/Assets/Images/produk-sendiri.png)
+_...To Self-Sufficient_
+
+## My Role: Infrastructure Team
+
+As part of the **Infrastructure Team (Infrastruktur)**, I work alongside talented developers to maintain and improve BlankOn's technical backbone:
+
+### Team Members
+
+**Infrastructure Team:**
+- **Harry Suryapambagya** (Denpasar) - Infrastructure Lead
+- **Bagus Kusuma Loka** (Jakarta) - Infrastructure Developer
+- **Firmansyah Dzakwan Arifien** (Depok) - Infrastructure Developer (Me!)
+
+### My Responsibilities
+
+```yaml
+Role: Infrastructure Core Contributor
+Team: Infrastruktur BlankOn
+Location: Depok, Indonesia
+Contact:
+  Email: fdzak01@gmail.com
+  Telegram: @fdzak01
+  GPG Key: 65C4F8CCA44402DDCE9EB9985F3D6D9F31A402B6
+  SSH Key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNEXiJMxT7AOrPtcgfeDXa0LPwKfzGAbamdUXaLslup
+```
+
+My work focuses on:
+
+1. **Server Infrastructure**: Managing and maintaining BlankOn's server infrastructure
+2. **Build Systems**: Ensuring smooth package building and distribution processes
+3. **Repository Management**: Maintaining package repositories and mirrors
+4. **CI/CD Pipeline**: Automating build and deployment workflows
+5. **Security**: Implementing security best practices and GPG/SSH key management
+6. **Collaboration**: Working with the packaging and R&D teams to support development needs
+
+> All infrastructure work is done transparently using GPG-signed commits and secure SSH authentication, ensuring the integrity of BlankOn's systems.
+{: .prompt-tip }
+
+## The Revival Project Structure
+
+The BlankOn Revival project is organized into three core teams:
+
+### 1. Infrastructure Team (Infrastruktur)
+Responsible for:
+- Server and network infrastructure
+- Build and deployment systems
+- Repository and mirror management
+- Security and access control
+
+**Members**: Harry, Bagus, and myself (Dzakwan)
+
+### 2. Packaging Team (Pemaket)
+Responsible for:
+- Creating and maintaining Debian packages
+- Package quality assurance
+- Dependency management
+- Integration with Debian upstream
+
+**Members**: Herpiko, Lucky, Raffi, and Raska
+
+### 3. Research & Development Team (Riset dan Pengembangan)
+Responsible for:
+- New feature development
+- User experience improvements
+- Localization and Indonesian language support
+- Innovation and experimentation
+
+**Members**: Atqa, Arthur (Aris), and Atikha
+
+## Vision for Success: Real-World Impact
+
+BlankOn's success isn't measured just by downloads or installations, but by real-world transformations. Here are some aspirational scenarios that guide our work:
+
+- **Education Access**: "I'm a student in a remote area, accessing Wikipedia offline using an affordable BlankOn computer"
+- **Accessibility**: "I'm visually impaired, using BlankOn's accessibility features to access the Internet"
+- **Disaster Relief**: "I'm a disaster victim, communicating through emergency telecommunication systems powered by BlankOn"
+- **Agriculture**: "I'm a farmer, using irrigation solutions controlled by BlankOn systems"
+- **Creative Industry**: "I own a graphic design and animation studio, all our software is FOSS, including BlankOn"
+- **Business**: "I'm a telecommunications entrepreneur, selling mobile phones with software components developed by BlankOn"
+- **Government**: "I'm a governor, using BlankOn to implement official communication in local languages and scripts"
+- **National Security**: "I'm a general, our combat communication systems were developed with the BlankOn Team"
+- **Policy**: "I'm the president, mandating open-source software and open data formats across all government agencies"
+- **International Impact**: "I'm an entrepreneur from Vietnam, using applications developed with the BlankOn Team"
+- **Regional Expansion**: "I'm a computer retailer in Malaysia, selling computers with BlankOn pre-installed"
+
+> These aren't just dreams—they're concrete goals that guide our development priorities and measure our impact on society.
+{: .prompt-info }
+
+## Technical Stack & Tools
+
+Working on BlankOn infrastructure involves:
+
+```bash
+# Core Technologies
+OS: Debian/BlankOn Linux
+Version Control: Git with GPG signing
+Authentication: SSH with Ed25519 keys
+Security: GPG for package signing and verification
+Build System: Debian packaging tools
+CI/CD: GitHub Actions and custom automation
+Repository: APT repository management
+Monitoring: System and service monitoring tools
+
+# Development Workflow
+git commit -S -m "Signed commit"  # GPG-signed commits
+ssh-keygen -t ed25519              # Secure SSH keys
+gpg --sign --armor                 # Package signing
+```
+
+## Why This Matters
+
+Contributing to BlankOn is more than just technical work—it's about:
+
+1. **Digital Sovereignty**: Building Indonesia's capacity to create and maintain its own technology
+2. **Knowledge Transfer**: The chain mentoring system means today's mentees become tomorrow's mentors
+3. **Community Building**: Creating networks of skilled developers across Indonesia
+4. **National Pride**: Proving that Indonesia can produce world-class open-source software
+5. **Social Impact**: Making technology more accessible to Indonesian communities
+
+## Getting Involved
+
+The BlankOn project is always open to new contributors! Whether you're a developer, designer, writer, or just passionate about open source, there's a place for you.
+
+### Ways to Contribute
+
+- **Technical**: Package maintenance, infrastructure work, feature development
+- **Documentation**: Wiki editing, tutorial writing, translation
+- **Design**: UI/UX design, artwork, branding
+- **Community**: User support, event organization, advocacy
+- **Testing**: Bug reporting, quality assurance, user feedback
+
+### Resources
+
+- **Website**: [blankonlinux.or.id](https://blankonlinux.or.id)
+- **Wiki**: [blankon.github.io/wiki](https://blankon.github.io/wiki)
+- **GitHub**: [github.com/BlankOn](https://github.com/BlankOn)
+- **License**: GPL (Free and Open Source)
+
+> BlankOn is free to download and use, but donations are welcome to support ongoing development!
+{: .prompt-tip }
+
+## Looking Forward
+
+Joining the BlankOn Revival Project as an infrastructure contributor is both an honor and a responsibility. I'm working alongside talented individuals who share the vision of digital independence for Indonesia.
+
+This aligns perfectly with my broader journey in system administration and cybersecurity:
+- **SMTP 2025**: Cybersecurity knowledge from Korean experts
+- **Jarvis Academy**: System administration bootcamp
+- **Red Hat RH134**: Enterprise Linux administration
+- **BlankOn**: Infrastructure for Indonesian Linux distribution
+
+Each experience builds upon the last, creating a comprehensive skill set that I can now apply to serve Indonesia's open-source community.
+
+## Personal Reflection
+
+The transformation from **blank to on** isn't just BlankOn's philosophy—it's my personal journey too. From learning Linux basics to now contributing to Indonesia's own distribution, from being a user to becoming a builder, this is exactly the kind of transformation BlankOn represents.
+
+I'm committed to the mission of changing Indonesia's technology landscape from consumer-dependent to producer-innovative. Every commit, every infrastructure improvement, every collaboration brings us closer to that vision.
+
+---
+
+> **The Journey Continues**: From learning system administration to securing networks, from earning certifications to building infrastructure for Indonesia's Linux distribution—every step forward is a step toward digital independence.
+{: .prompt-tip }
+
+## Connect & Collaborate
+
+If you're interested in contributing to BlankOn or learning more about Indonesian open-source projects:
+
+- **Email**: fdzak01@gmail.com
+- **Telegram**: @fdzak01
+- **GPG Fingerprint**: `65C4 F8CC A444 02DD CE9E B998 5F3D 6D9F 31A4 02B6`
+
+Let's build Indonesia's digital future together—from blank to on, from consumers to producers, from dependence to independence!
+
+---
+
+*Tags: #BlankOn #OpenSource #Linux #Debian #Indonesia #Infrastructure #FOSS #DigitalSovereignty #MadeInIndonesia #SystemAdministration*
