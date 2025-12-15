@@ -5,7 +5,7 @@ date: 2025-12-11 10:00:00 +0800
 categories: [Open Source, Linux Distribution]
 tags: [blankon, linux, debian, open-source, indonesia, infrastructure, foss]
 image:
-  path: /assets/img/posts/blankon2.png
+  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/blankon2.png"
   alt: BlankOn Linux - Buatan Indonesia
 ---
 
