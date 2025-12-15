@@ -5,7 +5,7 @@ date: 2025-09-17 15:00:00 +0800
 categories: [Learning, Cybersecurity]
 tags: [penetration-testing, web-security, offsec, wstg, cybersecurity, pentesting]
 image:
-  path: /assets/img/posts/cyber-sentinel-secure.png
+  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/cyber-sentinel-secure.png"
   alt: Cyber Sentinel Secure - Web Pentesting Bootcamp
 pin: true
 ---

@@ -6,7 +6,7 @@ description: Journey Through System Administration - Jarvis Camp & Red Hat RH134
 categories: [Learning, Certification]
 tags: [linux, redhat, system-administration, bootcamp, rhcsa]
 image:
-  path: /assets/img/posts/rha134.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/rha134.png
   alt: Red Hat System Administration II (RH134-RHA) - Ver. 9.3
 ---
 

@@ -5,7 +5,7 @@ date: 2025-12-15 14:00:00 +0800
 categories: [Learning, DevOps]
 tags: [devops, cloud, kubernetes, docker, aws, ci-cd, infrastructure, mbkm, sib]
 image:
-  path: /assets/img/posts/nf-academy-devops.png
+  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/nf-academy-devops.png"
   alt: NF Academy DevOps Engineer Program
 ---
 
@@ -230,7 +230,7 @@ The program covered **14 core competencies** across 900 hours of intensive train
 
 Throughout the 4-month intensive program, I maintained consistent high performance across all 14 competencies:
 
-![Capaian Pembelajaran Program](/assets/img/posts/nfa-capaian-pembelajaran.png){: width="972" height="589" }
+![Capaian Pembelajaran Program](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/nfa-capaian-pembelajaran.png){: width="972" height="589" }
 _Official competency assessment showing scores for each module_
 
 **Performance Highlights:**

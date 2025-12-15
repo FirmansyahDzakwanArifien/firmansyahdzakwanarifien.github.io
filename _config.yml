@@ -81,10 +81,10 @@ theme_mode: # [light | dark]
 
 # The CDN endpoint for media resources.
 # Uncomment and configure if using CDN for faster loading
-# cdn: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien.github.io@main"
+cdn: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main"
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "/assets/img/Logo.png"
+avatar: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/Logo.png"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # Create a 1200x630px image for better social media previews
