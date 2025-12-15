@@ -12,7 +12,7 @@ timezone: Asia/Jakarta
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Cyphera # the main title
+title: Cyphera 
 
 tagline: System Administrator | Cybersecurity Enthusiast | Open Source Contributor
 
@@ -146,6 +146,16 @@ collections:
     output: true
     sort_by: order
 
+  projects:
+    output: true
+    permalink: /projects/:title/
+    sort_by: date
+
+  album:
+    output: true
+    permalink: /album/:title/
+    sort_by: date
+
 defaults:
   - scope:
       path: ""
@@ -165,6 +175,24 @@ defaults:
     values:
       layout: page
       permalink: /:title/
+
+    # Projects defaults
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+      comments: true
+      toc: true
+      
+  # Album defaults
+  - scope:
+      path: ""
+      type: album
+    values:
+      layout: photo
+      comments: true
+      toc: false
 
 sass:
   style: compressed

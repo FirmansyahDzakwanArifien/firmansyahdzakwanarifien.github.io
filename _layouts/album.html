@@ -1,0 +1,82 @@
+---
+layout: default
+refactor: true
+panel_includes:
+  - toc
+tail_includes:
+  - related-posts
+  - post-nav
+  - comments
+---
+
+<article class="px-1">
+  <header>
+    <h1 data-toc-skip>{{ page.title }}</h1>
+    
+    {% if page.description %}
+    <p class="post-desc fw-light mb-4">
+      {{ page.description }}
+    </p>
+    {% endif %}
+
+    <div class="post-meta text-muted">
+      <!-- Posted date -->
+      <span>
+        <i class="far fa-calendar"></i>
+        {% include datetime.html date=page.date tooltip=true lang=lang %}
+      </span>
+
+      <!-- Location -->
+      {% if page.location %}
+      <div class="mt-2">
+        <i class="fas fa-map-marker-alt"></i>
+        <em>{{ page.location }}</em>
+      </div>
+      {% endif %}
+
+      <!-- Event -->
+      {% if page.event %}
+      <div class="mt-2">
+        <i class="fas fa-calendar-check"></i>
+        <em>{{ page.event }}</em>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if page.featured_image %}
+  <div class="mt-4 mb-4">
+    <img src="{{ page.featured_image.path }}" 
+         alt="{{ page.featured_image.alt }}" 
+         class="img-fluid rounded shadow-lg">
+    {% if page.featured_image.caption %}
+    <p class="text-center text-muted mt-2">
+      <em>{{ page.featured_image.caption }}</em>
+    </p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  <div class="post-tail-wrapper text-muted">
+    <!-- Tag list -->
+    {% if page.tags.size > 0 %}
+    <div class="post-tags">
+      <i class="fa fa-tags fa-fw me-1"></i>
+      {% for tag in page.tags %}
+        <a href="{{ site.baseurl }}/tags/{{ tag | slugify | url_encode }}/"
+          class="post-tag no-text-decoration">
+          {{- tag -}}
+        </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Share buttons -->
+    {% include post-sharing.html lang=lang %}
+
+  </div>
+</article>
