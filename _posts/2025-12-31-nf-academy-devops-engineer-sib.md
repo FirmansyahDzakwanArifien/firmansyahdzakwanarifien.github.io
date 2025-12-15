@@ -226,6 +226,24 @@ The program covered **14 core competencies** across 900 hours of intensive train
 
 **Outcome:** Successfully delivered a comprehensive DevOps infrastructure project demonstrating mastery of all learned concepts.
 
+## Program Performance Overview
+
+Throughout the 4-month intensive program, I maintained consistent high performance across all 14 competencies:
+
+![Capaian Pembelajaran Program](/assets/img/posts/nfa-capaian-pembelajaran.png){: width="972" height="589" }
+_Official competency assessment showing scores for each module_
+
+**Performance Highlights:**
+- **Total Duration**: 900 hours of intensive training
+- **Final Score**: 95/100 (Sangat Baik)
+- **Highest Score**: 97/100 (Git Advanced & CI/CD Implementation)
+- **Lowest Score**: 92/100 (DevOps Project Implementation - Capstone)
+- **Average Score**: ~95/100 across all competencies
+- **Consistency**: All 14 modules scored between 92-97
+
+> The comprehensive assessment demonstrates mastery of both technical skills and soft skills required for modern DevOps practices, with consistent excellence across infrastructure, automation, and security domains.
+{: .prompt-tip }
+
 ## Why NF Academy Stands Out
 
 ### 1. Industry-Aligned Curriculum
