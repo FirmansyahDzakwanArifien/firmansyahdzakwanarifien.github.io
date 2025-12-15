@@ -1,7 +1,7 @@
 ---
 title: Completing DevOps Engineer Program at NF Academy - Studi Independen Bersertifikat MBKM
 author: Cyphera
-date: 2025-12-31 14:00:00 +0800
+date: 2025-12-15 14:00:00 +0800
 categories: [Learning, DevOps]
 tags: [devops, cloud, kubernetes, docker, aws, ci-cd, infrastructure, mbkm, sib]
 image:
