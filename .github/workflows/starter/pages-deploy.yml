@@ -35,6 +35,36 @@ jobs:
           # If using the 'assets' git submodule from Chirpy Starter, uncomment above
           # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
 
+      # ==========================================
+      # NEW: Setup Node.js and Build JavaScript
+      # ==========================================
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Build JavaScript assets
+        run: npm run build
+
+      - name: Verify JavaScript build
+        run: |
+          echo "=== Checking built JavaScript files ==="
+          ls -lh assets/js/dist/ || echo "WARNING: assets/js/dist/ not found"
+          echo ""
+          if [ -f "assets/js/dist/commons.min.js" ]; then
+            echo "✓ commons.min.js built successfully"
+          else
+            echo "✗ ERROR: commons.min.js not found!"
+            exit 1
+          fi
+      # ==========================================
+      # End of JavaScript build section
+      # ==========================================
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
