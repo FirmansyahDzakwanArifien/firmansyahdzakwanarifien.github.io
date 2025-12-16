@@ -66,21 +66,6 @@ A photographic documentation of my learning experiences, certifications, trainin
   {% endfor %}
 </div>
 
----
-
-## 📸 Gallery Categories
-
-### 🎓 Certifications & Achievements
-Documenting milestones in my learning journey
-
-### 💻 Workspace & Lab Setup  
-Behind-the-scenes of my development and testing environments
-
-### 📚 Training & Bootcamps
-Moments from various intensive training programs
-
-### 🤝 Community & Events
-Tech meetups, contributions, and collaboration
 
 ---
 
