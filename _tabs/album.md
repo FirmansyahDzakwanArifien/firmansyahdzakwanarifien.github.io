@@ -9,7 +9,7 @@ order: 4
 
 A photographic documentation of my learning experiences, certifications, training sessions, and tech adventures.
 
----
+<!-- ---
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
   {% assign sorted_album = site.album | sort: 'date' | reverse %}
@@ -65,7 +65,7 @@ A photographic documentation of my learning experiences, certifications, trainin
   </div>
   {% endfor %}
 </div>
-
+ -->
 
 ---
 
