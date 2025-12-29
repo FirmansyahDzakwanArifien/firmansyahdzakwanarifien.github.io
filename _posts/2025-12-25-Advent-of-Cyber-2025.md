@@ -17,7 +17,7 @@ What a journey! Successfully completed **Advent of Cyber 2025** by TryHackMe - 2
 
 ## 🏆 Certificate of Achievement
 
-![Advent of Cyber 2025 Certificate]({{ site.cdn }}/img/album/aoc-2025-certificate.jpg){: width="800" }
+![Advent of Cyber 2025 Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.png){: width="800" }
 _Official Certificate of Completion from TryHackMe_
 
 **Certificate Details:**
