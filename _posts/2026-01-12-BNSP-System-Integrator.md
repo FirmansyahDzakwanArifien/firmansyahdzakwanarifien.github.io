@@ -11,17 +11,21 @@ tags: [DevOps]
 
 ---
 
-**Completed:** January 12, 2026  
-**Issued by:** BNSP (Badan Nasional Sertifikasi Profesi)  
-**Certificate Number:** 62090 2523 6 0165494 2026  
-**Registration Number:** TIK 1565 50183 2026  
-**Valid for:** 3 years
-
 ---
 
 ## About the Certification
 
 Achieved professional competency certification as a Systems Integrator in Network Architecture from BNSP, Indonesia's National Professional Certification Authority. This certification validates expertise in designing, implementing, and managing computer network systems with integration capabilities across various technologies and platforms.
+
+![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.png){: width="700" }
+
+![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026-2.png){: width="700" }
+
+**Completed:** January 12, 2026  
+**Issued by:** BNSP (Badan Nasional Sertifikasi Profesi)  
+**Certificate Number:** 62090 2523 6 0165494 2026  
+**Registration Number:** TIK 1565 50183 2026  
+**Valid for:** 3 years
 
 ## Competency Areas
 
