@@ -232,24 +232,6 @@ Cyber Sentinel Secure continues its mission with Batch #3:
 
 For aspiring penetration testers, this is an exceptional opportunity to receive **world-class training at zero cost**.
 
-## Personal Reflection
-
-Completing this bootcamp alongside my other cybersecurity training creates a comprehensive skill set:
-
-| Training | Focus | Achievement |
-|:---------|:------|:------------|
-| **SMTP 2025** | General Cybersecurity | High Distinction |
-| **Cyber Sentinel** | Web Pentesting | Graduate (188/850+) |
-| **Jarvis Academy** | System Administration | Grade A (All Levels) |
-| **Red Hat RH134** | Enterprise Linux | 40 Credit Hours |
-| **BlankOn** | Infrastructure | Core Contributor |
-
-Each program complements the others:
-- **SMTP 2025** provided broad security fundamentals
-- **Cyber Sentinel** delivered deep penetration testing expertise
-- **Jarvis & RH134** established strong system administration foundation
-- **BlankOn** offers real-world infrastructure experience
-
 ## The Journey from 850+ to 188
 
 The 22% graduation rate reflects the program's rigor. Success required:
@@ -283,35 +265,35 @@ The 22% graduation rate reflects the program's rigor. Success required:
 If you're considering applying to Cyber Sentinel Secure:
 
 **Do Apply If:**
-- ✅ You're serious about becoming a professional pentester
-- ✅ You can commit 3-4 hours daily for 6 months
-- ✅ You embrace the "Try Harder" mentality
-- ✅ You want industry-standard training (WSTG + OffSec)
-- ✅ You value ethical hacking and responsible disclosure
+-  You're serious about becoming a professional pentester
+-  You can commit 3-4 hours daily for 6 months
+-  You embrace the "Try Harder" mentality
+-  You want industry-standard training (WSTG + OffSec)
+-  You value ethical hacking and responsible disclosure
 
 **Be Prepared For:**
-- ⚠️ Rigorous examinations (4 major tests)
-- ⚠️ Mandatory live session attendance
-- ⚠️ High difficulty level (22% graduation rate)
-- ⚠️ Self-directed lab practice requirements
-- ⚠️ Professional-level expectations
+-  Rigorous examinations (4 major tests)
+-  Mandatory live session attendance
+-  High difficulty level (22% graduation rate)
+-  Self-directed lab practice requirements
+-  Professional-level expectations
 
 **You'll Gain:**
-- 🎯 Professional penetration testing skills
-- 🎯 WSTG & OffSec methodology expertise
-- 🎯 Real-world exploitation experience
-- 🎯 Industry-recognized training from OSCE3 instructor
-- 🎯 Potential career opportunities
+-  Professional penetration testing skills
+-  WSTG & OffSec methodology expertise
+-  Real-world exploitation experience
+-  Industry-recognized training from OSCE3 instructor
+-  Potential career opportunities
 
 ## Gratitude
 
 I'm deeply grateful to:
 
+- **God** - For the opportunity, strength, and guidance throughout this journey
 - **Kurniawan, S.Kom, M.Cs** - For founding this program and rigorous examination standards
 - **Yohanes Nugroho** - For world-class instruction and sharing OSCE3-level expertise
 - **X-code Team** - For providing infrastructure and industry support
 - **Fellow Students** - For collaboration, support, and shared learning
-- **God** - For the opportunity, strength, and guidance throughout this journey
 
 ## Conclusion
 
@@ -326,9 +308,6 @@ The journey taught me not just technical skills, but also:
 As I continue building my career in cybersecurity and system administration, the skills from Cyber Sentinel Secure form a crucial foundation for penetration testing and security assessment work.
 
 ---
-
-> **Soli Deo Gloria**: To God alone be the glory. This achievement is only possible through dedication, support from instructors and peers, and faith.
-{: .prompt-tip }
 
 ## Certificate Verification
 

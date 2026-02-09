@@ -11,11 +11,11 @@ location: Online (TryHackMe Platform)
 tags: [tryhackme, aoc, advent-of-cyber, cybersecurity, ctf, challenges, learning]
 ---
 
-## 🎄 24 Days, 24 Challenges, One Goal
+## 24 Days, 24 Challenges, One Goal
 
 What a journey! Successfully completed **Advent of Cyber 2025** by TryHackMe - 24 consecutive days of cybersecurity challenges throughout December. Each day brought new techniques, tools, and lessons in the ever-evolving world of cyber security.
 
-## 🏆 Certificate of Achievement
+## Certificate of Achievement
 
 ![Advent of Cyber 2025 Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.png){: width="800" }
 _Official Certificate of Completion from TryHackMe_
@@ -28,7 +28,7 @@ _Official Certificate of Completion from TryHackMe_
 - **Certificate ID:** THM-NVA6Z26QIU
 - **Achievement:** Completed all 24 cyber security challenges
 
-## 🎯 What is Advent of Cyber?
+## What is Advent of Cyber?
 
 **Advent of Cyber** is TryHackMe's annual December event - a festive twist on cybersecurity learning. Like an advent calendar, a new challenge unlocks each day from December 1st to 24th.
 
@@ -48,7 +48,7 @@ _Official Certificate of Completion from TryHackMe_
 - Video walkthroughs available
 - Community support and discussions
 
-## 📚 Challenge Categories Covered
+## Challenge Categories Covered
 
 Throughout the 24 days, the event covered a comprehensive range of cybersecurity topics:
 
@@ -94,7 +94,7 @@ Throughout the 24 days, the event covered a comprehensive range of cybersecurity
 - **Indicators of Compromise** - Identifying threats
 - **Sandboxing** - Safe execution environments
 
-## 💡 Key Learnings
+## Key Learnings
 
 ### Technical Skills Gained
 
@@ -130,7 +130,7 @@ Cybersecurity often hinges on spotting the one thing that's out of place. The ch
 **Problem-Solving:**
 Each challenge presented unique problems requiring creative solutions. Learning to think outside the box while staying methodical.
 
-## 🎓 Daily Challenge Experience
+## Daily Challenge Experience
 
 ### The Routine
 
@@ -152,38 +152,8 @@ Each challenge presented unique problems requiring creative solutions. Learning 
 - Share experiences with community
 - Prepare for next day
 
-### Memorable Challenges
 
-**Day 7: The Log Mystery**
-A forensics challenge analyzing system logs to identify a security breach. Required careful attention to timestamps and event correlation.
-
-**Day 12: API Exploitation**
-Breaking into a REST API through authentication flaws and parameter tampering. Great lesson in API security testing.
-
-**Day 18: Memory Forensics**
-Using Volatility to analyze a memory dump and extract artifacts. First deep dive into memory analysis.
-
-**Day 24: Final Challenge**
-The grand finale combining multiple techniques learned throughout the month. Satisfying to apply everything in one comprehensive scenario.
-
-## 📊 Personal Statistics
-
-### Consistency
-✅ **24/24 challenges completed**
-✅ **Zero days missed**
-✅ **Completed before deadline each day**
-
-### Time Investment
-- **Average per challenge:** 1-2 hours
-- **Total time invested:** ~40 hours
-- **Learning outside challenges:** ~10 hours
-
-### Progress Tracking
-- Started: December 1, 2025
-- Finished: December 24, 2025
-- Completion rate: 100%
-
-## 🌟 Why This Event Matters
+## Why This Event Matters
 
 ### Structured Learning Path
 Unlike random CTF challenges, Advent of Cyber provides a curated learning path. Each challenge builds on previous knowledge while introducing new concepts.
@@ -210,7 +180,7 @@ Completing Advent of Cyber demonstrates:
 - **Continuous Learning** - Dedication to improvement
 - **Practical Skills** - Hands-on experience
 
-## 🎁 Beyond the Certificate
+## Beyond the Certificate
 
 ### What I'm Taking Forward
 
@@ -227,7 +197,7 @@ The challenges provided hands-on experience with tools and techniques used daily
 **Confidence:**
 Successfully completing 24 diverse challenges builds confidence in approaching new security problems. Each solved challenge reinforces that complex problems can be broken down and solved.
 
-## 🚀 Next Steps
+## Next Steps
 
 ### Immediate Actions
 - **Review weak areas** - Revisit challenging topics
@@ -242,21 +212,7 @@ Successfully completing 24 diverse challenges builds confidence in approaching n
 - Contribute to security tools and projects
 - Keep the learning momentum going
 
-## 🙏 Acknowledgments
-
-**TryHackMe Team:**
-Thank you for creating such an engaging, educational event. The quality of challenges and learning resources is exceptional.
-
-**Ashu Savani & Ben Spring:**
-Appreciation for your leadership in making cybersecurity education accessible and fun.
-
-**TryHackMe Community:**
-Thanks to fellow participants for the discussions, hints (when stuck), and shared enthusiasm throughout December.
-
-**Content Creators:**
-To everyone who wrote walkthroughs, recorded videos, and shared solutions - you make learning easier for everyone.
-
-## 💭 Final Thoughts
+## Final Thoughts
 
 > "Proven understanding of cyber security fundamentals. Has shown consistency, tenacity & continuous learning."
 
@@ -273,7 +229,7 @@ Advent of Cyber 2025 wasn't just about earning a certificate. It was about:
 
 The best part? This is just the beginning. The foundation built during these 24 days opens doors to more advanced topics and challenges ahead.
 
-## 🔗 Resources
+## Resources
 
 **TryHackMe Platform:**
 - Website: [tryhackme.com](https://tryhackme.com)

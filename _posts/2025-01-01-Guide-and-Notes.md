@@ -8,6 +8,7 @@ image:
   path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/Logo.png"
   alt: Logo-Cyphera v.1.0
 render_with_liquid: false
+pin: true
 ---
 
 This tutorial will guide you how to write a post in the _Chirpy_ template, and it's worth reading even if you've used Jekyll before, as many features require specific variables to be set.
