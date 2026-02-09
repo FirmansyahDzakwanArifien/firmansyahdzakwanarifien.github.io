@@ -39,6 +39,8 @@ jobs:
           node-version: "20"
       - name: Install JS dependencies
         run: npm install
+      - name: Build JS assets
+        run: npm run build:js
       - name: Build CSS assets
         run: npm run build:css
       - name: Setup Ruby
