@@ -11,7 +11,7 @@ tags: [DevOps]
 
 ---
 
-![CP1 Cloud Foundation Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/cdoe-dewacloud.png){: width="700" } 
+![CDOE - Certified DevOps Engineer Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/cdoe-dewacloud.png){: width="700" } 
 
 **Completed:** February 5, 2026 
 **Issued by:** Dewacloud Academy  
