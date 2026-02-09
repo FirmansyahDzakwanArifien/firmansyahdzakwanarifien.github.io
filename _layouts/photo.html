@@ -1,0 +1,190 @@
+---
+layout: default
+---
+
+{% include lang.html %}
+
+<div class="album-wrapper px-1">
+  <header class="mb-5">
+    <h1 data-toc-skip>{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="text-muted">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <!-- Gallery Grid -->
+  <div class="album-gallery">
+    {% for item in site.album %}
+      {% assign image = item.featured_image %}
+      {% if image.path %}
+        <div class="gallery-item" data-toggle="modal" data-target="#albumModal" 
+             onclick="showAlbumModal('{{ image.path }}', '{{ image.alt | escape }}', 
+             '{{ image.caption | escape }}', '{{ item.date | date: '%B %d, %Y at %H:%M' }}', 
+             '{{ item.location | escape }}', '{{ item.event | escape }}')">
+          <img src="{{ image.path }}" alt="{{ image.alt }}" class="gallery-img" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <h3>{{ item.title }}</h3>
+              <p class="gallery-meta">
+                <i class="fas fa-map-marker-alt"></i> {{ item.location }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Album Modal -->
+<div class="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="albumModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="albumModalTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="" class="w-100 mb-3" style="max-height: 500px; object-fit: contain;">
+        <div id="modalInfo" class="album-modal-info">
+          <p class="mb-2">
+            <strong><i class="fas fa-calendar-alt"></i> Timeline:</strong>
+            <span id="modalDate"></span>
+          </p>
+          <p class="mb-2">
+            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong>
+            <span id="modalLocation"></span>
+          </p>
+          <p class="mb-2">
+            <strong><i class="fas fa-tag"></i> Event:</strong>
+            <span id="modalEvent"></span>
+          </p>
+          <p class="text-muted small" id="modalCaption"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.album-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  background: var(--code-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 1;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.05);
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-info {
+  color: white;
+  width: 100%;
+}
+
+.gallery-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.gallery-meta {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.album-modal-info {
+  border-top: 1px solid var(--tb-border-color);
+  padding-top: 1.5rem;
+}
+
+.modal-content {
+  background-color: var(--card-bg);
+  border: 1px solid var(--tb-border-color);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--tb-border-color);
+  background-color: var(--card-bg);
+}
+
+.modal-body {
+  color: var(--text-color);
+}
+
+.close {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.close:hover,
+.close:focus {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .album-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+}
+</style>
+
+<script>
+function showAlbumModal(imageSrc, imageAlt, caption, date, location, event) {
+  document.getElementById('modalImage').src = imageSrc;
+  document.getElementById('modalImage').alt = imageAlt;
+  document.getElementById('modalCaption').textContent = caption;
+  document.getElementById('modalDate').textContent = date;
+  document.getElementById('modalLocation').textContent = location;
+  document.getElementById('modalEvent').textContent = event;
+  
+  $('#albumModal').modal('show');
+}
+</script>
