@@ -17,7 +17,7 @@ layout: default
     {% for item in site.album %}
       {% assign image = item.featured_image %}
       {% if image.path %}
-        <div class="gallery-item" data-toggle="modal" data-target="#albumModal" 
+        <div class="gallery-item" role="button" tabindex="0" 
              onclick="showAlbumModal('{{ image.path }}', '{{ image.alt | escape }}', 
              '{{ image.caption | escape }}', '{{ item.date | date: '%B %d, %Y at %H:%M' }}', 
              '{{ item.location | escape }}', '{{ item.event | escape }}')">
@@ -37,14 +37,12 @@ layout: default
 </div>
 
 <!-- Album Modal -->
-<div class="modal fade" id="albumModal" tabindex="-1" role="dialog" aria-labelledby="albumModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="albumModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="albumModalTitle"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <img id="modalImage" src="" alt="" class="w-100 mb-3" style="max-height: 500px; object-fit: contain;">
@@ -187,4 +185,12 @@ function showAlbumModal(imageSrc, imageAlt, caption, date, location, event) {
   
   $('#albumModal').modal('show');
 }
-</script>
+</const modal = new bootstrap.Modal(document.getElementById('albumModal'));
+  modal.show();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && document.activeElement.classList.contains('gallery-item')) {
+    document.activeElement.click();
+  }
+});
