@@ -181,9 +181,9 @@ defaults:
       path: ""
       type: projects
     values:
-      layout: projects
-      comments: true
-      toc: true
+      layout: project
+      comments: false
+      toc: false
       toc: true
       
   # Album defaults
