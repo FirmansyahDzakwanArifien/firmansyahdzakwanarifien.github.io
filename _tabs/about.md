@@ -4,15 +4,6 @@ icon: fas fa-info-circle
 order: 2
 ---
 
-<!-- > Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip } -->
-
----
-# the default layout is 'page'
-icon: fas fa-info-circle
-order: 2
----
-
 ## About Me
 
 I'm Firmansyah, an Informatics Engineering student at STT Terpadu Nurul Fikri with a strong focus on cybersecurity, system administration, and infrastructure security. I believe in learning through hands-on experience and continuous skill development in the tech industry.
