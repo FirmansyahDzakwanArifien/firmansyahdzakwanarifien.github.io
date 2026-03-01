@@ -4,7 +4,7 @@ icon: fas fa-info-circle
 order: 2
 ---
 
-{%- capture about_img -%}{% include media-url.html src="/assets/img/about/profile.jpg" %}{%- endcapture -%}
+{%- capture about_img -%}https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/me.png{%- endcapture -%}
 
 ## About Me
 
