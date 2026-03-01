@@ -4,37 +4,65 @@ icon: fas fa-info-circle
 order: 2
 ---
 
+{%- capture about_img -%}{% include media-url.html src="/assets/img/about/profile.jpg" %}{%- endcapture -%}
+
 ## About Me
 
-I'm Firmansyah, an Informatics Engineering student at STT Terpadu Nurul Fikri deeply passionate about cybersecurity and infrastructure security. My journey in tech has been driven by a genuine curiosity about how systems work and how to secure them effectively. I learn best through hands-on experience—whether that's working in a SOC environment, managing Linux systems, or building secure infrastructure.
+<div class="row align-items-start mb-4">
+	<div class="col-md-4">
+		<img src="{{ about_img }}" alt="Firmansyah" class="img-fluid rounded shadow-sm" />
+	</div>
 
-Throughout my career, I've had the opportunity to work across multiple domains: from security operations and threat monitoring to system administration and cloud infrastructure. Currently, I'm working as an Implementation Engineer at PT Jarvis Integrasi Solusi, where I help design and deploy robust solutions for clients. Beyond my day-to-day work, I lead the Nurul Fikri Student Cybersecurity Community and teach practical Incident Response courses, which allows me to share knowledge with the next generation of security professionals.
+	<div class="col-md-8">
+		<p>I'm Dzakwan, an Informatics Engineering student at STT Terpadu Nurul Fikri deeply passionate about cybersecurity and infrastructure security. My journey in tech has been driven by a genuine curiosity about how systems work and how to secure them effectively. I learn best through hands-on experience—whether that's working in a SOC environment, managing Linux systems, or building secure infrastructure.</p>
+
+		<p>Throughout my career, I've had the opportunity to work across multiple domains: from security operations and threat monitoring to system administration and cloud infrastructure. Currently, I'm working as an Implementation Engineer at PT Jarvis Integrasi Solusi, where I help design and deploy robust solutions for clients. Beyond my day-to-day work, I lead the Nurul Fikri Student Cybersecurity Community and teach practical Incident Response courses, which allows me to share knowledge with the next generation of security professionals.</p>
+	</div>
+</div>
 
 ## Professional Experience
 
-**Implementation Engineer** at PT Jarvis Integrasi Solusi _(Feb 2026 - Present)_  
-Responsible for implementing and deploying infrastructure solutions for enterprise clients. Work closely with teams to design secure and scalable systems tailored to business needs.
+<div class="list-unstyled">
+	<div class="mb-4">
+		<h5 class="mb-1">Implementation Engineer <small class="text-muted">PT Jarvis Integrasi Solusi — Feb 2026 – Present</small></h5>
+		<p class="mb-0">Implementing and deploying infrastructure solutions for enterprise clients; collaborating with teams to design secure, scalable systems tailored to business needs.</p>
+	</div>
 
-**Leader** at [NFSCC - Nurul Fikri Student Cybersecurity Community](https://www.instagram.com/nf.scc/) _(Apr 2025 - Jan 2026)_  
-Led cybersecurity initiatives including workshops, training programs, and community engagement activities. Organized security awareness campaigns and facilitated CTF competitions.
+	<div class="mb-4">
+		<h5 class="mb-1">Leader <small class="text-muted">NFSCC — Apr 2025 – Mar 2026</small></h5>
+		<p class="mb-0">Led cybersecurity initiatives including workshops, training programs, and community engagement activities; organized security awareness campaigns and facilitated CTF competitions.</p>
+	</div>
 
-**Assistant Lecturer** at [Sekolah Tinggi Teknologi Terpadu Nurul Fikri](https://www.instagram.com/sttnf_official/) _(Sep 2025 - Jan 2026)_  
-Taught practical aspects of Incident Response course, mentoring students in real-world security scenarios and best practices.
+	<div class="mb-4">
+		<h5 class="mb-1">Assistant Lecturer <small class="text-muted">Sekolah Tinggi Teknologi Terpadu Nurul Fikri — Sep 2025 – Jan 2026</small></h5>
+		<p class="mb-0">Taught practical Incident Response topics and mentored students in real-world scenarios.</p>
+	</div>
 
-**SOC Analyst** at Xcode / PT. Teknologi Server Indonesia _(Sep - Dec 2025)_  
-Monitored network traffic and logs for security threats. Analyzed incidents, coordinated responses, and documented findings for remediation.
+	<div class="mb-4">
+		<h5 class="mb-1">SOC Analyst <small class="text-muted">Xcode / PT. Teknologi Server Indonesia — Sep 2025 – Dec 2025</small></h5>
+		<p class="mb-0">Monitored network traffic and logs for security threats; analyzed incidents and coordinated responses.</p>
+	</div>
 
-**DevOps Engineer Trainee** at [PT Nurul Fikri Academy](https://www.instagram.com/nfacademy_id/) _(Aug - Oct 2025)_  
-Learned DevOps practices including infrastructure automation, CI/CD pipelines, and cloud infrastructure management.
+	<div class="mb-4">
+		<h5 class="mb-1">DevOps Engineer Trainee <small class="text-muted">PT Nurul Fikri Academy — Aug 2025 – Oct 2025</small></h5>
+		<p class="mb-0">Learned infrastructure automation, CI/CD basics, and cloud fundamentals.</p>
+	</div>
 
-**Sysadmin Trainee** at [PT. Jarvis Integrasi Solusi](https://jarvis.biz.id/) _(Jul - Aug 2025)_  
-Gained foundational experience in Linux system administration, server configuration, and infrastructure maintenance.
+	<div class="mb-4">
+		<h5 class="mb-1">Sysadmin Trainee <small class="text-muted">PT. Jarvis Integrasi Solusi — Jul 2025 – Aug 2025</small></h5>
+		<p class="mb-0">Gained hands-on experience in Linux administration and server configuration.</p>
+	</div>
 
-**Campus Ambassador** at [LINUXENIC Corporation](https://linuxenic.com/) _(Nov 2025 - Jan 2026)_  
-Promoted open-source technologies and Linux adoption within the academic community.
+	<div class="mb-4">
+		<h5 class="mb-1">Campus Ambassador <small class="text-muted">LINUXENIC Corporation — Nov 2025 – Jan 2026</small></h5>
+		<p class="mb-0">Promoted open-source technologies and organized campus engagement activities.</p>
+	</div>
 
-**Research & Development** at BPH Litbang, STT Terpadu Nurul Fikri _(Jun 2024 - Mar 2025)_  
-Contributed to research projects and development initiatives at the research bureau.
+	<div class="mb-4">
+		<h5 class="mb-1">Research & Development <small class="text-muted">BPH Litbang, STT Terpadu Nurul Fikri — Jun 2024 – Mar 2025</small></h5>
+		<p class="mb-0">Contributed to research projects and development initiatives at the research bureau.</p>
+	</div>
+</div>
 
 ## Skills & Expertise
 
@@ -67,20 +95,6 @@ Understanding modern infrastructure practices and cloud technologies, with certi
 - **DevOps Tools:** Git, Docker, CI/CD basics
 - **Platforms:** Linux, VS Code
 
-**Languages**
-- Indonesian _(Native)_
-- English _(Elementary)_
-- Arabic _(Elementary)_
-
-## Certifications & Training
-
-I believe in continuous learning and professional development. Beyond formal education, I've pursued certifications and bootcamp training to deepen my expertise:
-
-- **Certified Cyber Security Analyst (C3SA)** - Premium Edition certification in cybersecurity analysis
-- **CP1 - Cloud Foundation** - Professional certification in cloud infrastructure fundamentals
-- **SOC Member** - Formal recognition of Security Operations Center experience
-- **System Administration & DevOps Bootcamp Programs** - Intensive practical training from multiple institutions
-
 ## Education
 
 **Teknik Informatika** (Informatics Engineering)  
@@ -98,5 +112,6 @@ I'm always open to learning from others and sharing knowledge. Whether you want 
 
 - **LinkedIn:** [firmansyah-dzakwan-arifien-90b1b8293](https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293)
 - **GitHub:** [FirmansyahDzakwanArifien](https://github.com/FirmansyahDzakwanArifien)
-- **Email:** [fdzak01@gmail.com](mailto:fdzak01@gmail.com)
+- **Email:** [contact@codebijak.my.id](mailto:contact@codebijak.my.id)
 - **Website:** [cyphera.my.id](https://cyphera.my.id)
+- **Medium:** [@fdzak01] (https://medium.com/@fdzak01)
