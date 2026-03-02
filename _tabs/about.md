@@ -64,38 +64,78 @@ order: 2
 	</div>
 </div>
 
-## Skills & Expertise
+	## Skills & Expertise
 
-**Cybersecurity**  
-I focus on practical security skills developed through hands-on experience. This includes monitoring systems for threats, identifying vulnerabilities, responding to incidents, and understanding attack methodologies through penetration testing fundamentals.
+	<div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+		<div class="col">
+			<div class="card h-100 border-0 shadow-sm">
+				<div class="card-body">
+					<h6 class="card-title mb-2">Cybersecurity</h6>
+					<p class="text-muted small mb-2">Practical security skills from hands-on experience.</p>
+					<ul class="mb-0">
+						<li>Security operations (SOC) &amp; threat monitoring</li>
+						<li>Vulnerability assessment &amp; analysis</li>
+						<li>Incident response &amp; threat investigation</li>
+						<li>Penetration testing fundamentals</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-- Security operations (SOC) and threat monitoring
-- Vulnerability assessment and analysis
-- Incident response and threat investigation
-- Penetration testing fundamentals
+		<div class="col">
+			<div class="card h-100 border-0 shadow-sm">
+				<div class="card-body">
+					<h6 class="card-title mb-2">System Administration</h6>
+					<p class="text-muted small mb-2">Core Linux and infrastructure management skills.</p>
+					<ul class="mb-0">
+						<li>Linux system management &amp; configuration</li>
+						<li>Server administration &amp; maintenance</li>
+						<li>Infrastructure automation &amp; scripting</li>
+						<li>Network fundamentals &amp; troubleshooting</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-**System Administration**  
-Strong foundation in Linux-based infrastructure with experience in managing servers, automating administrative tasks, and maintaining robust system architecture.
+		<div class="col">
+			<div class="card h-100 border-0 shadow-sm">
+				<div class="card-body">
+					<h6 class="card-title mb-2">Cloud &amp; DevOps</h6>
+					<p class="text-muted small mb-2">Modern infrastructure practices and tooling.</p>
+					<ul class="mb-0">
+						<li>Cloud foundations (CP1)</li>
+						<li>DevOps methodologies &amp; CI/CD</li>
+						<li>Infrastructure as Code (IaC)</li>
+						<li>Containerization (Docker)</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 
-- Linux system management and configuration
-- Server administration and maintenance
-- Infrastructure automation and scripting
-- Network fundamentals and troubleshooting
+	<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+		<div class="col">
+			<div class="card h-100 border-0 shadow-sm">
+				<div class="card-body">
+					<h6 class="card-title mb-2">Technical Stack</h6>
+					<p class="mb-0"><strong>Languages:</strong> Python, Bash, JavaScript</p>
+					<p class="mb-0"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
+					<p class="mb-0"><strong>Platforms:</strong> Linux, VS Code</p>
+				</div>
+			</div>
+		</div>
 
-**Cloud & DevOps**  
-Understanding modern infrastructure practices and cloud technologies, with certification in cloud foundations and hands-on experience with containerization.
+		<div class="col">
+			<div class="card h-100 border-0 shadow-sm">
+				<div class="card-body">
+					<h6 class="card-title mb-2">Languages</h6>
+					<p class="mb-0">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-- Cloud foundations (CP1 certified)
-- DevOps methodologies and best practices
-- Infrastructure as code (IaC) concepts
-- Docker and containerization basics
-
-**Technical Stack**
-- **Programming Languages:** Python, Bash, JavaScript
-- **DevOps Tools:** Git, Docker, CI/CD basics
-- **Platforms:** Linux, VS Code
-
-## Education
+	## Education
 
 **Teknik Informatika** (Informatics Engineering)  
 STT Terpadu Nurul Fikri | Sep 2023 - 2026
@@ -114,4 +154,4 @@ I'm always open to learning from others and sharing knowledge. Whether you want 
 - **GitHub:** [FirmansyahDzakwanArifien](https://github.com/FirmansyahDzakwanArifien)
 - **Email:** [contact@codebijak.my.id](mailto:contact@codebijak.my.id)
 - **Website:** [cyphera.my.id](https://cyphera.my.id)
-- **Medium:** [@fdzak01] (https://medium.com/@fdzak01)
+- **Medium:** [@fdzak01](https://medium.com/@fdzak01)
