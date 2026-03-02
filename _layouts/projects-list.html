@@ -6,8 +6,20 @@ layout: default
 
 {% assign all_projects = site.projects | sort: 'date' | reverse %}
 
-<div id="post-list" class="flex-grow-1 px-xl-1">
+<div id="post-list" class="flex-grow-1 px-md-4 px-xl-3 projects-list">
   {% if all_projects.size > 0 %}
+
+  <style>
+    /* prevent horizontal bleed and mirror achievements padding */
+    .projects-list {
+      overflow-x: hidden;
+    }
+    .projects-list .card-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%;
+    }
+  </style>
     {% for project in all_projects %}
       <article class="card-wrapper card">
         <a href="{{ project.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
