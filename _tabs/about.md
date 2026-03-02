@@ -64,78 +64,78 @@ order: 2
 	</div>
 </div>
 
-	## Skills & Expertise
+## Skills & Expertise
 
-	<div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
-		<div class="col">
-			<div class="card h-100 border-0 shadow-sm">
-				<div class="card-body">
-					<h6 class="card-title mb-2">Cybersecurity</h6>
-					<p class="text-muted small mb-2">Practical security skills from hands-on experience.</p>
-					<ul class="mb-0">
-						<li>Security operations (SOC) &amp; threat monitoring</li>
-						<li>Vulnerability assessment &amp; analysis</li>
-						<li>Incident response &amp; threat investigation</li>
-						<li>Penetration testing fundamentals</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+<div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Cybersecurity</h6>
+        <p class="text-muted small mb-2">Practical security skills from hands-on experience.</p>
+        <ul class="mb-0">
+          <li>Security operations (SOC) & threat monitoring</li>
+          <li>Vulnerability assessment & analysis</li>
+          <li>Incident response & threat investigation</li>
+          <li>Penetration testing fundamentals</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-		<div class="col">
-			<div class="card h-100 border-0 shadow-sm">
-				<div class="card-body">
-					<h6 class="card-title mb-2">System Administration</h6>
-					<p class="text-muted small mb-2">Core Linux and infrastructure management skills.</p>
-					<ul class="mb-0">
-						<li>Linux system management &amp; configuration</li>
-						<li>Server administration &amp; maintenance</li>
-						<li>Infrastructure automation &amp; scripting</li>
-						<li>Network fundamentals &amp; troubleshooting</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title mb-2">System Administration</h6>
+        <p class="text-muted small mb-2">Core Linux and infrastructure management skills.</p>
+        <ul class="mb-0">
+          <li>Linux system management & configuration</li>
+          <li>Server administration & maintenance</li>
+          <li>Infrastructure automation & scripting</li>
+          <li>Network fundamentals & troubleshooting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-		<div class="col">
-			<div class="card h-100 border-0 shadow-sm">
-				<div class="card-body">
-					<h6 class="card-title mb-2">Cloud &amp; DevOps</h6>
-					<p class="text-muted small mb-2">Modern infrastructure practices and tooling.</p>
-					<ul class="mb-0">
-						<li>Cloud foundations (CP1)</li>
-						<li>DevOps methodologies &amp; CI/CD</li>
-						<li>Infrastructure as Code (IaC)</li>
-						<li>Containerization (Docker)</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Cloud & DevOps</h6>
+        <p class="text-muted small mb-2">Modern infrastructure practices and tooling.</p>
+        <ul class="mb-0">
+          <li>Cloud foundations (CP1)</li>
+          <li>DevOps methodologies & CI/CD</li>
+          <li>Infrastructure as Code (IaC)</li>
+          <li>Containerization (Docker)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-	<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
-		<div class="col">
-			<div class="card h-100 border-0 shadow-sm">
-				<div class="card-body">
-					<h6 class="card-title mb-2">Technical Stack</h6>
-					<p class="mb-0"><strong>Languages:</strong> Python, Bash, JavaScript</p>
-					<p class="mb-0"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
-					<p class="mb-0"><strong>Platforms:</strong> Linux, VS Code</p>
-				</div>
-			</div>
-		</div>
+<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Technical Stack</h6>
+        <p class="mb-0"><strong>Languages:</strong> Python, Bash, JavaScript</p>
+        <p class="mb-0"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
+        <p class="mb-0"><strong>Platforms:</strong> Linux, VS Code</p>
+      </div>
+    </div>
+  </div>
 
-		<div class="col">
-			<div class="card h-100 border-0 shadow-sm">
-				<div class="card-body">
-					<h6 class="card-title mb-2">Languages</h6>
-					<p class="mb-0">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <h6 class="card-title mb-2">Languages</h6>
+        <p class="mb-0">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-	## Education
+## Education
 
 **Teknik Informatika** (Informatics Engineering)  
 STT Terpadu Nurul Fikri | Sep 2023 - 2026
