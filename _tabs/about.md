@@ -72,6 +72,22 @@ order: 2
   border: none !important;
   box-shadow: none !important;
 }
+
+.skills-card .card-body {
+  color: var(--bs-body-color, inherit);
+}
+
+.skills-card .card-title {
+  color: var(--bs-body-color, inherit);
+}
+
+.skills-card .card-body p {
+  color: var(--bs-secondary-text-emphasis, inherit);
+}
+
+.skills-card li {
+  color: var(--bs-body-color, inherit);
+}
 </style>
 
 <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
@@ -79,7 +95,7 @@ order: 2
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
         <h6 class="card-title mb-3">Cybersecurity</h6>
-        <p class="text-muted small mb-3">Practical security skills from hands-on experience.</p>
+        <p class="small mb-3">Practical security skills from hands-on experience.</p>
         <ul class="mb-0">
           <li>Security operations (SOC) & threat monitoring</li>
           <li>Vulnerability assessment & analysis</li>
@@ -94,7 +110,7 @@ order: 2
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
         <h6 class="card-title mb-3">System Administration</h6>
-        <p class="text-muted small mb-3">Core Linux and infrastructure management skills.</p>
+        <p class="small mb-3">Core Linux and infrastructure management skills.</p>
         <ul class="mb-0">
           <li>Linux system management & configuration</li>
           <li>Server administration & maintenance</li>
@@ -109,7 +125,7 @@ order: 2
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
         <h6 class="card-title mb-3">Cloud & DevOps</h6>
-        <p class="text-muted small mb-3">Modern infrastructure practices and tooling.</p>
+        <p class="small mb-3">Modern infrastructure practices and tooling.</p>
         <ul class="mb-0">
           <li>Cloud foundations (CP1)</li>
           <li>DevOps methodologies & CI/CD</li>
