@@ -74,19 +74,24 @@ order: 2
 }
 
 .skills-card .card-body {
-  color: var(--bs-body-color, inherit);
+  color: var(--bs-body-color) !important;
 }
 
 .skills-card .card-title {
-  color: var(--bs-body-color, inherit);
+  color: var(--bs-body-color) !important;
+  font-weight: 600 !important;
 }
 
 .skills-card .card-body p {
-  color: var(--bs-secondary-text-emphasis, inherit);
+  color: var(--bs-body-color) !important;
 }
 
 .skills-card li {
-  color: var(--bs-body-color, inherit);
+  color: var(--bs-body-color) !important;
+}
+
+.skills-card ul {
+  color: var(--bs-body-color) !important;
 }
 </style>
 
@@ -94,9 +99,9 @@ order: 2
   <div class="col">
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
-        <h6 class="card-title mb-3">Cybersecurity</h6>
-        <p class="small mb-3">Practical security skills from hands-on experience.</p>
-        <ul class="mb-0">
+        <h6 class="card-title mb-3" style="color: var(--bs-body-color) !important;">Cybersecurity</h6>
+        <p class="small mb-3" style="color: var(--bs-body-color) !important;">Practical security skills from hands-on experience.</p>
+        <ul class="mb-0" style="color: var(--bs-body-color) !important;">
           <li>Security operations (SOC) & threat monitoring</li>
           <li>Vulnerability assessment & analysis</li>
           <li>Incident response & threat investigation</li>
@@ -109,9 +114,9 @@ order: 2
   <div class="col">
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
-        <h6 class="card-title mb-3">System Administration</h6>
-        <p class="small mb-3">Core Linux and infrastructure management skills.</p>
-        <ul class="mb-0">
+        <h6 class="card-title mb-3" style="color: var(--bs-body-color) !important;">System Administration</h6>
+        <p class="small mb-3" style="color: var(--bs-body-color) !important;">Core Linux and infrastructure management skills.</p>
+        <ul class="mb-0" style="color: var(--bs-body-color) !important;">
           <li>Linux system management & configuration</li>
           <li>Server administration & maintenance</li>
           <li>Infrastructure automation & scripting</li>
@@ -124,9 +129,9 @@ order: 2
   <div class="col">
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
-        <h6 class="card-title mb-3">Cloud & DevOps</h6>
-        <p class="small mb-3">Modern infrastructure practices and tooling.</p>
-        <ul class="mb-0">
+        <h6 class="card-title mb-3" style="color: var(--bs-body-color) !important;">Cloud & DevOps</h6>
+        <p class="small mb-3" style="color: var(--bs-body-color) !important;">Modern infrastructure practices and tooling.</p>
+        <ul class="mb-0" style="color: var(--bs-body-color) !important;">
           <li>Cloud foundations (CP1)</li>
           <li>DevOps methodologies & CI/CD</li>
           <li>Infrastructure as Code (IaC)</li>
@@ -141,10 +146,10 @@ order: 2
   <div class="col">
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
-        <h6 class="card-title mb-3">Technical Stack</h6>
-        <p class="mb-0"><strong>Languages:</strong> Python, Bash, JavaScript</p>
-        <p class="mb-0"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
-        <p class="mb-0"><strong>Platforms:</strong> Linux, VS Code</p>
+        <h6 class="card-title mb-3" style="color: var(--bs-body-color) !important;">Technical Stack</h6>
+        <p class="mb-0" style="color: var(--bs-body-color) !important;"><strong>Languages:</strong> Python, Bash, JavaScript</p>
+        <p class="mb-0" style="color: var(--bs-body-color) !important;"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
+        <p class="mb-0" style="color: var(--bs-body-color) !important;"><strong>Platforms:</strong> Linux, VS Code</p>
       </div>
     </div>
   </div>
@@ -152,8 +157,8 @@ order: 2
   <div class="col">
     <div class="card h-100 border-0 shadow-sm skills-card">
       <div class="card-body p-4">
-        <h6 class="card-title mb-3">Languages</h6>
-        <p class="mb-0">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
+        <h6 class="card-title mb-3" style="color: var(--bs-body-color) !important;">Languages</h6>
+        <p class="mb-0" style="color: var(--bs-body-color) !important;">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
       </div>
     </div>
   </div>
