@@ -66,12 +66,20 @@ order: 2
 
 ## Skills & Expertise
 
-<div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+<style>
+.skills-card {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+</style>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
   <div class="col">
-    <div class="card h-100 border-0 shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title mb-2">Cybersecurity</h6>
-        <p class="text-muted small mb-2">Practical security skills from hands-on experience.</p>
+    <div class="card h-100 border-0 shadow-sm skills-card">
+      <div class="card-body p-4">
+        <h6 class="card-title mb-3">Cybersecurity</h6>
+        <p class="text-muted small mb-3">Practical security skills from hands-on experience.</p>
         <ul class="mb-0">
           <li>Security operations (SOC) & threat monitoring</li>
           <li>Vulnerability assessment & analysis</li>
@@ -83,10 +91,10 @@ order: 2
   </div>
 
   <div class="col">
-    <div class="card h-100 border-0 shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title mb-2">System Administration</h6>
-        <p class="text-muted small mb-2">Core Linux and infrastructure management skills.</p>
+    <div class="card h-100 border-0 shadow-sm skills-card">
+      <div class="card-body p-4">
+        <h6 class="card-title mb-3">System Administration</h6>
+        <p class="text-muted small mb-3">Core Linux and infrastructure management skills.</p>
         <ul class="mb-0">
           <li>Linux system management & configuration</li>
           <li>Server administration & maintenance</li>
@@ -98,10 +106,10 @@ order: 2
   </div>
 
   <div class="col">
-    <div class="card h-100 border-0 shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title mb-2">Cloud & DevOps</h6>
-        <p class="text-muted small mb-2">Modern infrastructure practices and tooling.</p>
+    <div class="card h-100 border-0 shadow-sm skills-card">
+      <div class="card-body p-4">
+        <h6 class="card-title mb-3">Cloud & DevOps</h6>
+        <p class="text-muted small mb-3">Modern infrastructure practices and tooling.</p>
         <ul class="mb-0">
           <li>Cloud foundations (CP1)</li>
           <li>DevOps methodologies & CI/CD</li>
@@ -113,11 +121,11 @@ order: 2
   </div>
 </div>
 
-<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
   <div class="col">
-    <div class="card h-100 border-0 shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title mb-2">Technical Stack</h6>
+    <div class="card h-100 border-0 shadow-sm skills-card">
+      <div class="card-body p-4">
+        <h6 class="card-title mb-3">Technical Stack</h6>
         <p class="mb-0"><strong>Languages:</strong> Python, Bash, JavaScript</p>
         <p class="mb-0"><strong>Tools:</strong> Git, Docker, CI/CD basics</p>
         <p class="mb-0"><strong>Platforms:</strong> Linux, VS Code</p>
@@ -126,9 +134,9 @@ order: 2
   </div>
 
   <div class="col">
-    <div class="card h-100 border-0 shadow-sm">
-      <div class="card-body">
-        <h6 class="card-title mb-2">Languages</h6>
+    <div class="card h-100 border-0 shadow-sm skills-card">
+      <div class="card-body p-4">
+        <h6 class="card-title mb-3">Languages</h6>
         <p class="mb-0">Indonesian (Native), English (Elementary), Arabic (Elementary)</p>
       </div>
     </div>
