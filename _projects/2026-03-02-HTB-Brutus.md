@@ -1,6 +1,6 @@
 ---
 title: "Brutus — HTB Sherlock: Linux Log Forensics"
-date: 2024-03-06 06:32:45 +0700
+date: 2026-03-02 06:32:45 +0700
 description: Analisis forensik log Linux pada kasus brute force SSH — mencakup identifikasi attacker, timeline rekonstruksi, persistence analysis, dan MITRE ATT&CK mapping.
 image:
   path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/cover.png"
@@ -244,16 +244,13 @@ Script eksternal dari GitHub ini kemungkinan digunakan untuk privilege enumerati
 
 ![Achievement](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/close-banner.png)
 
-Challenge **Brutus** membuktikan bahwa investigasi forensik yang efektif tidak selalu membutuhkan tool canggih. Hanya dari dua artefak sederhana — `auth.log` dan `wtmp` — kita mampu merekonstruksi **seluruh rantai serangan** dari awal hingga akhir.
+Pertama, brute force attack masih menjadi ancaman nyata, terutama pada sistem yang tidak menerapkan hardening seperti rate limiting, fail2ban, atau key-based authentication.
 
-1. **Sumber serangan** — IP `65.2.161.68` sebagai pelaku brute force
-2. **Akun yang dikompromikan** — `root`, privilege tertinggi sistem
-3. **Timeline insiden** — dari detik pertama brute force hingga eksekusi script berbahaya
-4. **Mekanisme persistence** — pembuatan user `cyberjunkie` dengan akses sudo penuh
-5. **Klasifikasi ATT&CK** — `T1136.001` (Local Account Creation)
-6. **Post-exploitation** — pengunduhan `linper.sh` via curl
+Kedua, memahami perbedaan antara authentication log dan session log sangat krusial dalam membangun timeline yang akurat. auth.log memberi tahu kita kapan kredensial diterima, sedangkan wtmp memberi tahu kapan sesi benar-benar aktif.
 
-Meskipun dikategorikan *Very Easy*, skenario ini sangat representatif terhadap serangan nyata di server produksi. Brute force SSH sederhana, jika berhasil, dapat berujung pada kompromi sistem secara penuh.
+Ketiga, persistence tidak selalu kompleks. Terkadang, teknik sederhana seperti membuat akun lokal baru dan menambahkannya ke grup sudo sudah cukup untuk mempertahankan akses.
+
+Kita melihat bagaimana sebuah serangan brute force terhadap layanan SSH dapat berkembang menjadi kompromi penuh terhadap sistem. Dimulai dari percobaan login masif, berlanjut ke keberhasilan autentikasi sebagai root, kemudian diikuti dengan pembuatan akun baru untuk persistence, hingga eksekusi perintah menggunakan sudo untuk mengunduh script tambahan.
 
 > *Seringkali, sebuah insiden besar dimulai dari satu hal yang sederhana — sebuah password yang berhasil ditebak.*
 {: .prompt-info }
