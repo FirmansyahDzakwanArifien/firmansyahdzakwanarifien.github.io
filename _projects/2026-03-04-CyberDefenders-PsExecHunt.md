@@ -299,5 +299,3 @@ Pola traffic: `IPC$` → `ADMIN$` → pembuatan `PSEXESVC.exe` adalah signature 
 {: .prompt-info }
 
 ---
-
-**Happy Hunting.** 🔍

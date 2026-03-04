@@ -1,6 +1,6 @@
 ---
 title: "Event-Viewing — picoCTF 2025: Windows Event Log Forensics"
-date: 2025-03-17 00:00:00 +0700
+date: 2026-03-04 00:00:00 +0700
 description: Analisis Windows Event Log untuk mengungkap infeksi malware — mencakup investigasi instalasi software, modifikasi registry, dan mekanisme shutdown otomatis yang tersembunyi.
 image:
   path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/picoctf/event-viewing/cover.png"
@@ -315,6 +315,3 @@ Skenario dalam challenge ini sangat mencerminkan serangan nyata di dunia profesi
 > *Malware bisa bersembunyi, tapi Windows selalu mencatat. Event Log tidak pernah berbohong — jika kamu tahu harus mencari apa.*
 {: .prompt-info }
 
----
-
-**Happy Hunting.** 🔍
