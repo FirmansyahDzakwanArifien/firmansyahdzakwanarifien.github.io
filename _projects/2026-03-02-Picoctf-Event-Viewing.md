@@ -25,7 +25,7 @@ artifacts:
   - Windows_Log.evtx
 ---
 
-## 🔍 Introduction
+##  Introduction
 
 Challenge **Event-Viewing** membawa kita ke dalam skenario investigasi malware di lingkungan Windows. Seorang karyawan melaporkan kejadian aneh pada komputernya:
 
@@ -53,7 +53,7 @@ Windows Event Log adalah sistem pencatatan bawaan Windows yang merekam semua akt
 
 ---
 
-## 🧩 Step-by-Step Solution
+##  Step-by-Step Solution
 
 ### Step 1 — Parse File EVTX ke Format XML
 
@@ -135,7 +135,7 @@ Hasil decode:
 picoCTF{Ev3nt_vi3wv3r_
 ```
 
-> ✅ **Flag Part 1:** `picoCTF{Ev3nt_vi3wv3r_`
+>  **Flag Part 1:** `picoCTF{Ev3nt_vi3wv3r_`
 {: .prompt-tip }
 
 ---
@@ -181,7 +181,7 @@ Hasil decode:
 1s_a_pr3tty_us3ful_
 ```
 
-> ✅ **Flag Part 2:** `1s_a_pr3tty_us3ful_`
+>  **Flag Part 2:** `1s_a_pr3tty_us3ful_`
 {: .prompt-tip }
 
 **Apa yang terjadi di balik layar?**
@@ -229,7 +229,7 @@ Hasil decode:
 t00l_81ba3fe9}
 ```
 
-> ✅ **Flag Part 3:** `t00l_81ba3fe9}`
+>  **Flag Part 3:** `t00l_81ba3fe9}`
 {: .prompt-tip }
 
 ---
@@ -295,7 +295,7 @@ _Alur serangan malware dari instalasi hingga shutdown otomatis_
 
 ---
 
-## ✅ Penutup & Kesimpulan
+##  Penutup & Kesimpulan
 
 Challenge **Event-Viewing** mengajarkan kita tentang pentingnya **Windows Event Log** sebagai sumber utama investigasi forensik di lingkungan Windows. Dengan memahami Event ID yang tepat, kita bisa merekonstruksi seluruh aktivitas malware hanya dari log:
 
