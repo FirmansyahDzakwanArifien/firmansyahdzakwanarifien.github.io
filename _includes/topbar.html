@@ -13,45 +13,45 @@
         <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
 
       {% else %}
-        {% for item in paths %}
-          {% if forloop.first %}
-            <span>
-              <a href="{{ '/' | relative_url }}">
-                {{- site.data.locales[include.lang].tabs.home | capitalize -}}
-              </a>
-            </span>
-
-          {% elsif forloop.last %}
-            {% if page.collection == 'tabs' %}
-              <span>{{ site.data.locales[include.lang].tabs[item] | default: page.title }}</span>
-            {% elsif page.collection == 'projects' %}
-              <!-- For project detail pages, show projects link then title -->
+        {% if page.collection == 'projects' %}
+          <!-- Projects breadcrumb: Achievements > Projects > Project Title -->
+          <span>
+            <a href="{{ '/' | relative_url }}">
+              {{- site.data.locales[include.lang].tabs.home | capitalize -}}
+            </a>
+          </span>
+          <span>
+            <a href="{{ '/projects/' | relative_url }}">
+              {{- site.data.locales[include.lang].tabs.projects | default: 'Projects' -}}
+            </a>
+          </span>
+          <span>{{ page.title }}</span>
+        {% else %}
+          <!-- Standard breadcrumb for other pages -->
+          {% for item in paths %}
+            {% if forloop.first %}
               <span>
-                <a href="{{ '/projects/' | relative_url }}">
-                  {{- site.data.locales[include.lang].tabs.projects | default: 'Projects' -}}
+                <a href="{{ '/' | relative_url }}">
+                  {{- site.data.locales[include.lang].tabs.home | capitalize -}}
                 </a>
               </span>
-              <span>{{ page.title }}</span>
-            {% else %}
-              <span>{{ page.title }}</span>
+
+            {% elsif forloop.last %}
+              {% if page.collection == 'tabs' %}
+                <span>{{ site.data.locales[include.lang].tabs[item] | default: page.title }}</span>
+              {% else %}
+                <span>{{ page.title }}</span>
+              {% endif %}
+
+            {% elsif page.layout == 'category' or page.layout == 'tag' %}
+              <span>
+                <a href="{{ item | append: '/' | relative_url }}">
+                  {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
+                </a>
+              </span>
             {% endif %}
-
-          {% elsif page.layout == 'category' or page.layout == 'tag' %}
-            <span>
-              <a href="{{ item | append: '/' | relative_url }}">
-                {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
-              </a>
-            </span>
-
-          {% elsif page.collection == 'projects' and item == 'projects' %}
-            <!-- For projects list page -->
-            <span>
-              <a href="{{ item | append: '/' | relative_url }}">
-                {{- site.data.locales[include.lang].tabs.projects | default: 'Projects' -}}
-              </a>
-            </span>
-          {% endif %}
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
       {% endif %}
     </nav>
     <!-- endof #breadcrumb -->
