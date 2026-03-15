@@ -10,14 +10,8 @@ layout: default
   {% if all_projects.size > 0 %}
 
   <style>
-    /* minor spacing adjustments; base styles handle the rest */
-    .projects-list {
-      overflow-x: hidden;
-    }
-
-    .projects-list .card-wrapper {
-      margin-bottom: 1.5rem;
-    }
+    .projects-list { overflow-x: hidden; }
+    .projects-list .card-wrapper { margin-bottom: 1.5rem; }
   </style>
 
     {% for project in all_projects %}
@@ -27,18 +21,15 @@ layout: default
 
           {% if project.image %}
             {% assign src = project.image.path | default: project.image %}
-
             <div class="col-md-5">
               <img src="{{ src }}" alt="{{ project.image.alt | default: 'Project Image' }}" loading="lazy">
             </div>
-
             {% assign card_body_col = '7' %}
           {% endif %}
 
           <div class="col-md-{{ card_body_col }}">
             <div class="card-body d-flex flex-column">
               <h1 class="card-title my-2 mt-md-0">{{ project.title }}</h1>
-
               <div class="card-text content mt-0 mb-3">
                 <p>
                   {% if project.description %}
@@ -48,13 +39,10 @@ layout: default
                   {% endif %}
                 </p>
               </div>
-
               <div class="post-meta flex-grow-1 d-flex align-items-end">
                 <div class="me-auto">
-                  <!-- Date -->
                   <i class="far fa-calendar fa-fw me-1"></i>
                   {% include datetime.html date=project.date lang=lang %}
-
                   {% if project.categories.size > 0 %}
                     <i class="far fa-folder-open fa-fw me-1"></i>
                     <span class="categories">
@@ -64,7 +52,6 @@ layout: default
                     </span>
                   {% endif %}
                 </div>
-
                 {% if project.status %}
                   <i class="fas fa-circle-notch fa-fw"></i>
                   <span class="badge 
@@ -80,13 +67,8 @@ layout: default
         </a>
       </article>
     {% endfor %}
+
   {% else %}
-    <div class="alert alert-info text-center">
-      <i class="fas fa-info-circle me-2"></i>
-      No projects yet. Check back soon!
-    </div>
-  {% endif %}
-</div>  {% else %}
     <div class="alert alert-info text-center">
       <i class="fas fa-info-circle me-2"></i>
       No projects yet. Check back soon!
