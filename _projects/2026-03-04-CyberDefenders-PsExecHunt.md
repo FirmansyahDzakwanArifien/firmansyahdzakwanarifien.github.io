@@ -2,9 +2,6 @@
 title: "PsExec Hunt — CyberDefenders: SMB Lateral Movement Analysis"
 date: 2026-03-04 00:00:00 +0700
 description: Analisis PCAP untuk mengungkap aktivitas lateral movement menggunakan PsExec — mencakup identifikasi attacker, autentikasi NTLM, administrative shares, dan upaya pivot ke mesin kedua.
-image:
-  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/cyberdefenders/psexec-hunt/cover.png"
-  alt: "PsExec Hunt CyberDefenders Writeup"
 categories:
   - CyberDefenders
   - Network Forensics
@@ -28,9 +25,11 @@ artifacts:
 
 ## Introduction
 
-![Skenario](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/cyberdefenders/psexec-hunt/skenario.png)
+![Introduction](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/cyberdefenders/psexec-hunt/cover.png)
 
 Challenge **PsExec Hunt** menempatkan kita sebagai SOC analyst yang menerima alert dari IDS terkait aktivitas mencurigakan di jaringan internal. Alert tersebut menunjukkan adanya indikasi **lateral movement** menggunakan **PsExec** — sebuah tool administrasi remote yang sah, namun sangat sering disalahgunakan oleh attacker.
+
+![Skenario](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/cyberdefenders/psexec-hunt/skenario.png)
 
 Tugas utama: analisis file PCAP menggunakan Wireshark untuk menelusuri:
 - Dari mana attacker masuk

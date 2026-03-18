@@ -2,9 +2,6 @@
 title: "Brutus — HTB Sherlock: Linux Log Forensics"
 date: 2026-03-02 06:32:45 +0700
 description: Analisis forensik log Linux pada kasus brute force SSH — mencakup identifikasi attacker, timeline rekonstruksi, persistence analysis, dan MITRE ATT&CK mapping.
-image:
-  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/cover.png"
-  alt: "Brutus HTB Sherlock Writeup"
 categories:
   - Hack The Box
   - Sherlock
@@ -28,6 +25,8 @@ artifacts:
 ---
 
 ## Challenge Overview
+
+![Overview Challange](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/hackthebox/brutus/cover.png)
 
 **Brutus** adalah challenge forensik yang mengangkat skenario umum di dunia nyata: sebuah server Linux mengalami **brute force attack** via SSH. Setelah berhasil masuk, attacker melakukan serangkaian aktivitas lanjutan yang dapat direkonstruksi melalui analisis log.
 

@@ -2,9 +2,6 @@
 title: "Ph4nt0m 1ntrud3r — picoCTF 2025: Network Forensics"
 date: 2026-03-02 00:00:00 +0700
 description: Analisis PCAP file untuk menemukan flag yang disembunyikan dalam TCP segment data — mencakup filtering paket, decoding hex, dan rekonstruksi Base64.
-image:
-  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/picoctf/ph4nt0m-1ntrud3r/cover.png"
-  alt: "Ph4nt0m 1ntrud3r picoCTF Writeup"
 categories:
   - picoCTF
   - Forensics
@@ -25,6 +22,8 @@ artifacts:
 ---
 
 ## 🔍 Introduction
+
+![Introduction](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/task/picoctf/ph4nt0m-1ntrud3r/cover.png)
 
 Challenge **Ph4nt0m 1ntrud3r** mengajak kita untuk menganalisis file PCAP — sebuah rekaman lalu lintas jaringan — untuk menemukan flag yang disembunyikan oleh attacker.
 
