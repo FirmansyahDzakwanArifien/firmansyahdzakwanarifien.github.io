@@ -5,7 +5,7 @@ description: >
   The Fundamentals of Recognizing and Managing Cyber Threats was successfully held on Sunday, September 28, 2025.
   This event served as an educational platform for students to improve their digital security literacy and familiarize themselves with the increasingly prevalent cyber threats in the digital age.
 featured_image:
-  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/album/posts/event-cybersec-101.jpg"
+  path: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/album/posts/event-cybersec-101-2025.jpg"
   alt: Cyber Security 101
   caption: Doc - Cybersec 101
 event: "Seminar: Cyber Security 101"
