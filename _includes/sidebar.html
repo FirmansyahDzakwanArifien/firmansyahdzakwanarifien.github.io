@@ -36,6 +36,15 @@
           </a>
         </li>
         <!-- .nav-item -->
+
+        {% if tab.title == 'Projects' %}
+          <li class="nav-item project-external-link">
+            <a href="https://blog.cyphera.my.id" class="nav-link" target="_blank" rel="noopener noreferrer">
+              <i class="fa-fw fas fa-blog"></i>
+              <span>BLOG</span>
+            </a>
+          </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </nav>
