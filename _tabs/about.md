@@ -451,8 +451,8 @@ order: 2
       <p class="hero-bio">Informatics Engineering student at STT Terpadu Nurul Fikri with a deep focus on cybersecurity and infrastructure security. I learn best through hands-on experience — whether in a SOC environment, managing Linux systems, or building secure infrastructure. Currently working as an Implementation Engineer at PT Jarvis Integrasi Solusi, while leading the Nurul Fikri Student Cybersecurity Community and teaching practical Incident Response.</p>
       <div class="hero-cta">
         <a href="https://drive.google.com/file/d/10pIfd05f4a8LTz6F_B9ICiVjTCcJ2wWb/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
-          <i class="fab fa-github" style="font-size:13px;"></i>
-          View Full CV on GitHub
+          <i class="fab fa-drive" style="font-size:13px;"></i>
+          View My CV
         </a>
       </div>
     </div>
