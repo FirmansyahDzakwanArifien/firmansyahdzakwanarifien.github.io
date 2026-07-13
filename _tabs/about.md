@@ -448,7 +448,7 @@ order: 2
     <div class="hero-text">
       <h1 class="hero-name">Firmansyah <em>Dzakwan</em> Arifien</h1>
       <p class="hero-role">Security &amp; Infrastructure · Implementation Engineer</p>
-      <p class="hero-bio">Informatics Engineering student at STT Terpadu Nurul Fikri with a deep focus on cybersecurity and infrastructure security. I learn best through hands-on experience — whether in a SOC environment, managing Linux systems, or building secure infrastructure. Currently working as an Implementation Engineer at PT Jarvis Integrasi Solusi, while leading the Nurul Fikri Student Cybersecurity Community and teaching practical Incident Response.</p>
+      <p class="hero-bio">Implementation Engineer at PT Jarvis Integrasi Solusi with a strong focus on cybersecurity, network infrastructure, and system administration. Experienced in implementing, managing, securing, and troubleshooting enterprise IT infrastructure, including network and security systems, Linux, virtualization, cloud environments, monitoring, and incident response. I am also actively involved in cybersecurity research, particularly in User and Entity Behavior Analytics (UEBA), Machine Learning, and Explainable AI for insider threat detection, while continuously contributing to the cybersecurity community through practical learning and knowledge sharing.</p>
       <div class="hero-cta">
         <a href="https://drive.google.com/file/d/1xizAWX6gF48XjoKhd6ukP6c5O6RP7LzO/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
           View My CV
