@@ -507,6 +507,22 @@ order: 2
         </div>
       </div>
 
+      <div class="exp-card" data-cat="Infrastructure" onclick="toggleExp(this)">
+        <div class="exp-card-head">
+          <div class="exp-card-left">
+            <p class="exp-role">IT Infra</p>
+            <p class="exp-company">BlankOn Linux - Revival Project</p>
+          </div>
+          <div class="exp-card-right">
+            <span class="exp-period">Nov 2026 — Present</span>
+            <span class="exp-badge sysadmin">Sysadmin</span>
+          </div>
+        </div>
+        <div class="exp-desc-wrap">
+          <p class="exp-desc">Gained hands-on experience in Linux administration and server configuration in a professional environment.</p>
+        </div>
+      </div>
+
 
       <div class="exp-card" data-cat="community" onclick="toggleExp(this)">
         <div class="exp-card-head">
