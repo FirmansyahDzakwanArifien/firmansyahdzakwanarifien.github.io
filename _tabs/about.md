@@ -467,7 +467,7 @@ order: 2
     <div class="exp-filters">
       <button class="exp-filter-btn active" onclick="filterExp('all', this)">All</button>
       <button class="exp-filter-btn" onclick="filterExp('security', this)">Security</button>
-      <button class="exp-filter-btn" onclick="filterExp('sysadmin', this)">Infrastructure</button>
+      <button class="exp-filter-btn" onclick="filterExp('Infrastructure', this)">Infrastructure</button>
       <button class="exp-filter-btn" onclick="filterExp('devops', this)">DevOps</button>
       <button class="exp-filter-btn" onclick="filterExp('community', this)">Community</button>
       <button class="exp-filter-btn" onclick="filterExp('research', this)">Research</button>
@@ -475,7 +475,7 @@ order: 2
 
     <div class="exp-timeline">
 
-      <div class="exp-card" data-cat="sysadmin" onclick="toggleExp(this)">
+      <div class="exp-card" data-cat="Infrastructure" onclick="toggleExp(this)">
         <div class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Implementation Engineer</p>
@@ -491,7 +491,7 @@ order: 2
         </div>
       </div>
 
-      <div class="exp-card" data-cat="sysadmin" onclick="toggleExp(this)">
+      <div class="exp-card" data-cat="Infrastructure" onclick="toggleExp(this)">
         <div class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Sysadmin Trainer</p>
