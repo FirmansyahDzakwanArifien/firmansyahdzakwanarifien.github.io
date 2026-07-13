@@ -491,6 +491,23 @@ order: 2
         </div>
       </div>
 
+      <div class="exp-card" data-cat="sysadmin" onclick="toggleExp(this)">
+        <div class="exp-card-head">
+          <div class="exp-card-left">
+            <p class="exp-role">Sysadmin Trainer</p>
+            <p class="exp-company">PT. Jarvis Integrasi Solusi</p>
+          </div>
+          <div class="exp-card-right">
+            <span class="exp-period">Jul 2026 — Sep 2026</span>
+            <span class="exp-badge sysadmin">Sysadmin</span>
+          </div>
+        </div>
+        <div class="exp-desc-wrap">
+          <p class="exp-desc">Gained hands-on experience in Linux administration and server configuration in a professional environment.</p>
+        </div>
+      </div>
+
+
       <div class="exp-card" data-cat="community" onclick="toggleExp(this)">
         <div class="exp-card-head">
           <div class="exp-card-left">
@@ -568,22 +585,6 @@ order: 2
         </div>
         <div class="exp-desc-wrap">
           <p class="exp-desc">Learned infrastructure automation, CI/CD fundamentals, and cloud basics through a structured training program.</p>
-        </div>
-      </div>
-
-      <div class="exp-card" data-cat="sysadmin" onclick="toggleExp(this)">
-        <div class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Sysadmin Trainee</p>
-            <p class="exp-company">PT. Jarvis Integrasi Solusi</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Jul 2025 — Aug 2025</span>
-            <span class="exp-badge sysadmin">Sysadmin</span>
-          </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Gained hands-on experience in Linux administration and server configuration in a professional environment.</p>
         </div>
       </div>
 
