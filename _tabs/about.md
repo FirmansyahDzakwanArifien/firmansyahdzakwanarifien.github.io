@@ -453,9 +453,7 @@ order: 2
         <a href="https://drive.google.com/file/d/1xizAWX6gF48XjoKhd6ukP6c5O6RP7LzO/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
           View My CV
         </a>
-      </div>
-            <div class="hero-cta">
-        <a href="https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
+                <a href="https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
           View My Portofolio
         </a>
       </div>
