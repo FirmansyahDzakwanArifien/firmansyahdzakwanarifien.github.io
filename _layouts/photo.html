@@ -4,230 +4,341 @@ layout: default
 
 {% include lang.html %}
 
-<div class="album-wrapper px-1">
-  <header class="mb-5">
+{% assign items = site.album | sort: 'date' | reverse %}
+
+<div class="gphoto-wrapper px-1">
+  <header class="gphoto-header mb-4">
     <h1 data-toc-skip>{{ page.title }}</h1>
     {% if page.description %}
       <p class="text-muted">{{ page.description }}</p>
     {% endif %}
   </header>
 
-  <!-- Gallery Grid -->
-  <div class="album-gallery">
-    {% for item in site.album %}
+  {% if items.size > 0 %}
+    {% assign current_month = '' %}
+    {% assign grid_open = false %}
+    {% assign photo_index = 0 %}
+    {% for item in items %}
       {% assign image = item.featured_image %}
       {% if image.path %}
-        <div class="gallery-item" role="button" tabindex="0" 
-             onclick="showAlbumModal('{{ image.path }}', '{{ image.alt | escape }}', 
-             '{{ image.caption | escape }}', '{{ item.date | date: '%B %d, %Y at %H:%M' }}', 
-             '{{ item.location | escape }}', '{{ item.event | escape }}')">
-          <img src="{{ image.path }}" alt="{{ image.alt }}" class="gallery-img" loading="lazy">
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <h3>{{ item.title }}</h3>
-              <p class="gallery-meta">
-                <i class="fas fa-map-marker-alt"></i> {{ item.location }}
-              </p>
-            </div>
-          </div>
-        </div>
+        {% assign month_label = item.date | date: '%B %Y' %}
+        {% if month_label != current_month %}
+          {% if grid_open %}</div>{% endif %}
+          <h2 class="gphoto-date-heading">{{ month_label }}</h2>
+          <div class="gphoto-grid">
+          {% assign current_month = month_label %}
+          {% assign grid_open = true %}
+        {% endif %}
+
+        <button type="button" class="gphoto-tile" data-index="{{ photo_index }}"
+                aria-label="{{ item.title | escape }}">
+          <img src="{{ image.path }}" alt="{{ image.alt | default: item.title | escape }}" loading="lazy">
+        </button>
+        {% assign photo_index = photo_index | plus: 1 %}
       {% endif %}
     {% endfor %}
-  </div>
+    {% if grid_open %}</div>{% endif %}
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle me-2"></i>
+      No photos yet. Check back soon!
+    </div>
+  {% endif %}
 </div>
 
-<!-- Album Modal -->
-<div class="modal fade" id="albumModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="albumModalTitle"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <img id="modalImage" src="" alt="" class="w-100 mb-3" style="max-height: 500px; object-fit: contain;">
-        <div id="modalInfo" class="album-modal-info">
-          <p class="mb-2">
-            <strong><i class="fas fa-calendar-alt"></i> Timeline:</strong>
-            <span id="modalDate"></span>
-          </p>
-          <p class="mb-2">
-            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong>
-            <span id="modalLocation"></span>
-          </p>
-          <p class="mb-2">
-            <strong><i class="fas fa-tag"></i> Event:</strong>
-            <span id="modalEvent"></span>
-          </p>
-          <p class="text-muted small" id="modalCaption"></p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Lightbox -->
+<div class="gphoto-lightbox" id="gphotoLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="gphoto-lightbox-backdrop" data-gphoto-close></div>
+  <button type="button" class="gphoto-lb-btn gphoto-lb-close" data-gphoto-close aria-label="Close">
+    <i class="fas fa-times"></i>
+  </button>
+  <button type="button" class="gphoto-lb-btn gphoto-lb-prev" id="gphotoPrev" aria-label="Previous photo">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <button type="button" class="gphoto-lb-btn gphoto-lb-next" id="gphotoNext" aria-label="Next photo">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+
+  <figure class="gphoto-lb-figure">
+    <img id="gphotoLbImage" src="" alt="">
+    <figcaption class="gphoto-lb-info">
+      <h3 id="gphotoLbTitle"></h3>
+      <p class="gphoto-lb-meta" id="gphotoLbMeta"></p>
+      <p class="gphoto-lb-event" id="gphotoLbEvent"></p>
+      <p class="gphoto-lb-caption" id="gphotoLbCaption"></p>
+    </figcaption>
+  </figure>
 </div>
+
+<script type="application/json" id="gphoto-data">
+[
+{% assign printed = false %}
+{% for item in items %}
+  {% assign image = item.featured_image %}
+  {% if image.path %}
+  {% if printed %},{% endif %}
+  {
+    "src": {{ image.path | jsonify }},
+    "title": {{ item.title | default: '' | jsonify }},
+    "alt": {{ image.alt | default: item.title | jsonify }},
+    "caption": {{ image.caption | default: '' | jsonify }},
+    "date": {{ item.date | date: '%B %-d, %Y' | jsonify }},
+    "location": {{ item.location | default: '' | jsonify }},
+    "event": {{ item.event | default: '' | jsonify }}
+  }
+  {% assign printed = true %}
+  {% endif %}
+{% endfor %}
+]
+</script>
 
 <style>
-.album-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 3rem;
-  auto-rows: 280px;
+.gphoto-date-heading {
+  position: sticky;
+  top: 3rem;
+  z-index: 2;
+  margin: 2rem 0 0.75rem;
+  padding: 0.4rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  background: var(--main-bg);
 }
 
-.gallery-item {
+.gphoto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.gphoto-tile {
   position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 0;
   overflow: hidden;
-  border-radius: 0.5rem;
   cursor: pointer;
-  background: var(--code-bg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
+  background: var(--card-bg);
+  border-radius: 6px;
+}
+
+.gphoto-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.gphoto-tile:hover img,
+.gphoto-tile:focus-visible img {
+  transform: scale(1.06);
+}
+
+.gphoto-tile:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+}
+
+/* Lightbox */
+.gphoto-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
   align-items: center;
   justify-content: center;
 }
 
-.gallery-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.gallery-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-  display: block;
-}
-
-.gallery-item:hover .gallery-img {
-  transform: scale(1.04);
-}
-
-.gallery-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+.gphoto-lightbox.is-open {
   display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
+.gphoto-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
 }
 
-.gallery-info {
-  color: white;
-  width: 100%;
-}
-
-.gallery-info h3 {
-  margin: 0 0 0.25rem 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.gallery-meta {
+.gphoto-lb-figure {
+  position: relative;
+  z-index: 1;
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
   margin: 0;
-  font-size: 0.75rem;
-  opacity: 0.85;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.album-modal-info {
-  border-top: 1px solid var(--tb-border-color);
-  padding-top: 1.5rem;
+.gphoto-lb-figure img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
-  background-color: var(--card-bg);
-  border: 1px solid var(--tb-border-color);
+.gphoto-lb-info {
+  color: #f1f1f1;
+  text-align: center;
+  margin-top: 1rem;
+  max-width: 640px;
 }
 
-.modal-header {
-  border-bottom: 1px solid var(--tb-border-color);
-  background-color: var(--card-bg);
+.gphoto-lb-info h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+  color: #fff;
 }
 
-.modal-body {
-  color: var(--text-color);
+.gphoto-lb-meta {
+  font-size: 0.82rem;
+  opacity: 0.75;
+  margin: 0 0 0.4rem;
 }
 
-.close {
-  color: var(--text-color);
-  opacity: 0.6;
+.gphoto-lb-event {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin: 0 0 0.3rem;
 }
 
-.close:hover,
-.close:focus {
-  opacity: 1;
+.gphoto-lb-caption {
+  font-size: 0.8rem;
+  opacity: 0.65;
+  margin: 0;
+}
+
+.gphoto-lb-btn {
+  position: absolute;
+  z-index: 2;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.gphoto-lb-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.gphoto-lb-close {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.gphoto-lb-prev {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gphoto-lb-next {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .album-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-    auto-rows: 240px;
+  .gphoto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .album-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.75rem;
-    auto-rows: 200px;
+  .gphoto-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 3px;
   }
 
-  .gallery-info h3 {
-    font-size: 0.8rem;
+  .gphoto-lb-btn {
+    width: 36px;
+    height: 36px;
   }
 
-  .gallery-meta {
-    font-size: 0.7rem;
-  }
-}
-
-/* Small mobile */
-@media (max-width: 480px) {
-  .album-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.5rem;
-    auto-rows: 150px;
-  }
+  .gphoto-lb-prev { left: 0.5rem; }
+  .gphoto-lb-next { right: 0.5rem; }
+  .gphoto-lb-close { top: 0.5rem; right: 0.5rem; }
 }
 </style>
 
 <script>
-function showAlbumModal(imageSrc, imageAlt, caption, date, location, event) {
-  document.getElementById('modalImage').src = imageSrc;
-  document.getElementById('modalImage').alt = imageAlt;
-  document.getElementById('modalCaption').textContent = caption;
-  document.getElementById('modalDate').textContent = date;
-  document.getElementById('modalLocation').textContent = location;
-  document.getElementById('modalEvent').textContent = event;
-  
-  const modal = new bootstrap.Modal(document.getElementById('albumModal'));
-  modal.show();
-}
+(function () {
+  var data = JSON.parse(document.getElementById('gphoto-data').textContent);
+  var lightbox = document.getElementById('gphotoLightbox');
+  var img = document.getElementById('gphotoLbImage');
+  var titleEl = document.getElementById('gphotoLbTitle');
+  var metaEl = document.getElementById('gphotoLbMeta');
+  var eventEl = document.getElementById('gphotoLbEvent');
+  var captionEl = document.getElementById('gphotoLbCaption');
+  var currentIndex = 0;
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && document.activeElement.classList.contains('gallery-item')) {
-    document.activeElement.click();
+  function render(index) {
+    if (!data.length) return;
+    currentIndex = (index + data.length) % data.length;
+    var item = data[currentIndex];
+
+    img.src = item.src;
+    img.alt = item.alt || item.title || '';
+    titleEl.textContent = item.title || '';
+    metaEl.textContent = [item.date, item.location].filter(Boolean).join(' · ');
+    eventEl.textContent = item.event || '';
+    eventEl.hidden = !item.event;
+    captionEl.textContent = item.caption || '';
+    captionEl.hidden = !item.caption;
   }
-});
+
+  function open(index) {
+    render(index);
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gphoto-tile').forEach(function (tile) {
+    tile.addEventListener('click', function () {
+      open(parseInt(tile.dataset.index, 10));
+    });
+  });
+
+  document.querySelectorAll('[data-gphoto-close]').forEach(function (el) {
+    el.addEventListener('click', close);
+  });
+
+  document.getElementById('gphotoPrev').addEventListener('click', function () {
+    render(currentIndex - 1);
+  });
+
+  document.getElementById('gphotoNext').addEventListener('click', function () {
+    render(currentIndex + 1);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') render(currentIndex - 1);
+    if (e.key === 'ArrowRight') render(currentIndex + 1);
+  });
+})();
 </script>
