@@ -267,8 +267,8 @@ layout: default
   var captionEl = document.getElementById('gphotoLbCaption');
   var currentIndex = 0;
 
-  // The lightbox <img> is created at runtime (rather than emitted as static
-  // HTML) so the build-time content refactor doesn't wrap it in a link.
+  /* The lightbox image is created at runtime (rather than emitted as static
+     markup) so the build-time content refactor doesn't wrap it in a link. */
   var lbImg = document.createElement('img');
   lbImg.alt = '';
   figure.insertBefore(lbImg, figure.firstChild);
@@ -301,9 +301,9 @@ layout: default
     document.body.style.overflow = '';
   }
 
-  // Build the timeline grid client-side, from the same data used by the
-  // lightbox, so thumbnails are never plain <img> tags in the built HTML
-  // (that would otherwise get auto-wrapped into a link to the raw image).
+  /* Build the timeline grid client-side, from the same data used by the
+     lightbox, so thumbnails are never plain image tags in the built markup
+     (that would otherwise get auto-wrapped into a link to the raw image). */
   var timeline = document.getElementById('gphotoTimeline');
   var emptyState = document.getElementById('gphotoEmpty');
 
@@ -365,7 +365,7 @@ layout: default
     if (e.key === 'ArrowRight') render(currentIndex + 1);
   });
 
-  // Swipe left/right to navigate on touch devices.
+  /* Swipe left/right to navigate on touch devices. */
   var touchStartX = null;
   var touchStartY = null;
 
