@@ -221,9 +221,7 @@ function showAlbumModal(imageSrc, imageAlt, caption, date, location, event) {
   document.getElementById('modalLocation').textContent = location;
   document.getElementById('modalEvent').textContent = event;
   
-  $('#albumModal').modal('show');
-}
-</const modal = new bootstrap.Modal(document.getElementById('albumModal'));
+  const modal = new bootstrap.Modal(document.getElementById('albumModal'));
   modal.show();
 }
 
@@ -232,3 +230,4 @@ document.addEventListener('keydown', (e) => {
     document.activeElement.click();
   }
 });
+</script>
