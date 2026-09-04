@@ -14,36 +14,12 @@ layout: default
     {% endif %}
   </header>
 
-  {% if items.size > 0 %}
-    {% assign current_month = '' %}
-    {% assign grid_open = false %}
-    {% assign photo_index = 0 %}
-    {% for item in items %}
-      {% assign image = item.featured_image %}
-      {% if image.path %}
-        {% assign month_label = item.date | date: '%B %Y' %}
-        {% if month_label != current_month %}
-          {% if grid_open %}</div>{% endif %}
-          <h2 class="gphoto-date-heading">{{ month_label }}</h2>
-          <div class="gphoto-grid">
-          {% assign current_month = month_label %}
-          {% assign grid_open = true %}
-        {% endif %}
+  <div id="gphotoTimeline"></div>
 
-        <button type="button" class="gphoto-tile" data-index="{{ photo_index }}"
-                aria-label="{{ item.title | escape }}">
-          <img src="{{ image.path }}" alt="{{ image.alt | default: item.title | escape }}" loading="lazy">
-        </button>
-        {% assign photo_index = photo_index | plus: 1 %}
-      {% endif %}
-    {% endfor %}
-    {% if grid_open %}</div>{% endif %}
-  {% else %}
-    <div class="alert alert-info text-center">
-      <i class="fas fa-info-circle me-2"></i>
-      No photos yet. Check back soon!
-    </div>
-  {% endif %}
+  <div class="alert alert-info text-center" id="gphotoEmpty" hidden>
+    <i class="fas fa-info-circle me-2"></i>
+    No photos yet. Check back soon!
+  </div>
 </div>
 
 <!-- Lightbox -->
@@ -59,8 +35,7 @@ layout: default
     <i class="fas fa-chevron-right"></i>
   </button>
 
-  <figure class="gphoto-lb-figure">
-    <img id="gphotoLbImage" src="" alt="">
+  <figure class="gphoto-lb-figure" id="gphotoLbFigure">
     <figcaption class="gphoto-lb-info">
       <h3 id="gphotoLbTitle"></h3>
       <p class="gphoto-lb-meta" id="gphotoLbMeta"></p>
@@ -83,6 +58,7 @@ layout: default
     "alt": {{ image.alt | default: item.title | jsonify }},
     "caption": {{ image.caption | default: '' | jsonify }},
     "date": {{ item.date | date: '%B %-d, %Y' | jsonify }},
+    "month": {{ item.date | date: '%B %Y' | jsonify }},
     "location": {{ item.location | default: '' | jsonify }},
     "event": {{ item.event | default: '' | jsonify }}
   }
@@ -151,6 +127,7 @@ layout: default
   display: none;
   align-items: center;
   justify-content: center;
+  touch-action: pan-y;
 }
 
 .gphoto-lightbox.is-open {
@@ -180,6 +157,8 @@ layout: default
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .gphoto-lb-info {
@@ -281,20 +260,26 @@ layout: default
 (function () {
   var data = JSON.parse(document.getElementById('gphoto-data').textContent);
   var lightbox = document.getElementById('gphotoLightbox');
-  var img = document.getElementById('gphotoLbImage');
+  var figure = document.getElementById('gphotoLbFigure');
   var titleEl = document.getElementById('gphotoLbTitle');
   var metaEl = document.getElementById('gphotoLbMeta');
   var eventEl = document.getElementById('gphotoLbEvent');
   var captionEl = document.getElementById('gphotoLbCaption');
   var currentIndex = 0;
 
+  // The lightbox <img> is created at runtime (rather than emitted as static
+  // HTML) so the build-time content refactor doesn't wrap it in a link.
+  var lbImg = document.createElement('img');
+  lbImg.alt = '';
+  figure.insertBefore(lbImg, figure.firstChild);
+
   function render(index) {
     if (!data.length) return;
     currentIndex = (index + data.length) % data.length;
     var item = data[currentIndex];
 
-    img.src = item.src;
-    img.alt = item.alt || item.title || '';
+    lbImg.src = item.src;
+    lbImg.alt = item.alt || item.title || '';
     titleEl.textContent = item.title || '';
     metaEl.textContent = [item.date, item.location].filter(Boolean).join(' · ');
     eventEl.textContent = item.event || '';
@@ -316,11 +301,50 @@ layout: default
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.gphoto-tile').forEach(function (tile) {
-    tile.addEventListener('click', function () {
-      open(parseInt(tile.dataset.index, 10));
+  // Build the timeline grid client-side, from the same data used by the
+  // lightbox, so thumbnails are never plain <img> tags in the built HTML
+  // (that would otherwise get auto-wrapped into a link to the raw image).
+  var timeline = document.getElementById('gphotoTimeline');
+  var emptyState = document.getElementById('gphotoEmpty');
+
+  if (!data.length) {
+    emptyState.hidden = false;
+  } else {
+    var currentMonth = null;
+    var grid = null;
+
+    data.forEach(function (item, index) {
+      if (item.month !== currentMonth) {
+        currentMonth = item.month;
+
+        var heading = document.createElement('h2');
+        heading.className = 'gphoto-date-heading';
+        heading.textContent = item.month;
+        timeline.appendChild(heading);
+
+        grid = document.createElement('div');
+        grid.className = 'gphoto-grid';
+        timeline.appendChild(grid);
+      }
+
+      var tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'gphoto-tile';
+      tile.setAttribute('aria-label', item.title || '');
+
+      var thumb = document.createElement('img');
+      thumb.src = item.src;
+      thumb.alt = item.alt || item.title || '';
+      thumb.loading = 'lazy';
+      tile.appendChild(thumb);
+
+      tile.addEventListener('click', function () {
+        open(index);
+      });
+
+      grid.appendChild(tile);
     });
-  });
+  }
 
   document.querySelectorAll('[data-gphoto-close]').forEach(function (el) {
     el.addEventListener('click', close);
@@ -340,5 +364,27 @@ layout: default
     if (e.key === 'ArrowLeft') render(currentIndex - 1);
     if (e.key === 'ArrowRight') render(currentIndex + 1);
   });
+
+  // Swipe left/right to navigate on touch devices.
+  var touchStartX = null;
+  var touchStartY = null;
+
+  lightbox.addEventListener('touchstart', function (e) {
+    var t = e.changedTouches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', function (e) {
+    if (touchStartX === null) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    touchStartX = null;
+
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      render(dx < 0 ? currentIndex + 1 : currentIndex - 1);
+    }
+  }, { passive: true });
 })();
 </script>
