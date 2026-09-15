@@ -69,7 +69,9 @@
     var lines = Array.prototype.slice.call(root.querySelectorAll('.intro-line'));
     var progress = 0;
     var target = null;
-    var done = false;
+    var hidden = false;
+    var finishing = false;
+    var upAccum = 0;
     var idleTimer = null;
     var raf = null;
     var touchY = null;
@@ -78,9 +80,14 @@
     var LID_OPEN = 12;
     var WHEEL_STEP = 1 / 1400;
     var TOUCH_STEP = 1 / 500;
-    var AUTO_FINISH_FROM = 0.65;
+    var SNAP_OPEN_FROM = 0.65;
+    var SNAP_CLOSED_TO = 0.35;
+    var REOPEN_WHEEL_PX = 160;
+    var REOPEN_TOUCH_PX = 70;
 
     function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    function atPageTop() { return (window.scrollY || window.pageYOffset || 0) <= 0; }
 
     function render() {
       root.style.setProperty('--p', progress.toFixed(4));
@@ -93,18 +100,29 @@
     }
 
     function finish() {
-      if (done) { return; }
-      done = true;
+      if (hidden || finishing) { return; }
+      finishing = true;
+      target = null;
       progress = 1;
       render();
       window.setTimeout(function () {
         root.classList.add('is-done');
         html.classList.remove('intro-lock');
-        window.removeEventListener('wheel', onWheel);
-        window.removeEventListener('keydown', onKey);
-        root.addEventListener('transitionend', function () { root.remove(); }, { once: true });
-        window.setTimeout(function () { if (root.parentNode) { root.remove(); } }, 1200);
+        finishing = false;
+        hidden = true;
+        upAccum = 0;
       }, 550);
+    }
+
+    function reopen() {
+      if (!hidden) { return; }
+      hidden = false;
+      upAccum = 0;
+      root.classList.remove('is-done');
+      html.classList.add('intro-lock');
+      target = null;
+      progress = 1;
+      render();
     }
 
     function tick() {
@@ -129,25 +147,48 @@
     }
 
     function nudge(delta) {
-      if (done) { return; }
+      if (hidden || finishing) { return; }
       target = null;
       progress = clamp(progress + delta);
       render();
       if (progress >= 1) { finish(); return; }
       window.clearTimeout(idleTimer);
       idleTimer = window.setTimeout(function () {
-        if (!done && progress >= AUTO_FINISH_FROM) { animateTo(1); }
+        if (hidden || finishing) { return; }
+        if (progress >= SNAP_OPEN_FROM) { animateTo(1); }
+        else if (progress <= SNAP_CLOSED_TO) { animateTo(0); }
       }, 500);
     }
 
     function onWheel(e) {
+      if (finishing) { e.preventDefault(); return; }
+      if (hidden) {
+        if (e.deltaY < 0 && atPageTop()) {
+          upAccum += -e.deltaY;
+          if (upAccum >= REOPEN_WHEEL_PX) {
+            reopen();
+            nudge(e.deltaY * WHEEL_STEP);
+          }
+        } else {
+          upAccum = 0;
+        }
+        return;
+      }
       e.preventDefault();
       nudge(e.deltaY * WHEEL_STEP);
     }
 
     function onKey(e) {
-      if (done) { return; }
       var k = e.key;
+      if (hidden) {
+        if ((k === 'ArrowUp' || k === 'PageUp') && atPageTop()) {
+          e.preventDefault();
+          reopen();
+          animateTo(0);
+        }
+        return;
+      }
+      if (finishing) { return; }
       if (k === 'ArrowDown' || k === 'PageDown' || k === ' ' || k === 'Enter') {
         e.preventDefault();
         animateTo(1);
@@ -160,22 +201,37 @@
     }
 
     root.addEventListener('click', function (e) {
+      if (hidden || finishing) { return; }
       if (e.target.closest('[data-intro-skip]')) { finish(); return; }
       animateTo(1);
     });
 
-    root.addEventListener('touchstart', function (e) {
+    document.addEventListener('touchstart', function (e) {
       touchY = e.touches[0].clientY;
+      upAccum = 0;
     }, { passive: true });
 
-    root.addEventListener('touchmove', function (e) {
+    document.addEventListener('touchmove', function (e) {
       if (touchY === null) { return; }
       var y = e.touches[0].clientY;
-      nudge((touchY - y) * TOUCH_STEP);
+      var dy = y - touchY;
       touchY = y;
+      if (hidden) {
+        if (dy > 0 && atPageTop()) {
+          upAccum += dy;
+          if (upAccum >= REOPEN_TOUCH_PX) {
+            reopen();
+            nudge(-dy * TOUCH_STEP);
+          }
+        } else {
+          upAccum = 0;
+        }
+        return;
+      }
+      nudge(-dy * TOUCH_STEP);
     }, { passive: true });
 
-    root.addEventListener('touchend', function () { touchY = null; });
+    document.addEventListener('touchend', function () { touchY = null; });
 
     window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('keydown', onKey);
