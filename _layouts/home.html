@@ -19,7 +19,7 @@ layout: default
 
     <ul class="hof-grid list-unstyled">
       {% for cert in certs %}
-        {% assign src = cert.image.path | default: cert.image %}
+        {% assign src = cert.badge | default: cert.image.path | default: cert.image %}
         <li class="hof-card">
           <a href="{{ cert.url | relative_url }}" class="hof-link">
             {% if src %}
