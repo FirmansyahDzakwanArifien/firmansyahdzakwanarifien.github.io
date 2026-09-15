@@ -4,47 +4,50 @@ layout: default
 
 {% include lang.html %}
 
-{% assign all_pinned = site.posts | where: 'pin', 'true' %}
-{% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+{% assign certs = site.posts | where: 'type', 'certification' %}
+{% assign others = site.posts | where_exp: 'item', 'item.type != "certification" and item.hidden != true' %}
+{% assign pinned = others | where: 'pin', 'true' %}
+{% assign normal = others | where_exp: 'item', 'item.pin != true' %}
+{% assign posts = pinned | concat: normal %}
 
-{% assign posts = '' | split: '' %}
+{% if certs.size > 0 %}
+  <section class="hof">
+    <h2 class="home-section-title">
+      <i class="fas fa-medal fa-fw me-2"></i>
+      {{- site.data.locales[lang].home.certifications | default: 'Certifications' -}}
+    </h2>
 
-<!-- Get pinned posts on current page -->
-
-{% assign visible_start = paginator.page | minus: 1 | times: paginator.per_page %}
-{% assign visible_end = visible_start | plus: paginator.per_page %}
-
-{% if all_pinned.size > visible_start %}
-  {% if all_pinned.size > visible_end %}
-    {% assign pinned_size = paginator.per_page %}
-  {% else %}
-    {% assign pinned_size = all_pinned.size | minus: visible_start %}
-  {% endif %}
-
-  {% for i in (visible_start..all_pinned.size) limit: pinned_size %}
-    {% assign posts = posts | push: all_pinned[i] %}
-  {% endfor %}
-{% else %}
-  {% assign pinned_size = 0 %}
+    <ul class="hof-grid list-unstyled">
+      {% for cert in certs %}
+        {% assign src = cert.image.path | default: cert.image %}
+        <li class="hof-card">
+          <a href="{{ cert.url | relative_url }}" class="hof-link">
+            {% if src %}
+              <span class="hof-badge" style="background-image: url('{{ src }}')" role="img" aria-label="{{ cert.image.alt | default: cert.title | xml_escape }}"></span>
+            {% else %}
+              <span class="hof-badge hof-badge-empty"><i class="fas fa-certificate"></i></span>
+            {% endif %}
+            <span class="hof-title">{{ cert.title }}</span>
+            <span class="hof-meta">
+              {% if cert.issuer %}<span class="hof-issuer">{{ cert.issuer }}</span> &middot; {% endif %}
+              {% include datetime.html date=cert.date lang=lang %}
+            </span>
+          </a>
+          {% if cert.verify %}
+            <a href="{{ cert.verify }}" class="hof-verify" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-check-circle fa-fw"></i>{{ site.data.locales[lang].home.verify | default: 'Verify' }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endif %}
 
-<!-- Get normal posts on current page -->
-
-{% assign normal_size = paginator.posts | size | minus: pinned_size %}
-
-{% if normal_size > 0 %}
-  {% if pinned_size > 0 %}
-    {% assign normal_start = 0 %}
-  {% else %}
-    {% assign normal_start = visible_start | minus: all_pinned.size %}
-  {% endif %}
-
-  {% assign normal_end = normal_start | plus: normal_size | minus: 1 %}
-
-  {% for i in (normal_start..normal_end) %}
-    {% assign posts = posts | push: all_normal[i] %}
-  {% endfor %}
-{% endif %}
+<h2 class="home-section-title">
+  <i class="fas fa-graduation-cap fa-fw me-2"></i>
+  {{- site.data.locales[lang].home.events | default: 'Bootcamps & Events' -}}
+</h2>
 
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
@@ -134,7 +137,3 @@ layout: default
   {% endfor %}
 </div>
 <!-- #post-list -->
-
-{% if paginator.total_pages > 1 %}
-  {% include post-paginator.html %}
-{% endif %}

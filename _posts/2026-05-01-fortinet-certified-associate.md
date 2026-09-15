@@ -1,4 +1,5 @@
 ---
+type: certification
 
 title: Fortinet Certified Associate in Cybersecurity
 date: 2026-05-01 00:00:00 +0800

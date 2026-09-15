@@ -1,4 +1,5 @@
 ---
+type: certification
 title: Fortinet NSE 1–5 Certified
 date: 2026-08-09 00:00:00 +0800
 description: Achieved Fortinet NSE 1 through NSE 5 certifications from Fortinet Training Institute, covering cybersecurity fundamentals through FortiOS and Security Operations.

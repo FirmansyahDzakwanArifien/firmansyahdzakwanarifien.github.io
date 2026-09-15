@@ -19,6 +19,12 @@ tabs:
   milestone: Milestone
   about: About
 
+# Achievements page sections
+home:
+  certifications: Certifications
+  events: Bootcamps & Events
+  verify: Verify
+
 # the text displayed in the search bar & search results
 search:
   hint: search

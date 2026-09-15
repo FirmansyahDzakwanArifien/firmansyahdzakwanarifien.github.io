@@ -123,8 +123,6 @@ pwa:
     deny_paths:
       # - "/example"
 
-paginate: 10
-paginate_path: /achievements/page:num/
 
 # The base URL of your site
 baseurl: ""

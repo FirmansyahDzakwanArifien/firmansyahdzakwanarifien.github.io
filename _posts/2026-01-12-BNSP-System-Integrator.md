@@ -1,4 +1,5 @@
 ---
+type: certification
 title: BNSP - System Integrator
 date: 2026-01-12 15:00:00 +0800
 description: Completed BNSP - System Integrator

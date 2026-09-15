@@ -1,4 +1,5 @@
 ---
+type: certification
 title: CDOE - Certified DevOps Engineer
 date: 2026-02-05 15:00:00 +0800
 description: Completed CP1 - Cloud Foundation course from Dewacloud Academy, covering fundamental concepts of cloud computing, platform usage, and operational best practices.
