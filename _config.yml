@@ -14,7 +14,7 @@ timezone: Asia/Jakarta
 
 title: Cyphera 
 
-tagline: Enthusiast, Sincered & Confident
+tagline: Enthusiast, Sincere & Confident
 
 description: >- # used by seo meta and the atom feed
   Personal blog of Firmansyah Dzakwan Arifien (Cyphera). 
@@ -23,7 +23,7 @@ description: >- # used by seo meta and the atom feed
   RHCSA aspirant | BlankOn Infrastructure Team | SMTP 2025 Graduate.
 
 # Fill in the protocol & hostname for your site.
-url: "https://firmansyahdzakwanarifien.github.io"
+url: "https://cyphera.my.id"
 
 github:
   username: firmansyahdzakwanarifien
@@ -34,12 +34,12 @@ twitter:
 social:
   # Change to your full name.
   name: Firmansyah Dzakwan Arifien
-  email: contact@codebijak.my.id 
+  email: contact@cyphera.my.id
   fediverse_handle: "cyphera.my.id"
   links:
     - https://twitter.com/fdzak01
     - https://github.com/firmansyahdzakwanarifien
-    - https://www.linkedin.com/in/FirmansyahDzakwanArifien
+    - https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293
     - https://t.me/fdzak01
     
 # Site Verification Settings
@@ -88,7 +88,7 @@ avatar: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwana
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # Create a 1200x630px image for better social media previews
-social_preview_image: # TODO: /assets/img/social-preview.png
+social_preview_image: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/Logo.png"
 
 # boolean type, the global switch for TOC in posts.
 toc: true
