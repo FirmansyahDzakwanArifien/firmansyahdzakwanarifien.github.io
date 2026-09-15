@@ -17,6 +17,10 @@ layout: compress
   {% include head.html %}
 
   <body>
+    {% if page.intro %}
+      {% include intro-laptop.html lang=lang %}
+    {% endif %}
+
     {% include sidebar.html lang=lang %}
 
     <div id="main-wrapper" class="d-flex justify-content-center">

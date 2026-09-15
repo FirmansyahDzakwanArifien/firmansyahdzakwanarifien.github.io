@@ -8,13 +8,22 @@
     <nav id="breadcrumb" aria-label="Breadcrumb">
       {% assign paths = page.url | split: '/' %}
 
-      {% if paths.size == 0 or page.layout == 'home' %}
-        <!-- index page -->
-        <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
+      {% if page.url == '/' %}
+        <!-- index page (About) -->
+        <span>{{ site.data.locales[include.lang].tabs.about | default: 'About' }}</span>
+
+      {% elsif page.layout == 'home' %}
+        <!-- Achievements post list -->
+        <span>
+          <a href="{{ '/' | relative_url }}">
+            {{- site.data.locales[include.lang].tabs.home | capitalize -}}
+          </a>
+        </span>
+        <span>{{ site.data.locales[include.lang].tabs.achievements | default: 'Achievements' }}</span>
 
       {% else %}
         {% if page.collection == 'projects' %}
-          <!-- Projects breadcrumb: Achievements > Projects > Project Title -->
+          <!-- Projects breadcrumb: Home > Projects > Project Title -->
           <span>
             <a href="{{ '/' | relative_url }}">
               {{- site.data.locales[include.lang].tabs.home | capitalize -}}
@@ -61,8 +70,10 @@
     </button>
 
     <div id="topbar-title">
-      {% if page.layout == 'home' %}
-        {{- site.data.locales[include.lang].title | default: site.title -}}
+      {% if page.url == '/' %}
+        {{- site.data.locales[include.lang].tabs.about | default: 'About' -}}
+      {% elsif page.layout == 'home' %}
+        {{- site.data.locales[include.lang].tabs.achievements | default: 'Achievements' -}}
       {% elsif page.collection == 'tabs' or page.layout == 'page' %}
         {%- capture tab_key -%}{{ page.url | split: '/' }}{%- endcapture -%}
         {{- site.data.locales[include.lang].tabs[tab_key] | default: page.title -}}

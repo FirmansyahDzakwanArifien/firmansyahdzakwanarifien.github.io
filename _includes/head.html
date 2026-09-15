@@ -56,7 +56,7 @@
   {% endif %}
 
   <title>
-    {%- unless page.layout == 'home' -%}
+    {%- unless page.url == '/' -%}
       {{ page.title | append: ' | ' }}
     {%- endunless -%}
     {{ site.title }}

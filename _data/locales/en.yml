@@ -10,7 +10,8 @@ layout:
 # The tabs of sidebar
 tabs:
   # format: <filename_without_extension>: <value>
-  home: Achievements
+  home: Home
+  achievements: Achievements
   projects: Projects
   categories: Categories
   tags: Tags
