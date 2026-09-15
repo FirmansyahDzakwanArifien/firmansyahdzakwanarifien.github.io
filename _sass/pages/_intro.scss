@@ -7,6 +7,11 @@ html.intro-lock body {
   overflow: hidden;
 }
 
+/* keep the PWA update toast reachable while the intro overlay is up */
+html.intro-lock #notification.toast.show {
+  z-index: 3001;
+}
+
 #intro {
   --p: 0;
   --lid: -90deg;
