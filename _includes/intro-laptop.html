@@ -7,7 +7,7 @@
 {%- endcapture -%}
 {%- assign intro_avatar = intro_avatar | strip -%}
 
-<div id="intro" class="is-idle" role="dialog" aria-label="Intro" aria-modal="true">
+<div id="intro" class="is-idle" role="dialog" aria-label="Intro" aria-modal="true" style="display: none">
   <button type="button" class="intro-skip" data-intro-skip>Skip</button>
 
   <div class="intro-stage">
@@ -60,8 +60,10 @@
     if (!root) { return; }
 
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) { root.remove(); return; }
+    var styled = window.getComputedStyle(root).position === 'fixed';
+    if (reduced || !styled) { root.remove(); return; }
 
+    root.style.display = '';
     var html = document.documentElement;
     html.classList.add('intro-lock');
 
