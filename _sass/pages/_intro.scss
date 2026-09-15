@@ -129,11 +129,12 @@ html.intro-lock body {
   align-items: center;
   justify-content: center;
 
-  img {
+  &::after {
+    content: '';
     width: 18%;
     aspect-ratio: 1;
-    object-fit: cover;
     border-radius: 50%;
+    background: var(--intro-logo, none) center / cover no-repeat;
     opacity: 0.85;
     filter: grayscale(0.4);
   }

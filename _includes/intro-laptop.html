@@ -33,11 +33,10 @@
             </div>
           </div>
         </div>
-        <div class="intro-lid-face intro-lid-back">
-          {%- if intro_avatar != empty -%}
-            <img src="{{ intro_avatar }}" alt="" onerror="this.remove()">
-          {%- endif -%}
-        </div>
+        <div
+          class="intro-lid-face intro-lid-back"
+          {% if intro_avatar != empty %}style="--intro-logo: url('{{ intro_avatar }}')"{% endif %}
+        ></div>
       </div>
 
       <div class="intro-base">
