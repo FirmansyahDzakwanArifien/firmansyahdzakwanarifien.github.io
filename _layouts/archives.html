@@ -40,10 +40,12 @@ layout: page
       <span class="date month small text-muted ms-1" data-ts="{{ ts }}" data-df="{{ df_dayjs_m }}">
         {{ item.date | date: df_strftime_m }}
       </span>
-      <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
-      {% if kind == 'is-project' %}
-        <span class="milestone-tag">{{ site.data.locales[lang].tabs.projects | default: 'Project' }}</span>
-      {% endif %}
+      <a href="{{ item.url | relative_url }}">
+        {%- if kind == 'is-project' -%}
+          <span class="milestone-tag">{{ site.data.locales[lang].tabs.projects | default: 'Project' }}</span>
+        {%- endif -%}
+        {{ item.title }}
+      </a>
     </li>
 
     {% if forloop.last %}</ul>{% endif %}
