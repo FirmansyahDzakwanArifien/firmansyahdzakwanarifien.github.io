@@ -1,10 +1,23 @@
 # Tools listed under the "Tools" group in the sidebar.
 # Add a new entry here to show another tool; no template change is needed.
+# Each tool is deployed on GitHub Pages behind its own cyphera.my.id subdomain.
 #
 # title : label shown in the sidebar
 # url   : link target (external links open in a new tab)
 # icon  : Font Awesome class, e.g. "fas fa-pen-ruler"
 
+- title: IT-Tools
+  url: https://tools.cyphera.my.id
+  icon: fas fa-toolbox
+
 - title: Excalidraw
   url: https://excalidraw.cyphera.my.id
   icon: fas fa-pen-ruler
+
+- title: tldr Pages
+  url: https://tldr.cyphera.my.id
+  icon: fas fa-terminal
+
+- title: Status Page
+  url: https://status.cyphera.my.id
+  icon: fas fa-heart-pulse
