@@ -27,6 +27,8 @@ function verifyUrl(url) {
 
 self.addEventListener('install', (event) => {
   if (purge) {
+    // Do not wait for the old worker to be released; purge as soon as possible.
+    self.skipWaiting();
     return;
   }
 
@@ -39,19 +41,27 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          if (purge) {
-            return caches.delete(key);
-          } else {
-            if (key !== swconf.cacheName) {
+    caches
+      .keys()
+      .then((keyList) => {
+        return Promise.all(
+          keyList.map((key) => {
+            if (purge) {
               return caches.delete(key);
+            } else {
+              if (key !== swconf.cacheName) {
+                return caches.delete(key);
+              }
             }
-          }
-        })
-      );
-    })
+          })
+        );
+      })
+      .then(() => {
+        if (purge) {
+          // Take control of already-open tabs so they stop using the old cache.
+          return self.clients.claim();
+        }
+      })
   );
 });
 

@@ -119,7 +119,10 @@ assets:
 pwa:
   enabled: true # The option for PWA feature (installable)
   cache:
-    enabled: true # The option for PWA offline cache
+    # Disabled on purpose: the cache-first service worker kept serving stale pages
+    # after every deploy until visitors hard-refreshed. With this off the worker
+    # runs in purge mode and wipes any cache left in visitors' browsers.
+    enabled: false # The option for PWA offline cache
     deny_paths:
       # - "/example"
 
