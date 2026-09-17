@@ -1,0 +1,10 @@
+# Tools listed under the "Tools" group in the sidebar.
+# Add a new entry here to show another tool; no template change is needed.
+#
+# title : label shown in the sidebar
+# url   : link target (external links open in a new tab)
+# icon  : Font Awesome class, e.g. "fas fa-pen-ruler"
+
+- title: Excalidraw
+  url: https://excalidraw.cyphera.my.id
+  icon: fas fa-pen-ruler

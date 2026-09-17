@@ -53,6 +53,33 @@
           </li>
         {% endif %}
       {% endfor %}
+
+      <!-- tools (collapsible group, entries come from _data/tools.yml) -->
+      {% if site.data.tools.size > 0 %}
+        <li class="nav-item nav-group">
+          <details class="nav-group-details">
+            <summary class="nav-link">
+              <i class="fa-fw fas fa-screwdriver-wrench"></i>
+              <span>{{ site.data.locales[include.lang].tabs.tools | default: 'Tools' | upcase }}</span>
+              <i class="fa-fw fas fa-chevron-down nav-group-chevron ms-auto"></i>
+            </summary>
+            <ul class="nav-group-list list-unstyled">
+              {% for tool in site.data.tools %}
+                <li>
+                  <a
+                    href="{{ tool.url }}"
+                    class="nav-link"
+                    {% unless tool.url contains site.url %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                  >
+                    <i class="fa-fw {{ tool.icon | default: 'fas fa-wrench' }}"></i>
+                    <span>{{ tool.title }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </details>
+        </li>
+      {% endif %}
     </ul>
   </nav>
 

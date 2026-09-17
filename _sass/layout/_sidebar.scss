@@ -133,7 +133,8 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
         @include mx.pl-pr(2.75rem);
       }
 
-      a.nav-link {
+      a.nav-link,
+      summary.nav-link {
         @include mx.pt-pb(0.6rem);
 
         display: flex;
@@ -170,6 +171,49 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
 
       &:not(:first-child) {
         margin-top: 0.25rem;
+      }
+
+      /* collapsible group (e.g. Tools) */
+      &.nav-group {
+        summary.nav-link {
+          @extend %sidebar-links;
+
+          cursor: pointer;
+          list-style: none;
+
+          &::-webkit-details-marker {
+            display: none;
+          }
+
+          .nav-group-chevron {
+            margin-right: 0;
+            font-size: 70%;
+            transition: transform 0.2s ease-in-out;
+          }
+        }
+
+        details[open] > summary .nav-group-chevron {
+          transform: rotate(180deg);
+        }
+
+        .nav-group-list {
+          margin: 0.25rem 0 0;
+          padding-left: 1.25rem;
+
+          li:not(:first-child) {
+            margin-top: 0.25rem;
+          }
+
+          a.nav-link {
+            @include mx.pt-pb(0.45rem);
+
+            font-weight: 500;
+
+            span {
+              font-size: 85%;
+            }
+          }
+        }
       }
     }
   }
