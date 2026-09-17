@@ -54,6 +54,10 @@
       <!-- tools (collapsible group, entries come from _data/tools.yml) -->
       {% capture tools_title %}{{ site.data.locales[include.lang].tabs.tools | default: 'Tools' | upcase }}{% endcapture %}
       {% include sidebar-group.html title=tools_title icon='fas fa-screwdriver-wrench' items=site.data.tools %}
+
+      <!-- playground (collapsible group, entries come from _data/playground.yml) -->
+      {% capture playground_title %}{{ site.data.locales[include.lang].tabs.playground | default: 'Playground' | upcase }}{% endcapture %}
+      {% include sidebar-group.html title=playground_title icon='fas fa-flask' items=site.data.playground %}
     </ul>
   </nav>
 

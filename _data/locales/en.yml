@@ -20,6 +20,7 @@ tabs:
   about: About
   tools: Tools
   blog: Blog
+  playground: Playground
 
 # Achievements page sections
 home:

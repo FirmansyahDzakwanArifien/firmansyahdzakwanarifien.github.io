@@ -1,0 +1,11 @@
+# Casual experiments listed under the "Playground" group in the sidebar:
+# small games, demos, and side experiments that are not portfolio projects.
+# Add a new entry here to show another one; no template change is needed.
+#
+# title : label shown in the sidebar
+# url   : link target (external links open in a new tab)
+# icon  : Font Awesome class, e.g. "fas fa-gamepad"
+
+- title: Varmintz
+  url: https://varmintz.cyphera.my.id
+  icon: fas fa-gamepad
