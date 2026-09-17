@@ -1,0 +1,33 @@
+<!--
+  A collapsible sidebar group.
+
+  Parameters:
+    title : label shown on the group header (already localized/upcased by the caller)
+    icon  : Font Awesome class for the group header
+    items : array of { title, url, icon } (usually from a _data/*.yml file)
+-->
+{% if include.items.size > 0 %}
+  <li class="nav-item nav-group">
+    <details class="nav-group-details">
+      <summary class="nav-link">
+        <i class="fa-fw {{ include.icon }}"></i>
+        <span>{{ include.title }}</span>
+        <i class="fa-fw fas fa-chevron-down nav-group-chevron ms-auto"></i>
+      </summary>
+      <ul class="nav-group-list list-unstyled">
+        {% for item in include.items %}
+          <li>
+            <a
+              href="{{ item.url }}"
+              class="nav-link"
+              {% unless item.url contains site.url %}target="_blank" rel="noopener noreferrer"{% endunless %}
+            >
+              <i class="fa-fw {{ item.icon | default: 'fas fa-link' }}"></i>
+              <span>{{ item.title }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
+  </li>
+{% endif %}

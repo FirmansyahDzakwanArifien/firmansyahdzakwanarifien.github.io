@@ -1,0 +1,14 @@
+# Blog platforms listed under the "Blog" group in the sidebar.
+# Add a new entry here to show another platform; no template change is needed.
+#
+# title : label shown in the sidebar
+# url   : link target (external links open in a new tab)
+# icon  : Font Awesome class, e.g. "fab fa-medium"
+
+- title: Hashnode
+  url: https://blog.cyphera.my.id
+  icon: fab fa-hashnode
+
+- title: Medium
+  url: https://medium.com/@fdzak01
+  icon: fab fa-medium
