@@ -49,11 +49,16 @@ layout: default
 [
 {% assign printed = false %}
 {% for item in items %}
-  {% assign image = item.featured_image %}
+  {% if item.photos %}
+    {% assign images = item.photos %}
+  {% else %}
+    {% assign images = '' | split: '' | push: item.featured_image %}
+  {% endif %}
+  {% for image in images %}
   {% if image.path %}
   {% if printed %},{% endif %}
   {
-    "src": {{ image.path | jsonify }},
+    "src": {{ image.path | prepend: item.photos_base | jsonify }},
     "title": {{ item.title | default: '' | jsonify }},
     "alt": {{ image.alt | default: item.title | jsonify }},
     "caption": {{ image.caption | default: '' | jsonify }},
@@ -64,6 +69,7 @@ layout: default
   }
   {% assign printed = true %}
   {% endif %}
+  {% endfor %}
 {% endfor %}
 ]
 </script>
