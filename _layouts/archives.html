@@ -1,6 +1,6 @@
 ---
 layout: page
-# Milestone timeline: achievements (posts) and projects, newest first.
+# Milestone timeline: achievements (posts), projects and album events, newest first.
 ---
 
 {% include lang.html %}
@@ -8,11 +8,12 @@ layout: page
 {% assign df_strftime_m = site.data.locales[lang].df.archives.strftime | default: '/ %m' %}
 {% assign df_dayjs_m = site.data.locales[lang].df.archives.dayjs | default: '/ MM' %}
 
-{% assign milestones = site.posts | concat: site.projects | sort: 'date' | reverse %}
+{% assign milestones = site.posts | concat: site.projects | concat: site.album | sort: 'date' | reverse %}
 
 <p class="milestone-legend small text-muted">
   <span class="is-post">{{ site.data.locales[lang].tabs.achievements | default: 'Achievement' }}</span>
   <span class="is-project">{{ site.data.locales[lang].tabs.projects | default: 'Project' }}</span>
+  <span class="is-album">{{ site.data.locales[lang].tabs.album | default: 'Album' }}</span>
 </p>
 
 <div id="archives" class="pl-xl-3">
@@ -30,6 +31,8 @@ layout: page
 
     {% if item.collection == 'projects' %}
       {% assign kind = 'is-project' %}
+    {% elsif item.collection == 'album' %}
+      {% assign kind = 'is-album' %}
     {% else %}
       {% assign kind = 'is-post' %}
     {% endif %}
@@ -43,6 +46,8 @@ layout: page
       <a href="{{ item.url | relative_url }}">
         {%- if kind == 'is-project' -%}
           <span class="milestone-tag">Project</span>
+        {%- elsif kind == 'is-album' -%}
+          <span class="milestone-tag">Album</span>
         {%- endif -%}
         {{ item.title }}
       </a>

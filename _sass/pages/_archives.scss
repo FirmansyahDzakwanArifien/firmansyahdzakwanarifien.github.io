@@ -146,6 +146,14 @@
     box-shadow: 0 0 3px 0 var(--link-color);
   }
 
+  /* album events: hollow ring node */
+  li.is-album a::before {
+    background-color: var(--main-bg);
+    box-sizing: border-box;
+    border: 2px solid var(--link-color);
+    box-shadow: none;
+  }
+
   .milestone-tag {
     display: inline-block;
     margin-right: 0.5rem;
@@ -183,5 +191,11 @@
     border-radius: 1px;
     transform: rotate(45deg);
     background-color: var(--link-color);
+  }
+
+  .is-album::before {
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 2px solid var(--link-color);
   }
 }
