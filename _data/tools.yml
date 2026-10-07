@@ -21,3 +21,7 @@
 - title: Status Page
   url: https://status.cyphera.my.id
   icon: fas fa-heart-pulse
+
+- title: SonarQube
+  url: https://sonarqube.cyphera.my.id
+  icon: fas fa-shield-halved
