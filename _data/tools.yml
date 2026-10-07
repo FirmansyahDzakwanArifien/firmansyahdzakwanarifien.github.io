@@ -25,3 +25,7 @@
 - title: SonarQube
   url: https://sonarqube.cyphera.my.id
   icon: fas fa-shield-halved
+
+- title: Barcode Generator
+  url: https://barcode.cyphera.my.id
+  icon: fas fa-barcode
