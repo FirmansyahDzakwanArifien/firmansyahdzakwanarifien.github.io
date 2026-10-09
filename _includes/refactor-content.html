@@ -61,6 +61,12 @@
       {% continue %}
     {% endunless %}
 
+    <!-- leave images that sit inside their own link untouched -->
+    {% if _left contains 'data-no-popup' %}
+      {% assign _img_content = _img_content | append: IMG_TAG | append: _img_snippet %}
+      {% continue %}
+    {% endif %}
+
     {% assign _left = _left | remove: ' /' | replace: ' w=', ' width=' | replace: ' h=', ' height=' %}
     {% assign _attrs = _left | split: '" ' %}
 
@@ -161,7 +167,7 @@
       {% assign _left = _left | append: ' loading="lazy"' %}
     {% endif %}
 
-    {% if page.layout == 'home' %}
+    {% if page.layout == 'home' or page.layout == 'projects-list' %}
       <!-- create the image wrapper -->
       {% assign _wrapper_start = '<div class="preview-img ' | append: _wrapper_class | append: '">' %}
 

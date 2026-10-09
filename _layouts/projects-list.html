@@ -22,7 +22,7 @@ layout: default
           {% if project.image %}
             {% assign src = project.image.path | default: project.image %}
             <div class="col-md-5">
-              <img src="{{ src }}" alt="{{ project.image.alt | default: 'Project Image' }}" loading="lazy">
+              <img src="{{ src }}" alt="{{ project.image.alt | default: 'Project Image' }}">
             </div>
             {% assign card_body_col = '7' %}
           {% endif %}
