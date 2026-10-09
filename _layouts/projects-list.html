@@ -55,7 +55,8 @@ layout: default
                 {% if project.status %}
                   <i class="fas fa-circle-notch fa-fw"></i>
                   <span class="badge 
-                    {% if project.status == 'completed' %}bg-success
+                    {% if project.status == 'completed' or project.status == 'playable' %}bg-success
+                    {% elsif project.status == 'beta' %}bg-info
                     {% elsif project.status == 'in-progress' %}bg-warning
                     {% else %}bg-secondary{% endif %}">
                     {{ project.status | capitalize }}

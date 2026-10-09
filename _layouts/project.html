@@ -37,7 +37,8 @@ layout: default
         <i class="fas fa-circle-notch fa-fw"></i>
         <em>Status:</em>
         <span class="badge 
-          {% if page.status == 'completed' %}bg-success
+          {% if page.status == 'completed' or page.status == 'playable' %}bg-success
+          {% elsif page.status == 'beta' %}bg-info
           {% elsif page.status == 'in-progress' %}bg-warning
           {% else %}bg-secondary{% endif %}">
           {{ page.status | capitalize }}
