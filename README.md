@@ -1,84 +1,57 @@
-<!-- markdownlint-disable-next-line -->
-<div align="center">
+# Cyphera — cyphera.my.id
 
-  <!-- markdownlint-disable-next-line -->
-  # Chirpy Jekyll Theme
+Personal portfolio and blog of **Firmansyah Dzakwan Arifien**, Implementation Engineer focused on
+cybersecurity, network infrastructure, and Linux system administration.
 
-  A minimal, responsive, and feature-rich Jekyll theme for technical writing.
+**Live site:** <https://cyphera.my.id>
 
-  [![CI](https://img.shields.io/github/actions/workflow/status/cotes2020/jekyll-theme-chirpy/ci.yml?logo=github)][ci]&nbsp;
-  [![Codacy Badge](https://img.shields.io/codacy/grade/4e556876a3c54d5e8f2d2857c4f43894?logo=codacy)][codacy]&nbsp;
-  [![GitHub license](https://img.shields.io/github/license/cotes2020/jekyll-theme-chirpy?color=goldenrod)][license]&nbsp;
-  [![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy?&logo=RubyGems&logoColor=ghostwhite&label=gem&color=orange)][gem]&nbsp;
-  [![Open in Dev Containers](https://img.shields.io/badge/Dev_Containers-Open-deepskyblue?logo=linuxcontainers)][open-container]
+## What's inside
 
-  [**Live Demo** →][demo]
+| Section | Source | Notes |
+|---|---|---|
+| Home / About | `index.html` | Profile, featured work, experience, certifications, skills |
+| Certifications | `_data/certifications.yml` | Rendered as medals on the home page |
+| Blog | `_posts/` | Certifications, training, and learning notes |
+| Projects | `_projects/` | Case studies (Memoir, Si Ngacir, IDN Blue Team capstone) |
+| Album | `_album/` | Event and community photos |
+| Milestone | `_tabs/milestone.md` | Timeline of posts and events |
 
-  [![Devices Mockup](https://chirpy-img.netlify.app/commons/devices-mockup.png)][demo]
+## Stack
 
-</div>
+- [Jekyll](https://jekyllrb.com) with a customized [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) theme
+- GitHub Actions → GitHub Pages (`.github/workflows/jekyll.yml`)
+- Images served from [firmansyahdzakwanarifien-assets](https://github.com/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets) via jsDelivr
+- Comments with [Giscus](https://giscus.app) (GitHub Discussions)
 
-## Features
+## Run locally
 
-- Dark Theme
-- Localized UI language
-- Pinned Posts on Home Page
-- Hierarchical Categories
-- Trending Tags
-- Table of Contents
-- Last Modified Date
-- Syntax Highlighting
-- Mathematical Expressions
-- Mermaid Diagrams & Flowcharts
-- Dark Mode Images
-- Embed Media
-- Comment Systems
-- Built-in Search
-- Atom Feeds
-- PWA
-- Web Analytics
-- SEO & Performance Optimization
+Requires Ruby 3.1+, Bundler, and Node.js 20+.
 
-## Documentation
+```bash
+git clone --recurse-submodules https://github.com/firmansyahdzakwanarifien/firmansyahdzakwanarifien.github.io.git
+cd firmansyahdzakwanarifien.github.io
 
-To learn how to use, develop, and upgrade the project, please refer to the [Wiki][wiki].
+bundle install
+npm install
+npm run build          # bundles JS and CSS assets
 
-## Contributing
+bundle exec jekyll serve   # http://127.0.0.1:4000
+```
 
-Contributions (_pull requests_, _issues_, and _discussions_) are what make the open-source community such an amazing place
-to learn, inspire, and create. Any contributions you make are greatly appreciated.
-For details, see the "[Contributing Guidelines][contribute-guide]".
+`bash tools/run.sh -p` serves the site in production mode.
 
-## Credits
+## Adding content
 
-### Contributors
+- **Certification medal:** add an entry to `_data/certifications.yml` (name, issuer, year, badge, cat, icon, url).
+- **Post:** add `_posts/YYYY-MM-DD-title.md`; the URL becomes `/posts/title/`.
+- **Album:** add `_album/YYYY-MM-DD-title.md` with `photos_base` and a `photos` list; upload the images to the assets repo first.
 
-Thanks to [all the contributors][contributors] involved in the development of the project!
+Inline `<script>` blocks are compressed onto a single line in production, so use `/* */` comments only.
 
-[![all-contributors](https://contrib.rocks/image?repo=cotes2020/jekyll-theme-chirpy&columns=16)][contributors]
-<sub> — Made with [contrib.rocks](https://contrib.rocks)</sub>
+## Deployment
 
-### Third-Party Assets
-
-This project is built on the [Jekyll][jekyllrb] ecosystem and some [great libraries][lib], and is developed using [VS Code][vscode] as well as tools provided by [JetBrains][jetbrains] under a non-commercial open-source software license.
-
-The avatar and favicon for the project's website are from [ClipartMAX][clipartmax].
+Every push to `main` builds and deploys the site through GitHub Actions.
 
 ## License
 
-This project is published under [MIT License][license].
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[ci]: https://github.com/cotes2020/jekyll-theme-chirpy/actions/workflows/ci.yml?query=event%3Apush+branch%3Amaster
-[codacy]: https://app.codacy.com/gh/cotes2020/jekyll-theme-chirpy/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
-[license]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE
-[open-container]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/cotes2020/jekyll-theme-chirpy
-[jekyllrb]: https://jekyllrb.com/
-[clipartmax]: https://www.clipartmax.com/middle/m2i8b1m2K9Z5m2K9_ant-clipart-childrens-ant-cute/
-[demo]: https://cotes2020.github.io/chirpy-demo/
-[wiki]: https://github.com/cotes2020/jekyll-theme-chirpy/wiki
-[contribute-guide]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CONTRIBUTING.md
-[contributors]: https://github.com/cotes2020/jekyll-theme-chirpy/graphs/contributors
-[lib]: https://github.com/cotes2020/chirpy-static-assets
-[vscode]: https://code.visualstudio.com/
-[jetbrains]: https://www.jetbrains.com/?from=jekyll-theme-chirpy
+Site content © Firmansyah Dzakwan Arifien. The theme code is based on Chirpy by Cotes Chung, released under the [MIT License](LICENSE).
