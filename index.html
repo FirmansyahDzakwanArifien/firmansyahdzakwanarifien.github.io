@@ -15,6 +15,30 @@ intro: true
   --border-hover: rgba(37, 99, 235, 0.3);
   --muted: rgba(128, 128, 128, 0.6);
   --radius: 12px;
+  --tone-security: #1d4ed8;
+  --tone-infrastructure: #0f6e56;
+  --tone-devops: #534ab7;
+  --tone-community: #9a6612;
+  --tone-research: #5f5e5a;
+}
+
+/* Lighter category tones so badges stay legible on Chirpy's dark theme. */
+html[data-mode="dark"] {
+  --tone-security: #7aa7ff;
+  --tone-infrastructure: #4fc7a4;
+  --tone-devops: #a99ff0;
+  --tone-community: #e0ac5c;
+  --tone-research: #b5b3ad;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) {
+    --tone-security: #7aa7ff;
+    --tone-infrastructure: #4fc7a4;
+    --tone-devops: #a99ff0;
+    --tone-community: #e0ac5c;
+    --tone-research: #b5b3ad;
+  }
 }
 
 .about-wrap {
@@ -24,14 +48,38 @@ intro: true
 }
 
 /* ── Hero ── */
+/* Card with the profile photo, blurred, as its own backdrop; a theme-colored veil keeps text readable. */
 .hero-block {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 150px 1fr;
   gap: 2rem;
-  align-items: start;
-  padding: 2.5rem 0 2rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 3rem;
+  align-items: center;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin: 1.5rem 0 3rem;
+}
+
+.hero-block::before,
+.hero-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-block::before {
+  background: var(--hero-bg) center 62% / cover no-repeat;
+  filter: blur(14px) saturate(1.2);
+  transform: scale(1.15);
+}
+
+.hero-block::after {
+  background: linear-gradient(90deg, transparent -30%, var(--main-bg, #fff) 42%);
+  opacity: 0.85;
 }
 
 /* Portrait crop of a tall photo: keep the subject and drop the letterbox bars. */
@@ -43,7 +91,8 @@ intro: true
   object-fit: cover;
   object-position: 50% 74%;
   border-radius: var(--radius);
-  border: 3px solid var(--border);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.55);
 }
 
 .hero-name {
@@ -253,11 +302,60 @@ intro: true
   letter-spacing: 0.04em;
 }
 
-.exp-badge.security       { background: rgba(37,99,235,0.1);   color: #1d4ed8; }
-.exp-badge.infrastructure { background: rgba(15,110,86,0.1);   color: #0f6e56; }
-.exp-badge.devops         { background: rgba(127,119,221,0.12); color: #534ab7; }
-.exp-badge.community      { background: rgba(186,117,23,0.12); color: #9a6612; }
-.exp-badge.research       { background: rgba(128,128,128,0.1); color: #5f5e5a; }
+.exp-badge.security,       .cert-item.security       { --tone: var(--tone-security); }
+.exp-badge.infrastructure, .cert-item.infrastructure { --tone: var(--tone-infrastructure); }
+.exp-badge.devops,         .cert-item.devops         { --tone: var(--tone-devops); }
+.exp-badge.community,      .cert-item.community      { --tone: var(--tone-community); }
+.exp-badge.research,       .cert-item.research       { --tone: var(--tone-research); }
+
+.exp-badge {
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+/* ── Certifications ── */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.cert-item {
+  display: block;
+  padding: 0.7rem 0.9rem 0.7rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--tone);
+  border-radius: var(--radius);
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.cert-item:hover {
+  border-color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 7%, transparent);
+}
+
+.cert-name {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.cert-meta {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.cert-more {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
 
 .exp-desc {
   font-size: 0.82rem;
@@ -444,6 +542,49 @@ intro: true
 
 .feat-memoir { --feat-tone: #d9805f; --feat-bg: #16120f; }
 .feat-game   { --feat-tone: #1fb5a8; --feat-bg: #f6ead2; }
+.feat-blue   { --feat-tone: #3b82f6; --feat-bg: #0b1220; }
+
+.feat-blue .feat-shot {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(59, 130, 246, 0.35), transparent 55%),
+    var(--feat-bg);
+}
+
+/* Investigation timeline drawn in HTML instead of a screenshot. */
+.feat-alerts {
+  list-style: none;
+  margin: 0;
+  padding: 0.6rem 0;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-family: ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.feat-alerts li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.feat-alerts b {
+  flex-shrink: 0;
+  min-width: 74px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-align: center;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.16);
+}
+
+.feat-alerts span { overflow: hidden; text-overflow: ellipsis; }
 
 .feat-shot {
   position: relative;
@@ -562,6 +703,7 @@ intro: true
 
 .feat-status.beta { background: rgba(217, 128, 95, 0.14); color: #c4643f; }
 .feat-status.live { background: rgba(15, 140, 120, 0.12); color: #0f8c78; }
+.feat-status.done { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
 
 .feat-status .pulse {
   position: relative;
@@ -716,7 +858,8 @@ intro: true
 @media (max-width: 640px) {
   .feat-body { padding: 1.1rem 1.1rem 1.25rem; }
   .feat-title { font-size: 1.6rem; }
-  .hero-block { grid-template-columns: 1fr; }
+  .hero-block { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem 1.25rem; }
+  .hero-block::after { background: var(--main-bg, #fff); }
   .hero-avatar img { width: 120px; }
   .hero-name { font-size: 1.9rem; }
   .skills-row,
@@ -728,7 +871,7 @@ intro: true
 <div class="about-wrap">
 
   <!-- Hero -->
-  <div class="hero-block">
+  <div class="hero-block" style="--hero-bg: url('https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg')">
     <div class="hero-avatar">
       <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg" alt="Firmansyah Dzakwan Arifien" width="150" height="200" fetchpriority="high" decoding="async" data-no-popup />
     </div>
@@ -808,6 +951,45 @@ intro: true
             <a class="feat-btn primary" href="https://cyphera-game.itch.io/si-ngacir" target="_blank" rel="noopener noreferrer"><i class="fas fa-play"></i> Play now</a>
             <a class="feat-btn" href="https://wiki-si-ngacir.cyphera.my.id/en/" target="_blank" rel="noopener noreferrer"><i class="fas fa-book"></i> Wiki</a>
             <a class="feat-btn" href="{{ '/projects/si-ngacir/' | relative_url }}"><i class="fas fa-book-open"></i> Case study</a>
+          </div>
+        </div>
+      </article>
+
+      {%- assign capstone = site.projects | where_exp: "p", "p.title contains 'IDN Blue Team'" | first -%}
+      {%- assign capstone_url = capstone.url | relative_url -%}
+      <article class="feat-card feat-blue">
+        <a class="feat-shot" href="{{ capstone_url }}" aria-label="Read the IDN Blue Team capstone write-up">
+          <div class="feat-window">
+            <div class="feat-window-bar"><i></i><i></i><i></i><span>investigation · metasploitable / apache2</span></div>
+            <ul class="feat-alerts">
+              <li><b>Wazuh</b><span>SQL injection attempts</span></li>
+              <li><b>Wazuh</b><span>Cross-site scripting (XSS)</span></li>
+              <li><b>Wazuh</b><span>Local file inclusion (LFI)</span></li>
+              <li><b>Wireshark</b><span>RFI callback on a suspicious port</span></li>
+              <li><b>Wireshark</b><span>Reverse shell to port 4444</span></li>
+              <li><b>Volatility</b><span>shell.exe found in memory</span></li>
+            </ul>
+          </div>
+          <span class="feat-shot-hint">Read write-up →</span>
+        </a>
+        <div class="feat-body">
+          <div class="feat-meta">
+            <span class="feat-status done">Completed · Capstone</span>
+            <span class="feat-kind">Security · DFIR</span>
+          </div>
+          <h3 class="feat-title">IDN Blue Team <em>— Capstone</em></h3>
+          <p class="feat-tagline">One compromised web server, three sources of evidence.</p>
+          <p class="feat-desc">An end-to-end investigation of attacks on a vulnerable Apache host. I traced SQL injection, XSS, local and remote file inclusion, and a reverse shell by correlating Wazuh SIEM alerts, packet captures, and a memory dump.</p>
+          <div class="feat-stats">
+            <div class="feat-stat"><b>5</b><span>attack techniques traced</span></div>
+            <div class="feat-stat"><b>3</b><span>evidence sources: SIEM, PCAP, memory</span></div>
+            <div class="feat-stat"><b>10</b><span>investigation questions answered</span></div>
+          </div>
+          <div class="feat-stack">
+            <span>Wazuh SIEM</span><span>Wireshark</span><span>Volatility 3</span><span>Metasploitable</span><span>Apache2</span>
+          </div>
+          <div class="feat-actions">
+            <a class="feat-btn primary" href="{{ capstone_url }}"><i class="fas fa-book-open"></i> Read the write-up</a>
           </div>
         </div>
       </article>
@@ -959,6 +1141,54 @@ intro: true
     </div>
   </div>
 
+  <!-- Certifications -->
+  <div class="about-section">
+    <p class="section-label">Certifications &amp; Training</p>
+    <div class="cert-grid">
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2026-05-01-fortinet-certified-associate %}">
+        <span class="cert-name">Fortinet Certified Associate in Cybersecurity</span>
+        <span class="cert-meta">Fortinet · 2026</span>
+      </a>
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2026-08-09-fortinet-nse5-certified-security-operations %}">
+        <span class="cert-name">NSE 5 — Certified in Security Operations</span>
+        <span class="cert-meta">Fortinet · 2026</span>
+      </a>
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2026-06-21-fortinet-nse4-certified-fortios %}">
+        <span class="cert-name">NSE 4 — Certified in FortiOS</span>
+        <span class="cert-meta">Fortinet · 2026</span>
+      </a>
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2026-05-01-fortinet-nse3-certified-cybersecurity %}">
+        <span class="cert-name">NSE 1–3 — Certified in Cybersecurity</span>
+        <span class="cert-meta">Fortinet · 2026</span>
+      </a>
+      <a class="cert-item infrastructure" href="{{ site.baseurl }}{% post_url 2026-01-12-BNSP-System-Integrator %}">
+        <span class="cert-name">System Integrator</span>
+        <span class="cert-meta">BNSP · 2026</span>
+      </a>
+      <a class="cert-item devops" href="{{ site.baseurl }}{% post_url 2026-02-05-CDOE-DevOps-Dewacloud %}">
+        <span class="cert-name">CDOE — Certified DevOps Engineer</span>
+        <span class="cert-meta">Dewacloud Academy · 2026</span>
+      </a>
+      <a class="cert-item devops" href="{{ site.baseurl }}{% post_url 2025-12-30-cp1-cloudfoundation-dewacloud %}">
+        <span class="cert-name">CP1 — Cloud Foundation</span>
+        <span class="cert-meta">Dewacloud Academy · 2025</span>
+      </a>
+      <a class="cert-item infrastructure" href="{{ site.baseurl }}{% post_url 2025-11-21-Jarvis-Academy-2025 %}">
+        <span class="cert-name">Red Hat System Administration II (RH134)</span>
+        <span class="cert-meta">Red Hat · Jarvis Camp · 2025</span>
+      </a>
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2025-09-04-SMTP-2025 %}">
+        <span class="cert-name">SMTP 2025 — High Distinction</span>
+        <span class="cert-meta">KISIA · 2025</span>
+      </a>
+      <a class="cert-item security" href="{{ site.baseurl }}{% post_url 2025-09-17-Cyber-Sentinel-Secure-2025 %}">
+        <span class="cert-name">Cyber Sentinel Secure — Web App Pentest</span>
+        <span class="cert-meta">6-month bootcamp · 2025</span>
+      </a>
+    </div>
+    <a class="cert-more" href="{{ '/milestone/' | relative_url }}">See the full milestone timeline →</a>
+  </div>
+
   <!-- Skills -->
   <div class="about-section">
     <p class="section-label">Skills &amp; Expertise</p>
@@ -1024,7 +1254,7 @@ intro: true
           </div>
           <div class="skill-lang-item">
             <span>English</span>
-            <span class="skill-lang-level">Elementary</span>
+            <span class="skill-lang-level">Intermediate</span>
           </div>
           <div class="skill-lang-item">
             <span>Arabic</span>
@@ -1040,7 +1270,7 @@ intro: true
     <p class="section-label">Education</p>
     <div class="edu-block">
       <p class="edu-degree">Teknik Informatika — Informatics Engineering</p>
-      <p class="edu-meta">STT Terpadu Nurul Fikri &nbsp;·&nbsp; Sep 2023 – 2026</p>
+      <p class="edu-meta">STT Terpadu Nurul Fikri &nbsp;·&nbsp; Sep 2023 – Present (final year)</p>
     </div>
   </div>
 
