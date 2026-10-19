@@ -17,10 +17,10 @@ title: Cyphera
 tagline: Enthusiast, Sincere & Confident
 
 description: >- # used by seo meta and the atom feed
-  Personal blog of Firmansyah Dzakwan Arifien (Cyphera). 
-  Sharing knowledge about Linux System Administration, Cybersecurity, 
-  Open Source contributions, and technical learnings. 
-  RHCSA aspirant | BlankOn Infrastructure Team | SMTP 2025 Graduate.
+  Personal blog of Firmansyah Dzakwan Arifien (Cyphera), Implementation Engineer
+  focused on cybersecurity, network infrastructure, and Linux system administration.
+  Notes on security, open source, and technical learnings.
+  Fortinet NSE 1–5 | BlankOn Infrastructure Team | SMTP 2025 Graduate.
 
 # Fill in the protocol & hostname for your site.
 url: "https://cyphera.my.id"
@@ -185,9 +185,8 @@ defaults:
     values:
       layout: project
       comments: false
-      toc: false
       toc: true
-      
+
   # Album defaults
   - scope:
       path: ""

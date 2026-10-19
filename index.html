@@ -4,10 +4,10 @@ intro: true
 # Index page: About
 ---
 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400..600&display=swap">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
-
 :root {
   --accent: #2563eb;
   --accent-soft: rgba(37, 99, 235, 0.07);
@@ -26,7 +26,7 @@ intro: true
 /* ── Hero ── */
 .hero-block {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 150px 1fr;
   gap: 2rem;
   align-items: start;
   padding: 2.5rem 0 2rem;
@@ -34,13 +34,15 @@ intro: true
   margin-bottom: 3rem;
 }
 
+/* Portrait crop of a tall photo: keep the subject and drop the letterbox bars. */
 .hero-avatar img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
   display: block;
-  filter: grayscale(10%);
+  width: 150px;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 74%;
+  border-radius: var(--radius);
   border: 3px solid var(--border);
 }
 
@@ -81,7 +83,7 @@ intro: true
   flex-wrap: wrap;
 }
 
-.btn-cv {
+.btn-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -92,15 +94,21 @@ intro: true
   font-weight: 500;
   border-radius: var(--radius);
   text-decoration: none !important;
-  transition: all 0.2s ease;
-  border: none;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.btn-cv:hover {
+.btn-cta:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
-  text-decoration: none !important;
 }
+
+.btn-cta.ghost {
+  background: transparent;
+  color: var(--accent) !important;
+  border: 1px solid var(--border-hover);
+}
+
+.btn-cta.ghost:hover { background: var(--accent-soft); }
 
 /* ── Section title ── */
 .section-label {
@@ -143,7 +151,7 @@ intro: true
   background: transparent;
   cursor: pointer;
   color: var(--muted);
-  transition: all 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
   font-weight: 500;
 }
 
@@ -170,14 +178,11 @@ intro: true
 
 .exp-card {
   position: relative;
-  background: transparent;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.85rem 1rem;
   margin-bottom: 8px;
-  cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
-  overflow: hidden;
 }
 
 .exp-card::before {
@@ -186,28 +191,30 @@ intro: true
   left: -25px; top: 14px;
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--main-bg, #fff);
   border: 1.5px solid var(--border);
   transition: border-color 0.15s, background 0.15s;
   z-index: 1;
 }
 
-.exp-card.open::before {
+.exp-card[open]::before {
   border-color: var(--accent);
   background: var(--accent);
 }
 
-.exp-card:hover { border-color: rgba(128,128,128,0.35); }
-.exp-card.open  { border-color: var(--border-hover); background: var(--accent-soft); }
-
-.exp-card[data-hidden="true"] { display: none; }
+.exp-card:hover  { border-color: rgba(128,128,128,0.35); }
+.exp-card[open]  { border-color: var(--border-hover); background: var(--accent-soft); }
 
 .exp-card-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 8px;
+  cursor: pointer;
+  list-style: none;
 }
+
+.exp-card-head::-webkit-details-marker { display: none; }
 
 .exp-card-left { flex: 1; min-width: 0; }
 
@@ -246,23 +253,11 @@ intro: true
   letter-spacing: 0.04em;
 }
 
-.exp-badge.security  { background: rgba(37,99,235,0.1);  color: #1d4ed8; }
-.exp-badge.sysadmin  { background: rgba(15,110,86,0.1);  color: #0f6e56; }
-.exp-badge.devops    { background: rgba(127,119,221,0.12); color: #534ab7; }
-.exp-badge.community { background: rgba(186,117,23,0.12); color: #9a6612; }
-.exp-badge.research  { background: rgba(128,128,128,0.1); color: #5f5e5a; }
-
-.exp-desc-wrap {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.28s ease, opacity 0.2s;
-}
-
-.exp-card.open .exp-desc-wrap {
-  max-height: 120px;
-  opacity: 1;
-}
+.exp-badge.security       { background: rgba(37,99,235,0.1);   color: #1d4ed8; }
+.exp-badge.infrastructure { background: rgba(15,110,86,0.1);   color: #0f6e56; }
+.exp-badge.devops         { background: rgba(127,119,221,0.12); color: #534ab7; }
+.exp-badge.community      { background: rgba(186,117,23,0.12); color: #9a6612; }
+.exp-badge.research       { background: rgba(128,128,128,0.1); color: #5f5e5a; }
 
 .exp-desc {
   font-size: 0.82rem;
@@ -281,11 +276,7 @@ intro: true
   margin-bottom: 10px;
 }
 
-.skills-row-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
+.skills-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
 
 .skill-card {
   border: 1px solid var(--border);
@@ -725,13 +716,11 @@ intro: true
 @media (max-width: 640px) {
   .feat-body { padding: 1.1rem 1.1rem 1.25rem; }
   .feat-title { font-size: 1.6rem; }
-  .hero-block {
-    grid-template-columns: 1fr;
-  }
-  .hero-avatar img { width: 100px; height: 100px; }
+  .hero-block { grid-template-columns: 1fr; }
+  .hero-avatar img { width: 120px; }
   .hero-name { font-size: 1.9rem; }
-  .skills-row  { grid-template-columns: 1fr; }
-  .skills-row-2 { grid-template-columns: 1fr; }
+  .skills-row,
+  .skills-row.cols-2 { grid-template-columns: 1fr; }
   .exp-card-right { display: none; }
 }
 </style>
@@ -741,21 +730,17 @@ intro: true
   <!-- Hero -->
   <div class="hero-block">
     <div class="hero-avatar">
-      <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/me.png" alt="Firmansyah Dzakwan Arifien" />
+      <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg" alt="Firmansyah Dzakwan Arifien" width="150" height="200" fetchpriority="high" decoding="async" data-no-popup />
     </div>
     <div class="hero-text">
       <h1 class="hero-name">Firmansyah <em>Dzakwan</em> Arifien</h1>
       <p class="hero-role">Security &amp; Infrastructure · Implementation Engineer</p>
-      <p class="hero-bio">Implementation Engineer at PT Jarvis Integrasi Solusi with a strong focus on cybersecurity, network infrastructure, and system administration. Experienced in implementing, managing, securing, and troubleshooting enterprise IT infrastructure, including network and security systems, Linux, virtualization, cloud environments, monitoring, and incident response. I am also actively involved in cybersecurity research, particularly in User and Entity Behavior Analytics (UEBA), Machine Learning, and Explainable AI for insider threat detection, while continuously contributing to the cybersecurity community through practical learning and knowledge sharing.</p>
+      <p class="hero-bio">Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure, and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and security appliances (Fortinet NSE 1–5 certified), Linux servers, virtualization, cloud, monitoring, and incident response. On the research side, I work on User and Entity Behavior Analytics (UEBA) with Machine Learning and Explainable AI for insider threat detection, and I give back to the community through open source and knowledge sharing.</p>
       <div class="hero-cta">
-        <a href="https://drive.google.com/file/d/1xizAWX6gF48XjoKhd6ukP6c5O6RP7LzO/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
-          View My CV
-        </a>
-        <a href="https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cv">
-          View My Portfolio
-        </a>
+        <a href="https://drive.google.com/file/d/1xizAWX6gF48XjoKhd6ukP6c5O6RP7LzO/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cta">View My CV</a>
+        <a href="https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cta ghost">View My Portfolio</a>
       </div>
-    </div>  
+    </div>
   </div>
 
   <!-- Featured work -->
@@ -835,67 +820,46 @@ intro: true
     <p class="section-label">Professional Experience</p>
 
     <div class="exp-filters">
-      <button class="exp-filter-btn active" onclick="filterExp('all', this)">All</button>
-      <button class="exp-filter-btn" onclick="filterExp('security', this)">Security</button>
-      <button class="exp-filter-btn" onclick="filterExp('infrastructure', this)">Infrastructure</button>
-      <button class="exp-filter-btn" onclick="filterExp('devops', this)">DevOps</button>
-      <button class="exp-filter-btn" onclick="filterExp('community', this)">Community</button>
-      <button class="exp-filter-btn" onclick="filterExp('research', this)">Research</button>
+      <button type="button" class="exp-filter-btn active" data-filter="all">All</button>
+      <button type="button" class="exp-filter-btn" data-filter="security">Security</button>
+      <button type="button" class="exp-filter-btn" data-filter="infrastructure">Infrastructure</button>
+      <button type="button" class="exp-filter-btn" data-filter="devops">DevOps</button>
+      <button type="button" class="exp-filter-btn" data-filter="community">Community</button>
+      <button type="button" class="exp-filter-btn" data-filter="research">Research</button>
     </div>
 
     <div class="exp-timeline">
 
-      <div class="exp-card" data-cat="infrastructure" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="infrastructure">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Implementation Engineer</p>
             <p class="exp-company">PT Jarvis Integrasi Solusi</p>
           </div>
           <div class="exp-card-right">
             <span class="exp-period">Feb 2026 — Present</span>
-            <span class="exp-badge sysadmin">Infrastructure</span>
+            <span class="exp-badge infrastructure">Infrastructure</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Implementing and deploying infrastructure solutions for enterprise clients; collaborating with teams to design secure, scalable systems tailored to business needs.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Implementing, securing, and troubleshooting network, security, and server infrastructure for enterprise clients; working with project teams to design secure, scalable systems tailored to each client's needs.</p>
+      </details>
 
-      <div class="exp-card" data-cat="infrastructure" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="infrastructure">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
-            <p class="exp-role">Sysadmin Trainer</p>
-            <p class="exp-company">PT. Jarvis Integrasi Solusi</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Jul 2025 — Sep 2025</span>
-            <span class="exp-badge sysadmin">Sysadmin</span>
-          </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Gained hands-on experience in Linux administration and server configuration in a professional environment.</p>
-        </div>
-      </div>
-
-      <div class="exp-card" data-cat="infrastructure" onclick="toggleExp(this)">
-        <div class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">IT Infra</p>
-            <p class="exp-company">BlankOn Linux - Revival Project</p>
+            <p class="exp-role">IT Infrastructure Team</p>
+            <p class="exp-company">BlankOn Linux — Revival Project</p>
           </div>
           <div class="exp-card-right">
             <span class="exp-period">Nov 2025 — Present</span>
-            <span class="exp-badge sysadmin">Infrastructure</span>
+            <span class="exp-badge infrastructure">Open Source</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Core contributor in the Infrastructure Team of the BlankOn Revival Project, Indonesia's Debian-based GNU/Linux distribution; helping maintain and improve the build, hosting, and server infrastructure behind the distro.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Core contributor to the infrastructure team of BlankOn, Indonesia's Debian-based GNU/Linux distribution; maintaining and improving the build, hosting, and server infrastructure behind the distro.</p>
+      </details>
 
-
-      <div class="exp-card" data-cat="community" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="community">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Leader, Student Cybersecurity Community</p>
             <p class="exp-company">NFSCC — STT Terpadu Nurul Fikri</p>
@@ -904,14 +868,12 @@ intro: true
             <span class="exp-period">Apr 2025 — Mar 2026</span>
             <span class="exp-badge community">Community</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Led cybersecurity initiatives including workshops, training programs, and community engagement; organized security awareness campaigns and facilitated CTF competitions.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Led cybersecurity initiatives including workshops, training programs, and community engagement; organized security awareness campaigns and facilitated CTF competitions.</p>
+      </details>
 
-      <div class="exp-card" data-cat="community" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="community">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Campus Ambassador</p>
             <p class="exp-company">LINUXENIC Corporation</p>
@@ -920,14 +882,12 @@ intro: true
             <span class="exp-period">Nov 2025 — Jan 2026</span>
             <span class="exp-badge community">Community</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Promoted open-source technologies and organized campus engagement activities around the Linux and FOSS ecosystem.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Promoted open-source technologies and organized campus engagement activities around the Linux and FOSS ecosystem.</p>
+      </details>
 
-      <div class="exp-card" data-cat="community" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="community">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Assistant Lecturer</p>
             <p class="exp-company">STT Terpadu Nurul Fikri</p>
@@ -936,30 +896,26 @@ intro: true
             <span class="exp-period">Sep 2025 — Jan 2026</span>
             <span class="exp-badge community">Teaching</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Taught practical Incident Response topics and mentored students in real-world security scenarios and hands-on labs.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Taught practical Incident Response topics and mentored students in real-world security scenarios and hands-on labs.</p>
+      </details>
 
-      <div class="exp-card" data-cat="security" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="security">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">SOC Analyst</p>
-            <p class="exp-company">Xcode / PT. Teknologi Server Indonesia</p>
+            <p class="exp-company">Xcode / PT Teknologi Server Indonesia</p>
           </div>
           <div class="exp-card-right">
             <span class="exp-period">Sep 2025 — Dec 2025</span>
             <span class="exp-badge security">Security</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Monitored network traffic and logs for security threats; analyzed incidents and coordinated response actions in a live SOC environment.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Monitored network traffic and logs for security threats; analyzed incidents and coordinated response actions in a live SOC environment.</p>
+      </details>
 
-      <div class="exp-card" data-cat="devops" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="devops">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">DevOps Engineer Trainee</p>
             <p class="exp-company">PT Nurul Fikri Academy</p>
@@ -968,14 +924,26 @@ intro: true
             <span class="exp-period">Aug 2025 — Oct 2025</span>
             <span class="exp-badge devops">DevOps</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Learned infrastructure automation, CI/CD fundamentals, and cloud basics through a structured training program.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Learned infrastructure automation, CI/CD fundamentals, and cloud basics through a structured training program.</p>
+      </details>
 
-      <div class="exp-card" data-cat="research" onclick="toggleExp(this)">
-        <div class="exp-card-head">
+      <details class="exp-card" name="exp" data-cat="infrastructure">
+        <summary class="exp-card-head">
+          <div class="exp-card-left">
+            <p class="exp-role">Sysadmin Trainer</p>
+            <p class="exp-company">PT Jarvis Integrasi Solusi</p>
+          </div>
+          <div class="exp-card-right">
+            <span class="exp-period">Jul 2025 — Sep 2025</span>
+            <span class="exp-badge infrastructure">Sysadmin</span>
+          </div>
+        </summary>
+        <p class="exp-desc">Hands-on Linux administration and server configuration in a professional environment, including Red Hat System Administration II (RH134) at Jarvis Camp.</p>
+      </details>
+
+      <details class="exp-card" name="exp" data-cat="research">
+        <summary class="exp-card-head">
           <div class="exp-card-left">
             <p class="exp-role">Research &amp; Development</p>
             <p class="exp-company">BPH Litbang, STT Terpadu Nurul Fikri</p>
@@ -984,11 +952,9 @@ intro: true
             <span class="exp-period">Jun 2024 — Mar 2025</span>
             <span class="exp-badge research">Research</span>
           </div>
-        </div>
-        <div class="exp-desc-wrap">
-          <p class="exp-desc">Contributed to research projects and development initiatives at the university research bureau.</p>
-        </div>
-      </div>
+        </summary>
+        <p class="exp-desc">Contributed to research projects and development initiatives at the university research bureau.</p>
+      </details>
 
     </div>
   </div>
@@ -1001,21 +967,22 @@ intro: true
       <div class="skill-card">
         <p class="skill-card-title">Cybersecurity</p>
         <div class="skill-tags">
-          <span class="skill-tag">SOC & Monitoring</span>
-          <span class="skill-tag">Vuln Assessment</span>
+          <span class="skill-tag">SOC &amp; Monitoring</span>
           <span class="skill-tag">Incident Response</span>
-          <span class="skill-tag">Pentest Fundamentals</span>
           <span class="skill-tag">Threat Investigation</span>
+          <span class="skill-tag">Vuln Assessment</span>
+          <span class="skill-tag">Web Pentest</span>
+          <span class="skill-tag">Firewall / NGFW</span>
         </div>
       </div>
       <div class="skill-card">
-        <p class="skill-card-title">System Administration</p>
+        <p class="skill-card-title">Infrastructure</p>
         <div class="skill-tags">
-          <span class="skill-tag">Linux Management</span>
-          <span class="skill-tag">Server Admin</span>
-          <span class="skill-tag">Infra Automation</span>
+          <span class="skill-tag">Linux Administration</span>
+          <span class="skill-tag">Networking</span>
+          <span class="skill-tag">Virtualization</span>
+          <span class="skill-tag">System Integration</span>
           <span class="skill-tag">Bash Scripting</span>
-          <span class="skill-tag">Network Fundamentals</span>
         </div>
       </div>
       <div class="skill-card">
@@ -1030,21 +997,21 @@ intro: true
       </div>
     </div>
 
-    <div class="skills-row-2">
+    <div class="skills-row cols-2">
       <div class="skill-card">
         <p class="skill-card-title">Technical Stack</p>
         <div class="skill-kv">
           <div class="skill-kv-row">
-            <span class="skill-kv-label">Languages</span>
-            <span>Python · Bash · JavaScript · TypeScript · GDScript</span>
+            <span class="skill-kv-label">Security</span>
+            <span>FortiGate · Wazuh · Wireshark · Volatility</span>
           </div>
           <div class="skill-kv-row">
-            <span class="skill-kv-label">Tools</span>
-            <span>Git · Docker · GitHub Actions · Prisma</span>
+            <span class="skill-kv-label">Infra</span>
+            <span>RHEL / Debian · Proxmox VE · MikroTik</span>
           </div>
           <div class="skill-kv-row">
-            <span class="skill-kv-label">Platforms</span>
-            <span>Linux · Next.js · Express · Godot · Vercel</span>
+            <span class="skill-kv-label">Dev</span>
+            <span>Python · Bash · TypeScript · Git · Docker · GitHub Actions</span>
           </div>
         </div>
       </div>
@@ -1080,26 +1047,26 @@ intro: true
   <!-- What's Next -->
   <div class="about-section">
     <p class="section-label">What's Next</p>
-    <p class="next-block">Currently focused on growing as a well-rounded security professional. Particularly interested in deepening penetration testing skills and exploring how DevSecOps can improve security throughout the development lifecycle. Staying actively involved in the community — through mentoring, contributing to cybersecurity initiatives, and participating in CTF competitions to keep technical skills sharp. The goal: become a security professional who bridges the gap between infrastructure, operations, and security strategy.</p>
+    <p class="next-block">Growing as a security professional who bridges infrastructure, operations, and security strategy. Next up: deeper hands-on work with enterprise security platforms, sharper penetration testing skills, and DevSecOps practices built into the deployment pipeline. Alongside that, staying active in the community through open source, mentoring, and CTF competitions.</p>
   </div>
 
   <!-- Connect -->
   <div class="about-section">
     <p class="section-label">Let's Connect</p>
     <div class="connect-grid">
-      <a href="https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293" class="connect-link" target="_blank">
+      <a href="https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293" class="connect-link" target="_blank" rel="noopener noreferrer">
         <span><span class="cl-label">LinkedIn</span><span class="cl-value">firmansyah-dzakwan</span></span>
       </a>
-      <a href="https://github.com/FirmansyahDzakwanArifien" class="connect-link" target="_blank">
-        <span><span class="cl-label">GitHub</span><span class="cl-value">FirmansyahDzakwanArifien</span></span>
+      <a href="https://github.com/firmansyahdzakwanarifien" class="connect-link" target="_blank" rel="noopener noreferrer">
+        <span><span class="cl-label">GitHub</span><span class="cl-value">firmansyahdzakwanarifien</span></span>
       </a>
       <a href="mailto:contact@cyphera.my.id" class="connect-link">
         <span><span class="cl-label">Email</span><span class="cl-value">contact@cyphera.my.id</span></span>
       </a>
-      <a href="https://cyphera.my.id" class="connect-link" target="_blank">
-        <span><span class="cl-label">Website</span><span class="cl-value">cyphera.my.id</span></span>
+      <a href="https://t.me/fdzak01" class="connect-link" target="_blank" rel="noopener noreferrer">
+        <span><span class="cl-label">Telegram</span><span class="cl-value">@fdzak01</span></span>
       </a>
-      <a href="https://medium.com/@fdzak01" class="connect-link" target="_blank">
+      <a href="https://medium.com/@fdzak01" class="connect-link" target="_blank" rel="noopener noreferrer">
         <span><span class="cl-label">Medium</span><span class="cl-value">@fdzak01</span></span>
       </a>
     </div>
@@ -1108,30 +1075,30 @@ intro: true
 </div>
 
 <script>
-function toggleExp(el) {
-  var isOpen = el.classList.contains('open');
-  document.querySelectorAll('.exp-card.open').forEach(function(c) { c.classList.remove('open'); });
-  if (!isOpen) el.classList.add('open');
-}
+(function() {
+  // Experience filter; the cards themselves are native <details name="exp"> accordions.
+  var filters = document.querySelector('.exp-filters');
+  var cards = document.querySelectorAll('.exp-card');
 
-// Swap a featured screenshot for its animated GIF on hover; the GIF only loads on first hover.
-document.querySelectorAll('.feat-card img[data-gif]').forEach(function(img) {
-  var card = img.closest('.feat-card');
-  var still = img.src;
-  card.addEventListener('mouseenter', function() { img.src = img.dataset.gif; });
-  card.addEventListener('mouseleave', function() { img.src = still; });
-});
-
-function filterExp(cat, btn) {
-  document.querySelectorAll('.exp-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.querySelectorAll('.exp-card').forEach(function(c) {
-    if (cat === 'all' || c.dataset.cat === cat) {
-      c.removeAttribute('data-hidden');
-    } else {
-      c.setAttribute('data-hidden', 'true');
-      c.classList.remove('open');
-    }
+  filters.addEventListener('click', function(e) {
+    var btn = e.target.closest('.exp-filter-btn');
+    if (!btn) return;
+    var cat = btn.dataset.filter;
+    filters.querySelector('.active').classList.remove('active');
+    btn.classList.add('active');
+    cards.forEach(function(card) {
+      var hide = cat !== 'all' && card.dataset.cat !== cat;
+      card.hidden = hide;
+      if (hide) card.open = false;
+    });
   });
-}
+
+  // Swap a featured screenshot for its animated GIF on hover; the GIF only loads on first hover.
+  document.querySelectorAll('.feat-card img[data-gif]').forEach(function(img) {
+    var card = img.closest('.feat-card');
+    var still = img.src;
+    card.addEventListener('mouseenter', function() { img.src = img.dataset.gif; });
+    card.addEventListener('mouseleave', function() { img.src = still; });
+  });
+})();
 </script>
