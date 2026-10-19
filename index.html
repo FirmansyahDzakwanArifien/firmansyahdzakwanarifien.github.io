@@ -1346,7 +1346,7 @@ html[data-mode="dark"] {
 
 <script>
 (function() {
-  // Experience filter; the cards themselves are native <details name="exp"> accordions.
+  /* Experience filter; the cards themselves are native <details name="exp"> accordions. */
   var filters = document.querySelector('.exp-filters');
   var cards = document.querySelectorAll('.exp-card');
 
@@ -1363,7 +1363,7 @@ html[data-mode="dark"] {
     });
   });
 
-  // Swap a featured screenshot for its animated GIF on hover; the GIF only loads on first hover.
+  /* Swap a featured screenshot for its animated GIF on hover; the GIF only loads on first hover. */
   document.querySelectorAll('.feat-card img[data-gif]').forEach(function(img) {
     var card = img.closest('.feat-card');
     var still = img.src;
