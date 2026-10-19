@@ -1,0 +1,83 @@
+# Certifications & training shown as medals on the home page.
+# badge: short text on the medal · cat: security | infrastructure | devops (sets the color)
+# icon: Font Awesome class · url: post permalink
+
+- name: Fortinet Certified Associate in Cybersecurity
+  issuer: Fortinet
+  year: 2026
+  badge: FCA
+  cat: security
+  icon: fas fa-shield-halved
+  url: /posts/fortinet-certified-associate/
+
+- name: NSE 5 — Security Operations
+  issuer: Fortinet
+  year: 2026
+  badge: NSE 5
+  cat: security
+  icon: fas fa-shield-halved
+  url: /posts/fortinet-nse5-certified-security-operations/
+
+- name: NSE 4 — FortiOS
+  issuer: Fortinet
+  year: 2026
+  badge: NSE 4
+  cat: security
+  icon: fas fa-shield-halved
+  url: /posts/fortinet-nse4-certified-fortios/
+
+- name: NSE 1–3 — Cybersecurity
+  issuer: Fortinet
+  year: 2026
+  badge: NSE 1–3
+  cat: security
+  icon: fas fa-shield-halved
+  url: /posts/fortinet-nse3-certified-cybersecurity/
+
+- name: System Integrator
+  issuer: BNSP
+  year: 2026
+  badge: BNSP
+  cat: infrastructure
+  icon: fas fa-network-wired
+  url: /posts/BNSP-System-Integrator/
+
+- name: CDOE — Certified DevOps Engineer
+  issuer: Dewacloud Academy
+  year: 2026
+  badge: CDOE
+  cat: devops
+  icon: fas fa-infinity
+  url: /posts/CDOE-DevOps-Dewacloud/
+
+- name: CP1 — Cloud Foundation
+  issuer: Dewacloud Academy
+  year: 2025
+  badge: CP1
+  cat: devops
+  icon: fas fa-cloud
+  url: /posts/cp1-cloudfoundation-dewacloud/
+
+- name: Red Hat System Administration II
+  issuer: Red Hat · Jarvis Camp
+  year: 2025
+  badge: RH134
+  cat: infrastructure
+  icon: fab fa-redhat
+  url: /posts/Jarvis-Academy-2025/
+
+- name: SMTP 2025 — High Distinction
+  issuer: KISIA
+  year: 2025
+  badge: SMTP
+  cat: security
+  icon: fas fa-award
+  url: /posts/SMTP-2025/
+
+- name: Cyber Sentinel Secure — Web App Pentest
+  issuer: 6-month bootcamp
+  year: 2025
+  badge: CSS
+  cat: security
+  icon: fas fa-user-secret
+  url: /posts/Cyber-Sentinel-Secure-2025/
