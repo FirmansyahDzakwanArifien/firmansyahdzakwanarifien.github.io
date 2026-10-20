@@ -109,20 +109,22 @@ ZONES = {"edge": (113, 128, 150), "security": (209, 67, 67), "compute": (90, 140
          "monitor": (32, 170, 145), "client": (150, 125, 230)}
 
 
-def homelab_card():
-    """The homelab topology on a 1200x630 card, from the same coordinates as the SVG on /labs/."""
+def homelab_card(w=W, h=H, header=True):
+    """The homelab topology, from the same coordinates as the SVG on /labs/: a 1200x630 social card, or
+    (header=False) a bare diagram for the thesis card in Featured Work."""
     lab = yaml.safe_load((ROOT / "_data" / "homelab.yml").read_text(encoding="utf-8"))
     cw, ch = lab.get("canvas", [800, 460])
-    img = Image.new("RGB", (W, H), BG)
+    img = Image.new("RGB", (w, h), BG)
     d = ImageDraw.Draw(img)
-    x0 = 72
-    d.text((x0, 52), "LABS · HOMELAB", font=font("DMSans-Variable.ttf", 22, 600), fill=ACCENT)
-    d.text((x0, 82), lab.get("title", "Homelab"), font=font("InstrumentSerif-Regular.ttf", 52), fill=WHITE)
-    d.text((W - x0, 62), "cyphera.my.id", font=font("DMSans-Variable.ttf", 22, 400), fill=MUTED, anchor="ra")
-
-    top, avail_w, avail_h = 165, W - 2 * 40, H - 165 - 28
+    if header:
+        x0 = 72
+        d.text((x0, 52), "LABS · HOMELAB", font=font("DMSans-Variable.ttf", 22, 600), fill=ACCENT)
+        d.text((x0, 82), lab.get("title", "Homelab"), font=font("InstrumentSerif-Regular.ttf", 52), fill=WHITE)
+        d.text((w - x0, 62), "cyphera.my.id", font=font("DMSans-Variable.ttf", 22, 400), fill=MUTED, anchor="ra")
+    top = 165 if header else 28
+    avail_w, avail_h = w - 2 * 40, h - top - 28
     k = min(avail_w / cw, avail_h / ch)
-    ox, oy = (W - cw * k) / 2, top
+    ox, oy = (w - cw * k) / 2, top + (avail_h - ch * k) / 2
 
     def pt(x, y):
         return ox + x * k, oy + y * k
@@ -193,8 +195,9 @@ def main():
     target = OUT / "labs-homelab.jpg"
     if force or not target.exists() or stamps.get("labs-homelab") != digest:
         homelab_card().save(target, "JPEG", quality=86, optimize=True, progressive=True)
+        homelab_card(960, 600, header=False).save(OUT / "labs-homelab-diagram.jpg", "JPEG", quality=86, optimize=True, progressive=True)
         stamps["labs-homelab"] = digest
-        print(f"wrote {target.relative_to(ROOT)}")
+        print(f"wrote {target.relative_to(ROOT)} and labs-homelab-diagram.jpg")
     for stale in set(stamps) - keep:  # post deleted or renamed
         (OUT / f"{stale}.jpg").unlink(missing_ok=True)
         del stamps[stale]
