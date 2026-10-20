@@ -4,7 +4,9 @@
   python3 tools/og-image.py            # write missing/changed cards to assets/img/og/
   python3 tools/og-image.py --force    # regenerate every card
 
-Output: assets/img/og/<collection>-<slug>.jpg, picked up by _includes/head.html for og:image.
+Output: assets/img/og/<collection>-<slug>.jpg, picked up by _includes/head.html for og:image, plus
+assets/img/og/labs-homelab.jpg: the thesis testbed diagram drawn from _data/homelab.yml (Labs page and
+the thesis project).
 Fonts are bundled in tools/fonts (SIL OFL) so the result is identical locally and in CI.
 """
 import hashlib
@@ -111,6 +113,51 @@ def card(title, kicker, meta, av):
     return img
 
 
+ZONES = {"edge": (113, 128, 150), "security": (209, 67, 67), "compute": (90, 140, 245),
+         "monitor": (32, 170, 145), "client": (150, 125, 230)}
+
+
+def homelab_card():
+    """The homelab topology on a 1200x630 card, from the same coordinates as the SVG on /labs/."""
+    lab = yaml.safe_load((ROOT / "_data" / "homelab.yml").read_text(encoding="utf-8"))
+    cw, ch = lab.get("canvas", [800, 460])
+    img = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(img)
+    x0 = 72
+    d.text((x0, 52), "LABS · HOMELAB", font=font("DMSans-Variable.ttf", 22, 600), fill=ACCENT)
+    d.text((x0, 82), lab.get("title", "Homelab"), font=font("InstrumentSerif-Regular.ttf", 52), fill=WHITE)
+    d.text((W - x0, 62), "cyphera.my.id", font=font("DMSans-Variable.ttf", 22, 400), fill=MUTED, anchor="ra")
+
+    top, avail_w, avail_h = 165, W - 2 * 40, H - 165 - 28
+    k = min(avail_w / cw, avail_h / ch)
+    ox, oy = (W - cw * k) / 2, top
+
+    def pt(x, y):
+        return ox + x * k, oy + y * k
+
+    b = lab.get("boundary")
+    if b:
+        bx, by = pt(b["x"], b["y"])
+        bx2, by2 = pt(b["x"] + b["width"], b["y"] + b["height"])
+        d.rounded_rectangle((bx, by, bx2, by2), radius=14 * k, fill=(22, 28, 46), outline=(70, 80, 105), width=2)
+        d.text((bx + 14 * k, by2 - 12 * k), b.get("label", ""), font=font("DMSans-Variable.ttf", round(12 * k), 600),
+               fill=MUTED, anchor="ls")
+    nodes = {n["id"]: n for n in lab.get("nodes", [])}
+    for l in lab.get("links", []):
+        a, c = nodes.get(l["from"]), nodes.get(l["to"])
+        if a and c:
+            d.line((*pt(a["x"], a["y"]), *pt(c["x"], c["y"])), fill=(95, 105, 130), width=2)
+    nf = font("DMSans-Variable.ttf", round(13 * k), 600)
+    for n in nodes.values():
+        x, y = pt(n["x"] - 82, n["y"] - 22)
+        x2, y2 = pt(n["x"] + 82, n["y"] + 22)
+        color = ZONES.get(n.get("zone", "compute"), ZONES["compute"])
+        d.rounded_rectangle((x, y, x2, y2), radius=10 * k, fill=BG, outline=color, width=3)
+        d.ellipse((x + 12 * k, (y + y2) / 2 - 5 * k, x + 22 * k, (y + y2) / 2 + 5 * k), fill=color)
+        d.text((x + 32 * k, (y + y2) / 2), n["label"], font=nf, fill=WHITE, anchor="lm")
+    return img
+
+
 def items():
     for collection, folder in SOURCES.items():
         for path in sorted(folder.glob("*.md")):
@@ -143,6 +190,14 @@ def main():
         av = av or avatar_layer()
         card(title, kicker, meta, av).save(target, "JPEG", quality=84, optimize=True, progressive=True)
         stamps[name] = digest
+        print(f"wrote {target.relative_to(ROOT)}")
+    lab_src = (ROOT / "_data" / "homelab.yml").read_bytes()
+    keep.add("labs-homelab")
+    digest = hashlib.sha256(VERSION.encode() + lab_src).hexdigest()[:16]
+    target = OUT / "labs-homelab.jpg"
+    if force or not target.exists() or stamps.get("labs-homelab") != digest:
+        homelab_card().save(target, "JPEG", quality=86, optimize=True, progressive=True)
+        stamps["labs-homelab"] = digest
         print(f"wrote {target.relative_to(ROOT)}")
     for stale in set(stamps) - keep:  # post deleted or renamed
         (OUT / f"{stale}.jpg").unlink(missing_ok=True)

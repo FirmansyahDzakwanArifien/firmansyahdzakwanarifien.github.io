@@ -5,7 +5,7 @@ name: Social cards
 on:
   push:
     branches: ["main"]
-    paths: ["_posts/**", "_projects/**", "tools/og-image.py", "tools/fonts/**"]
+    paths: ["_posts/**", "_projects/**", "_data/homelab.yml", "tools/og-image.py", "tools/fonts/**"]
   workflow_dispatch:
 
 permissions:

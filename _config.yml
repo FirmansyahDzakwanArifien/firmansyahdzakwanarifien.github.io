@@ -223,6 +223,8 @@ exclude:
   - purgecss.js
   - "*.config.js"
   - "package*.json"
+  - lighthouserc.json
+  - lighthouse-reports
 
 jekyll-archives:
   enabled: [categories, tags]

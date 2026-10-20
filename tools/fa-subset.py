@@ -4,8 +4,8 @@
   python3 tools/fa-subset.py          # rebuild assets/css/fa-subset.css + assets/fonts/fa/*.woff2
   python3 tools/fa-subset.py --check  # fail if the source uses an icon missing from the subset (CI)
 
-Icons are collected from templates, data files, posts, and scripts ("fa-<name>" tokens), plus the
-glyph names in assets/js/custom/homelab.js. After adding an icon anywhere, run this and commit.
+Icons are collected from templates, data files, posts, and scripts ("fa-<name>" tokens), the glyph
+names in assets/js/custom/homelab.js, and raw codepoints in _sass (e.g. the theme's prompt boxes). After adding an icon anywhere, run this and commit.
 Needs: pip install fonttools brotli
 """
 import io
@@ -55,6 +55,13 @@ def used_names(known):
             found.update(n for n in re.findall(r"\bfa-([a-z0-9-]+)", text) if n in known)
             if f.name == "homelab.js":  # SVG <text> glyphs keyed by icon name
                 found.update(n for n in re.findall(r"'?([a-z][a-z0-9-]+)'?\s*:\s*'\\u", text) if n in known)
+    by_code = {}
+    for name, code in known.items():
+        by_code.setdefault(code, name)
+    for f in (ROOT / "_sass").rglob("*.scss"):  # e.g. @include mx.prompt('info', '\f06a')
+        for code in re.findall(r"\\(f[0-9a-f]{3})\b", f.read_text(encoding="utf-8")):
+            if int(code, 16) in by_code:
+                found.add(by_code[int(code, 16)])
     return found
 
 

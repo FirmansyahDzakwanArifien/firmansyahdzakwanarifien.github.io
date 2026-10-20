@@ -201,6 +201,31 @@ Bagian **Homelab** di halaman Labs (`/labs/#homelab`, template `_includes/homela
 - `links`: `from`, `to`, `label` (opsional), dan `dashed: true` untuk koneksi sesuai kebutuhan (misalnya VPN).
 - `layers`: lima lapisan pipeline (bagian "How an alert flows").
 - `principles`: keputusan desain. `icon` memakai kelas lengkap, misalnya `fas fa-lock`.
+- `facts`: angka ringkas di atas diagram (misalnya jumlah VM).
+- `progress`: timeline TA. Setiap tahap punya `stage`, `status` (`done`, `in-progress`, `planned`), `text`, dan `when` (opsional, misalnya `Nov 2026`). Tahap `in-progress` pertama muncul sebagai label "Now: ..." di samping judul.
+- `results`: tabel evaluasi di tab **Results**. `models` adalah nama kolom; setiap `metrics` punya `values` dengan urutan yang sama seperti `models`. Biarkan `~` (kosong) selama belum diukur, maka tabel menampilkan "pending". Begitu semua nilai satu baris terisi, nilai terbaik ditebalkan sesuai `best` (`higher` atau `lower`). `pipeline` untuk angka yang tidak per model, misalnya persentase alert yang tersaring.
+
+Contoh memperbarui progres dan hasil:
+
+```yaml
+progress:
+  - stage: Proposal and testbed design
+    status: done
+    when: Nov 2026
+  - stage: Testbed build
+    status: in-progress
+
+results:
+  metrics:
+    - name: Category accuracy
+      unit: "%"
+      best: higher
+      values: [87.5, 82.1]   # Llama 3 8B, Mistral 7B
+```
+
+Bagian ini memakai tab (Topology, Pipeline, Progress, Results). Tab bisa dibuka langsung lewat link, misalnya `/labs/#hl-pane-results`. Gambar preview saat link Labs dibagikan (`assets/img/og/labs-homelab.jpg`) digambar ulang otomatis dari file ini oleh workflow **Social cards** setiap kali `_data/homelab.yml` berubah.
+
+Studi kasus TA ada di `_projects/2026-10-20-ta-klasifikasi-insiden-llm.md`. Diagramnya dipakai ulang dengan `{% include homelab.html parts="topology" %}`, jadi cukup ubah `_data/homelab.yml` dan keduanya ikut berubah.
 
 Pilihan `icon` untuk node ada di `GLYPHS` dalam `assets/js/custom/homelab.js` (`server`, `shield-halved`, `eye`, `brain`, `diagram-project`, `bell`, `laptop`, `chart-line`, `database`, dan lainnya). Untuk menambah ikon baru, masukkan kode glyph-nya di `GLYPHS`, lalu jalankan `python3 tools/fa-subset.py`.
 
@@ -372,3 +397,4 @@ Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, avata
 - **Intro:** keputusan tampil/tidaknya dibuat di `<head>` (`theme-variant.js` menambah `html.intro-active`), sedangkan animasinya (`intro.js`) dimuat `defer`, sehingga tidak memblokir render.
 - **Analytics:** hanya Cloudflare Web Analytics. Google Analytics dimatikan di `_config.yml` (`analytics.google.id` kosong); kalau diaktifkan lagi, domain Google harus kembali ditambahkan ke CSP.
 - **Ukur ulang:** `npx lighthouse https://cyphera.my.id/ --view` atau PageSpeed Insights.
+- **Lighthouse otomatis:** workflow **Lighthouse** menguji halaman utama, Labs, dan CV (median dari 3 run) di setiap push dan PR. Gagal bila performa di bawah 80 atau aksesibilitas di bawah 95; batasnya ada di `lighthouserc.json`. Laporan HTML lengkap bisa diunduh dari artifact `lighthouse-reports` di halaman run tersebut.
