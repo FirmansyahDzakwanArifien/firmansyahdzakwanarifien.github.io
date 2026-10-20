@@ -48,97 +48,88 @@ html[data-mode="dark"] {
 }
 
 /* ── Hero ── */
-/* The original photo, blurred, is the card's backdrop; the pop-out avatar sits in front of it. */
+/* The card is the pop-out frame: the subject stands inside it, cut off at the bottom edge,
+   while the head breaks out past the top edge. The blurred photo backdrop lives in .hero-bg
+   so it stays clipped to the card even though the card itself does not clip. */
 .hero-block {
+  --avatar-h: 430px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 2.25rem;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 1.5rem;
   border: 1px solid var(--border);
   border-radius: 16px;
-  margin: 1.5rem 0 3rem;
+  margin: 6rem 0 3rem;
 }
 
-.hero-block::before,
-.hero-block::after {
-  content: '';
+.hero-bg {
   position: absolute;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
-.hero-block::before {
+.hero-bg::before,
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.hero-bg::before {
   background: var(--hero-bg) center 62% / cover no-repeat;
   filter: blur(14px) saturate(1.2);
   transform: scale(1.15);
 }
 
-.hero-block::after {
-  background: linear-gradient(90deg, transparent -30%, var(--main-bg, #fff) 42%);
+.hero-bg::after {
+  background: linear-gradient(90deg, transparent -30%, var(--main-bg, #fff) 48%);
   opacity: 0.85;
 }
 
-/* Pop-out avatar: a half-body cutout rises out of a colored circle, head breaking past its rim.
-   The clip box is open at the top and rounded at the bottom to match the circle. */
+/* The avatar column spans the full card height; its clip box is flush with the card's
+   bottom edge and open above it, so a fixed-height cutout pokes out past the top edge. */
 .hero-avatar {
-  --pop: 180px;
   position: relative;
-  z-index: 0;
-  width: var(--pop);
-  height: calc(var(--pop) * 1.4);
-}
-
-.hero-avatar::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: var(--pop);
-  height: var(--pop);
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #60a5fa, #1d4ed8 72%);
-  box-shadow:
-    0 0 0 4px rgba(255, 255, 255, 0.55),
-    0 18px 36px -16px rgba(29, 78, 216, 0.75);
-  animation: pop-ring 0.5s ease-out backwards;
+  align-self: stretch;
+  margin: -2rem 0;
 }
 
 .pop-clip {
   position: absolute;
-  inset: 0;
+  top: -200px;
+  bottom: 0;
+  left: -1.5rem;
+  right: -1.5rem;
   overflow: hidden;
-  border-radius: 0 0 calc(var(--pop) / 2) calc(var(--pop) / 2);
+  border-bottom-left-radius: 15px;
 }
 
 .hero-avatar img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: calc(var(--pop) * -0.12); /* hides the waist cut, even mid-bounce and on hover */
-  width: calc(var(--pop) * 0.92);
-  height: auto;
+  bottom: -14px; /* keeps the waist cut below the card edge, even mid-bounce and on hover */
+  height: var(--avatar-h);
+  width: auto;
+  max-width: none;
   margin: 0 auto;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
   animation: pop-rise 0.9s cubic-bezier(0.22, 1.3, 0.36, 1) 0.25s backwards;
   transition: transform 0.3s ease;
 }
 
 .hero-block:hover .hero-avatar img { transform: translateY(-4px); }
 
-@keyframes pop-ring {
-  from { transform: scale(0.6); opacity: 0; }
-}
-
 @keyframes pop-rise {
-  from { transform: translateY(75%); }
+  from { transform: translateY(70%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-avatar::before,
   .hero-avatar img { animation: none; }
 }
 
@@ -974,9 +965,15 @@ html[data-mode="dark"] {
 @media (max-width: 640px) {
   .feat-body { padding: 1.1rem 1.1rem 1.25rem; }
   .feat-title { font-size: 1.6rem; }
-  .hero-block { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem 1.25rem; }
-  .hero-block::after { background: linear-gradient(180deg, transparent -40%, var(--main-bg, #fff) 50%); }
-  .hero-avatar { --pop: 150px; }
+  .hero-block { --avatar-h: 260px; grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 1.25rem; margin-top: 4rem; }
+  .hero-bg::after { background: linear-gradient(180deg, transparent -40%, var(--main-bg, #fff) 45%); }
+  /* Stacked layout: the avatar row ends mid-card, so fade the waist out instead of a hard cut. */
+  .hero-avatar { align-self: auto; height: 190px; margin: -1.5rem 0 0; }
+  .pop-clip {
+    border-radius: 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+            mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  }
   .hero-name { font-size: 1.9rem; }
   .skills-row,
   .skills-row.cols-2 { grid-template-columns: 1fr; }
@@ -989,6 +986,7 @@ html[data-mode="dark"] {
   <!-- Hero -->
   {%- assign profile = site.data.profile %}
   <div class="hero-block" style="--hero-bg: url('{{ profile.photo }}')">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-avatar">
       <div class="pop-clip">
         <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="166" height="248" fetchpriority="high" decoding="async" data-no-popup />
@@ -997,7 +995,7 @@ html[data-mode="dark"] {
     <div class="hero-text">
       <h1 class="hero-name">Firmansyah <em>Dzakwan</em> Arifien</h1>
       <p class="hero-role">{{ profile.headline | escape }}</p>
-      <p class="hero-bio">{{ profile.bio }}</p>
+      <p class="hero-bio">{{ profile.summary }}</p>
       <div class="hero-cta">
         <a href="{{ '/cv/' | relative_url }}" class="btn-cta">View My CV</a>
         <a href="{{ profile.portfolio_pdf }}" target="_blank" rel="noopener noreferrer" class="btn-cta ghost">View My Portfolio</a>

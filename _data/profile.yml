@@ -11,6 +11,12 @@ photo: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanari
 cutout: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-popout.webp
 portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing
 
+# Short version for the home page hero; the full bio is used on /cv/ and in the terminal.
+summary: >-
+  Implementation Engineer at PT Jarvis Integrasi Solusi, deploying and securing enterprise network,
+  security, and Linux infrastructure. Fortinet NSE 1–5 certified, BlankOn Linux infrastructure
+  contributor, and researcher in UEBA-based insider threat detection.
+
 bio: >-
   Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure,
   and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and
