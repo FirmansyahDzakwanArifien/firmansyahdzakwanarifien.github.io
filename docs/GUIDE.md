@@ -317,7 +317,19 @@ bash tools/check-assets.sh _site
 
 **Halaman `/contact/`** (`_tabs/contact.html`): daftar saluran dari `links` di `_data/profile.yml`, tombol salin email, dan form "Write a message". Form ini **tidak mengirim apa pun dari situs**: ia membuka aplikasi email pengunjung dengan subjek `[Topik] Nama (Organisasi)` dan isi pesan yang sudah terisi (`assets/js/custom/contact.js`). Topik "Security report" menampilkan petunjuk ke `security.txt`. Pilihan topik bisa diubah langsung di `<select name="topic">`.
 
-**Traktir kopi:** isi username di `_data/profile.yml`:
+**Traktir kopi via QRIS (GoPay Merchant):** sudah aktif. Gambar QRIS ada di repo assets `merchants/gopay-qris.jpg` dan dirujuk dari `_data/profile.yml`:
+
+```yaml
+support:
+  qris: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/merchants/gopay-qris.jpg
+  qris_merchant: FIRMANSYAH DZAKWAN ARIFIE   # persis seperti yang tampil di aplikasi pembayar
+```
+
+Tombol "Traktir via QRIS" membuka dialog berisi QR (`_includes/qris-dialog.html`). Dialog yang sama bisa dibuka dari halaman utama, Contact, `Ctrl+K` ("Traktir kopi"), dan perintah `coffee` di terminal. `qris_merchant` ditampilkan supaya pembayar bisa memastikan nama penerima di aplikasinya sebelum membayar.
+
+Kalau QRIS diganti: unggah gambar baru dengan **nama file baru** (jsDelivr menyimpan cache file lama), lalu perbarui URL-nya. Jangan kompres ulang gambar QR, karena detail kodenya bisa rusak.
+
+**Opsi tambahan Trakteer / Ko-fi:** isi username di `_data/profile.yml`:
 
 ```yaml
 support:

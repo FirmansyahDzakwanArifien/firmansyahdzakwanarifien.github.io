@@ -27,6 +27,11 @@
     { t: 'Keyboard shortcuts', i: 'fas fa-keyboard', h: '?', run: function () { openShortcuts(); } }
   ];
 
+  /* "Traktir kopi" appears only when the QRIS dialog is on the page (support.qris is set). */
+  if (document.getElementById('qris-dialog')) {
+    ACTIONS.splice(1, 0, { t: 'Traktir kopi (QRIS)', i: 'fas fa-mug-hot', h: 'GoPay, OVO, DANA, bank', run: function () { window.openQris(); } });
+  }
+
   var entries = null;
   var root = null;
   var input = null;

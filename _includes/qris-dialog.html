@@ -1,0 +1,19 @@
+{%- comment -%}
+  "Traktir kopi" QRIS dialog, rendered once per page when support.qris is set in _data/profile.yml.
+  Opened by any [data-qris-open] element, the command palette, or the terminal "coffee" command.
+{%- endcomment -%}
+{%- assign sup = site.data.profile.support -%}
+{%- if sup.qris %}
+<dialog id="qris-dialog" class="qris-dialog" aria-labelledby="qris-title">
+  <form method="dialog" class="qris-close-form">
+    <button type="submit" class="qris-close" aria-label="Close">&times;</button>
+  </form>
+  <h2 id="qris-title"><i class="fas fa-mug-hot" aria-hidden="true"></i> Traktir kopi</h2>
+  <p class="qris-sub">Scan with any QRIS app: GoPay, OVO, DANA, ShopeePay, LinkAja, or your mobile banking.</p>
+  <img class="qris-img" src="{{ sup.qris }}" alt="QRIS code{% if sup.qris_merchant %} for {{ sup.qris_merchant }}{% endif %}" width="904" height="1280" loading="lazy" data-no-popup>
+  {%- if sup.qris_merchant %}
+  <p class="qris-merchant"><i class="fas fa-shield-halved" aria-hidden="true"></i> Your app should show <b>{{ sup.qris_merchant }}</b> before you pay.</p>
+  {%- endif %}
+  <p class="qris-note">On a phone? <a href="{{ sup.qris }}" target="_blank" rel="noopener noreferrer">Open the QR image</a>, save it, then choose "upload from gallery" in your payment app. Thank you!</p>
+</dialog>
+{%- endif -%}

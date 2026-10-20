@@ -58,3 +58,20 @@
     if (d) { tip.textContent = fmt.format(new Date(d + 'T00:00:00')); }
   });
 })();
+
+/* Profile card CTF banner: show this visitor's progress (stored by /ctf/ in localStorage). */
+(function() {
+  var banner = document.querySelector('.hero-ctf');
+  if (!banner) { return; }
+  var total = Number(banner.dataset.ctfTotal) || 0;
+  var found = 0;
+  try { found = (JSON.parse(localStorage.getItem('ctf-solved')) || []).length; } catch (e) { found = 0; }
+  if (!found || !total) { return; }
+  var label = banner.querySelector('[data-ctf-progress]');
+  if (found >= total) {
+    banner.classList.add('is-done');
+    label.textContent = 'All ' + total + ' found ✓';
+  } else {
+    label.textContent = found + '/' + total + ' found →';
+  }
+})();

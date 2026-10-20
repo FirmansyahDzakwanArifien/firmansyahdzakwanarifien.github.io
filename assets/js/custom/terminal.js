@@ -168,6 +168,7 @@
       desc: 'buy me a coffee',
       run: function () {
         var s = DATA.support || {};
+        if (s.qris && window.openQris) { print('opening QRIS... scan it with GoPay, OVO, DANA, ShopeePay, or m-banking. thank you!', 'term-ok'); close(); window.openQris(); return; }
         if (!s.trakteer && !s.kofi) { print('no coffee links yet. a message is just as nice: ' + link(DATA.contactPage, 'contact page')); return; }
         if (s.trakteer) { print('<span class="term-key">Trakteer</span>' + link('https://trakteer.id/' + s.trakteer) + ' <span class="term-dim">QRIS, e-wallet, bank</span>'); }
         if (s.kofi) { print('<span class="term-key">Ko-fi</span>' + link('https://ko-fi.com/' + s.kofi) + ' <span class="term-dim">PayPal, card</span>'); }

@@ -27,6 +27,19 @@
     window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
   }
 
+  /* [data-qris-open]: open the "Traktir kopi" QRIS dialog (_includes/qris-dialog.html). */
+  window.openQris = function () {
+    var dialog = document.getElementById('qris-dialog');
+    if (!dialog) { return false; }
+    if (dialog.showModal) { dialog.showModal(); } else { dialog.setAttribute('open', ''); }
+    return true;
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-qris-open]')) { e.preventDefault(); window.openQris(); return; }
+    /* A click on the dialog's backdrop (outside its box) closes it. */
+    if (e.target.id === 'qris-dialog') { e.target.close(); }
+  });
+
   /* [data-hide-on-error]: hide an image that fails to load (sidebar avatar). */
   document.querySelectorAll('img[data-hide-on-error]').forEach(function (img) {
     function hide() { img.style.display = 'none'; }

@@ -234,6 +234,58 @@ html[data-mode="dark"] {
   flex-wrap: wrap;
 }
 
+/* CTF invitation inside the profile card. */
+.hero-ctf {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: inherit !important;
+  text-decoration: none !important;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.hero-ctf:hover { background: color-mix(in srgb, var(--accent) 16%, transparent); transform: translateY(-1px); }
+
+.hero-ctf > i {
+  color: var(--accent);
+  font-size: 1rem;
+  transform-origin: 15% 90%;
+  animation: ctf-wave 2.4s ease-in-out infinite;
+}
+
+.hero-ctf-text b { margin-right: 0.35rem; color: var(--accent); }
+
+.hero-ctf-progress {
+  margin-left: auto;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #fff;
+  background: #2563eb;
+  border-radius: 20px;
+}
+
+.hero-ctf.is-done .hero-ctf-progress { background: #2f855a; }
+
+@keyframes ctf-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  70% { transform: rotate(-14deg); }
+  80% { transform: rotate(10deg); }
+  90% { transform: rotate(-6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ctf > i { animation: none; }
+}
+
 .btn-cta {
   display: inline-flex;
   align-items: center;
@@ -1125,6 +1177,11 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         <a href="{{ '/cv/' | relative_url }}" class="btn-cta">View My CV</a>
         <a href="{{ profile.portfolio_pdf }}" target="_blank" rel="noopener noreferrer" class="btn-cta ghost">View My Portfolio</a>
       </div>
+      <a class="hero-ctf" href="{{ '/ctf/' | relative_url }}" data-ctf-total="{{ site.data.ctf.size }}">
+        <i class="fas fa-flag" aria-hidden="true"></i>
+        <span class="hero-ctf-text"><b>Capture the flag</b> {{ site.data.ctf.size }} flags are hidden on this site. Can you find them?</span>
+        <span class="hero-ctf-progress" data-ctf-progress>Play &rarr;</span>
+      </a>
     </div>
   </div>
 

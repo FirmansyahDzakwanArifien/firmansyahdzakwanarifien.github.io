@@ -2,7 +2,7 @@
   "Buy me a coffee" buttons. Shown only when a username is set under `support:` in _data/profile.yml.
 {%- endcomment -%}
 {%- assign sup = site.data.profile.support -%}
-{%- if sup.trakteer or sup.kofi %}
+{%- if sup.qris or sup.trakteer or sup.kofi %}
 {%- assign hl = include.heading | default: 3 -%}
 <section class="widget support" aria-labelledby="support-title">
   <div class="widget-head">
@@ -11,6 +11,11 @@
   </div>
   <p class="support-note">If a writeup, tool, or the CTF helped you, a coffee keeps the labs running.</p>
   <div class="support-links">
+    {%- if sup.qris %}
+    <button type="button" class="support-btn qris" data-qris-open>
+      <i class="fas fa-qrcode"></i><span><b>Traktir via QRIS</b><small>GoPay, OVO, DANA, ShopeePay, bank</small></span>
+    </button>
+    {%- endif %}
     {%- if sup.trakteer %}
     <a class="support-btn trakteer" href="https://trakteer.id/{{ sup.trakteer }}" target="_blank" rel="noopener noreferrer">
       <i class="fas fa-mug-hot"></i><span><b>Trakteer</b><small>QRIS, GoPay, OVO, DANA, bank</small></span>
