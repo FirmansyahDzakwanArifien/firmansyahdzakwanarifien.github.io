@@ -27,4 +27,4 @@ _sass/vendors
 
 # Lighthouse CI
 .lighthouseci
-.lighthouseci-reports
+lighthouse-reports

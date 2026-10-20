@@ -27,7 +27,7 @@ tech_stack:
   - Ollama
   - LibreNMS
 image:
-  path: /assets/img/og/labs-homelab.jpg
+  path: https://cyphera.my.id/assets/img/og/labs-homelab.jpg
   alt: Topologi testbed tugas akhir di Proxmox
 hide_image: true  # the interactive diagram below replaces it on the page
 ---
