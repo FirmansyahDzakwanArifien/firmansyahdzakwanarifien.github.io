@@ -14,6 +14,7 @@
       projects: {{ profile.projects | jsonify }},
       experience: {{ site.data.experience | jsonify }},
       certs: {{ site.data.certifications | jsonify }},
+      labs: {{ site.data.labs | jsonify }},
       cv: {{ '/cv/' | relative_url | jsonify }},
       home: {{ '/' | relative_url | jsonify }}
     };
@@ -81,6 +82,15 @@
           });
         }
       },
+      labs: {
+        desc: 'security writeups & labs',
+        run: function () {
+          DATA.labs.forEach(function (lab) {
+            var url = lab.url.charAt(0) === '/' ? DATA.home.replace(/\/$/, '') + lab.url : lab.url;
+            print('<span class="term-key">' + esc(lab.platform) + '</span>' + link(url, lab.title));
+          });
+        }
+      },
       skills: {
         desc: 'skill groups',
         run: function () {
@@ -130,7 +140,7 @@
       },
       ls: {
         hidden: true,
-        run: function () { print('about  certs  contact  cv  education  experience  projects  skills'); }
+        run: function () { print('about  certs  contact  cv  education  experience  labs  projects  skills'); }
       }
     };
 

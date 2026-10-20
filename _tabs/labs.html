@@ -1,0 +1,192 @@
+---
+layout: page
+title: Labs
+icon: fas fa-shield-halved
+order: 3.5
+description: Hands-on security writeups by Firmansyah Dzakwan Arifien — DFIR, network and log forensics, CTFs, and vulnerability analysis.
+---
+
+<style>
+.labs {
+  --labs-border: rgba(128, 128, 128, 0.18);
+  --labs-muted: rgba(128, 128, 128, 0.85);
+  --tone-dfir: #2563eb;
+  --tone-network: #0f8c78;
+  --tone-logs: #b4690e;
+  --tone-ctf: #7c5cd6;
+  --tone-vuln: #d14343;
+}
+
+html[data-mode="dark"] .labs {
+  --tone-dfir: #7aa7ff;
+  --tone-network: #4fc7a4;
+  --tone-logs: #e0ac5c;
+  --tone-ctf: #a99ff0;
+  --tone-vuln: #f08080;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .labs {
+    --tone-dfir: #7aa7ff;
+    --tone-network: #4fc7a4;
+    --tone-logs: #e0ac5c;
+    --tone-ctf: #a99ff0;
+    --tone-vuln: #f08080;
+  }
+}
+
+.labs-intro { margin-bottom: 1.25rem; color: var(--labs-muted); }
+
+.labs-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.labs-filter {
+  padding: 4px 13px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--labs-muted);
+  background: transparent;
+  border: 1px solid var(--labs-border);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.labs-filter.active,
+.labs-filter:hover {
+  color: #2563eb;
+  border-color: #2563eb;
+  background: rgba(37, 99, 235, 0.07);
+}
+
+.labs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.lab-card {
+  --tone: var(--tone-dfir);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--labs-border);
+  border-top: 3px solid var(--tone);
+  border-radius: 12px;
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.lab-card:hover {
+  border-color: var(--tone);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -16px var(--tone);
+}
+
+.lab-card[hidden] { display: none; }
+
+.lab-card.network { --tone: var(--tone-network); }
+.lab-card.logs    { --tone: var(--tone-logs); }
+.lab-card.ctf     { --tone: var(--tone-ctf); }
+.lab-card.vuln    { --tone: var(--tone-vuln); }
+
+.lab-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0.5rem;
+  font-size: 0.72rem;
+}
+
+.lab-platform { font-weight: 600; color: var(--tone); }
+
+.lab-diff {
+  padding: 1px 8px;
+  border-radius: 10px;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.lab-date { margin-left: auto; color: var(--labs-muted); }
+
+.lab-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.lab-title i { font-size: 0.7rem; opacity: 0.6; margin-left: 4px; }
+
+.lab-summary {
+  flex: 1;
+  margin: 0 0 0.8rem;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--labs-muted);
+}
+
+.lab-tools { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.lab-tools span {
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  border: 1px solid var(--labs-border);
+  border-radius: 6px;
+  background: rgba(128, 128, 128, 0.06);
+}
+</style>
+
+<div class="labs">
+  <p class="labs-intro">Hands-on blue-team work: incident investigations, forensics challenges, and vulnerability write-ups. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>.</p>
+
+  <div class="labs-filters" role="group" aria-label="Filter labs">
+    <button type="button" class="labs-filter active" data-kind="all">All</button>
+    <button type="button" class="labs-filter" data-kind="dfir">DFIR</button>
+    <button type="button" class="labs-filter" data-kind="network">Network forensics</button>
+    <button type="button" class="labs-filter" data-kind="logs">Log forensics</button>
+    <button type="button" class="labs-filter" data-kind="ctf">CTF</button>
+    <button type="button" class="labs-filter" data-kind="vuln">Vulnerability</button>
+  </div>
+
+  <div class="labs-grid">
+    {%- for lab in site.data.labs %}
+      {%- assign external = lab.url | slice: 0, 4 %}
+    <a class="lab-card {{ lab.kind }}" data-kind="{{ lab.kind }}" href="{{ lab.url | relative_url }}"{% if external == 'http' %} target="_blank" rel="noopener noreferrer"{% endif %}>
+      <div class="lab-meta">
+        <span class="lab-platform">{{ lab.platform }}</span>
+        {%- if lab.difficulty %}<span class="lab-diff">{{ lab.difficulty }}</span>{% endif %}
+        <span class="lab-date">{{ lab.date | date: '%b %Y' }}</span>
+      </div>
+      <h2 class="lab-title">{{ lab.title }}{% if external == 'http' %}<i class="fas fa-arrow-up-right-from-square"></i>{% endif %}</h2>
+      <p class="lab-summary">{{ lab.summary }}</p>
+      {%- if lab.tools.size > 0 %}
+      <div class="lab-tools">
+        {%- for tool in lab.tools %}<span>{{ tool }}</span>{% endfor %}
+      </div>
+      {%- endif %}
+    </a>
+    {%- endfor %}
+  </div>
+</div>
+
+<script>
+(function () {
+  var filters = document.querySelector('.labs-filters');
+  var cards = document.querySelectorAll('.lab-card');
+  filters.addEventListener('click', function (e) {
+    var btn = e.target.closest('.labs-filter');
+    if (!btn) { return; }
+    filters.querySelector('.active').classList.remove('active');
+    btn.classList.add('active');
+    cards.forEach(function (card) {
+      card.hidden = btn.dataset.kind !== 'all' && card.dataset.kind !== btn.dataset.kind;
+    });
+  });
+})();
+</script>

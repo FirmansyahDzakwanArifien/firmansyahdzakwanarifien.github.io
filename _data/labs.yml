@@ -1,0 +1,84 @@
+# Hands-on security work for the Labs page, newest first.
+# kind: dfir | network | logs | ctf | vuln (sets the filter + color) · difficulty: leave empty when unknown
+# url: external links (Hashnode, GitHub) open in a new tab; site paths start with /
+
+- title: FortySeven-1
+  platform: Hack The Box · Sherlock
+  kind: dfir
+  difficulty: Very Easy
+  date: 2026-05-13
+  summary: Investigation of an APT group's Hajj-themed campaign, written up as a Sherlock challenge walkthrough.
+  tools: []
+  url: https://blog.cyphera.my.id/htb-sherlock-write-up-fortyseven-1
+
+- title: Copy Fail (CVE-2026-31431)
+  platform: Vulnerability analysis
+  kind: vuln
+  difficulty:
+  date: 2026-05-11
+  summary: Breakdown of the Copy Fail Linux kernel local privilege escalation and why it matters to Linux administrators.
+  tools: [Linux kernel, LPE]
+  url: https://blog.cyphera.my.id/copy-fail-linux-kernel-local-privilege-escalation-vulnerability
+
+- title: PsExec Hunt
+  platform: CyberDefenders
+  kind: network
+  difficulty:
+  date: 2026-04-21
+  summary: Traced SMB lateral movement with PsExec through NTLM authentication, admin and IPC$ shares, and remote service creation in a packet capture.
+  tools: [Wireshark, SMB, NTLM]
+  url: https://blog.cyphera.my.id/psexec-hunt-cyberdefenders-smb-lateral-movement-analysis
+
+- title: Ph4nt0m 1ntrud3r
+  platform: picoCTF 2025
+  kind: network
+  difficulty:
+  date: 2026-04-21
+  summary: Network forensics on a PCAP to recover the flag an attacker hid inside captured traffic.
+  tools: [Wireshark, PCAP]
+  url: https://blog.cyphera.my.id/ph4nt0m-1ntrud3r-picoctf-2025-network-forensics
+
+- title: Event-Viewing
+  platform: picoCTF 2025
+  kind: logs
+  difficulty:
+  date: 2026-04-21
+  summary: Windows event log forensics on a host where a user installed software that turned out to be malicious.
+  tools: [Windows Event Logs, EVTX]
+  url: https://blog.cyphera.my.id/event-viewing-picoctf-2025-windows-event-log-forensics
+
+- title: Brutus
+  platform: Hack The Box · Sherlock
+  kind: logs
+  difficulty: Very Easy
+  date: 2026-04-21
+  summary: Linux log forensics on a server compromised through an SSH brute-force attack, following the attacker's actions after login.
+  tools: [auth.log, wtmp]
+  url: https://blog.cyphera.my.id/brutus-htb-sherlock-linux-log-forensics
+
+- title: IDN Blue Team Capstone
+  platform: IDN Blue Team
+  kind: dfir
+  difficulty: Capstone
+  date: 2026-03-18
+  summary: End-to-end investigation of SQLi, XSS, LFI/RFI, and a reverse shell on a compromised Apache host, correlating SIEM alerts, packet captures, and a memory dump.
+  tools: [Wazuh, Wireshark, Volatility 3]
+  url: /projects/Milestone-Project-IDN-Blue-Team-2026/
+
+- title: Advent of Cyber 2025
+  platform: TryHackMe
+  kind: ctf
+  difficulty:
+  date: 2025-12-25
+  summary: 24 days of daily security challenges across offensive and defensive topics.
+  tools: [TryHackMe]
+  url: /posts/Advent-of-Cyber-2025/
+
+- title: ASTROX NFSCC CTF 2025
+  platform: NFSCC · Official writeups
+  kind: ctf
+  difficulty:
+  date: 2025-12-07
+  summary: Official writeups for the ASTROX CTF run by the NFSCC student cybersecurity community.
+  tools: [CTF]
+  url: https://github.com/firmansyahdzakwanarifien/writeup-nfsccxastro
