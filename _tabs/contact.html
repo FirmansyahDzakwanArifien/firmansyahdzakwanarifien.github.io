@@ -95,14 +95,7 @@ description: How to reach Firmansyah Dzakwan Arifien for job opportunities, coll
 
   <div class="contact-channels">
     {%- for link in profile.links %}
-      {%- assign icon = 'fas fa-link' -%}
-      {%- case link.label -%}
-        {%- when 'Email' -%}{%- assign icon = 'fas fa-envelope' -%}
-        {%- when 'LinkedIn' -%}{%- assign icon = 'fab fa-linkedin' -%}
-        {%- when 'GitHub' -%}{%- assign icon = 'fab fa-github' -%}
-        {%- when 'Telegram' -%}{%- assign icon = 'fab fa-telegram' -%}
-        {%- when 'Medium' -%}{%- assign icon = 'fab fa-medium' -%}
-      {%- endcase %}
+      {%- assign icon = link.icon | default: 'fas fa-link' -%}
     {%- if link.label == 'Email' %}
     <div class="contact-channel">
       <i class="{{ icon }}"></i>

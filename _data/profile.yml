@@ -84,19 +84,36 @@ support:
   trakteer:   # https://trakteer.id/<username>  (Indonesia: QRIS, GoPay, OVO, DANA, ShopeePay, bank transfer)
   kofi:       # https://ko-fi.com/<username>    (international: PayPal, card)
 
+# Contact links (home "Let's Connect", /contact/, /cv/, terminal, Person schema).
+# id picks the brand colour in CSS; icon is a Font Awesome class; action is the short verb on the card.
 links:
   - label: LinkedIn
+    id: linkedin
+    icon: fab fa-linkedin-in
+    action: Connect
     value: firmansyah-dzakwan
     url: https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293
   - label: GitHub
+    id: github
+    icon: fab fa-github
+    action: Follow
     value: firmansyahdzakwanarifien
     url: https://github.com/firmansyahdzakwanarifien
   - label: Email
+    id: email
+    icon: fas fa-envelope
+    action: Email
     value: contact@cyphera.my.id
     url: mailto:contact@cyphera.my.id
   - label: Telegram
+    id: telegram
+    icon: fab fa-telegram
+    action: Chat
     value: "@fdzak01"
     url: https://t.me/fdzak01
   - label: Medium
+    id: medium
+    icon: fab fa-medium
+    action: Read
     value: "@fdzak01"
     url: https://medium.com/@fdzak01

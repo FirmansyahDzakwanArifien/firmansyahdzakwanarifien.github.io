@@ -2,6 +2,19 @@
 
 /* Site add-ons: data widgets, command palette, shortcuts overlay, reading progress, toast. */
 
+/* Chirpy underlines every content link with a bottom border (.content a:not(.img-link)).
+   Card-style links draw their own border, so restore their bottom edge (same specificity, later). */
+.content a.connect-card,
+.content a.feat-btn { border-bottom: 1px solid var(--border); }
+.content a.contact-channel { border-bottom: 1px solid var(--main-border-color); }
+.content a.lab-card { border-bottom: 1px solid var(--labs-border); }
+.content a.hero-ctf { border-bottom: 1px dashed var(--accent); }
+.content a.btn-cta.ghost { border-bottom: 1px solid var(--border-hover); }
+.content a.feat-btn.primary { border-bottom-color: var(--feat-tone); }
+.content a.feat-shot,
+.content a.medal,
+.content a.btn-cta:not(.ghost) { border-bottom: 0; }
+
 /* ---------- Data widgets (_includes/widgets/) ---------- */
 
 .widget {

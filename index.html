@@ -698,49 +698,148 @@ html[data-mode="dark"] {
 }
 
 /* ── Connect ── */
+/* Cards: brand tile | label + value (ellipsis, never overlaps) | action. Brand colours per network
+   (decorative tiles only; text stays on the theme colours). */
 .connect-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 0.65rem;
 }
 
-.connect-link {
-  display: flex;
+.connect-card {
+  --brand: var(--accent);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.65rem 1rem;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  text-decoration: none !important;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: border-color 0.2s, background 0.2s;
   color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
 }
 
-.connect-link:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
+.about-wrap .connect-card:hover {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 7%, transparent);
+  transform: translateY(-1px);
 }
 
-.connect-link .cl-label {
-  color: var(--muted);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+.connect-card.is-linkedin { --brand: #0a66c2; }
+.connect-card.is-github   { --brand: #24292f; }
+.connect-card.is-email    { --brand: #2563eb; }
+.connect-card.is-telegram { --brand: #229ed9; }
+.connect-card.is-medium   { --brand: #111111; }
+.connect-card.is-message  { --brand: #0f766e; }
+
+html[data-mode="dark"] .connect-card.is-github { --brand: #e6edf3; }
+html[data-mode="dark"] .connect-card.is-medium { --brand: #e6e6e6; }
+html[data-mode="dark"] .connect-card.is-email  { --brand: #7aa7ff; }
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .connect-card.is-github { --brand: #e6edf3; }
+  html:not([data-mode]) .connect-card.is-medium { --brand: #e6e6e6; }
+  html:not([data-mode]) .connect-card.is-email  { --brand: #7aa7ff; }
+}
+
+.cc-icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--brand);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--brand) 14%, transparent);
+}
+
+.cc-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cc-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  display: block;
+  color: var(--muted);
 }
 
-.connect-link .cl-value {
-  display: block;
-  line-height: 1.2;
-  font-size: 0.84rem;
+.cc-value {
+  overflow: hidden;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-action {
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--muted);
+  transition: color 0.2s;
+
+  i { margin-left: 0.2rem; font-size: 0.65rem; transition: transform 0.2s; }
+}
+
+.connect-card:hover .cc-action { color: inherit; }
+.connect-card:hover .cc-action i { transform: translateX(2px); }
+
+/* Coffee: a full-width card at the end of the grid. */
+.connect-coffee {
+  --brand: #b45309;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 1px dashed color-mix(in srgb, var(--brand) 60%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--brand) 6%, transparent);
+}
+
+html[data-mode="dark"] .connect-coffee { --brand: #f59e0b; }
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .connect-coffee { --brand: #f59e0b; }
+}
+
+.cc-coffee-note {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.cc-coffee-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #fff;
+  background: #0f766e;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.cc-coffee-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+@media (max-width: 560px) {
+  .connect-coffee { grid-template-columns: auto minmax(0, 1fr); }
+  .cc-coffee-btn { grid-column: 1 / -1; justify-content: center; }
 }
 
 /* ── Featured work ── */
-.contact-more { margin: 0.9rem 0 1rem; font-size: 0.85rem; font-weight: 500; }
-
 .feat-more {
   display: inline-block;
   margin-top: 1rem;
@@ -1420,13 +1519,35 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
     <h2 class="section-label">Let's Connect</h2>
     <div class="connect-grid">
       {%- for link in profile.links %}
-      <a href="{{ link.url }}" class="connect-link"{% unless link.url contains 'mailto:' %} target="_blank" rel="noopener noreferrer"{% endunless %}>
-        <span><span class="cl-label">{{ link.label }}</span><span class="cl-value">{{ link.value }}</span></span>
+      <a href="{{ link.url }}" class="connect-card is-{{ link.id }}"{% unless link.url contains 'mailto:' %} target="_blank" rel="noopener noreferrer"{% endunless %}>
+        <span class="cc-icon" aria-hidden="true"><i class="{{ link.icon }}"></i></span>
+        <span class="cc-text">
+          <span class="cc-label">{{ link.label }}</span>
+          <span class="cc-value" title="{{ link.value }}">{{ link.value }}</span>
+        </span>
+        <span class="cc-action">{{ link.action }} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
       </a>
       {%- endfor %}
+      <a href="{{ '/contact/' | relative_url }}" class="connect-card is-message">
+        <span class="cc-icon" aria-hidden="true"><i class="fas fa-pen-to-square"></i></span>
+        <span class="cc-text">
+          <span class="cc-label">Message</span>
+          <span class="cc-value">Write me a message</span>
+        </span>
+        <span class="cc-action">Write <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+      </a>
+      {%- assign sup = profile.support %}
+      {%- if sup.qris %}
+      <div class="connect-coffee">
+        <span class="cc-icon" aria-hidden="true"><i class="fas fa-mug-hot"></i></span>
+        <span class="cc-text">
+          <span class="cc-label">Traktir kopi</span>
+          <span class="cc-coffee-note">Enjoyed a writeup, a tool, or the CTF? Buy me a coffee via QRIS: GoPay, OVO, DANA, ShopeePay, or any m-banking.</span>
+        </span>
+        <button type="button" class="cc-coffee-btn" data-qris-open><i class="fas fa-qrcode" aria-hidden="true"></i> Scan QRIS</button>
+      </div>
+      {%- endif %}
     </div>
-    <p class="contact-more"><a href="{{ '/contact/' | relative_url }}"><i class="fas fa-pen-to-square"></i> Write me a message</a></p>
-    {% include widgets/support.html %}
     <p class="term-hint">Prefer the keyboard? Press <kbd>Ctrl</kbd> <kbd>K</kbd> for the <button type="button" data-cmdk-open>command palette</button>, <kbd>`</kbd> for the <button type="button" data-term-open>terminal</button>, or <kbd>?</kbd> for shortcuts. Curious? There's a <a href="{{ '/ctf/' | relative_url }}">CTF</a> hidden on this site.</p>
   </div>
 
