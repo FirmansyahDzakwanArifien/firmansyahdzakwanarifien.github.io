@@ -1,34 +1,167 @@
-# Homelab topology for /homelab/ (an interactive SVG diagram).
-# The page stays unpublished until this is filled in: then set `published: true` in _tabs/homelab.html.
-# Full instructions: docs/GUIDE.md, section "Homelab".
+# Lab topology for /homelab/: the isolated testbed of my undergraduate thesis.
+# Full instructions: docs/GUIDE.md, section "Homelab". Never put IPs, hostnames, ports, or credentials here:
+# this page is public.
 #
-# Canvas is 800 x 460. Each node needs a unique id and x/y for its centre.
-# icon: any Font Awesome class name without the "fas " prefix (server, shield-halved, network-wired,
-#       cloud, desktop, database, eye, router...). zone colours the node: edge | security | compute | monitor | client
-#
-# Example (replace with your real lab, then remove the "[]" values below):
-#
-# nodes:
-#   - id: isp
-#     label: Internet
-#     icon: cloud
-#     zone: edge
-#     x: 400
-#     y: 50
-#     role: Upstream connection
-#     details: [ISP router in bridge mode]
-#   - id: fw
-#     label: FortiGate
-#     icon: shield-halved
-#     zone: security
-#     x: 400
-#     y: 170
-#     role: Perimeter firewall / VPN
-#     details: [Policies per VLAN, SSL-VPN for remote access]
-# links:
-#   - from: isp
-#     to: fw
-#     label: WAN
+# canvas: [width, height] of the diagram. Each node needs a unique id and x/y for its centre.
+# icon: one of the glyph names in assets/js/custom/homelab.js (server, eye, brain, laptop, ...).
+# principles use full Font Awesome classes (fas fa-...) so tools/fa-subset.py picks them up.
+# zone colours the node: edge | security | compute | monitor | client
+# links: from/to node ids, optional label, optional dashed: true (on-demand connections).
 
-nodes: []
-links: []
+title: Thesis testbed
+summary: >-
+  The isolated lab behind my undergraduate thesis on automating security incident classification with
+  n8n and a self-hosted LLM. Alerts from Wazuh and Suricata flow through a normalization and rule-based
+  filtering pipeline; only significant alerts reach the LLM, which drafts a classification and mitigation
+  steps for a human analyst.
+
+canvas: [932, 510]
+
+# Dashed frame drawn around the nodes that live inside the virtualization cluster.
+boundary:
+  x: 200
+  y: 24
+  width: 724
+  height: 330
+  label: Proxmox cluster · isolated internal network, no public IP
+
+nodes:
+  - id: laptop
+    label: Researcher
+    icon: laptop
+    zone: client
+    x: 90
+    y: 90
+    role: Attack simulation and lab access
+    details:
+      - Runs the attack scenarios over the VPN, so no separate attacker VM is needed
+      - Attack traffic still passes the gateway, where Suricata inspects it
+  - id: gateway
+    label: Gateway
+    icon: shield-halved
+    zone: security
+    x: 340
+    y: 90
+    role: pfSense / OPNsense
+    details:
+      - Single controlled entry point to the lab
+      - VPN endpoint, enabled only for experiment sessions and disabled afterwards
+      - Mirrors network traffic to Suricata for inspection
+  - id: targets
+    label: Target VMs
+    icon: server
+    zone: compute
+    x: 590
+    y: 90
+    role: One to two Linux targets of the simulated attacks
+    details:
+      - Wazuh agent ships host logs to the detection VM
+  - id: librenms
+    label: LibreNMS
+    icon: chart-line
+    zone: monitor
+    x: 830
+    y: 90
+    role: Lab infrastructure monitoring
+    details:
+      - Dedicated lab instance, separate from the production LibreNMS
+  - id: detection
+    label: Wazuh + Suricata
+    icon: eye
+    zone: security
+    x: 340
+    y: 270
+    role: Detection VM (host and network)
+    details:
+      - Wazuh Manager raises rule-based alerts from agent logs (JSON)
+      - Suricata inspects mirrored traffic with IDS rules
+      - Combined on one VM to save resources; can be split if CPU or storage becomes a bottleneck
+  - id: n8n
+    label: n8n + Postgres
+    icon: diagram-project
+    zone: compute
+    x: 590
+    y: 270
+    role: Pipeline VM 1 · orchestration and storage (Docker)
+    details:
+      - Webhook intake, normalization, and Sigma-style rule filtering
+      - PostgreSQL stores every incident with its ground-truth label
+  - id: ollama
+    label: Ollama LLM
+    icon: brain
+    zone: compute
+    x: 830
+    y: 270
+    role: Pipeline VM 2 · LLM inference
+    details:
+      - Open-source models (candidates Llama 3 8B, Mistral 7B)
+      - Kept apart from n8n so heavy inference does not slow orchestration
+  - id: analyst
+    label: Analyst alert
+    icon: bell
+    zone: client
+    x: 590
+    y: 476
+    role: Slack or email notification
+    details:
+      - Recommendation only; nothing is executed on the targets
+
+links:
+  - from: laptop
+    to: gateway
+    label: VPN
+    dashed: true
+  - from: gateway
+    to: targets
+    label: lab network
+  - from: gateway
+    to: detection
+    label: traffic mirror
+  - from: targets
+    to: detection
+    label: agent logs
+  - from: librenms
+    to: targets
+    label: monitoring
+  - from: detection
+    to: n8n
+    label: webhook
+  - from: n8n
+    to: ollama
+    label: inference
+  - from: n8n
+    to: analyst
+    label: recommendation
+
+# The five pipeline layers, in order.
+layers:
+  - name: Data sources
+    tools: Wazuh · Suricata
+    text: Wazuh watches the target hosts through agents and raises rule-based alerts in JSON; Suricata inspects traffic mirrored from the gateway with intrusion detection rules.
+  - name: Intake and normalization
+    tools: n8n webhook · JavaScript
+    text: Wazuh and Suricata alerts have different field schemas, so each one is mapped to a single JSON schema. This step is deterministic code, not an LLM, so results are consistent and repeatable across experiment sessions.
+  - name: Rule-based filtering
+    tools: Sigma-style rules in n8n
+    text: Each normalized alert gets a severity. Low-severity alerts are archived straight to PostgreSQL; only alerts above the threshold continue, which cuts LLM load and speeds up the whole pipeline.
+  - name: LLM inference
+    tools: Ollama · Llama 3 8B / Mistral 7B
+    text: Significant alerts are sent to Ollama with a structured prompt. The model returns structured JSON with the incident category, severity, a short narrative, and suggested mitigation steps, using a low temperature and a fixed seed to limit run-to-run variation.
+  - name: Output and records
+    tools: Slack / email · PostgreSQL
+    text: Recommendations go to the analyst without any automated action on the targets. Every incident, whether processed by the LLM or archived by the filter, is stored with the ground-truth label from the scenario for offline evaluation.
+
+# Design decisions worth calling out.
+principles:
+  - icon: fas fa-lock
+    title: Isolated by design
+    text: No public IPs; the only way in is a VPN that is switched on for an experiment session and off afterwards.
+  - icon: fas fa-code
+    title: Deterministic where it matters
+    text: Normalization and filtering are plain code, so the LLM only sees clean, already-triaged alerts.
+  - icon: fas fa-filter
+    title: LLM only when needed
+    text: Rule-based filtering keeps low-severity noise away from the model and keeps the pipeline fast.
+  - icon: fas fa-user-shield
+    title: Human in the loop
+    text: The system recommends; the analyst decides. Nothing is executed on the target systems.

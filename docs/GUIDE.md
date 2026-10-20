@@ -193,17 +193,20 @@ Untuk flag 5: menulis ulang metadata EXIF bisa dengan `exiftool -ImageDescriptio
 
 ## 7. Homelab
 
-Halaman `/homelab/` (`_tabs/homelab.html`) sudah siap tapi masih `published: false`.
+Halaman `/homelab/` (`_tabs/homelab.html`) menampilkan **testbed TA**: lab Proxmox terisolasi untuk penelitian klasifikasi insiden dengan Wazuh, Suricata, n8n, dan LLM (Ollama). Semua isinya ada di `_data/homelab.yml`:
 
-1. Isi `_data/homelab.yml`. Contoh lengkap ada di komentar file itu:
-   - `nodes`: `id`, `label`, `icon`, `zone`, posisi `x`/`y` di kanvas 800 × 460, `role`, dan `details`.
-   - `links`: `from`, `to`, dan `label` (opsional).
-2. Ubah `published: false` menjadi `published: true` di `_tabs/homelab.html`.
-3. Push. Halaman muncul di sidebar setelah Labs dan otomatis masuk command palette.
+- `title`, `summary`: judul dan paragraf pembuka.
+- `canvas`: ukuran diagram `[lebar, tinggi]`. `boundary`: kotak putus-putus "Proxmox cluster" di sekeliling VM.
+- `nodes`: `id`, `label` (pendek, maksimal sekitar 16 karakter agar muat di kotak), `icon`, `zone` (warna: `security`, `compute`, `monitor`, `client`, `edge`), posisi `x`/`y`, `role`, dan `details` (muncul di panel saat node disorot atau diklik).
+- `links`: `from`, `to`, `label` (opsional), dan `dashed: true` untuk koneksi sesuai kebutuhan (misalnya VPN).
+- `layers`: lima lapisan pipeline (bagian "How an alert flows").
+- `principles`: keputusan desain. `icon` memakai kelas lengkap, misalnya `fas fa-lock`.
 
-Pilihan `icon`: `server`, `shield-halved`, `network-wired`, `cloud`, `desktop`, `database`, `eye`, `router`, `laptop`, `hard-drive`, `wifi`, `lock`, `chart-line`, `box`. Untuk menambah ikon lain, masukkan kode glyph Font Awesome-nya di `GLYPHS` dalam `assets/js/custom/homelab.js`.
+Pilihan `icon` untuk node ada di `GLYPHS` dalam `assets/js/custom/homelab.js` (`server`, `shield-halved`, `eye`, `brain`, `diagram-project`, `bell`, `laptop`, `chart-line`, `database`, dan lainnya). Untuk menambah ikon baru, masukkan kode glyph-nya di `GLYPHS`, lalu jalankan `python3 tools/fa-subset.py`.
 
----
+**Halaman ini publik:** jangan menulis IP, hostname, port, atau kredensial apa pun.
+
+Kalau TA berkembang (misalnya VM deteksi dipecah, atau model LLM dipilih), cukup ubah `_data/homelab.yml`.
 
 ## 8. Widget data harian
 

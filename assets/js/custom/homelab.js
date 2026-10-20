@@ -9,7 +9,8 @@
   var GLYPHS = {
     server: '\uf233', 'shield-halved': '\uf3ed', 'network-wired': '\uf6ff', cloud: '\uf0c2',
     desktop: '\uf390', database: '\uf1c0', eye: '\uf06e', router: '\uf8da', laptop: '\uf109',
-    'hard-drive': '\uf0a0', wifi: '\uf1eb', lock: '\uf023', 'chart-line': '\uf201', box: '\uf466'
+    'hard-drive': '\uf0a0', wifi: '\uf1eb', lock: '\uf023', 'chart-line': '\uf201', box: '\uf466',
+    brain: '\uf5dc', 'diagram-project': '\uf542', bell: '\uf0f3'
   };
   document.querySelectorAll('.hl-icon').forEach(function (el) {
     el.textContent = GLYPHS[el.dataset.icon] || GLYPHS.server;
@@ -26,7 +27,7 @@
     if (!n) { return; }
     document.querySelectorAll('.hl-node.is-active').forEach(function (x) { x.classList.remove('is-active'); });
     el.classList.add('is-active');
-    panel.innerHTML = '<h2>' + esc(n.label) + '</h2><p class="hl-role">' + esc(n.role || '') + '</p>' +
+    panel.innerHTML = '<h3>' + esc(n.label) + '</h3><p class="hl-role">' + esc(n.role || '') + '</p>' +
       (n.details && n.details.length ? '<ul>' + n.details.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul>' : '');
   }
 
