@@ -1,34 +1,46 @@
 {
-  "grade": "B-",
-  "score": 65,
-  "passed": 9,
+  "grade": "A+",
+  "score": 115,
+  "passed": 12,
   "total": 12,
   "checked": "2026-10-20",
   "report": "https://developer.mozilla.org/en-US/observatory/analyze?host=cyphera.my.id",
   "headers": [
     {
       "name": "Strict-Transport-Security",
-      "present": true
+      "present": true,
+      "value": "max-age 180 days",
+      "purpose": "Browsers only ever connect over HTTPS, even if a link says http://."
     },
     {
       "name": "Content-Security-Policy",
-      "present": true
+      "present": true,
+      "value": "inline JS blocked · scripts from self + 3 origins · object-src 'none' · frame-ancestors 'none' · base-uri 'self'",
+      "purpose": "Only approved sources may load; injected scripts, plugins, and framing are blocked."
     },
     {
       "name": "X-Frame-Options",
-      "present": true
+      "present": true,
+      "value": "DENY",
+      "purpose": "No other site can embed these pages in a frame (clickjacking)."
     },
     {
       "name": "X-Content-Type-Options",
-      "present": true
+      "present": true,
+      "value": "nosniff",
+      "purpose": "Files are only used as their declared type, never guessed (MIME sniffing)."
     },
     {
       "name": "Referrer-Policy",
-      "present": true
+      "present": true,
+      "value": "strict-origin-when-cross-origin",
+      "purpose": "Other sites only see the domain a visitor came from, not the full URL."
     },
     {
       "name": "Permissions-Policy",
-      "present": true
+      "present": true,
+      "value": "camera, microphone, geolocation, payment, usb, browsing-topics off",
+      "purpose": "Browser features the site never uses are switched off for it and any embed."
     }
   ]
 }

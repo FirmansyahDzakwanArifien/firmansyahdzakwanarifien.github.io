@@ -93,14 +93,45 @@ def github():
     })
 
 
+# What each header does, shown under its value on the home page.
+HEADER_PURPOSE = {
+    "Strict-Transport-Security": "Browsers only ever connect over HTTPS, even if a link says http://.",
+    "Content-Security-Policy": "Only approved sources may load; injected scripts, plugins, and framing are blocked.",
+    "X-Frame-Options": "No other site can embed these pages in a frame (clickjacking).",
+    "X-Content-Type-Options": "Files are only used as their declared type, never guessed (MIME sniffing).",
+    "Referrer-Policy": "Other sites only see the domain a visitor came from, not the full URL.",
+    "Permissions-Policy": "Browser features the site never uses are switched off for it and any embed.",
+}
+
+
+def summarize(name, value):
+    """A short, specific reading of a header value for the scorecard."""
+    if value is None:
+        return "missing"
+    if name == "Strict-Transport-Security":
+        age = re.search(r"max-age=(\d+)", value)
+        parts = [f"max-age {int(age.group(1)) // 86400} days" if age else value]
+        parts += [flag for flag in ("includeSubDomains", "preload") if flag.lower() in value.lower()]
+        return " · ".join(parts)
+    if name == "Content-Security-Policy":
+        policy = {d.split()[0]: d.split()[1:] for d in (x.strip() for x in value.split(";")) if d}
+        scripts = policy.get("script-src", policy.get("default-src", []))
+        parts = ["inline JS blocked" if "'unsafe-inline'" not in scripts else "inline JS allowed",
+                 f"scripts from self + {len([s for s in scripts if s.startswith('https://')])} origins"]
+        parts += [f"{d} {' '.join(policy[d])}" for d in ("object-src", "frame-ancestors", "base-uri") if d in policy]
+        return " · ".join(parts)
+    if name == "Permissions-Policy":
+        off = re.findall(r"([a-z-]+)=\(\)", value)
+        return f"{', '.join(off)} off" if off else value
+    return value
+
+
 def scorecard():
     body, _ = get(f"https://observatory-api.mdn.mozilla.net/api/v2/scan?host={SITE}", method="POST")
     scan = json.loads(body)
     if scan.get("error"):
         raise RuntimeError(f"observatory: {scan['error']}")
     _, headers = get(f"https://{SITE}/", method="HEAD")
-    wanted = ["Strict-Transport-Security", "Content-Security-Policy", "X-Frame-Options",
-              "X-Content-Type-Options", "Referrer-Policy", "Permissions-Policy"]
     write("scorecard", {
         "grade": scan["grade"],
         "score": scan["score"],
@@ -108,7 +139,12 @@ def scorecard():
         "total": scan["tests_quantity"],
         "checked": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "report": f"https://developer.mozilla.org/en-US/observatory/analyze?host={SITE}",
-        "headers": [{"name": h, "present": headers.get(h) is not None} for h in wanted],
+        "headers": [{
+            "name": h,
+            "present": headers.get(h) is not None,
+            "value": summarize(h, headers.get(h)),
+            "purpose": purpose,
+        } for h, purpose in HEADER_PURPOSE.items()],
     })
 
 

@@ -360,7 +360,7 @@ Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, avata
 - **Warna teks:** pakai token `var(--muted)` / `var(--accent)` (halaman utama) atau `var(--text-muted-color)` (tema). Token ini sudah memenuhi kontras WCAG AA (≥ 4,5:1) di mode terang dan gelap. Jangan meredupkan teks dengan `opacity`, karena kontrasnya turun diam-diam.
 - **Heading:** satu `<h1>` per halaman (dari layout), bagian memakai `<h2>`, isi kartu `<h3>`. Widget menerima parameter `heading=2` bila diletakkan langsung di bawah `<h1>`.
 - **Gambar besar di atas lipatan:** jangan di-lazy-load. Header post sudah otomatis `fetchpriority="high"`. Gambar lain di konten otomatis lazy.
-- **Font:** dimuat dengan `display=optional` (tidak ada lompatan layout saat font datang terlambat).
+- **Font:** Source Sans Pro, Lato (tema), DM Sans, dan Instrument Serif (halaman utama) di-host sendiri di `assets/fonts/web/` (`assets/css/webfonts.css`, `assets/css/webfonts-home.css`), dengan `font-display: swap` dan preload untuk ketebalan yang dipakai sidebar. Hasilnya, font selalu sama setiap refresh, dan tidak ada request ke Google Fonts. Untuk mengganti atau menambah font, ubah `SHEETS`/`PRELOAD` di `tools/webfonts.py`, lalu jalankan `python3 tools/webfonts.py` dan commit hasilnya.
 - **Ikon (Font Awesome):** situs memakai **subset** yang di-host sendiri (`assets/css/fa-subset.css` dan `assets/fonts/fa/`, sekitar 25 KB, sebelumnya 232 KB dari CDN). Setiap kali memakai ikon **baru** (`fas fa-...`, `fab fa-...`) di template, data, post, atau JS, jalankan lalu commit hasilnya:
   ```bash
   pip install fonttools brotli   # sekali saja

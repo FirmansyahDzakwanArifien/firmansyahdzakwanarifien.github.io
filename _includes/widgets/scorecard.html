@@ -1,26 +1,86 @@
 {%- comment -%}
-  This site's own security posture: Mozilla Observatory grade and security headers.
-  Data: _data/scorecard.json, refreshed daily by .github/workflows/data-refresh.yml.
+  This site's own security posture: Mozilla Observatory grade, each security header with its live value,
+  and the build-time controls behind them.
+  Data: _data/scorecard.json (refreshed daily by .github/workflows/data-refresh.yml) and _data/sri.yml.
 {%- endcomment -%}
 {%- assign hl = include.heading | default: 3 -%}
 {%- assign sc = site.data.scorecard -%}
 {%- if sc.grade %}
 {%- assign grade_class = sc.grade | slice: 0 | downcase -%}
+{%- assign present = sc.headers | where: 'present', true -%}
 <section class="widget scorecard" aria-labelledby="scorecard-title">
   <div class="widget-head">
     <h{{ hl }} id="scorecard-title" class="widget-title"><i class="fas fa-shield-halved"></i> This Site's Security</h{{ hl }}>
     <span class="widget-sub">Checked {{ sc.checked | date: '%d %b %Y' }} · <a href="{{ sc.report }}" target="_blank" rel="noopener noreferrer">Full report</a></span>
   </div>
-  <div class="sc-body">
-    <div class="sc-grade grade-{{ grade_class }}" aria-label="Mozilla Observatory grade {{ sc.grade }}">
+
+  <div class="sc-summary">
+    <div class="sc-grade grade-{{ grade_class }}" aria-label="Mozilla Observatory grade {{ sc.grade }}, score {{ sc.score }}">
       <b>{{ sc.grade }}</b><span>{{ sc.score }}/100</span>
     </div>
-    <ul class="sc-headers">
-      {%- for h in sc.headers %}
-      <li class="{% if h.present %}ok{% else %}missing{% endif %}"><i class="fas {% if h.present %}fa-check{% else %}fa-xmark{% endif %}"></i>{{ h.name }}</li>
-      {%- endfor %}
-    </ul>
+    <p>
+      <b>Mozilla Observatory: {{ sc.passed }} of {{ sc.total }} tests passed.</b>
+      {{ present.size }} of {{ sc.headers.size }} recommended security headers are sent on every page by a
+      Cloudflare response rule, since GitHub Pages cannot set headers itself. Values below are read from the live site.
+    </p>
   </div>
-  <p class="sc-note">Mozilla Observatory · {{ sc.passed }}/{{ sc.total }} tests passed. Served with a strict CSP, SRI on third-party scripts, and HSTS.</p>
+
+  <h{{ hl | plus: 1 }} class="sc-heading">Response headers</h{{ hl | plus: 1 }}>
+  <ul class="sc-list">
+    {%- for h in sc.headers %}
+    <li class="{% if h.present %}ok{% else %}missing{% endif %}">
+      <i class="fas {% if h.present %}fa-check{% else %}fa-xmark{% endif %}" aria-hidden="true"></i>
+      <div>
+        <code class="sc-name">{{ h.name }}</code>
+        <span class="sc-value">{% if h.present %}{{ h.value | default: 'present' }}{% else %}not sent{% endif %}</span>
+        {%- if h.purpose %}<p>{{ h.purpose }}</p>{% endif %}
+      </div>
+    </li>
+    {%- endfor %}
+  </ul>
+
+  <h{{ hl | plus: 1 }} class="sc-heading">Beyond headers</h{{ hl | plus: 1 }}>
+  <ul class="sc-list">
+    <li class="ok">
+      <i class="fas fa-check" aria-hidden="true"></i>
+      <div>
+        <b class="sc-name">Subresource Integrity</b>
+        <span class="sc-value">{{ site.data.sri.size }} third-party files pinned to SHA-384</span>
+        <p>Every library loaded from jsDelivr carries a hash; if the CDN copy changes, the browser refuses it. CI fails when a hash goes stale.</p>
+      </div>
+    </li>
+    <li class="ok">
+      <i class="fas fa-check" aria-hidden="true"></i>
+      <div>
+        <b class="sc-name">No inline JavaScript</b>
+        <span class="sc-value">enforced in CI</span>
+        <p>All scripts are separate files, so the CSP needs no <code>'unsafe-inline'</code>. The build fails on any inline script, <code>on*=</code> handler, or <code>javascript:</code> URL.</p>
+      </div>
+    </li>
+    <li class="ok">
+      <i class="fas fa-check" aria-hidden="true"></i>
+      <div>
+        <b class="sc-name">Self-hosted fonts and icons</b>
+        <span class="sc-value">no Google Fonts requests</span>
+        <p>Text fonts and a trimmed Font Awesome set are served from this domain, so visitors' IPs are not sent to a font CDN.</p>
+      </div>
+    </li>
+    <li class="ok">
+      <i class="fas fa-check" aria-hidden="true"></i>
+      <div>
+        <b class="sc-name">Pinned build pipeline</b>
+        <span class="sc-value">Actions pinned to commit SHAs</span>
+        <p>A moved or hijacked tag cannot change what runs in CI. Dependabot proposes updates weekly.</p>
+      </div>
+    </li>
+    <li class="ok">
+      <i class="fas fa-check" aria-hidden="true"></i>
+      <div>
+        <b class="sc-name">Vulnerability disclosure</b>
+        <span class="sc-value"><a href="{{ '/.well-known/security.txt' | relative_url }}">security.txt</a> (RFC 9116)</span>
+        <p>Tells researchers how to report a vulnerability. A weekly CI check fails 30 days before the file expires, so it never goes stale.</p>
+      </div>
+    </li>
+  </ul>
 </section>
 {%- endif -%}

@@ -172,11 +172,21 @@ html[data-mode='dark'] .gh-activity {
 }
 
 /* Security scorecard */
-.sc-body {
+.sc-summary {
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+
+  p {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-muted-color);
+  }
+
+  p b { color: var(--text-color); }
 }
 
 .sc-grade {
@@ -220,26 +230,76 @@ html[data-mode='dark'] .sc-grade {
   }
 }
 
-.sc-headers {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.3rem 1rem;
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  font-size: 0.8rem;
-  list-style: none;
+.sc-grade { flex: none; }
 
-  i { width: 1.1rem; }
-  .ok i { color: #2f855a; }
-  .missing { color: var(--text-muted-color); }
-  .missing i { color: #c53030; }
+.scorecard .sc-heading {
+  margin: 1.1rem 0 0.5rem;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted-color);
 }
 
-.sc-note {
-  margin: 0.75rem 0 0;
-  font-size: 0.75rem;
-  color: var(--text-muted-color);
+.sc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 0.6rem 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  li > i {
+    flex: none;
+    width: 1rem;
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  li > div { min-width: 0; }
+  .ok > i { color: #2f855a; }
+  .missing > i { color: #c53030; }
+
+  .sc-name {
+    display: block;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    background: none;
+    overflow-wrap: anywhere;
+  }
+
+  .sc-value {
+    display: block;
+    margin-top: 0.1rem;
+    font-family: var(--bs-font-monospace, monospace);
+    font-size: 0.72rem;
+    color: var(--text-color);
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0.2rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-muted-color);
+  }
+
+  p code { font-size: 0.7rem; }
+}
+
+html[data-mode='dark'] .sc-list .ok > i { color: #48bb78; }
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .sc-list .ok > i { color: #48bb78; }
 }
 
 /* ---------- Command palette (assets/js/custom/command.js) ---------- */
