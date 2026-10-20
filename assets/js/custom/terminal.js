@@ -136,13 +136,56 @@
       desc: 'close the terminal',
       run: function () { close(); }
     },
+    theme: {
+      desc: 'theme [hacker|default|dark|light]',
+      run: function (args) {
+        var want = (args[0] || '').toLowerCase();
+        if (want === 'hacker' || want === 'default') {
+          if (window.ThemeVariant) { window.ThemeVariant.set(want); }
+          print('theme: ' + want, 'term-ok');
+        } else if ((want === 'dark' || want === 'light') && window.Theme && window.Theme.switchable) {
+          if ((window.Theme.visualState === 'dark') !== (want === 'dark')) { window.Theme.flip(); }
+          print('mode: ' + want, 'term-ok');
+        } else {
+          print('usage: theme hacker | default | dark | light  <span class="term-dim">(now: ' + esc(window.ThemeVariant ? window.ThemeVariant.get() : 'default') + ')</span>');
+        }
+      }
+    },
+    palette: {
+      desc: 'open the command palette (Ctrl+K)',
+      run: function () { close(); if (window.CommandPalette) { window.CommandPalette.open(); } }
+    },
+    ctf: {
+      desc: 'capture the flag: 5 flags hidden on this site',
+      run: function () {
+        print('5 flags in the format <span class="term-ok">cyphera{...}</span> are hidden around this site.');
+        print('submit them at ' + link(DATA.home.replace(/\/$/, '') + '/ctf/', '/ctf/') + '. one of them is closer than you think.', 'term-dim');
+      }
+    },
     sudo: {
       hidden: true,
       run: function () { print('nice try. this incident will be reported.', 'term-err'); }
     },
     ls: {
       hidden: true,
-      run: function () { print('about  certs  contact  cv  education  experience  labs  projects  skills'); }
+      run: function (args) {
+        var all = args.some(function (a) { return /^-[a-z]*a/.test(a); });
+        print((all ? '.  ..  .flag  ' : '') + 'about  certs  contact  cv  education  experience  labs  projects  skills');
+      }
+    },
+    cat: {
+      hidden: true,
+      run: function (args) {
+        var file = args[0];
+        if (!file) { print('usage: cat &lt;file&gt;', 'term-dim'); return; }
+        if (file === '.flag' || file === './.flag') {
+          /* CTF flag 4/5, base64 so it does not show up in a plain-text search of the source. */
+          print(atob('Y3lwaGVyYXt0M3JtMW40bF92M2wwYzF0eX0='), 'term-ok');
+          return;
+        }
+        if (COMMANDS[file] && !COMMANDS[file].hidden) { COMMANDS[file].run([]); return; }
+        print('cat: ' + esc(file) + ': No such file or directory', 'term-err');
+      }
     }
   };
 
@@ -152,10 +195,12 @@
     if (!line) { return; }
     history.push(line);
     cursor = history.length;
-    var name = line.split(/\s+/)[0].toLowerCase();
+    var parts = line.split(/\s+/);
+    var name = parts[0].toLowerCase();
+    var args = parts.slice(1);
     if (name === 'rm') { print('permission denied: this portfolio is read-only.', 'term-err'); return; }
     var cmd = COMMANDS[name];
-    if (cmd) { cmd.run(); } else { print(esc(name) + ': command not found. try <span class="term-key">help</span>', 'term-err'); }
+    if (cmd) { cmd.run(args); } else { print(esc(name) + ': command not found. try <span class="term-key">help</span>', 'term-err'); }
   }
 
   function build() {
@@ -237,4 +282,6 @@
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-term-open]')) { open(); }
   });
+
+  window.SiteTerminal = { open: open, close: close };
 })();

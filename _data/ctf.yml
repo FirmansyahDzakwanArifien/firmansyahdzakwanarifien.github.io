@@ -1,0 +1,37 @@
+# CTF challenges for /ctf/. Only SHA-256 hashes of the flags are stored here, never the flags.
+# Hash a new flag with: python3 tools/ctf-hash.py 'cyphera{...}'  (see docs/GUIDE.md, section CTF)
+
+- id: source
+  title: View Source
+  category: Recon
+  points: 100
+  hint: "Browsers hide more than they show. What does the home page look like to a parser?"
+  hash: 0b56205658a57b801a7b215d41d0d82d5bba10eb9d14ae1419acc0e21b7a8802
+
+- id: robots
+  title: Polite Crawler
+  category: Recon
+  points: 100
+  hint: "Every website leaves a note for the bots. Read it like one."
+  hash: 4cd3fd8d4ee2bb1fbb2b439ff73ec88d50ecffd08101677770fc6b2402f2d5b0
+
+- id: security-txt
+  title: Responsible Disclosure
+  category: Policy
+  points: 150
+  hint: "RFC 9116 says where to report a vulnerability. The file lives somewhere well-known."
+  hash: ab68b6f634a86875b7fcf07ce2c01d1b19e1aff47c833f29c2d7bc9f6957c721
+
+- id: terminal
+  title: Hidden Files
+  category: Linux
+  points: 150
+  hint: "Press ` and look around. Some files only show up when you ask for all of them."
+  hash: 7fdfd2f78a78d6ed66fdd290422a4e2abdf39c3e1a5138e60566d7846e9f306f
+
+- id: exif
+  title: Picture This
+  category: Forensics
+  points: 200
+  hint: "A picture is worth a thousand bytes. The comic version of me knows more than it shows."
+  hash: 63febe044d85ef794a9289287439c9264bed3dd82fdaa5e573ec612e8c55d185

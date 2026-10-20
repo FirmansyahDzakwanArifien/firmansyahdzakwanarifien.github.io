@@ -1,0 +1,44 @@
+# Daily: refresh the Threat Watch (CISA KEV), GitHub activity, and security scorecard data, commit it
+# when it changed, and redeploy. Pushes made with GITHUB_TOKEN do not trigger other workflows, so the
+# deploy is dispatched explicitly.
+name: Data refresh
+
+on:
+  schedule:
+    - cron: "30 0 * * *" # 00:30 UTC / 07:30 WIB
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # A failed source keeps its previous file; report it without blocking the others.
+        run: python3 tools/refresh-data.py || echo "::warning::Some sources failed; kept their previous data."
+
+      - name: Commit and redeploy when the data changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- _data; then
+            echo "No data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _data/kev.json _data/github.json _data/scorecard.json
+          git commit -m "chore: refresh threat watch, GitHub activity, and scorecard data"
+          git push
+          gh workflow run jekyll.yml --ref main

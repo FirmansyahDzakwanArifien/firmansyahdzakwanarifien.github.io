@@ -1,0 +1,34 @@
+{
+  "grade": "B-",
+  "score": 65,
+  "passed": 9,
+  "total": 12,
+  "checked": "2026-10-20",
+  "report": "https://developer.mozilla.org/en-US/observatory/analyze?host=cyphera.my.id",
+  "headers": [
+    {
+      "name": "Strict-Transport-Security",
+      "present": true
+    },
+    {
+      "name": "Content-Security-Policy",
+      "present": true
+    },
+    {
+      "name": "X-Frame-Options",
+      "present": true
+    },
+    {
+      "name": "X-Content-Type-Options",
+      "present": true
+    },
+    {
+      "name": "Referrer-Policy",
+      "present": true
+    },
+    {
+      "name": "Permissions-Policy",
+      "present": true
+    }
+  ]
+}

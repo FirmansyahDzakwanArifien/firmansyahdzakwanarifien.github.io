@@ -1,0 +1,60 @@
+{
+  "catalog_version": "2026.10.16",
+  "total": 1748,
+  "items": [
+    {
+      "cve": "CVE-2026-102764",
+      "vendor": "BeyondTrust",
+      "product": "Remote Support",
+      "name": "BeyondTrust Remote Support Authentication Bypass by Spoofing Vulnerability",
+      "added": "2026-10-16",
+      "due": "2026-10-19",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2025-61624",
+      "vendor": "Fortinet",
+      "product": "Multiple Products",
+      "name": "Fortinet Multiple Products Path Traversal Vulnerability",
+      "added": "2026-10-16",
+      "due": "2026-10-19",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-21589",
+      "vendor": "Atlassian",
+      "product": "Multiple Products",
+      "name": "Atlassian Multiple Products Files or Directories Accessible to External Parties Vulnerability",
+      "added": "2026-10-15",
+      "due": "2026-10-18",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-76519",
+      "vendor": "Cisco",
+      "product": "Secure Email Gateway",
+      "name": "Cisco Secure Email Gateway Relative Path Traversal Vulnerability",
+      "added": "2026-10-14",
+      "due": "2026-10-17",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-105134",
+      "vendor": "Ahsay",
+      "product": "AhsayCBS",
+      "name": "Ahsay AhsayCBS Command Injection Vulnerability",
+      "added": "2026-10-14",
+      "due": "2026-10-17",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-105133",
+      "vendor": "Ahsay",
+      "product": "AhsayCBS",
+      "name": "Ahsay AhsayCBS Improper Authentication Vulnerability",
+      "added": "2026-10-14",
+      "due": "2026-10-17",
+      "ransomware": false
+    }
+  ]
+}

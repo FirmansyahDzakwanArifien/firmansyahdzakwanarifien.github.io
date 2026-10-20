@@ -1,0 +1,26 @@
+{%- comment -%}
+  Threat Watch: newest entries of the CISA Known Exploited Vulnerabilities catalog.
+  Data: _data/kev.json, refreshed daily by .github/workflows/data-refresh.yml.
+{%- endcomment -%}
+{%- assign kev = site.data.kev -%}
+{%- assign kev_limit = include.limit | default: 6 -%}
+{%- if kev.items.size > 0 %}
+<section class="widget threat-watch" aria-labelledby="threat-watch-title">
+  <div class="widget-head">
+    <h2 id="threat-watch-title" class="widget-title"><i class="fas fa-triangle-exclamation"></i> Threat Watch</h2>
+    <span class="widget-sub">Newest of {{ kev.total }} actively exploited CVEs · <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a></span>
+  </div>
+  <ul class="kev-list">
+    {%- for v in kev.items limit: kev_limit %}
+    <li class="kev-item">
+      <a class="kev-cve" href="https://nvd.nist.gov/vuln/detail/{{ v.cve }}" target="_blank" rel="noopener noreferrer">{{ v.cve }}</a>
+      <span class="kev-name">{{ v.vendor }} {{ v.product }} <span class="kev-desc">— {{ v.name }}</span></span>
+      <span class="kev-meta">
+        {%- if v.ransomware %}<span class="kev-ransom" title="Known use in ransomware campaigns">Ransomware</span>{% endif -%}
+        <time datetime="{{ v.added }}">{{ v.added | date: '%d %b %Y' }}</time>
+      </span>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif -%}

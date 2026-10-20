@@ -1,0 +1,45 @@
+{%- comment -%}
+  Public GitHub contribution calendar and recently pushed repositories.
+  Data: _data/github.json, refreshed daily by .github/workflows/data-refresh.yml.
+{%- endcomment -%}
+{%- assign gh = site.data.github -%}
+{%- if gh.days.size > 0 %}
+{%- assign offset = gh.first | date: '%w' | plus: 0 -%}
+{%- assign cells = gh.days.size | plus: offset -%}
+{%- assign weeks = cells | plus: 6 | divided_by: 7 -%}
+{%- assign width = weeks | times: 12 | plus: 28 -%}
+<section class="widget gh-activity" aria-labelledby="gh-title">
+  <div class="widget-head">
+    <h2 id="gh-title" class="widget-title"><i class="fab fa-github"></i> Open Source Activity</h2>
+    <span class="widget-sub">{{ gh.total }} contributions in the last year · <a href="https://github.com/{{ site.github.username }}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+  </div>
+  <div class="gh-scroll">
+    <svg class="gh-calendar" viewBox="0 0 {{ width }} 100" width="{{ width }}" height="100" role="img" aria-label="{{ gh.total }} GitHub contributions in the last year">
+      {%- for day in gh.days %}
+        {%- assign i = forloop.index0 | plus: offset -%}
+        {%- assign col = i | divided_by: 7 -%}
+        {%- assign row = i | modulo: 7 -%}
+        {%- assign x = col | times: 12 | plus: 28 -%}
+        {%- assign y = row | times: 12 | plus: 14 -%}
+        {%- assign dom = day[0] | slice: 8, 2 -%}
+        {%- if dom == '01' %}<text class="gh-month" x="{{ x }}" y="9">{{ day[0] | date: '%b' }}</text>{% endif -%}
+        <rect class="lv{{ day[1] }}" x="{{ x }}" y="{{ y }}" width="10" height="10" rx="2"><title>{{ day[0] | date: '%d %b %Y' }}</title></rect>
+      {%- endfor %}
+      <text class="gh-month" x="0" y="35">Mon</text>
+      <text class="gh-month" x="0" y="59">Wed</text>
+      <text class="gh-month" x="0" y="83">Fri</text>
+    </svg>
+  </div>
+  {%- if gh.repos.size > 0 %}
+  <ul class="gh-repos">
+    {%- for r in gh.repos %}
+    <li>
+      <a href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ r.name }}</a>
+      {%- if r.description != '' %}<span class="gh-desc">{{ r.description | truncate: 90 }}</span>{% endif %}
+      <span class="gh-meta">{% if r.language != '' %}{{ r.language }} · {% endif %}updated {{ r.pushed | date: '%d %b %Y' }}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</section>
+{%- endif -%}

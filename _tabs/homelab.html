@@ -1,0 +1,72 @@
+---
+layout: page
+title: Homelab
+icon: fas fa-server
+order: 3.6
+published: false # set to true once _data/homelab.yml describes the lab (see docs/GUIDE.md)
+description: Interactive map of the homelab where I practise infrastructure, network security, and monitoring.
+---
+
+{%- assign lab = site.data.homelab -%}
+
+<style>
+.hl-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 1rem; align-items: start; }
+@media (max-width: 860px) { .hl-wrap { grid-template-columns: 1fr; } }
+
+.hl-map { width: 100%; height: auto; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
+.hl-link { stroke: var(--text-muted-color); stroke-width: 1.5; stroke-dasharray: 5 4; opacity: 0.6; }
+.hl-link-label { font-size: 11px; fill: var(--text-muted-color); }
+
+.hl-node { cursor: pointer; outline: none; }
+.hl-node rect { fill: var(--main-bg); stroke: var(--zone); stroke-width: 2; transition: transform 0.15s; }
+.hl-node:hover rect, .hl-node:focus rect, .hl-node.is-active rect { fill: color-mix(in srgb, var(--zone) 14%, var(--main-bg)); stroke-width: 3; }
+.hl-node text { font-size: 12px; font-weight: 600; fill: var(--text-color); }
+.hl-node .hl-icon { font-family: 'Font Awesome 7 Free', 'Font Awesome 6 Free'; font-weight: 900; font-size: 15px; fill: var(--zone); }
+
+.hl-node[data-zone='edge']     { --zone: #718096; }
+.hl-node[data-zone='security'] { --zone: #d14343; }
+.hl-node[data-zone='compute']  { --zone: #2563eb; }
+.hl-node[data-zone='monitor']  { --zone: #0f8c78; }
+.hl-node[data-zone='client']   { --zone: #7c5cd6; }
+
+.hl-panel { padding: 1rem 1.1rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
+.hl-panel h2 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.hl-panel .hl-role { margin: 0 0 0.6rem; font-size: 0.82rem; color: var(--text-muted-color); }
+.hl-panel ul { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; }
+.hl-empty { color: var(--text-muted-color); font-size: 0.85rem; }
+</style>
+
+{%- if lab.nodes.size > 0 %}
+<p>Hover or tap a node to see what it does. Use <kbd>Tab</kbd> to move between nodes with the keyboard.</p>
+
+<div class="hl-wrap">
+  <svg class="hl-map" viewBox="0 0 800 460" role="group" aria-label="Homelab topology">
+    {%- for l in lab.links %}
+      {%- assign a = lab.nodes | where: 'id', l.from | first -%}
+      {%- assign b = lab.nodes | where: 'id', l.to | first -%}
+      {%- if a and b %}
+      <line class="hl-link" x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}"></line>
+        {%- if l.label %}
+      <text class="hl-link-label" x="{{ a.x | plus: b.x | divided_by: 2 | plus: 6 }}" y="{{ a.y | plus: b.y | divided_by: 2 }}">{{ l.label }}</text>
+        {%- endif %}
+      {%- endif %}
+    {%- endfor %}
+    {%- for n in lab.nodes %}
+    <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 70 }} {{ n.y | minus: 22 }})">
+      <rect width="140" height="44" rx="10"></rect>
+      <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
+      <text x="40" y="27">{{ n.label }}</text>
+    </g>
+    {%- endfor %}
+  </svg>
+
+  <aside class="hl-panel" id="hl-panel" aria-live="polite">
+    <p class="hl-empty">Select a node to see its role and details.</p>
+  </aside>
+</div>
+
+<script type="application/json" id="hl-data">{{ lab.nodes | jsonify }}</script>
+<script defer src="{{ '/assets/js/custom/homelab.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+{%- else %}
+<p class="hl-empty">The homelab map is not filled in yet. See docs/GUIDE.md, section "Homelab".</p>
+{%- endif %}

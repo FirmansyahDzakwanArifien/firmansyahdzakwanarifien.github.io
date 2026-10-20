@@ -3,6 +3,9 @@ permalink: /robots.txt
 # The robots rules
 ---
 
+# Hello, recon-minded human. CTF flag 2/5: cyphera{r0b0ts_d0nt_h1d3_s3cr3ts}
+# More flags: {{ '/ctf/' | absolute_url }}
+
 User-agent: *
 
 Disallow: /norobots/

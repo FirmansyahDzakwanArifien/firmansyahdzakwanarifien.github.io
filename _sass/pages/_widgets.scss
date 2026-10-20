@@ -1,0 +1,431 @@
+@use '../abstracts/breakpoints' as bp;
+
+/* Site add-ons: data widgets, command palette, shortcuts overlay, reading progress, toast. */
+
+/* ---------- Data widgets (_includes/widgets/) ---------- */
+
+.widget {
+  padding: 1rem 1.15rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.widget-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.widget-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  i { margin-right: 0.35rem; color: var(--link-color); }
+}
+
+.widget-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+}
+
+/* Threat Watch */
+.kev-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kev-item {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr auto;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  padding: 0.45rem 0;
+  font-size: 0.82rem;
+  border-top: 1px dashed var(--main-border-color);
+
+  &:first-child { border-top: 0; }
+
+  @include bp.lt(bp.get(md)) {
+    grid-template-columns: 1fr auto;
+
+    .kev-name { grid-column: 1 / -1; grid-row: 2; }
+  }
+}
+
+.kev-cve {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 600;
+}
+
+.kev-desc { color: var(--text-muted-color); }
+
+.kev-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-size: 0.72rem;
+  color: var(--text-muted-color);
+  white-space: nowrap;
+}
+
+.kev-ransom {
+  padding: 0 0.45rem;
+  font-weight: 600;
+  color: #fff;
+  background: #c53030;
+  border-radius: 8px;
+}
+
+/* GitHub activity */
+.gh-scroll { overflow-x: auto; }
+
+.gh-calendar {
+  display: block;
+  max-width: none;
+
+  rect { fill: var(--gh-0); }
+  .lv1 { fill: var(--gh-1); }
+  .lv2 { fill: var(--gh-2); }
+  .lv3 { fill: var(--gh-3); }
+  .lv4 { fill: var(--gh-4); }
+}
+
+.gh-activity {
+  --gh-0: rgb(128 128 128 / 14%);
+  --gh-1: #9be9a8;
+  --gh-2: #40c463;
+  --gh-3: #30a14e;
+  --gh-4: #216e39;
+}
+
+html[data-mode='dark'] .gh-activity {
+  --gh-1: #0e4429;
+  --gh-2: #006d32;
+  --gh-3: #26a641;
+  --gh-4: #39d353;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .gh-activity {
+    --gh-1: #0e4429;
+    --gh-2: #006d32;
+    --gh-3: #26a641;
+    --gh-4: #39d353;
+  }
+}
+
+.gh-month {
+  font-size: 9px;
+  fill: var(--text-muted-color);
+}
+
+.gh-repos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--main-border-color);
+    border-radius: 8px;
+  }
+
+  a { font-weight: 600; }
+}
+
+.gh-desc { color: var(--text-muted-color); }
+
+.gh-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted-color);
+}
+
+/* Security scorecard */
+.sc-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sc-grade {
+  --grade: #2f855a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border: 3px solid var(--grade);
+  border-radius: 14px;
+  color: var(--grade);
+
+  b { font-size: 2rem; line-height: 1; }
+  span { font-size: 0.72rem; font-weight: 600; }
+
+  &.grade-b { --grade: #2b6cb0; }
+  &.grade-c { --grade: #b7791f; }
+  &.grade-d,
+  &.grade-f { --grade: #c53030; }
+}
+
+.sc-headers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.3rem 1rem;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  list-style: none;
+
+  i { width: 1.1rem; }
+  .ok i { color: #2f855a; }
+  .missing { color: var(--text-muted-color); }
+  .missing i { color: #c53030; }
+}
+
+.sc-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+}
+
+/* ---------- Command palette (assets/js/custom/command.js) ---------- */
+
+html.cmdk-lock,
+html.cmdk-lock body { overflow: hidden; }
+
+#cmdk {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 1rem 1rem;
+  background: rgb(0 0 0 / 40%);
+
+  &.is-open { display: flex; }
+}
+
+.cmdk-box {
+  width: min(620px, 100%);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--text-color);
+  background: var(--main-bg);
+  border: 1px solid var(--main-border-color);
+  border-radius: 12px;
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 55%);
+}
+
+.cmdk-input {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--main-border-color);
+
+  i { color: var(--text-muted-color); }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    font-size: 1rem;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    outline: 0;
+  }
+
+  kbd { font-size: 0.7rem; }
+}
+
+.cmdk-list {
+  flex: 1;
+  margin: 0;
+  padding: 0.35rem;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.cmdk-group {
+  padding: 0.5rem 0.65rem 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted-color);
+}
+
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  cursor: pointer;
+
+  i {
+    width: 1.1rem;
+    text-align: center;
+    color: var(--text-muted-color);
+  }
+
+  .cmdk-hint {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--text-muted-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45%;
+  }
+
+  &.is-active {
+    background: var(--sidebar-hover-bg);
+
+    i { color: var(--link-color); }
+  }
+}
+
+.cmdk-empty {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--text-muted-color);
+}
+
+.cmdk-foot {
+  display: flex;
+  gap: 1rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.7rem;
+  color: var(--text-muted-color);
+  border-top: 1px solid var(--main-border-color);
+}
+
+/* Sits just left of the search box (the top bar spaces its items apart). */
+#cmdk-trigger {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  margin-right: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+  background: transparent;
+  border: 1px solid var(--main-border-color);
+  border-radius: 8px;
+
+  &:hover { color: var(--link-color); }
+
+  @include bp.lg {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Keyboard shortcuts overlay ---------- */
+
+#shortcuts {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 40%);
+
+  &.is-open { display: flex; }
+}
+
+.shortcuts-box {
+  width: min(460px, 100%);
+  padding: 1.1rem 1.25rem;
+  color: var(--text-color);
+  background: var(--main-bg);
+  border: 1px solid var(--main-border-color);
+  border-radius: 12px;
+
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem 1rem;
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  dt { white-space: nowrap; }
+  dd { margin: 0; color: var(--text-muted-color); }
+}
+
+/* ---------- Reading progress + toast (assets/js/custom/post-extras.js) ---------- */
+
+#read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  width: 100%;
+  height: 3px;
+  background: var(--link-color);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.site-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 2200;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  color: #fff;
+  background: rgb(20 20 28 / 92%);
+  border-radius: 8px;
+  transform: translate(-50%, 1rem);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+
+  &.is-on {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-toast { transition: none; }
+}
+
+@media print {
+  #read-progress,
+  #cmdk,
+  #shortcuts,
+  .site-toast { display: none !important; }
+}

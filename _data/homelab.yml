@@ -1,0 +1,34 @@
+# Homelab topology for /homelab/ (an interactive SVG diagram).
+# The page stays unpublished until this is filled in: then set `published: true` in _tabs/homelab.html.
+# Full instructions: docs/GUIDE.md, section "Homelab".
+#
+# Canvas is 800 x 460. Each node needs a unique id and x/y for its centre.
+# icon: any Font Awesome class name without the "fas " prefix (server, shield-halved, network-wired,
+#       cloud, desktop, database, eye, router...). zone colours the node: edge | security | compute | monitor | client
+#
+# Example (replace with your real lab, then remove the "[]" values below):
+#
+# nodes:
+#   - id: isp
+#     label: Internet
+#     icon: cloud
+#     zone: edge
+#     x: 400
+#     y: 50
+#     role: Upstream connection
+#     details: [ISP router in bridge mode]
+#   - id: fw
+#     label: FortiGate
+#     icon: shield-halved
+#     zone: security
+#     x: 400
+#     y: 170
+#     role: Perimeter firewall / VPN
+#     details: [Policies per VLAN, SSL-VPN for remote access]
+# links:
+#   - from: isp
+#     to: fw
+#     label: WAN
+
+nodes: []
+links: []

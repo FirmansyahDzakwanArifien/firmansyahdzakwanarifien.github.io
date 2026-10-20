@@ -143,7 +143,9 @@ html[data-mode="dark"] .labs {
 </style>
 
 <div class="labs">
-  <p class="labs-intro">Hands-on blue-team work: incident investigations, forensics challenges, and vulnerability write-ups. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>.</p>
+  <p class="labs-intro">Hands-on blue-team work: incident investigations, forensics challenges, and vulnerability write-ups. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>. Want to try one yourself? This site hides a small <a href="{{ '/ctf/' | relative_url }}">CTF</a>.</p>
+
+  {% include widgets/threat-watch.html limit=5 %}
 
   <div class="labs-filters" role="group" aria-label="Filter labs">
     <button type="button" class="labs-filter active" data-kind="all">All</button>

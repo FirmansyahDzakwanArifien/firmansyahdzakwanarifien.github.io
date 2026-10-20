@@ -1081,6 +1081,7 @@ html[data-mode="dark"] {
 <div class="about-wrap">
 
   <!-- Hero -->
+  <template id="ctf-note">CTF flag 1/5 · cyphera{v13w_s0urc3_1s_4_sk1ll} · more at /ctf/</template>
   {%- assign profile = site.data.profile %}
   <div class="hero-block" style="--hero-bg: url('{{ profile.backdrop }}')">
     <div class="hero-bg" aria-hidden="true"></div>
@@ -1266,6 +1267,13 @@ html[data-mode="dark"] {
     <a class="cert-more" href="{{ '/milestone/' | relative_url }}">See the full milestone timeline →</a>
   </div>
 
+  <!-- Activity & Security -->
+  <div class="about-section">
+    <p class="section-label">Activity &amp; Security</p>
+    {% include widgets/github-activity.html %}
+    {% include widgets/scorecard.html %}
+  </div>
+
   <!-- Skills -->
   <div class="about-section">
     <p class="section-label">Skills &amp; Expertise</p>
@@ -1334,7 +1342,7 @@ html[data-mode="dark"] {
       </a>
       {%- endfor %}
     </div>
-    <p class="term-hint">Prefer the command line? Press <kbd>`</kbd> or <button type="button" data-term-open>open the terminal</button>.</p>
+    <p class="term-hint">Prefer the keyboard? Press <kbd>Ctrl</kbd> <kbd>K</kbd> for the <button type="button" data-cmdk-open>command palette</button>, <kbd>`</kbd> for the <button type="button" data-term-open>terminal</button>, or <kbd>?</kbd> for shortcuts. Curious? There's a <a href="{{ '/ctf/' | relative_url }}">CTF</a> hidden on this site.</p>
   </div>
 
 </div>

@@ -1,0 +1,26 @@
+---
+layout: compress
+# Entries for the command palette (Ctrl+K), built from site content so new posts, projects,
+# labs, and certifications show up automatically. Actions live in assets/js/custom/command.js.
+---
+[
+  {"g":"Pages","t":"Home","u":{{ '/' | relative_url | jsonify }},"i":"fas fa-house"},
+  {"g":"Pages","t":"Curriculum Vitae","u":{{ '/cv/' | relative_url | jsonify }},"i":"fas fa-file-lines","h":"Print-ready CV"},
+  {%- for tab in site.tabs %}
+  {"g":"Pages","t":{{ tab.title | default: tab.url | jsonify }},"u":{{ tab.url | relative_url | jsonify }},"i":{{ tab.icon | default: 'fas fa-file' | jsonify }}},
+  {%- endfor %}
+  {"g":"Pages","t":"Achievements","u":{{ '/achievements/' | relative_url | jsonify }},"i":"fas fa-medal"},
+  {%- for p in site.projects %}
+  {"g":"Projects","t":{{ p.title | jsonify }},"u":{{ p.url | relative_url | jsonify }},"i":"fas fa-code"},
+  {%- endfor %}
+  {%- for lab in site.data.labs %}
+  {"g":"Labs","t":{{ lab.title | jsonify }},"u":{{ lab.url | relative_url | jsonify }},"i":"fas fa-shield-halved","h":{{ lab.platform | jsonify }}},
+  {%- endfor %}
+  {%- for cert in site.data.certifications %}
+  {"g":"Certifications","t":{{ cert.name | jsonify }},"u":{{ cert.url | relative_url | jsonify }},"i":"fas fa-award","h":{{ cert.issuer | append: ' · ' | append: cert.year | jsonify }}},
+  {%- endfor %}
+  {%- for post in site.posts %}
+  {"g":"Posts","t":{{ post.title | jsonify }},"u":{{ post.url | relative_url | jsonify }},"i":"far fa-newspaper","h":{{ post.date | date: '%b %Y' | jsonify }}},
+  {%- endfor %}
+  {"g":"Pages","t":"Status page","u":"https://status.cyphera.my.id","i":"fas fa-heart-pulse","h":"status.cyphera.my.id"}
+]

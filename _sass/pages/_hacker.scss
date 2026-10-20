@@ -1,0 +1,79 @@
+/* "Hacker" theme: a green-on-black terminal look layered over Chirpy's dark palette.
+   Turned on by html[data-variant='hacker'], set early by assets/js/custom/theme-variant.js. */
+
+html[data-variant='hacker']:root {
+  color-scheme: dark;
+
+  --hk-green: #39ff8f;
+  --hk-dim: #2bbd6b;
+  --hk-muted: #5f8f73;
+  --hk-bg: #050807;
+  --hk-panel: #0a110d;
+  --hk-border: #143322;
+
+  --main-bg: var(--hk-bg);
+  --mask-bg: rgb(0 0 0 / 70%);
+  --main-border-color: var(--hk-border);
+  --text-color: #b6f5cf;
+  --text-muted-color: var(--hk-muted);
+  --text-muted-highlight-color: var(--hk-dim);
+  --heading-color: var(--hk-green);
+  --label-color: var(--hk-dim);
+  --link-color: var(--hk-green);
+  --link-underline-color: var(--hk-border);
+  --button-bg: var(--hk-panel);
+  --btn-border-color: var(--hk-border);
+  --site-title-color: var(--hk-green);
+  --site-subtitle-color: var(--hk-muted);
+  --sidebar-bg: var(--hk-panel);
+  --sidebar-border-color: var(--hk-border);
+  --sidebar-muted-color: var(--hk-muted);
+  --sidebar-active-color: var(--hk-green);
+  --sidebar-hover-bg: #0f1e15;
+  --sidebar-btn-bg: var(--hk-panel);
+  --sidebar-btn-color: var(--hk-dim);
+  --topbar-bg: rgb(5 8 7 / 85%);
+  --topbar-text-color: var(--hk-dim);
+  --search-border-color: var(--hk-border);
+  --search-icon-color: var(--hk-muted);
+  --card-bg: var(--hk-panel);
+  --card-hover-bg: #0f1e15;
+  --inline-code-bg: #0f1e15;
+  --code-color: var(--hk-green);
+  --highlight-bg-color: #07100b;
+  --kbd-bg-color: var(--hk-panel);
+  --kbd-text-color: var(--hk-green);
+  --tag-border: var(--hk-border);
+  --timeline-color: var(--hk-border);
+  --timeline-node-bg: var(--hk-dim);
+
+  /* Home page tokens (index.html) */
+  --accent: var(--hk-green);
+  --accent-soft: rgb(57 255 143 / 8%);
+  --border: var(--hk-border);
+  --border-hover: rgb(57 255 143 / 35%);
+  --muted: var(--hk-muted);
+}
+
+html[data-variant='hacker'] body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html[data-variant='hacker'] ::selection {
+  color: var(--hk-bg);
+  background: var(--hk-green);
+}
+
+/* Faint scanlines for the CRT feel; purely decorative. */
+html[data-variant='hacker'] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 3500;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 12%) 0 1px, transparent 1px 3px);
+}
+
+@media print {
+  html[data-variant='hacker'] body::after { display: none; }
+}

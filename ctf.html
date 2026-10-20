@@ -1,0 +1,144 @@
+---
+layout: page
+title: Capture The Flag
+permalink: /ctf/
+description: A small capture-the-flag hidden across cyphera.my.id. Find the five cyphera{...} flags and submit them here.
+---
+
+<style>
+.ctf { max-width: 760px; margin: 0 auto; }
+.ctf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ctf-intro { color: var(--text-muted-color); }
+.ctf-intro code { font-size: 0.85em; }
+
+.ctf-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  font-size: 0.85rem;
+}
+
+.ctf-bar {
+  flex: 1;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--main-border-color);
+}
+
+.ctf-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--link-color);
+  transition: width 0.4s ease;
+}
+
+.ctf-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ctf-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--text-color);
+  background: var(--card-bg);
+  border: 1px solid var(--main-border-color);
+  border-radius: 10px;
+}
+
+.ctf-form input:focus { outline: 2px solid var(--link-color); outline-offset: 1px; }
+
+.ctf-form button {
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  border: 0;
+  border-radius: 10px;
+}
+
+.ctf-msg { min-height: 1.4rem; margin: 0 0 1.25rem; font-size: 0.85rem; }
+.ctf-msg.ok { color: #2f855a; }
+.ctf-msg.bad { color: #c53030; }
+
+.ctf-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ctf-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0.25rem 0.75rem;
+  align-items: start;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+}
+
+.ctf-item .ctf-icon { font-size: 1.1rem; color: var(--text-muted-color); padding-top: 2px; }
+.ctf-item.solved { border-color: #2f855a; }
+.ctf-item.solved .ctf-icon { color: #2f855a; }
+.ctf-title { margin: 0; font-weight: 600; }
+.ctf-cat { font-size: 0.72rem; color: var(--text-muted-color); }
+.ctf-points { font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+
+.ctf-hint { grid-column: 2 / -1; font-size: 0.82rem; }
+.ctf-hint summary { cursor: pointer; color: var(--text-muted-color); }
+.ctf-hint p { margin: 0.35rem 0 0; }
+
+.ctf-done {
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid #2f855a;
+  border-radius: 12px;
+}
+
+.ctf-reset {
+  margin-top: 1rem;
+  padding: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+}
+</style>
+
+<div class="ctf">
+  <p class="ctf-intro">Five flags in the format <code>cyphera{...}</code> are hidden around this site: in places a curious analyst would look. Find them, then submit them below. Everything runs in your browser; flags are checked against SHA-256 hashes, so this page does not give the answers away.</p>
+
+  <div class="ctf-progress" aria-live="polite">
+    <div class="ctf-bar" aria-hidden="true"><span id="ctf-bar"></span></div>
+    <span id="ctf-score">0 / 0</span>
+  </div>
+
+  <form class="ctf-form" id="ctf-form" autocomplete="off">
+    <label class="ctf-sr" for="ctf-input">Flag</label>
+    <input id="ctf-input" type="text" placeholder="cyphera{...}" spellcheck="false" autocapitalize="off" required>
+    <button type="submit">Submit</button>
+  </form>
+  <p class="ctf-msg" id="ctf-msg" role="status"></p>
+
+  <ul class="ctf-list" id="ctf-list"></ul>
+
+  <div class="ctf-done" id="ctf-done" hidden>
+    <strong>All flags captured. Nice work!</strong>
+    <p class="mb-0">If you enjoyed this, say hi at <a href="mailto:{{ site.social.email }}">{{ site.social.email }}</a> or on <a href="https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293" target="_blank" rel="noopener noreferrer">LinkedIn</a>. More hands-on work lives in <a href="{{ '/labs/' | relative_url }}">Labs</a>.</p>
+  </div>
+
+  <button type="button" class="ctf-reset" id="ctf-reset">Reset my progress</button>
+</div>
+
+<script type="application/json" id="ctf-data">{{ site.data.ctf | jsonify }}</script>
+<script defer src="{{ '/assets/js/custom/ctf.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
