@@ -14,12 +14,13 @@ LIMIT_MB=50
 status=0
 
 urls=$(grep -rhoE "https://cdn\.jsdelivr\.net/gh/[^\"' )<>]+" "$SITE_DIR" --include='*.html' --include='*.xml' --include='*.json' |
-  sed 's/&amp;/\&/g' | sort -u)
+  sed -e 's/&amp;/\&/g' -e 's/\\u0026/\&/g' -e 's#\\/#/#g' | sort -u)  # undo HTML and JSON escaping
 count=$(printf '%s\n' "$urls" | grep -c . || true)
 echo "Checking $count jsDelivr URLs..."
 
-failed=$(printf '%s\n' "$urls" | grep . | xargs -P 8 -I{} sh -c \
-  'code=$(curl -s -o /dev/null -L --max-time 30 -w "%{http_code}" "{}"); [ "$code" = "200" ] || echo "$code {}"')
+# -d '\n' keeps xargs from treating backslashes and quotes in URLs specially.
+failed=$(printf '%s\n' "$urls" | grep . | xargs -d '\n' -P 8 -I{} sh -c \
+  'code=$(curl -s -o /dev/null -L --max-time 30 -w "%{http_code}" "$1"); [ "$code" = "200" ] || echo "$code $1"' _ {})
 
 if [ -n "$failed" ]; then
   printf '%s\n' "$failed" | while read -r code url; do
