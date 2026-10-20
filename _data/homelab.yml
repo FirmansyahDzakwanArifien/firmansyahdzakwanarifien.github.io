@@ -15,6 +15,74 @@ summary: >-
   filtering pipeline; only significant alerts reach the LLM, which drafts a classification and mitigation
   steps for a human analyst.
 
+# Key numbers shown above the diagram.
+facts:
+  - value: "6"
+    label: VMs on Proxmox
+  - value: "5"
+    label: pipeline layers
+  - value: "2"
+    label: LLM candidates
+  - value: "0"
+    label: public IPs
+
+# Thesis timeline. status: done | in-progress | planned. The first in-progress stage is shown as the
+# current status at the top of the section. when: free text (e.g. "Oct 2026"), optional.
+progress:
+  - stage: Proposal and testbed design
+    status: in-progress
+    text: Research questions, architecture, and the isolated Proxmox testbed design.
+  - stage: Testbed build
+    status: planned
+    text: Gateway, detection VM, targets, LibreNMS, n8n with PostgreSQL, and Ollama brought up in the lab.
+  - stage: Attack scenarios and ground truth
+    status: planned
+    text: Scripted attacks from the researcher laptop over the VPN, each labelled with its expected category and severity.
+  - stage: Pipeline and data collection
+    status: planned
+    text: Normalization, rule-based filtering, and LLM inference running end to end; every incident stored in PostgreSQL.
+  - stage: Evaluation
+    status: planned
+    text: LLM output compared against the ground-truth labels for each candidate model.
+  - stage: Thesis defense
+    status: planned
+
+# Evaluation results per model. Leave a value empty until it is measured; the table then shows
+# "pending". best: higher | lower marks the better value in each row once both are filled in.
+results:
+  models: [Llama 3 8B, Mistral 7B]
+  metrics:
+    - name: Category accuracy
+      unit: "%"
+      best: higher
+      note: Share of incidents whose predicted category matches the ground truth.
+      values: [~, ~]
+    - name: Macro F1 (category)
+      best: higher
+      note: Balances precision and recall across all incident categories.
+      values: [~, ~]
+    - name: Severity agreement
+      unit: "%"
+      best: higher
+      note: Share of incidents where the model's severity matches the scenario label.
+      values: [~, ~]
+    - name: Valid JSON output
+      unit: "%"
+      best: higher
+      note: Responses that parse and follow the output schema without retries.
+      values: [~, ~]
+    - name: Median inference time
+      unit: s
+      best: lower
+      note: Per significant alert, measured on the Ollama VM.
+      values: [~, ~]
+  # Pipeline-wide numbers (not per model).
+  pipeline:
+    - name: Alerts filtered before the LLM
+      unit: "%"
+      note: Low-severity alerts archived by the rule-based filter.
+      value: ~
+
 canvas: [932, 510]
 
 # Dashed frame drawn around the nodes that live inside the virtualization cluster.

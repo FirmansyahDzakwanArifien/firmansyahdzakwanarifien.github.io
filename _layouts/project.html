@@ -65,8 +65,8 @@ layout: default
     </div>
   </header>
 
-  <!-- Project Image -->
-  {% if page.image %}
+  <!-- Project Image (hide_image: true keeps it for the project list and social preview only) -->
+  {% if page.image and page.hide_image != true %}
   <div class="mt-4 mb-4">
     <img src="{{ page.image.path }}" alt="{{ page.image.alt }}" class="img-fluid rounded">
   </div>

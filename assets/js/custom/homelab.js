@@ -1,4 +1,4 @@
-/* Homelab page: shows a node's role and details on hover, focus, or tap, and draws the node icons. */
+/* Homelab section: node details on hover, focus, or tap; SVG node icons; and the section tabs. */
 (function () {
   var nodes = JSON.parse(document.getElementById('hl-data').textContent || '[]');
   var panel = document.getElementById('hl-panel');
@@ -39,4 +39,38 @@
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(el); }
     });
   });
+
+  /* Tabs (Topology, Pipeline, Progress, Results). Without JavaScript every pane stays visible. */
+  var tablist = document.querySelector('.hl-tabs');
+  if (!tablist) { return; }
+  var tabs = [].slice.call(tablist.querySelectorAll('[role="tab"]'));
+  tablist.closest('.hl-section').classList.add('hl-tabbed');
+  tablist.hidden = false;
+
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) { tab.focus(); }
+  }
+
+  tablist.addEventListener('click', function (e) {
+    var tab = e.target.closest('[role="tab"]');
+    if (tab) { select(tab); }
+  });
+  tablist.addEventListener('keydown', function (e) {
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) { return; }
+    var next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (next === undefined) { return; }
+    e.preventDefault();
+    select(tabs[(next + tabs.length) % tabs.length], true);
+  });
+
+  /* Deep links such as /labs/#hl-pane-results open that tab. */
+  var linked = location.hash && tabs.filter(function (t) { return '#' + t.getAttribute('aria-controls') === location.hash; })[0];
+  select(linked || tabs[0]);
 })();

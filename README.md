@@ -70,6 +70,7 @@ Every push to `main` builds and deploys the site through GitHub Actions.
 | `labs-sync.yml` | daily | Adds new Hashnode writeups to `_data/labs.yml` and opens a PR for review (`tools/sync-labs.py`) |
 | `security-txt.yml` | weekly | Fails (and emails) when `.well-known/security.txt` is within 30 days of its `Expires` date |
 | `og-images.yml` | posts/projects change | Generates 1200×630 social preview cards in `assets/img/og/` (`tools/og-image.py`), then redeploys |
+| `lighthouse.yml` | push, PR | Lighthouse on home, Labs, and CV (median of 3 runs); fails below 80 performance or 95 accessibility (`lighthouserc.json`); reports kept as an artifact |
 | `data-refresh.yml` | daily | Refreshes Threat Watch (CISA KEV), GitHub activity, and the security scorecard (`tools/refresh-data.py`), then redeploys |
 
 Uptime of the site, its pages, and the projects is monitored at [status.cyphera.my.id](https://status.cyphera.my.id) (Upptime).

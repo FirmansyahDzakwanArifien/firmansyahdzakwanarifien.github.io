@@ -24,3 +24,7 @@ package-lock.json
 
 # Misc
 _sass/vendors
+
+# Lighthouse CI
+.lighthouseci
+.lighthouseci-reports

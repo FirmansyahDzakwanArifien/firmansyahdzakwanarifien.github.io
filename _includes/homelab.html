@@ -1,8 +1,10 @@
 {%- comment -%}
-  Homelab section of the Labs page: the thesis testbed topology, alert flow, and design decisions.
-  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js.
+  Homelab section of the Labs page: the thesis testbed topology, alert flow, progress, and results.
+  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js (node panel and tabs).
+  parts="topology" renders only the diagram, for reuse on another page (e.g. the thesis project page).
 {%- endcomment -%}
 {%- assign lab = site.data.homelab -%}
+{%- assign parts = include.parts | default: 'all' -%}
 {%- assign cw = lab.canvas[0] | default: 800 -%}
 {%- assign ch = lab.canvas[1] | default: 460 -%}
 
@@ -10,7 +12,32 @@
 .hl-intro { color: var(--text-muted-color); }
 .hl-intro b { color: var(--text-color); }
 
-.hl-wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1.25rem 0 2rem; }
+.hl-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.hl-head h2 { margin-right: auto; }
+.hl-status { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.7rem; font-size: 0.75rem; font-weight: 600; color: #b45309; border: 1px solid currentColor; border-radius: 999px; }
+.hl-status::before { content: ''; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
+html[data-mode='dark'] .hl-status { color: #f6ad55; }
+@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-status { color: #f6ad55; } }
+
+.hl-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 0.6rem; margin: 1rem 0 1.25rem; padding: 0; list-style: none; }
+.hl-facts li { padding: 0.65rem 0.85rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
+.hl-facts b { display: block; font-size: 1.45rem; line-height: 1.1; color: #2563eb; }
+.hl-facts span { font-size: 0.78rem; color: var(--text-muted-color); }
+html[data-mode='dark'] .hl-facts b { color: #7aa7ff; }
+@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-facts b { color: #7aa7ff; } }
+
+.hl-tabs { display: flex; gap: 0.25rem; margin: 0 0 1rem; border-bottom: 1px solid var(--main-border-color); overflow-x: auto; }
+.hl-tabs[hidden] { display: none; }
+.hl-tabs button { flex: none; padding: 0.5rem 0.9rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted-color); background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.hl-tabs button:hover { color: var(--text-color); }
+.hl-tabs button[aria-selected='true'] { color: #2563eb; border-bottom-color: #2563eb; }
+html[data-mode='dark'] .hl-tabs button[aria-selected='true'] { color: #7aa7ff; border-bottom-color: #7aa7ff; }
+@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-tabs button[aria-selected='true'] { color: #7aa7ff; border-bottom-color: #7aa7ff; } }
+.hl-tabbed .hl-pane-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hl-pane { margin-bottom: 2rem; }
+.hl-pane[hidden] { display: none; }
+
+.hl-wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1rem 0 0; }
 
 .hl-scroll { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
 .hl-map { display: block; width: 100%; min-width: 640px; height: auto; }
@@ -44,7 +71,7 @@
 .hl-panel li { margin-bottom: 0.3rem; }
 .hl-empty { color: var(--text-muted-color); font-size: 0.85rem; margin: 0; }
 
-.hl-layers { counter-reset: layer; margin: 0 0 2rem; padding: 0; list-style: none; }
+.hl-layers { counter-reset: layer; margin: 0 0 1.5rem; padding: 0; list-style: none; }
 .hl-layer { position: relative; padding: 0 0 1rem 2.6rem; }
 .hl-layer::before {
   counter-increment: layer;
@@ -56,103 +83,221 @@
   color: #fff; background: #2563eb; border-radius: 50%;
 }
 .hl-layer:not(:last-child)::after { content: ''; position: absolute; left: 0.88rem; top: 2rem; bottom: 0.2rem; width: 2px; background: var(--main-border-color); }
-.hl-layer h4 { margin: 0.15rem 0 0.15rem; font-size: 0.98rem; }
+.hl-layer h5 { margin: 0.15rem 0 0.15rem; font-size: 0.98rem; }
 .hl-layer .hl-tools { display: block; margin-bottom: 0.3rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted-color); }
 .hl-layer p { margin: 0; font-size: 0.88rem; line-height: 1.65; }
+
+.hl-sub { margin: 0 0 0.75rem; font-size: 1rem; }
 
 .hl-principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 0.65rem; margin: 0; padding: 0; list-style: none; }
 .hl-principles li { padding: 0.85rem 0.95rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
 .hl-principles i { color: #2563eb; margin-right: 0.4rem; }
 .hl-principles b { font-size: 0.9rem; }
 .hl-principles p { margin: 0.35rem 0 0; font-size: 0.82rem; line-height: 1.55; color: var(--text-muted-color); }
+
+.hl-progress { margin: 0; padding: 0; list-style: none; }
+.hl-step { --step: var(--text-muted-color); position: relative; padding: 0 0 1.1rem 2rem; }
+.hl-step::before { content: ''; position: absolute; left: 0.2rem; top: 0.3rem; width: 0.9rem; height: 0.9rem; border: 2px solid var(--step); border-radius: 50%; background: var(--main-bg); box-sizing: border-box; }
+.hl-step:not(:last-child)::after { content: ''; position: absolute; left: 0.6rem; top: 1.35rem; bottom: 0.1rem; width: 2px; background: var(--main-border-color); }
+.hl-step.is-done { --step: #2f855a; }
+.hl-step.is-done::before { background: var(--step); }
+.hl-step.is-in-progress { --step: #b45309; }
+.hl-step.is-in-progress::before { box-shadow: 0 0 0 4px color-mix(in srgb, var(--step) 22%, transparent); }
+html[data-mode='dark'] .hl-step.is-done { --step: #48bb78; }
+html[data-mode='dark'] .hl-step.is-in-progress { --step: #f6ad55; }
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .hl-step.is-done { --step: #48bb78; }
+  html:not([data-mode]) .hl-step.is-in-progress { --step: #f6ad55; }
+}
+.hl-step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem; }
+.hl-step-head b { font-size: 0.95rem; }
+.hl-step-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--step); }
+.hl-step p { margin: 0.15rem 0 0; font-size: 0.85rem; line-height: 1.55; color: var(--text-muted-color); }
+
+.hl-results-note { margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted-color); }
+.hl-table { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; }
+.hl-table table { width: 100%; margin: 0; border-collapse: collapse; font-size: 0.85rem; }
+.hl-table th, .hl-table td { padding: 0.6rem 0.85rem; text-align: left; border-bottom: 1px solid var(--main-border-color); vertical-align: top; }
+.hl-table tr:last-child > * { border-bottom: 0; }
+.hl-table thead th { font-size: 0.75rem; letter-spacing: 0.03em; color: var(--text-muted-color); background: var(--card-bg); }
+.hl-table td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.hl-table .is-best { font-weight: 700; color: #2f855a; }
+html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
+@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-table .is-best { color: #48bb78; } }
+.hl-table .is-pending { color: var(--text-muted-color); font-style: italic; }
+.hl-table small { display: block; margin-top: 0.15rem; font-size: 0.75rem; color: var(--text-muted-color); }
 </style>
 
 {%- if lab.nodes.size > 0 %}
+{%- assign current = lab.progress | where: 'status', 'in-progress' | first -%}
+{%- if parts == 'all' %}
 <section class="hl-section" aria-labelledby="homelab">
-<h2 id="homelab">Homelab: {{ lab.title }}</h2>
+<div class="hl-head">
+  <h2 id="homelab">Homelab: {{ lab.title }}</h2>
+  {%- if current %}<span class="hl-status">Now: {{ current.stage }}</span>{% endif %}
+</div>
 <p class="hl-intro">{{ lab.summary }}</p>
 
-<h3>Topology</h3>
-<p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard.</p>
-
-<div class="hl-wrap">
-  <div>
-    <div class="hl-scroll">
-      <svg class="hl-map" viewBox="0 0 {{ cw }} {{ ch }}" role="group" aria-label="{{ lab.title }} topology">
-        {%- if lab.boundary %}
-        <rect class="hl-boundary" x="{{ lab.boundary.x }}" y="{{ lab.boundary.y }}" width="{{ lab.boundary.width }}" height="{{ lab.boundary.height }}" rx="14"></rect>
-        <text class="hl-boundary-label" x="{{ lab.boundary.x | plus: 14 }}" y="{{ lab.boundary.y | plus: lab.boundary.height | minus: 12 }}">{{ lab.boundary.label }}</text>
-        {%- endif %}
-        {%- for l in lab.links %}
-          {%- assign a = lab.nodes | where: 'id', l.from | first -%}
-          {%- assign b = lab.nodes | where: 'id', l.to | first -%}
-          {%- if a and b %}
-        <line class="hl-link{% if l.dashed %} is-dashed{% endif %}" x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}"></line>
-          {%- endif %}
-        {%- endfor %}
-        {%- for l in lab.links %}
-          {%- assign a = lab.nodes | where: 'id', l.from | first -%}
-          {%- assign b = lab.nodes | where: 'id', l.to | first -%}
-          {%- if a and b and l.label %}
-            {%- assign mx = a.x | plus: b.x | divided_by: 2 -%}
-            {%- assign my = a.y | plus: b.y | divided_by: 2 -%}
-            {%- assign dx = a.x | minus: b.x | abs -%}
-            {%- assign dy = a.y | minus: b.y | abs -%}
-            {%- if dy < 5 %}
-        <text class="hl-link-label" x="{{ mx }}" y="{{ my | minus: 8 }}" text-anchor="middle">{{ l.label }}</text>
-            {%- elsif dx < 5 %}
-        <text class="hl-link-label" x="{{ mx | plus: 8 }}" y="{{ my | plus: 4 }}">{{ l.label }}</text>
-            {%- else %}
-        <text class="hl-link-label" x="{{ mx }}" y="{{ my | minus: 8 }}" text-anchor="middle">{{ l.label }}</text>
-            {%- endif %}
-          {%- endif %}
-        {%- endfor %}
-        {%- for n in lab.nodes %}
-        <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 82 }} {{ n.y | minus: 22 }})">
-          <rect width="164" height="44" rx="10"></rect>
-          <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
-          <text x="38" y="27">{{ n.label }}</text>
-        </g>
-        {%- endfor %}
-      </svg>
-    </div>
-    <ul class="hl-legend" aria-label="Legend">
-      <li><span style="background:#d14343"></span>Security</li>
-      <li><span style="background:#2563eb"></span>Compute / pipeline</li>
-      <li><span style="background:#0f8c78"></span>Monitoring</li>
-      <li><span style="background:#7c5cd6"></span>Outside the lab</li>
-      <li>- - - on-demand connection</li>
-    </ul>
-  </div>
-
-  <aside class="hl-panel" id="hl-panel" aria-live="polite">
-    <p class="hl-empty">Select a node to see its role and details.</p>
-  </aside>
-</div>
-
-{%- if lab.layers.size > 0 %}
-<h3>How an alert flows</h3>
-<ol class="hl-layers">
-  {%- for layer in lab.layers %}
-  <li class="hl-layer">
-    <h4>{{ layer.name }}</h4>
-    <span class="hl-tools">{{ layer.tools }}</span>
-    <p>{{ layer.text }}</p>
-  </li>
-  {%- endfor %}
-</ol>
-{%- endif %}
-
-{%- if lab.principles.size > 0 %}
-<h3>Design decisions</h3>
-<ul class="hl-principles">
-  {%- for p in lab.principles %}
-  <li><i class="{{ p.icon }}" aria-hidden="true"></i><b>{{ p.title }}</b><p>{{ p.text }}</p></li>
+{%- if lab.facts.size > 0 %}
+<ul class="hl-facts">
+  {%- for f in lab.facts %}
+  <li><b>{{ f.value }}</b><span>{{ f.label }}</span></li>
   {%- endfor %}
 </ul>
 {%- endif %}
 
+<div class="hl-tabs" role="tablist" aria-label="Homelab views" hidden>
+  <button type="button" role="tab" id="hl-tab-topology" aria-controls="hl-pane-topology" aria-selected="true">Topology</button>
+  {%- if lab.layers.size > 0 %}<button type="button" role="tab" id="hl-tab-pipeline" aria-controls="hl-pane-pipeline" aria-selected="false" tabindex="-1">Pipeline</button>{% endif %}
+  {%- if lab.progress.size > 0 %}<button type="button" role="tab" id="hl-tab-progress" aria-controls="hl-pane-progress" aria-selected="false" tabindex="-1">Progress</button>{% endif %}
+  {%- if lab.results %}<button type="button" role="tab" id="hl-tab-results" aria-controls="hl-pane-results" aria-selected="false" tabindex="-1">Results</button>{% endif %}
+</div>
+{%- endif %}
+
+<div class="hl-pane" id="hl-pane-topology"{% if parts == 'all' %} role="tabpanel" aria-labelledby="hl-tab-topology"{% endif %}>
+  {%- if parts == 'all' %}<h3 class="hl-pane-title">Topology</h3>{% endif %}
+  <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard.</p>
+  <div class="hl-wrap">
+    <div>
+      <div class="hl-scroll">
+        <svg class="hl-map" viewBox="0 0 {{ cw }} {{ ch }}" role="group" aria-label="{{ lab.title }} topology">
+          {%- if lab.boundary %}
+          <rect class="hl-boundary" x="{{ lab.boundary.x }}" y="{{ lab.boundary.y }}" width="{{ lab.boundary.width }}" height="{{ lab.boundary.height }}" rx="14"></rect>
+          <text class="hl-boundary-label" x="{{ lab.boundary.x | plus: 14 }}" y="{{ lab.boundary.y | plus: lab.boundary.height | minus: 12 }}">{{ lab.boundary.label }}</text>
+          {%- endif %}
+          {%- for l in lab.links %}
+            {%- assign a = lab.nodes | where: 'id', l.from | first -%}
+            {%- assign b = lab.nodes | where: 'id', l.to | first -%}
+            {%- if a and b %}
+          <line class="hl-link{% if l.dashed %} is-dashed{% endif %}" x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}"></line>
+            {%- endif %}
+          {%- endfor %}
+          {%- for l in lab.links %}
+            {%- assign a = lab.nodes | where: 'id', l.from | first -%}
+            {%- assign b = lab.nodes | where: 'id', l.to | first -%}
+            {%- if a and b and l.label %}
+              {%- assign mx = a.x | plus: b.x | divided_by: 2 -%}
+              {%- assign my = a.y | plus: b.y | divided_by: 2 -%}
+              {%- assign dx = a.x | minus: b.x | abs -%}
+              {%- assign dy = a.y | minus: b.y | abs -%}
+              {%- if dx < 5 %}
+          <text class="hl-link-label" x="{{ mx | plus: 8 }}" y="{{ my | plus: 4 }}">{{ l.label }}</text>
+              {%- else %}
+          <text class="hl-link-label" x="{{ mx }}" y="{{ my | minus: 8 }}" text-anchor="middle">{{ l.label }}</text>
+              {%- endif %}
+            {%- endif %}
+          {%- endfor %}
+          {%- for n in lab.nodes %}
+          <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 82 }} {{ n.y | minus: 22 }})">
+            <rect width="164" height="44" rx="10"></rect>
+            <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
+            <text x="38" y="27">{{ n.label }}</text>
+          </g>
+          {%- endfor %}
+        </svg>
+      </div>
+      <ul class="hl-legend" aria-label="Legend">
+        <li><span style="background:#d14343"></span>Security</li>
+        <li><span style="background:#2563eb"></span>Compute / pipeline</li>
+        <li><span style="background:#0f8c78"></span>Monitoring</li>
+        <li><span style="background:#7c5cd6"></span>Outside the lab</li>
+        <li>- - - on-demand connection</li>
+      </ul>
+    </div>
+
+    <aside class="hl-panel" id="hl-panel" aria-live="polite">
+      <p class="hl-empty">Select a node to see its role and details.</p>
+    </aside>
+  </div>
+</div>
+
+{%- if parts == 'all' %}
+{%- if lab.layers.size > 0 %}
+<div class="hl-pane" id="hl-pane-pipeline" role="tabpanel" aria-labelledby="hl-tab-pipeline">
+  <h3 class="hl-pane-title">Pipeline</h3>
+  <h4 class="hl-sub">How an alert flows</h4>
+  <ol class="hl-layers">
+    {%- for layer in lab.layers %}
+    <li class="hl-layer">
+      <h5>{{ layer.name }}</h5>
+      <span class="hl-tools">{{ layer.tools }}</span>
+      <p>{{ layer.text }}</p>
+    </li>
+    {%- endfor %}
+  </ol>
+  {%- if lab.principles.size > 0 %}
+  <h4 class="hl-sub">Design decisions</h4>
+  <ul class="hl-principles">
+    {%- for p in lab.principles %}
+    <li><i class="{{ p.icon }}" aria-hidden="true"></i><b>{{ p.title }}</b><p>{{ p.text }}</p></li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</div>
+{%- endif %}
+
+{%- if lab.progress.size > 0 %}
+<div class="hl-pane" id="hl-pane-progress" role="tabpanel" aria-labelledby="hl-tab-progress">
+  <h3 class="hl-pane-title">Progress</h3>
+  <ol class="hl-progress">
+    {%- for s in lab.progress %}
+    {%- assign st = s.status | default: 'planned' %}
+    <li class="hl-step is-{{ st }}">
+      <div class="hl-step-head">
+        <b>{{ s.stage }}</b>
+        <span class="hl-step-tag">{% if st == 'done' %}Done{% elsif st == 'in-progress' %}In progress{% else %}Planned{% endif %}{% if s.when %} · {{ s.when }}{% endif %}</span>
+      </div>
+      {%- if s.text %}<p>{{ s.text }}</p>{% endif %}
+    </li>
+    {%- endfor %}
+  </ol>
+</div>
+{%- endif %}
+
+{%- if lab.results %}
+{%- assign res = lab.results -%}
+{%- assign measured = false -%}
+{%- for m in res.metrics %}{% for v in m.values %}{% if v != nil %}{% assign measured = true %}{% endif %}{% endfor %}{% endfor -%}
+<div class="hl-pane" id="hl-pane-results" role="tabpanel" aria-labelledby="hl-tab-results">
+  <h3 class="hl-pane-title">Results</h3>
+  <p class="hl-results-note">{% if measured %}Measured against the ground-truth labels of each attack scenario. The better value in each row is highlighted.{% else %}Evaluation has not run yet. These are the metrics each model will be compared on; values appear here as they are measured.{% endif %}</p>
+  <div class="hl-table">
+    <table>
+      <thead>
+        <tr><th scope="col">Metric</th>{% for model in res.models %}<th scope="col">{{ model }}</th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+        {%- for m in res.metrics %}
+        {%- assign best = nil -%}
+        {%- assign complete = true -%}
+        {%- for v in m.values -%}
+          {%- if v == nil -%}{%- assign complete = false -%}
+          {%- elsif best == nil -%}{%- assign best = v -%}
+          {%- elsif m.best == 'lower' and v < best -%}{%- assign best = v -%}
+          {%- elsif m.best != 'lower' and v > best -%}{%- assign best = v -%}
+          {%- endif -%}
+        {%- endfor %}
+        <tr>
+          <th scope="row">{{ m.name }}{% if m.note %}<small>{{ m.note }}</small>{% endif %}</th>
+          {%- for v in m.values %}
+          <td class="num{% if v == nil %} is-pending{% elsif complete and m.values.size > 1 and v == best %} is-best{% endif %}">{% if v == nil %}pending{% else %}{{ v }}{% if m.unit %}{% if m.unit != '%' %} {% endif %}{{ m.unit }}{% endif %}{% endif %}</td>
+          {%- endfor %}
+        </tr>
+        {%- endfor %}
+        {%- for p in res.pipeline %}
+        <tr>
+          <th scope="row">{{ p.name }}{% if p.note %}<small>{{ p.note }}</small>{% endif %}</th>
+          <td class="num{% if p.value == nil %} is-pending{% endif %}" colspan="{{ res.models.size }}">{% if p.value == nil %}pending{% else %}{{ p.value }}{% if p.unit %}{% if p.unit != '%' %} {% endif %}{{ p.unit }}{% endif %}{% endif %}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{%- endif %}
+</section>
+{%- endif %}
+
 <script type="application/json" id="hl-data">{{ lab.nodes | jsonify }}</script>
 <script defer src="{{ '/assets/js/custom/homelab.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
-</section>
 {%- endif %}

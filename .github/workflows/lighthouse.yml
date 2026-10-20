@@ -1,0 +1,58 @@
+# Lighthouse on the built site (home, Labs, CV), three runs each, judged on the median run.
+# Fails when performance drops below 80 or accessibility below 95 (thresholds in lighthouserc.json);
+# best practices and SEO only warn. The HTML reports are kept as a workflow artifact for 14 days.
+name: Lighthouse
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+    paths-ignore: ["_data/kev.json", "_data/github.json", "_data/scorecard.json", "docs/**", "**/*.md"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "20"
+
+      - name: Build JS and CSS assets
+        run: |
+          npm install
+          npm run build:js
+          npm run build:css
+
+      - name: Setup Ruby
+        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
+        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4 # v1.207.0
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Run Lighthouse CI
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=./lighthouserc.json
+
+      - name: Upload reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci-reports
+          retention-days: 14

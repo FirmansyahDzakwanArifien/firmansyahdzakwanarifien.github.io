@@ -3,6 +3,9 @@ layout: page
 title: Labs
 icon: fas fa-shield-halved
 order: 3.5
+image:
+  path: /assets/img/og/labs-homelab.jpg  # social preview: the homelab diagram (tools/og-image.py)
+  alt: Thesis testbed topology on Proxmox
 description: Hands-on security work by Firmansyah Dzakwan Arifien — the homelab behind my thesis (Proxmox, Wazuh, Suricata, n8n, self-hosted LLM) and writeups on DFIR, network and log forensics, CTFs, and vulnerabilities.
 ---
 
@@ -86,6 +89,8 @@ html[data-mode="dark"] .labs {
   border-radius: 20px;
   cursor: pointer;
 }
+
+.labs-filter span { margin-left: 3px; font-variant-numeric: tabular-nums; opacity: 0.7; }
 
 .labs-filter.active,
 .labs-filter:hover {
@@ -192,13 +197,16 @@ html[data-mode="dark"] .labs {
   <h2 id="writeups">Writeups</h2>
   <p class="labs-section-intro">DFIR, forensics, and CTF challenges I have worked through. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>.</p>
 
-  <div class="labs-filters" role="group" aria-label="Filter labs">
-    <button type="button" class="labs-filter active" data-kind="all">All</button>
-    <button type="button" class="labs-filter" data-kind="dfir">DFIR</button>
-    <button type="button" class="labs-filter" data-kind="network">Network forensics</button>
-    <button type="button" class="labs-filter" data-kind="logs">Log forensics</button>
-    <button type="button" class="labs-filter" data-kind="ctf">CTF</button>
-    <button type="button" class="labs-filter" data-kind="vuln">Vulnerability</button>
+  <div class="labs-filters" role="group" aria-label="Filter writeups">
+    <button type="button" class="labs-filter active" data-kind="all">All <span>{{ site.data.labs.size }}</span></button>
+    {%- assign kinds = "dfir:DFIR,network:Network forensics,logs:Log forensics,ctf:CTF,vuln:Vulnerability" | split: "," %}
+    {%- for k in kinds %}
+      {%- assign key = k | split: ":" | first %}
+      {%- assign matches = site.data.labs | where: "kind", key %}
+      {%- if matches.size > 0 %}
+    <button type="button" class="labs-filter" data-kind="{{ key }}">{{ k | split: ":" | last }} <span>{{ matches.size }}</span></button>
+      {%- endif %}
+    {%- endfor %}
   </div>
 
   <div class="labs-grid">
