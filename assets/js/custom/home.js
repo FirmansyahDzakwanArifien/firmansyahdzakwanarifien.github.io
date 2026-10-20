@@ -21,8 +21,10 @@
   document.querySelectorAll('.feat-card img[data-gif]').forEach(function(img) {
     var card = img.closest('.feat-card');
     var still = img.src;
-    card.addEventListener('mouseenter', function() { img.src = img.dataset.gif; });
-    card.addEventListener('mouseleave', function() { img.src = still; });
+    var stillSet = img.getAttribute('srcset');
+    /* srcset would win over src, so it is removed while the animation plays. */
+    card.addEventListener('mouseenter', function() { img.removeAttribute('srcset'); img.src = img.dataset.gif; });
+    card.addEventListener('mouseleave', function() { if (stillSet) { img.setAttribute('srcset', stillSet); } img.src = still; });
   });
 
   /* Uptime badges: read the Upptime summary; badges stay invisible (space kept) if it cannot be loaded. */

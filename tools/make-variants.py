@@ -3,7 +3,7 @@
 
   python3 tools/make-variants.py ../firmansyahdzakwanarifien-assets
 
-Run it after adding images to blog/img/posts/ or blog/img/album/ in the assets repo, then commit both.
+Run it after adding images to blog/img/posts/, album/, or projects/ in the assets repo, then commit both.
 Every image there needs a variant: templates reference name-640.ext for any image in those folders
 (_includes/srcset.html, assets/js/custom/photo.js), and site-checks fails on a missing one.
 """
@@ -13,7 +13,7 @@ import sys
 from PIL import Image, ImageOps
 
 WIDTH = 640
-FOLDERS = ["blog/img/posts", "blog/img/album"]
+FOLDERS = ["blog/img/posts", "blog/img/album", "blog/img/projects"]
 EXTS = {".jpg", ".jpeg", ".webp", ".png"}
 
 root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "../firmansyahdzakwanarifien-assets")

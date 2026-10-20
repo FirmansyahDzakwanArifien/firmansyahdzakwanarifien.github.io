@@ -166,7 +166,7 @@ html[data-mode='dark'] .gh-activity {
 }
 
 .sc-grade {
-  --grade: #2f855a;
+  --grade: #2f855a; /* light-mode tones; lighter ones for dark mode below, all >= 4.5:1 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,6 +184,26 @@ html[data-mode='dark'] .gh-activity {
   &.grade-c { --grade: #b7791f; }
   &.grade-d,
   &.grade-f { --grade: #c53030; }
+}
+
+html[data-mode='dark'] .sc-grade {
+  --grade: #48bb78;
+
+  &.grade-b { --grade: #7aa7ff; }
+  &.grade-c { --grade: #ecc94b; }
+  &.grade-d,
+  &.grade-f { --grade: #fc8181; }
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .sc-grade {
+    --grade: #48bb78;
+
+    &.grade-b { --grade: #7aa7ff; }
+    &.grade-c { --grade: #ecc94b; }
+    &.grade-d,
+    &.grade-f { --grade: #fc8181; }
+  }
 }
 
 .sc-headers {

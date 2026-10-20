@@ -4,7 +4,7 @@
   Params: src (image URL), sizes (the sizes attribute; defaults to the post column width).
 {%- endcomment -%}
 {%- assign _src = include.src | default: '' -%}
-{%- if _src contains 'firmansyahdzakwanarifien-assets@main/blog/img/posts/' or _src contains 'firmansyahdzakwanarifien-assets@main/blog/img/album/' -%}
+{%- if _src contains 'firmansyahdzakwanarifien-assets@main/blog/img/posts/' or _src contains 'firmansyahdzakwanarifien-assets@main/blog/img/album/' or _src contains 'firmansyahdzakwanarifien-assets@main/blog/img/projects/' -%}
   {%- assign _ext = _src | split: '.' | last -%}
   {%- assign _ext_down = _ext | downcase -%}
   {%- if _ext_down == 'webp' or _ext_down == 'jpg' or _ext_down == 'jpeg' or _ext_down == 'png' -%}

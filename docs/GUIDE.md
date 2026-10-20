@@ -271,7 +271,7 @@ Gambar disajikan dari repo `firmansyahdzakwanarifien-assets` lewat jsDelivr:
 `https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/...`
 
 - **Kompres dulu:** foto maksimal 1600 px (JPG kualitas sekitar 80), screenshot dan sertifikat ke **WebP**.
-- **Buat varian 640 px (wajib untuk gambar post dan album):** template memakai `nama-640.ext` lewat `srcset` agar HP mengunduh versi kecil. Setelah menambah gambar di `blog/img/posts/` atau `blog/img/album/`, jalankan dari repo situs lalu commit repo assets:
+- **Buat varian 640 px (wajib untuk gambar post, album, dan proyek):** template memakai `nama-640.ext` lewat `srcset` agar HP mengunduh versi kecil. Setelah menambah gambar di `blog/img/posts/`, `blog/img/album/`, atau `blog/img/projects/`, jalankan dari repo situs lalu commit repo assets:
   ```bash
   python3 tools/make-variants.py ../firmansyahdzakwanarifien-assets
   ```
