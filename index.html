@@ -107,9 +107,12 @@ html[data-mode="dark"] {
   margin: -2rem 0;
 }
 
+/* The clip box reaches 200px above the card so the head can pop out; on phones that empty area
+   overlaps the top bar, so it must never catch taps (the menu and search buttons sit there). */
 .pop-clip {
   position: absolute;
   top: -200px;
+  pointer-events: none;
   bottom: 0;
   left: -1.5rem;
   right: -1.5rem;
@@ -153,6 +156,7 @@ html[data-mode="dark"] {
 .hero-bubble {
   position: absolute;
   z-index: 2;
+  pointer-events: none;
   top: -30px;
   left: 74%;
   margin: 0;
@@ -1264,7 +1268,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
     <div class="hero-avatar">
       <p class="hero-bubble" aria-hidden="true">Hi, I'm {{ profile.alias }}!</p>
       <div class="pop-clip">
-        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="271" height="442" fetchpriority="high" decoding="async" data-no-popup />
+        <img src="{{ profile.cutout | relative_url }}" alt="{{ profile.cutout_alt | default: profile.name }}" width="271" height="442" fetchpriority="high" decoding="async" data-no-popup />
       </div>
     </div>
     <div class="hero-text">

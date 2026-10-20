@@ -2,7 +2,7 @@
 {%- if page.preload_hero %}
   {%- comment -%} Home hero: start the LCP images (blurred backdrop, cutout) before the CSS is parsed. {%- endcomment -%}
   <link rel="preload" as="image" href="{{ site.data.profile.backdrop }}" fetchpriority="high">
-  <link rel="preload" as="image" href="{{ site.data.profile.cutout }}" fetchpriority="high">
+  <link rel="preload" as="image" href="{{ site.data.profile.cutout | relative_url }}" fetchpriority="high">
   {%- for font in site.data.webfonts.webfonts_home %}
   <link rel="preload" href="{{ font | relative_url }}" as="font" type="font/woff2" crossorigin>
   {%- endfor %}

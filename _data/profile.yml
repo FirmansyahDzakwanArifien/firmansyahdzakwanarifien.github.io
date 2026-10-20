@@ -8,7 +8,10 @@ employer: PT Jarvis Integrasi Solusi
 email: contact@cyphera.my.id
 website: https://cyphera.my.id
 photo: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg
-cutout: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-popout-comic-baked.webp
+# Home hero art that pops out of the profile card (271x442 ratio). To show the photo again, use:
+# https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-popout-comic-baked.webp
+cutout: /assets/img/hero/hero-stack.svg
+cutout_alt: Illustration of a server rack guarded by a security shield, with a terminal and network nodes
 backdrop: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/new-backdrop.jpg  # 64px: it is shown blurred, so a tiny file looks the same
 portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing
 

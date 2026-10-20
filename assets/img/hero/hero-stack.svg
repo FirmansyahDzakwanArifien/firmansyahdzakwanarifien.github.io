@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271 442" width="271" height="442">
+  <title>Server rack, security shield, terminal, and network nodes</title>
+  <defs>
+    <style>
+      .ink { stroke: #14141c; stroke-width: 5; stroke-linejoin: round; stroke-linecap: round; }
+      .thin { stroke: #14141c; stroke-width: 3; stroke-linecap: round; }
+      .shadow { fill: #2563eb; }
+      .mono { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-weight: 700; }
+    </style>
+    <!-- White sticker rim so the ink outline still reads on the dark theme -->
+    <filter id="rim" x="-5%" y="-5%" width="110%" height="110%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="3.5" result="grown"/>
+      <feFlood flood-color="#ffffff"/>
+      <feComposite in2="grown" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#rim)">
+
+  <!-- Network: three nodes wired to the rack -->
+  <g>
+    <path class="thin" d="M50 70 L104 34 M50 70 L40 132 M104 34 L132 150 M40 132 L96 178" fill="none"/>
+    <circle class="shadow" cx="56" cy="76" r="16"/>
+    <circle class="ink" cx="50" cy="70" r="16" fill="#0f8c78"/>
+    <circle class="shadow" cx="110" cy="40" r="12"/>
+    <circle class="ink" cx="104" cy="34" r="12" fill="#f5f6f8"/>
+    <circle class="shadow" cx="46" cy="138" r="11"/>
+    <circle class="ink" cx="40" cy="132" r="11" fill="#7c5cd6"/>
+    <circle cx="50" cy="70" r="5" fill="#f5f6f8"/>
+  </g>
+
+  <!-- Server rack -->
+  <rect class="shadow" x="100" y="160" width="140" height="290" rx="12"/>
+  <rect class="ink" x="92" y="152" width="140" height="290" rx="12" fill="#2b3445"/>
+  <g>
+    <rect class="thin" x="106" y="168" width="112" height="38" rx="6" fill="#3d4a61"/>
+    <rect class="thin" x="106" y="216" width="112" height="38" rx="6" fill="#3d4a61"/>
+    <rect class="thin" x="106" y="264" width="112" height="38" rx="6" fill="#3d4a61"/>
+    <rect class="thin" x="106" y="312" width="112" height="38" rx="6" fill="#3d4a61"/>
+    <rect class="thin" x="106" y="360" width="112" height="38" rx="6" fill="#3d4a61"/>
+    <g fill="#22c55e">
+      <circle cx="122" cy="187" r="5"/><circle cx="122" cy="235" r="5"/><circle cx="122" cy="331" r="5"/><circle cx="122" cy="379" r="5"/>
+    </g>
+    <circle cx="122" cy="283" r="5" fill="#f59e0b"/>
+    <g fill="#7aa7ff">
+      <circle cx="138" cy="187" r="4"/><circle cx="138" cy="283" r="4"/><circle cx="138" cy="379" r="4"/>
+    </g>
+    <g stroke="#14141c" stroke-width="3" stroke-linecap="round">
+      <path d="M160 180 v14 M170 180 v14 M180 180 v14 M190 180 v14 M200 180 v14"/>
+      <path d="M160 228 v14 M170 228 v14 M180 228 v14 M190 228 v14 M200 228 v14"/>
+      <path d="M160 276 v14 M170 276 v14 M180 276 v14 M190 276 v14 M200 276 v14"/>
+      <path d="M160 324 v14 M170 324 v14 M180 324 v14 M190 324 v14 M200 324 v14"/>
+      <path d="M160 372 v14 M170 372 v14 M180 372 v14 M190 372 v14 M200 372 v14"/>
+    </g>
+  </g>
+
+  <!-- Terminal window -->
+  <rect class="shadow" x="134" y="44" width="132" height="92" rx="10"/>
+  <rect class="ink" x="126" y="36" width="132" height="92" rx="10" fill="#0f172a"/>
+  <path class="thin" d="M128 58 H256" fill="none"/>
+  <circle cx="140" cy="47" r="4" fill="#ef4444"/>
+  <circle cx="153" cy="47" r="4" fill="#f59e0b"/>
+  <circle cx="166" cy="47" r="4" fill="#22c55e"/>
+  <text class="mono" x="136" y="78" font-size="12" fill="#22c55e">$ sudo -v</text>
+  <text class="mono" x="136" y="96" font-size="12" fill="#7aa7ff">&gt; wazuh: ok</text>
+  <text class="mono" x="136" y="114" font-size="12" fill="#f5f6f8">&gt; ufw on</text>
+  <rect x="200" y="104" width="8" height="12" fill="#f5f6f8"/>
+
+  <!-- Shield with a lock, in front of the rack -->
+  <path class="shadow" d="M78 236 L134 256 V318 C134 360 108 386 78 400 C48 386 22 360 22 318 V256 Z"/>
+  <path class="ink" d="M70 228 L126 248 V310 C126 352 100 378 70 392 C40 378 14 352 14 310 V248 Z" fill="#2563eb"/>
+  <path d="M70 244 L112 259 V308 C112 340 93 361 70 373 Z" fill="#3b7bff" opacity="0.6"/>
+  <rect class="ink" x="48" y="298" width="44" height="36" rx="6" fill="#f5f6f8"/>
+  <path class="ink" d="M57 298 V284 a13 13 0 0 1 26 0 V298" fill="none"/>
+  <circle cx="70" cy="313" r="5" fill="#14141c"/>
+  <path d="M70 316 v8" stroke="#14141c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Comic action lines -->
+  <g class="thin" fill="none">
+    <path d="M10 214 l14 8 M4 236 l16 2 M18 196 l10 12"/>
+    <path d="M262 160 l-10 8 M268 182 l-14 2"/>
+  </g>
+</g>
+</svg>
