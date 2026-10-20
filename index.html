@@ -243,6 +243,8 @@ html[data-mode="dark"] {
 }
 
 /* CTF invitation inside the profile card. */
+.connect-now { margin: -0.25rem 0 0.9rem; font-size: 0.88rem; color: var(--muted); }
+
 .hero-ctf {
   display: flex;
   align-items: center;
@@ -882,19 +884,26 @@ html[data-mode="dark"] .connect-coffee { --brand: #f59e0b; }
 .feat-memoir { --feat-tone: #d9805f; --feat-ink: #a3502b; --feat-on-tone: #1a0f0a; --feat-bg: #16120f; }
 .feat-game   { --feat-tone: #1fb5a8; --feat-ink: #0f766e; --feat-on-tone: #06201d; --feat-bg: #f6ead2; }
 .feat-blue   { --feat-tone: #3b82f6; --feat-ink: #1d4ed8; --feat-bg: #0b1220; }
+.feat-thesis { --feat-tone: #7c5cd6; --feat-ink: #6243c2; --feat-on-tone: #fff; --feat-bg: #10121c; }
 
 /* --feat-ink: the card tone as readable text (titles, stats, hover). */
 html[data-mode="dark"] .feat-memoir { --feat-ink: #e8976f; }
 html[data-mode="dark"] .feat-game   { --feat-ink: #2fc7b9; }
 html[data-mode="dark"] .feat-blue   { --feat-ink: #7aa7ff; }
+html[data-mode="dark"] .feat-thesis { --feat-ink: #a99ff0; }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]) .feat-memoir { --feat-ink: #e8976f; }
   html:not([data-mode]) .feat-game   { --feat-ink: #2fc7b9; }
   html:not([data-mode]) .feat-blue   { --feat-ink: #7aa7ff; }
+  html:not([data-mode]) .feat-thesis { --feat-ink: #a99ff0; }
 }
 
 .feat-blue .feat-btn.primary { background: #2563eb; border-color: #2563eb; }
+.feat-thesis .feat-btn.primary { background: #6243c2; border-color: #6243c2; }
+.feat-status.progress { background: rgba(124, 92, 214, 0.13); color: #5b3fb8; }
+html[data-mode="dark"] .feat-status.progress { color: #b9adf5; }
+@media (prefers-color-scheme: dark) { html:not([data-mode]) .feat-status.progress { color: #b9adf5; } }
 
 .feat-blue .feat-shot {
   background:
@@ -1361,9 +1370,43 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         </div>
       </article>
 
+      {%- assign thesis = site.projects | where_exp: "p", "p.title contains 'Tugas Akhir'" | first -%}
+      <article class="feat-card feat-thesis">
+        <a class="feat-shot" href="{{ '/labs/#homelab' | relative_url }}">
+          <div class="feat-window">
+            <div class="feat-window-bar"><i></i><i></i><i></i><span>proxmox · isolated thesis testbed</span></div>
+            <img src="{{ '/assets/img/og/labs-homelab-diagram.jpg' | relative_url }}" width="960" height="600" alt="Thesis testbed topology: gateway, Wazuh and Suricata, target VMs, n8n with PostgreSQL, and Ollama inside an isolated Proxmox network" loading="lazy" data-no-popup />
+          </div>
+          <span class="feat-shot-hint">Explore the lab →</span>
+        </a>
+        <div class="feat-body">
+          <div class="feat-meta">
+            <span class="feat-status progress"><span class="pulse"></span>In progress · Thesis</span>
+            <span class="feat-kind">Research · Security automation</span>
+          </div>
+          <h3 class="feat-title">Thesis <em>— LLM incident triage</em></h3>
+          <p class="feat-tagline">Alerts in; a classified incident and mitigation steps out. A human decides.</p>
+          <p class="feat-desc">My undergraduate thesis: Wazuh and Suricata alerts are normalized and filtered in n8n, and only significant ones reach a self-hosted LLM (Ollama), which drafts the incident category, severity, and mitigation steps for an analyst. Built and tested in an isolated Proxmox lab.</p>
+          <div class="feat-stats">
+            <div class="feat-stat"><b>6</b><span>VMs in an isolated lab, no public IP</span></div>
+            <div class="feat-stat"><b>5</b><span>pipeline layers; the LLM runs last</span></div>
+            <div class="feat-stat"><b>2</b><span>open-source LLMs compared on ground truth</span></div>
+          </div>
+          <div class="feat-stack">
+            <span>Proxmox</span><span>Wazuh</span><span>Suricata</span><span>n8n</span><span>PostgreSQL</span><span>Ollama</span>
+          </div>
+          <div class="feat-actions">
+            <a class="feat-btn primary" href="{{ '/labs/#homelab' | relative_url }}"><i class="fas fa-server"></i> Explore the testbed</a>
+            {%- if thesis %}
+            <a class="feat-btn" href="{{ thesis.url | relative_url }}"><i class="fas fa-book-open"></i> Case study</a>
+            {%- endif %}
+          </div>
+        </div>
+      </article>
+
       {%- assign capstone = site.projects | where_exp: "p", "p.title contains 'IDN Blue Team'" | first -%}
       {%- assign capstone_url = capstone.url | relative_url -%}
-      <article class="feat-card feat-blue">
+      <article class="feat-card feat-blue reverse">
         <a class="feat-shot" href="{{ capstone_url }}">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>investigation · metasploitable / apache2</span></div>
@@ -1523,6 +1566,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
   <!-- Connect -->
   <div class="about-section">
     <h2 class="section-label">Let's Connect</h2>
+    <p class="connect-now">Curious what I am working on this month? <a href="{{ '/now/' | relative_url }}">See my /now page →</a></p>
     <div class="connect-grid">
       {%- for link in profile.links %}
       <a href="{{ link.url }}" class="connect-card is-{{ link.id }}"{% unless link.url contains 'mailto:' %} target="_blank" rel="noopener noreferrer"{% endunless %}>

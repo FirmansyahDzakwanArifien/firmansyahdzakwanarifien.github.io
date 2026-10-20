@@ -1,0 +1,27 @@
+---
+layout: null
+permalink: /labs/ta-log.xml
+sitemap: false
+# Atom feed of the thesis log (_data/homelab.yml → log), shown in the Progress tab of Labs → Homelab.
+---
+{%- assign lab = site.data.homelab -%}
+{%- assign newest = lab.log | first -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Thesis log · {{ site.title | xml_escape }}</title>
+  <subtitle>{{ lab.title | xml_escape }}: progress notes on automating security incident classification with n8n and a self-hosted LLM.</subtitle>
+  <link href="{{ '/labs/ta-log.xml' | absolute_url }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ '/labs/#hl-pane-progress' | absolute_url }}" rel="alternate" type="text/html"/>
+  <id>{{ '/labs/ta-log.xml' | absolute_url }}</id>
+  <updated>{{ newest.date | date: '%Y-%m-%dT00:00:00+07:00' }}</updated>
+  <author><name>{{ site.social.name | xml_escape }}</name></author>
+  {%- for e in lab.log %}
+  <entry>
+    <title>{{ e.date | date: '%d %b %Y' }}: {{ e.text | truncatewords: 10 | xml_escape }}</title>
+    <link href="{{ '/labs/#hl-pane-progress' | absolute_url }}" rel="alternate" type="text/html"/>
+    <id>{{ '/labs/ta-log.xml' | absolute_url }}#{{ e.date | date: '%Y-%m-%d' }}-{{ forloop.rindex }}</id>
+    <updated>{{ e.date | date: '%Y-%m-%dT00:00:00+07:00' }}</updated>
+    <content type="text">{{ e.text | xml_escape }}</content>
+  </entry>
+  {%- endfor %}
+</feed>

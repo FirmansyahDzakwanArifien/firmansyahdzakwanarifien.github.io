@@ -1,0 +1,24 @@
+# The /now page (now.html): what I am focused on at the moment. Update it every month or two and bump
+# `updated`; the page shows how old it is, so a stale page is visible. Facts only, short sentences.
+updated: 2026-10-21
+location: Indonesia
+
+items:
+  - icon: fas fa-graduation-cap
+    title: Finishing my thesis
+    text: Final year of Informatics Engineering at STT Terpadu Nurul Fikri. My thesis automates security incident classification with Wazuh, Suricata, n8n, and a self-hosted LLM; right now I am on the proposal and testbed design.
+    link: /labs/#homelab
+    link_text: Thesis testbed and progress
+  - icon: fas fa-network-wired
+    title: Implementation Engineer at PT Jarvis Integrasi Solusi
+    text: Deploying, securing, and troubleshooting network, security, and server infrastructure for enterprise clients.
+    link: /cv/
+    link_text: CV
+  - icon: fab fa-linux
+    title: BlankOn Linux infrastructure
+    text: Contributing to the infrastructure team of the BlankOn revival project, keeping the build and hosting side of the distro running.
+  - icon: fas fa-code
+    title: Building Memoir
+    text: An event photo-sharing web app, currently in beta. Guests scan a QR code and upload from their phone browser.
+    link: /projects/memoir/
+    link_text: Case study

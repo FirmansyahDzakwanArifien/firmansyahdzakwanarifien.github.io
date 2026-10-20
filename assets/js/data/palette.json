@@ -10,6 +10,8 @@ layout: compress
   {"g":"Pages","t":{{ tab.title | default: tab.url | jsonify }},"u":{{ tab.url | relative_url | jsonify }},"i":{{ tab.icon | default: 'fas fa-file' | jsonify }}},
   {%- endfor %}
   {"g":"Pages","t":"Homelab","u":{{ '/labs/#homelab' | relative_url | jsonify }},"i":"fas fa-server","h":"Thesis testbed, part of Labs"},
+  {"g":"Pages","t":"Now","u":{{ '/now/' | relative_url | jsonify }},"i":"fas fa-clock","h":"What I am working on this month"},
+  {"g":"Pages","t":"Thesis log (feed)","u":{{ '/labs/ta-log.xml' | relative_url | jsonify }},"i":"fas fa-rss","h":"Atom feed of thesis progress"},
   {"g":"Pages","t":"Achievements","u":{{ '/achievements/' | relative_url | jsonify }},"i":"fas fa-medal"},
   {%- for p in site.projects %}
   {"g":"Projects","t":{{ p.title | jsonify }},"u":{{ p.url | relative_url | jsonify }},"i":"fas fa-code"},

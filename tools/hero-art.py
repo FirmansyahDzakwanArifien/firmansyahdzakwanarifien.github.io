@@ -6,6 +6,10 @@ and a shield, in the site's comic style (ink outlines, pop-art blue, white stick
 
 Every face is drawn in flat 2D coordinates and mapped onto its isometric plane with an SVG matrix, so
 labels and ports sit on the faces like real panels. The canvas is 271x442, the slot the hero expects.
+
+The social cards (tools/og-image.py) use a raster copy, tools/hero-iso.png: after changing the art,
+re-render it as a transparent PNG at 2x (542x884, cropped to the drawing), for example with a headless
+browser screenshot using --default-background-color=00000000, then commit both files.
 """
 import math
 import pathlib
