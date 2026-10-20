@@ -1566,7 +1566,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
   "jobTitle": {{ profile.job_title | jsonify }},
   "worksFor": { "@type": "Organization", "name": {{ profile.employer | jsonify }} },
   "affiliation": { "@type": "CollegeOrUniversity", "name": {{ profile.education.school | jsonify }} },
-  "knowsAbout": ["Cybersecurity", "Network Security", "Linux System Administration", "Incident Response", "DevOps", "UEBA"],
+  "knowsAbout": ["Cybersecurity", "Network Security", "Linux System Administration", "Incident Response", "DevOps", "Security Automation", "LLM-assisted Incident Classification"],
   "hasCredential": [
     {%- for cert in site.data.certifications -%}
     { "@type": "EducationalOccupationalCredential", "name": {{ cert.name | jsonify }}, "recognizedBy": { "@type": "Organization", "name": {{ cert.issuer | jsonify }} } }{% unless forloop.last %},{% endunless %}

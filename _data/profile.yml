@@ -16,15 +16,16 @@ portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl
 summary: >-
   Implementation Engineer at PT Jarvis Integrasi Solusi, deploying and securing enterprise network,
   security, and Linux infrastructure. Fortinet NSE 1–5 certified, BlankOn Linux infrastructure
-  contributor, and researcher in UEBA-based insider threat detection.
+  contributor, and researcher in LLM-assisted security incident classification.
 
 bio: >-
   Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure,
   and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and
   security appliances (Fortinet NSE 1–5 certified), Linux servers, virtualization, cloud, monitoring, and
-  incident response. On the research side, I work on User and Entity Behavior Analytics (UEBA) with Machine
-  Learning and Explainable AI for insider threat detection, and I give back to the community through open
-  source and knowledge sharing.
+  incident response. For my undergraduate thesis, I am building a pipeline that automates security incident
+  classification: Wazuh and Suricata alerts are normalized and filtered in n8n, then a self-hosted LLM drafts
+  the classification and mitigation steps for a human analyst. I also give back to the community through
+  open source and knowledge sharing.
 
 next: >-
   Growing as a security professional who bridges infrastructure, operations, and security strategy.
