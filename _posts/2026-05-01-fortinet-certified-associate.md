@@ -5,7 +5,7 @@ title: Fortinet Certified Associate in Cybersecurity
 date: 2026-05-01 00:00:00 +0800
 description: Achieved Fortinet Certified Associate in Cybersecurity (FCA) certification from Fortinet Training Institute
 image:
-  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Fortinet_Certified_Associate_in_Cybersecurity.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Fortinet_Certified_Associate_in_Cybersecurity.webp
   alt: Fortinet Certified Associate in Cybersecurity
   caption: Fortinet Certified Associate in Cybersecurity
 
@@ -17,7 +17,7 @@ tags: [Cybersecurity, Networking]
 
 Achieved the **Fortinet Certified Associate in Cybersecurity (FCA)** from Fortinet Training Institute. This entry-level certification validates foundational knowledge of cybersecurity concepts and introduces Fortinet's security technologies and solutions.
 
-![Fortinet Certified Associate in Cybersecurity Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Fortinet_Certified_Associate_in_Cybersecurity_Badge.png){: width="700" }
+![Fortinet Certified Associate in Cybersecurity Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Fortinet_Certified_Associate_in_Cybersecurity_Badge.webp){: width="700" }
 
 **Achieved:** May 1, 2026  
 **Valid Until:** May 1, 2028  

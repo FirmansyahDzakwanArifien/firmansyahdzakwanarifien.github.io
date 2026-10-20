@@ -5,7 +5,7 @@ date: 2026-08-04 00:00:00 +0800
 description: Fortinet NSE 2 certification from Fortinet Training Institute — an overview of the core security technologies that make up a layered defense, from firewalls and IPS to sandboxing and SIEM.
 issuer: Fortinet Training Institute
 image:
-  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse2-certified-cybersecurity.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse2-certified-cybersecurity.webp
   alt: Fortinet NSE 2 Certified in Cybersecurity
   caption: Fortinet NSE 2 — Certified in Cybersecurity
 categories: [Certification, Cybersecurity]

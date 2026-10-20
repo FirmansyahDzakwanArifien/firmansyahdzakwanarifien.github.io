@@ -59,11 +59,11 @@ ID: 000, Name: wazuh-server (server), IP: 127.0.0.1, Active/Local
 ID: 001, Name: metasploitable, IP: any, Active
 ```
 
-![Q1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q1.png)
+![Q1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q1.webp)
 
 ID 000 adalah Wazuh manager itu sendiri. ID 001 adalah endpoint eksternal yang sedang dimonitor — host inilah yang Apache access log-nya berisi semua jejak serangan yang perlu diinvestigasi.
 
-![Q1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q1.1.png)
+![Q1](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q1.1.webp)
 
 > **Answer:** `metasploitable`
 {: .prompt-tip }
@@ -86,7 +86,7 @@ agent.name: "metasploitable" AND data.srcip:*
 
 Seluruh request HTTP yang muncul berasal dari Apache access log pada agent metasploitable.
 
-![Q2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q2.png)
+![Q2](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q2.webp)
 
 > **Answer:** `Apache2`
 {: .prompt-tip }
@@ -110,7 +110,7 @@ Saya memilih index pattern `wazuh-archives-*`, kemudian membuka salah satu dokum
 
 Index ini menyimpan semua log mentah dari agent termasuk field `full_log`, yaitu baris asli Apache access log persis seperti yang tertulis di file log — tanpa perubahan apapun.
 
-![Q3](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q3.png)
+![Q3](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q3.webp)
 
 > **Answer:** `wazuh-archives-4.x-*`
 {: .prompt-tip }
@@ -136,7 +136,7 @@ Dari hasil filter tersebut, saya menemukan empat request HTTP yang berisi payloa
 
 Teknik yang digunakan mencakup `OR 1=1` untuk bypass autentikasi, dan `UNION SELECT` untuk mengekstrak data dari kolom `user` dan `password` di database.
 
-![Q4](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q4.png)
+![Q4](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q4.webp)
 
 > **Answer:** `4`
 {: .prompt-tip }
@@ -159,7 +159,7 @@ Kemudian membuka salah satu event dan melihat field `full_log`. Contoh raw log d
 
 Angka **200** setelah `HTTP/1.1` adalah status code yang dikembalikan server. Artinya server memproses request tersebut tanpa menolak payload XSS — script berbahaya diterima dan dirender oleh aplikasi.
 
-![Q5](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q5.png)
+![Q5](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q5.webp)
 
 > **Answer:** `200`
 {: .prompt-tip }
@@ -206,7 +206,7 @@ Di sana terlihat daftar semua koneksi TCP yang terekam. Ada satu koneksi yang la
 
 Ini adalah pola reverse shell. Setelah file PHP berbahaya berhasil dieksekusi melalui celah RFI, server korban terhubung balik ke attacker melalui port 9001.
 
-![Q7](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q7.png)
+![Q7](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q7.webp)
 
 > **Answer:** `9001`
 {: .prompt-tip }
@@ -232,7 +232,7 @@ Destination Port : 4444
 
 Host internal `192.168.132.238` melakukan koneksi keluar ke `192.168.132.242` pada port 4444. Source port yang digunakan untuk koneksi tersebut adalah **49816**.
 
-![Q8](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q8.png)
+![Q8](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/idn/capstone/q8.webp)
 
 > **Answer:** `49816`
 {: .prompt-tip }

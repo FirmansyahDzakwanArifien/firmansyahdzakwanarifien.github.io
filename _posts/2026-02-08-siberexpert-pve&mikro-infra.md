@@ -4,7 +4,7 @@ title: SiberExpert - PVE & Mikrotik Untuk Infra
 date: 2026-02-08 15:00:00 +0800
 description: Completed Seminar PVE & Router Mikrotik Untuk Infra
 image:
-  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Siberexpert-pve&router-mikrotik-infra.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Siberexpert-pve&router-mikrotik-infra.webp
   alt: SiberExpert - PVE & Mikrotik Untuk Infra
   caption: SiberExpert - PVE & Mikrotik Untuk Infra
 
@@ -17,7 +17,7 @@ tags: [SysAdmin]
 Attended a specialized seminar on Proxmox Virtual Environment (Proxmox VE) and MikroTik Router for infrastructure needs, organized by SiberExpert. This seminar focused on practical implementation of virtualization and network routing solutions commonly used in enterprise and data center environments.
 
 
-![SiberExpert - PVE & Mikrotik Untuk Infra Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Siberexpert-pve&router-mikrotik-infra.png){: width="700" } 
+![SiberExpert - PVE & Mikrotik Untuk Infra Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Siberexpert-pve&router-mikrotik-infra.webp){: width="700" } 
 
 **Completed:** February 8, 2026  
 **Location:** Yogyakarta, Indonesia  

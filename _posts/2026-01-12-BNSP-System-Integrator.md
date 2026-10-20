@@ -4,7 +4,7 @@ title: BNSP - System Integrator
 date: 2026-01-12 15:00:00 +0800
 description: Completed BNSP - System Integrator
 image:
-  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.webp
   alt: BNSP - System Integrator
   caption: BNSP - System Integrator
 
@@ -18,9 +18,9 @@ tags: [DevOps]
 
 Achieved professional competency certification as a Systems Integrator in Network Architecture from BNSP, Indonesia's National Professional Certification Authority. This certification validates expertise in designing, implementing, and managing computer network systems with integration capabilities across various technologies and platforms.
 
-![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.png){: width="700" }
+![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.webp){: width="700" }
 
-![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026-2.png){: width="700" }
+![BNSP -  System Integrator](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026-2.webp){: width="700" }
 
 **Completed:** January 12, 2026  
 **Issued by:** BNSP (Badan Nasional Sertifikasi Profesi)  

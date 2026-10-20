@@ -3,7 +3,7 @@ title: Advent of Cyber 2025 - 24 Days of Cybersecurity Challenges
 date: 2025-12-25 23:59:00 +0800
 description: Successfully completed all 24 cybersecurity challenges in TryHackMe's Advent of Cyber 2025 event. A month-long journey through web exploitation, networking, forensics, and more.
 image:
-  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.png
+  path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.webp
   alt: Advent of Cyber 2025 Certificate of Completion
   caption: Certificate of Completion - Advent of Cyber 2025 by TryHackMe
 event: Advent of Cyber 2025
@@ -17,7 +17,7 @@ What a journey! Successfully completed **Advent of Cyber 2025** by TryHackMe - 2
 
 ## Certificate of Achievement
 
-![Advent of Cyber 2025 Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.png){: width="800" }
+![Advent of Cyber 2025 Certificate](https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Aoc-2025-THM.webp){: width="800" }
 _Official Certificate of Completion from TryHackMe_
 
 **Certificate Details:**
