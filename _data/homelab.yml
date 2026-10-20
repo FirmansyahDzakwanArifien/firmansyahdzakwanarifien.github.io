@@ -233,3 +233,64 @@ principles:
   - icon: fas fa-user-shield
     title: Human in the loop
     text: The system recommends; the analyst decides. Nothing is executed on the target systems.
+
+# One alert followed through the pipeline (Pipeline tab). Illustrative: it shows the shape of the data at
+# each step, not a measured result. Keep it masked: placeholders instead of real IPs or hostnames.
+example:
+  title: "One alert, three steps: an SSH brute force on a target VM"
+  note: Illustrative data that shows the shape of each step, with addresses masked. Not an evaluation result.
+  steps:
+    - name: Raw Wazuh alert
+      layer: Data sources
+      code: |
+        {
+          "timestamp": "2026-10-21T09:14:07.512+0700",
+          "rule": {
+            "id": "5712",
+            "level": 10,
+            "description": "sshd: brute force trying to get access to the system. Non existent user.",
+            "frequency": 8,
+            "groups": ["syslog", "sshd", "authentication_failures"],
+            "mitre": { "id": ["T1110"], "tactic": ["Credential Access"] }
+          },
+          "agent": { "id": "002", "name": "target-01" },
+          "data": { "srcip": "<attacker-ip>", "srcuser": "admin" },
+          "full_log": "sshd[2231]: Invalid user admin from <attacker-ip> port 51644"
+        }
+    - name: Normalized and filtered
+      layer: n8n · JavaScript + rules
+      code: |
+        {
+          "source": "wazuh",
+          "event_time": "2026-10-21T02:14:07Z",
+          "host": "target-01",
+          "rule_id": "5712",
+          "signature": "SSH brute force, non-existent user",
+          "severity": "high",
+          "src_ip": "<attacker-ip>",
+          "user": "admin",
+          "count": 8,
+          "mitre": ["T1110"],
+          "route": "llm"
+        }
+    - name: LLM recommendation
+      layer: Ollama · structured JSON
+      code: |
+        {
+          "category": "Credential Access: Brute Force",
+          "severity": "high",
+          "summary": "Eight failed SSH logins for a non-existent user from one source on target-01 within a short window, consistent with password guessing.",
+          "mitigation": [
+            "Block the source address at the gateway for this session",
+            "Check the auth log for any successful login from that source",
+            "Disable SSH password login and allow keys only",
+            "Rate-limit sshd (e.g. fail2ban)"
+          ],
+          "needs_analyst": true
+        }
+
+# Thesis log, newest first: short dated notes shown in the Progress tab and published as an Atom feed
+# at /labs/ta-log.xml. Write facts only (what was done), one or two sentences each.
+log:
+  - date: 2026-10-20
+    text: Testbed design and the five-layer pipeline architecture written up and published as the Homelab section of Labs.

@@ -121,6 +121,10 @@ Medali, CV, terminal (`certs`), command palette, dan schema SEO langsung ikut te
 
 ---
 
+### Halaman /now
+
+`/now/` (`now.html`) berisi apa yang sedang dikerjakan saat ini. Isinya di `_data/now.yml`: `updated` (tanggal terakhir diubah, tampil di halaman), `location`, dan `items` (`icon`, `title`, `text`, `link`, `link_text`). Perbarui setiap satu atau dua bulan, lalu ubah `updated`. Halaman ini ditautkan dari bagian "Let's Connect" di beranda dan dari Ctrl+K.
+
 ## 4. Proyek dan album
 
 **Proyek:** buat `_projects/YYYY-MM-DD-nama.md`. Front matter mengikuti contoh di `_projects/2026-10-09-memoir.md`. URL-nya `/projects/nama/`. Kalau perlu tampil di "Featured Work" halaman utama, kartunya ditulis manual di `index.html` (bagian `<!-- Featured work -->`).
@@ -222,6 +226,17 @@ results:
       best: higher
       values: [87.5, 82.1]   # Llama 3 8B, Mistral 7B
 ```
+
+- `example`: satu alert yang ditelusuri melewati pipeline (tab **Pipeline**): alert Wazuh mentah, hasil normalisasi, dan JSON rekomendasi LLM. Isinya ilustrasi; selalu samarkan alamat dengan placeholder seperti `<attacker-ip>` dan nama host generik seperti `target-01`. Kalau sudah ada data asli dari lab, ganti isi `code` (tetap disamarkan).
+- `log`: catatan progres TA, terbaru di atas (`date`, `text`). Tampil di tab **Progress** dan otomatis menjadi feed Atom di `/labs/ta-log.xml`, yang bisa dilanggan dosen pembimbing lewat RSS reader. Tulis fakta saja, satu atau dua kalimat:
+
+  ```yaml
+  log:
+    - date: 2026-11-04
+      text: Gateway VM (OPNsense) and the VPN are up; the lab has no public IP.
+    - date: 2026-10-20
+      text: Testbed design and the five-layer pipeline architecture written up ...
+  ```
 
 Bagian ini memakai tab (Topology, Pipeline, Progress, Results). Tab bisa dibuka langsung lewat link, misalnya `/labs/#hl-pane-results`. Gambar preview saat link Labs dibagikan (`assets/img/og/labs-homelab.jpg`) digambar ulang otomatis dari file ini oleh workflow **Social cards** setiap kali `_data/homelab.yml` berubah.
 
@@ -373,7 +388,7 @@ Setelah diisi, tombolnya otomatis muncul di halaman utama (bagian Connect), hala
 
 ## 14. Kartu preview sosial media
 
-Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, avatar komik) di `assets/img/og/<collection>-<slug>.jpg`. `_includes/head.html` memakainya sebagai `og:image` dan `twitter:image` menggantikan gambar post.
+Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, dan ilustrasi isometrik dari halaman utama, `tools/hero-iso.png`) di `assets/img/og/<collection>-<slug>.jpg`. Halaman tanpa gambar sendiri memakai `assets/img/og/site.jpg`. `_includes/head.html` memakainya sebagai `og:image` dan `twitter:image` menggantikan gambar post.
 
 - **Otomatis:** workflow `og-images.yml` berjalan saat `_posts/` atau `_projects/` berubah, membuat kartu yang baru atau yang judulnya berubah, commit, lalu deploy.
 - **Manual / lokal:** `python3 tools/og-image.py` (butuh `pillow` dan `pyyaml`); `--force` untuk membuat ulang semua.

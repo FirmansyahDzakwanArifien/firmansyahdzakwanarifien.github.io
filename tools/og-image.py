@@ -6,29 +6,28 @@
 
 Output: assets/img/og/<collection>-<slug>.jpg, picked up by _includes/head.html for og:image, plus
 assets/img/og/labs-homelab.jpg: the thesis testbed diagram drawn from _data/homelab.yml (Labs page and
-the thesis project).
-Fonts are bundled in tools/fonts (SIL OFL) so the result is identical locally and in CI.
+the thesis project), and assets/img/og/site.jpg: the default card for pages without an image.
+The art on the right is tools/hero-iso.png (the home hero art). Fonts are bundled in tools/fonts (SIL OFL) so the result is identical locally and in CI.
 """
 import hashlib
-import io
 import json
 import pathlib
 import re
 import sys
-import urllib.request
 from datetime import datetime
 
 import yaml
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FONTS = ROOT / "tools" / "fonts"
 OUT = ROOT / "assets" / "img" / "og"
 STAMP = OUT / ".stamps.json"  # content hash per card, so unchanged cards are not rewritten
-AVATAR = ("https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main"
-          "/blog/img/avatar/avatar-popout-comic.webp")
+# The home hero art (assets/img/hero/hero-iso.svg from tools/hero-art.py) as a transparent PNG; PIL cannot
+# draw SVG. Re-render it after changing the art (see tools/hero-art.py) so the cards stay in sync.
+ART = ROOT / "tools" / "hero-iso.png"
 SOURCES = {"posts": ROOT / "_posts", "projects": ROOT / "_projects"}
-VERSION = "2"  # bump to regenerate every card after a design change
+VERSION = "3"  # bump to regenerate every card after a design change
 
 W, H = 1200, 630
 BG, INK, BLUE = (16, 18, 28), (20, 20, 28), (37, 99, 235)
@@ -66,10 +65,8 @@ def wrap(draw, text, fnt, width, max_lines):
 
 
 def avatar_layer():
-    with urllib.request.urlopen(urllib.request.Request(AVATAR, headers={"User-Agent": "cyphera-og/1.0"}), timeout=60) as res:
-        av = ImageOps.mirror(Image.open(io.BytesIO(res.read())).convert("RGBA"))
-    av = av.resize((round(av.width * 470 / av.height), 470), Image.LANCZOS)
-    return av
+    av = Image.open(ART).convert("RGBA")
+    return av.resize((round(av.width * 540 / av.height), 540), Image.LANCZOS)
 
 
 def card(title, kicker, meta, av):
@@ -84,12 +81,7 @@ def card(title, kicker, meta, av):
                 dd.ellipse((x - r, y - r, x + r, y + r), fill=255)
     img.paste(Image.new("RGB", (W, H), (40, 70, 150)), (0, 0), dots)
 
-    ax, ay = W - av.width - 40, H - av.height + 30
-    outline = av.getchannel("A").filter(ImageFilter.MaxFilter(7))
-    for color, dx, dy in ((BLUE, 9, 9), (INK, 0, 0)):
-        mask = Image.new("L", (W, H), 0)
-        mask.paste(outline, (ax + dx, ay + dy))
-        img.paste(Image.new("RGB", (W, H), color), (0, 0), mask)
+    ax, ay = W - av.width - 90, H - av.height - 30  # the art already carries its outline and shadow
     img.paste(av, (ax, ay), av)
 
     d = ImageDraw.Draw(img)
@@ -173,6 +165,9 @@ def items():
             kicker = "Project" if collection == "projects" else (cats[0] if cats else "Post")
             meta = " · ".join(filter(None, [date, ", ".join(str(c) for c in cats[:2])]))
             yield f"{collection}-{slug}", str(fm["title"]), kicker, meta
+    # Site-wide card for pages without their own image (_config.yml: social_preview_image).
+    profile = yaml.safe_load((ROOT / "_data" / "profile.yml").read_text(encoding="utf-8"))
+    yield "site", str(profile.get("headline", "Portfolio")), "Portfolio", "Labs · Projects · Thesis · CV"
 
 
 def main():
@@ -181,9 +176,10 @@ def main():
     force = "--force" in sys.argv
     av = None
     keep = set()
+    art = hashlib.sha256(ART.read_bytes()).hexdigest()[:12]  # a new hero art regenerates every card
     for name, title, kicker, meta in items():
         keep.add(name)
-        digest = hashlib.sha256(f"{VERSION}|{title}|{kicker}|{meta}".encode()).hexdigest()[:16]
+        digest = hashlib.sha256(f"{VERSION}|{art}|{title}|{kicker}|{meta}".encode()).hexdigest()[:16]
         target = OUT / f"{name}.jpg"
         if not force and target.exists() and stamps.get(name) == digest:
             continue
