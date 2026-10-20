@@ -47,7 +47,9 @@ bundle exec jekyll serve   # http://127.0.0.1:4000
 - **Post:** add `_posts/YYYY-MM-DD-title.md`; the URL becomes `/posts/title/`.
 - **Album:** add `_album/YYYY-MM-DD-title.md` with `photos_base` and a `photos` list; upload the images to the assets repo first.
 
-Inline `<script>` blocks are compressed onto a single line in production, so use `/* */` comments only.
+**No inline JavaScript.** The site is served with a Content Security Policy that blocks inline scripts, `on*=` handlers, and `javascript:` URLs. Put scripts in `assets/js/custom/` (add front matter when they need Liquid data) and attach events with `addEventListener`. `tools/check-inline.py` enforces this in CI.
+
+**Library versions.** jsDelivr libraries load with Subresource Integrity hashes from `_data/sri.yml`. After changing a version in `_data/origin/cors.yml`, run `python3 tools/sri.py`.
 
 ## Deployment
 
@@ -58,7 +60,7 @@ Every push to `main` builds and deploys the site through GitHub Actions.
 | Workflow | When | What it does |
 |---|---|---|
 | `jekyll.yml` | push to `main` | Builds and deploys to GitHub Pages |
-| `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, every jsDelivr URL must return 200, assets repo must stay under jsDelivr's 50 MB limit (`tools/check-assets.sh`) |
+| `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, no inline JavaScript, SRI hashes still valid, every jsDelivr URL returns 200, assets repo under jsDelivr's 50 MB limit |
 | `labs-sync.yml` | daily | Adds new Hashnode writeups to `_data/labs.yml` and opens a PR for review (`tools/sync-labs.py`) |
 | `security-txt.yml` | weekly | Fails (and emails) when `.well-known/security.txt` is within 30 days of its `Expires` date |
 
