@@ -1,0 +1,86 @@
+# Profile data shared by the home page, /cv/, the terminal, and the Person JSON-LD.
+
+name: Firmansyah Dzakwan Arifien
+alias: Cyphera
+headline: Security & Infrastructure · Implementation Engineer
+job_title: Implementation Engineer
+employer: PT Jarvis Integrasi Solusi
+email: contact@cyphera.my.id
+website: https://cyphera.my.id
+photo: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg
+cutout: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-cutout.webp
+portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing
+
+bio: >-
+  Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure,
+  and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and
+  security appliances (Fortinet NSE 1–5 certified), Linux servers, virtualization, cloud, monitoring, and
+  incident response. On the research side, I work on User and Entity Behavior Analytics (UEBA) with Machine
+  Learning and Explainable AI for insider threat detection, and I give back to the community through open
+  source and knowledge sharing.
+
+next: >-
+  Growing as a security professional who bridges infrastructure, operations, and security strategy.
+  Next up: deeper hands-on work with enterprise security platforms, sharper penetration testing skills,
+  and DevSecOps practices built into the deployment pipeline. Alongside that, staying active in the
+  community through open source, mentoring, and CTF competitions.
+
+education:
+  degree: Teknik Informatika — Informatics Engineering
+  school: STT Terpadu Nurul Fikri
+  period: Sep 2023 – Present (final year)
+
+languages:
+  - name: Indonesian
+    level: Native
+  - name: English
+    level: Intermediate
+  - name: Arabic
+    level: Elementary
+
+skill_groups:
+  - title: Cybersecurity
+    tags: [SOC & Monitoring, Incident Response, Threat Investigation, Vuln Assessment, Web Pentest, Firewall / NGFW]
+  - title: Infrastructure
+    tags: [Linux Administration, Networking, Virtualization, System Integration, Bash Scripting]
+  - title: Cloud & DevOps
+    tags: [Cloud Foundations, CI/CD, Docker, IaC, DevOps Practices]
+
+stack:
+  - label: Security
+    items: FortiGate · Wazuh · Wireshark · Volatility
+  - label: Infra
+    items: RHEL / Debian · Proxmox VE · MikroTik
+  - label: Dev
+    items: Python · Bash · TypeScript · Git · Docker · GitHub Actions
+
+projects:
+  - name: Memoir
+    kind: Product · Web App (beta)
+    summary: Event photo-sharing platform built end-to-end; guests upload via QR code, hosts get a live, moderated, print-ready album. Next.js, Express, Prisma, PostgreSQL, Cloudflare R2, Docker.
+    url: https://memoir.cyphera.my.id
+  - name: IDN Blue Team Capstone
+    kind: Security · DFIR
+    summary: Investigated SQLi, XSS, LFI/RFI, and a reverse shell on a compromised Apache host by correlating Wazuh SIEM alerts, packet captures, and a memory dump.
+    url: /projects/Milestone-Project-IDN-Blue-Team-2026/
+  - name: Si Ngacir — Trobos Ajalah!
+    kind: Game · Godot 4
+    summary: 2D story-driven arcade game by a team of six; built gameplay, UI, and the automated release pipeline for web, Windows, and Android.
+    url: https://cyphera-game.itch.io/si-ngacir
+
+links:
+  - label: LinkedIn
+    value: firmansyah-dzakwan
+    url: https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293
+  - label: GitHub
+    value: firmansyahdzakwanarifien
+    url: https://github.com/firmansyahdzakwanarifien
+  - label: Email
+    value: contact@cyphera.my.id
+    url: mailto:contact@cyphera.my.id
+  - label: Telegram
+    value: "@fdzak01"
+    url: https://t.me/fdzak01
+  - label: Medium
+    value: "@fdzak01"
+    url: https://medium.com/@fdzak01

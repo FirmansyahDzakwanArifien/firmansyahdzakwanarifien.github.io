@@ -1,0 +1,5 @@
+Contact: mailto:contact@cyphera.my.id
+Contact: https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293
+Expires: 2027-10-19T17:00:00.000Z
+Preferred-Languages: en, id
+Canonical: https://cyphera.my.id/.well-known/security.txt

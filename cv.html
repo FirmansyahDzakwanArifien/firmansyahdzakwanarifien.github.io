@@ -1,0 +1,251 @@
+---
+layout: page
+title: Curriculum Vitae
+permalink: /cv/
+description: Curriculum vitae of Firmansyah Dzakwan Arifien, Implementation Engineer focused on cybersecurity, network infrastructure, and Linux system administration.
+---
+
+{%- assign profile = site.data.profile -%}
+
+<style>
+.cv {
+  --cv-accent: #2563eb;
+  --cv-border: rgba(128, 128, 128, 0.2);
+  --cv-muted: rgba(128, 128, 128, 0.85);
+  max-width: 780px;
+  margin: 0 auto;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* The layout's page title duplicates the CV header. */
+h1.dynamic-title { display: none; }
+
+.cv-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--cv-border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.cv-btn:hover { border-color: var(--cv-accent); color: var(--cv-accent); }
+
+.cv-head {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--cv-accent);
+  margin-bottom: 1.25rem;
+}
+
+.cv-name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cv-headline {
+  margin: 0.15rem 0 0.6rem;
+  font-weight: 500;
+  color: var(--cv-accent);
+}
+
+.cv-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+}
+
+.cv-contacts b { font-weight: 600; margin-right: 0.3rem; }
+
+.cv-section { margin-bottom: 1.4rem; }
+
+.cv-section h2 {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cv-accent);
+  border-bottom: 1px solid var(--cv-border);
+  padding-bottom: 0.25rem;
+}
+
+.cv-item { margin-bottom: 0.75rem; break-inside: avoid; }
+
+.cv-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.cv-item-head strong { font-weight: 600; }
+
+.cv-period {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: var(--cv-muted);
+}
+
+.cv-sub { font-size: 0.84rem; color: var(--cv-muted); }
+
+.cv-item p { margin: 0.15rem 0 0; }
+
+.cv-list { margin: 0; padding-left: 1.1rem; }
+
+.cv-list li { margin-bottom: 0.2rem; break-inside: avoid; }
+
+.cv-grid {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 0.3rem 1rem;
+  margin: 0;
+}
+
+.cv-grid dt { font-weight: 600; }
+
+.cv-grid dd { margin: 0; }
+
+@media (max-width: 640px) {
+  .cv-item-head { flex-direction: column; gap: 0; }
+  .cv-grid { grid-template-columns: 1fr; }
+  .cv-grid dd { margin-bottom: 0.4rem; }
+}
+
+@media print {
+  @page { margin: 14mm 14mm 16mm; }
+
+  html, body { background: #fff !important; }
+
+  #sidebar, #topbar-wrapper, #panel-wrapper, #tail-wrapper, #back-to-top,
+  #intro, #term, #notification, .cv-actions { display: none !important; }
+
+  #main-wrapper { margin: 0 !important; padding: 0 !important; }
+  #main-wrapper > .container { max-width: none !important; padding: 0 !important; }
+  main { flex: 0 0 100% !important; max-width: 100% !important; padding: 0 !important; }
+  article, .content { margin: 0 !important; padding: 0 !important; }
+
+  .cv { max-width: none; font-size: 10pt; color: #111; }
+  .cv * { color: #111 !important; }
+  .cv-headline, .cv-section h2 { color: #1d4ed8 !important; }
+  .cv-period, .cv-sub { color: #555 !important; }
+  .cv a { text-decoration: none !important; }
+  .cv-section h2 { break-after: avoid; }
+}
+</style>
+
+<div class="cv">
+
+  <div class="cv-actions">
+    <button type="button" class="cv-btn" onclick="window.print()"><i class="fas fa-print"></i> Print / Save as PDF</button>
+    <a class="cv-btn" href="{{ '/' | relative_url }}"><i class="fas fa-user"></i> Full profile</a>
+  </div>
+
+  <header class="cv-head">
+    <p class="cv-name">{{ profile.name }}</p>
+    <p class="cv-headline">{{ profile.headline | escape }}</p>
+    <ul class="cv-contacts">
+      <li><b>Email</b><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+      <li><b>Web</b><a href="{{ profile.website }}">{{ profile.website | remove: 'https://' }}</a></li>
+      {%- for l in profile.links %}
+        {%- if l.label == 'LinkedIn' or l.label == 'GitHub' %}
+      <li><b>{{ l.label }}</b><a href="{{ l.url }}">{{ l.url | remove: 'https://' | remove: 'www.' }}</a></li>
+        {%- endif %}
+      {%- endfor %}
+    </ul>
+  </header>
+
+  <section class="cv-section">
+    <h2>Summary</h2>
+    <p>{{ profile.bio }}</p>
+  </section>
+
+  <section class="cv-section">
+    <h2>Experience</h2>
+    {%- for job in site.data.experience %}
+    <div class="cv-item">
+      <div class="cv-item-head">
+        <span><strong>{{ job.role | escape }}</strong> · {{ job.company | escape }}</span>
+        <span class="cv-period">{{ job.period }}</span>
+      </div>
+      <p>{{ job.desc | escape }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section class="cv-section">
+    <h2>Certifications &amp; Training</h2>
+    <ul class="cv-list">
+      {%- for cert in site.data.certifications %}
+      <li><a href="{{ cert.url | relative_url }}">{{ cert.name }}</a> <span class="cv-sub">— {{ cert.issuer }}, {{ cert.year }}</span></li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2>Selected Projects</h2>
+    {%- for project in profile.projects %}
+    <div class="cv-item">
+      <div class="cv-item-head">
+        <strong><a href="{{ project.url | relative_url }}">{{ project.name }}</a></strong>
+        <span class="cv-period">{{ project.kind }}</span>
+      </div>
+      <p>{{ project.summary }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section class="cv-section">
+    <h2>Skills</h2>
+    <dl class="cv-grid">
+      {%- for group in profile.skill_groups %}
+      <dt>{{ group.title | escape }}</dt>
+      <dd>{{ group.tags | join: ', ' | escape }}</dd>
+      {%- endfor %}
+      {%- for row in profile.stack %}
+      <dt>Tools · {{ row.label }}</dt>
+      <dd>{{ row.items }}</dd>
+      {%- endfor %}
+    </dl>
+  </section>
+
+  <section class="cv-section">
+    <h2>Education</h2>
+    <div class="cv-item">
+      <div class="cv-item-head">
+        <span><strong>{{ profile.education.degree }}</strong></span>
+        <span class="cv-period">{{ profile.education.period }}</span>
+      </div>
+      <span class="cv-sub">{{ profile.education.school }}</span>
+    </div>
+  </section>
+
+  <section class="cv-section">
+    <h2>Languages</h2>
+    <p>
+      {%- for language in profile.languages -%}
+      {{ language.name }} <span class="cv-sub">({{ language.level }})</span>{% unless forloop.last %} · {% endunless %}
+      {%- endfor -%}
+    </p>
+  </section>
+
+</div>

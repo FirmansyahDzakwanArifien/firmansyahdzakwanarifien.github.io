@@ -1,0 +1,65 @@
+# Professional experience, newest first. Used by the home page, /cv/, and the terminal.
+# cat: security | infrastructure | devops | community | research (filter + color) · badge: label on the card
+
+- role: Implementation Engineer
+  company: PT Jarvis Integrasi Solusi
+  period: Feb 2026 — Present
+  cat: infrastructure
+  badge: Infrastructure
+  desc: Implementing, securing, and troubleshooting network, security, and server infrastructure for enterprise clients; working with project teams to design secure, scalable systems tailored to each client's needs.
+
+- role: IT Infrastructure Team
+  company: BlankOn Linux — Revival Project
+  period: Nov 2025 — Present
+  cat: infrastructure
+  badge: Open Source
+  desc: Core contributor to the infrastructure team of BlankOn, Indonesia's Debian-based GNU/Linux distribution; maintaining and improving the build, hosting, and server infrastructure behind the distro.
+
+- role: Leader, Student Cybersecurity Community
+  company: NFSCC — STT Terpadu Nurul Fikri
+  period: Apr 2025 — Mar 2026
+  cat: community
+  badge: Community
+  desc: Led cybersecurity initiatives including workshops, training programs, and community engagement; organized security awareness campaigns and facilitated CTF competitions.
+
+- role: Campus Ambassador
+  company: LINUXENIC Corporation
+  period: Nov 2025 — Jan 2026
+  cat: community
+  badge: Community
+  desc: Promoted open-source technologies and organized campus engagement activities around the Linux and FOSS ecosystem.
+
+- role: Assistant Lecturer
+  company: STT Terpadu Nurul Fikri
+  period: Sep 2025 — Jan 2026
+  cat: community
+  badge: Teaching
+  desc: Taught practical Incident Response topics and mentored students in real-world security scenarios and hands-on labs.
+
+- role: SOC Analyst
+  company: Xcode / PT Teknologi Server Indonesia
+  period: Sep 2025 — Dec 2025
+  cat: security
+  badge: Security
+  desc: Monitored network traffic and logs for security threats; analyzed incidents and coordinated response actions in a live SOC environment.
+
+- role: DevOps Engineer Trainee
+  company: PT Nurul Fikri Academy
+  period: Aug 2025 — Oct 2025
+  cat: devops
+  badge: DevOps
+  desc: Learned infrastructure automation, CI/CD fundamentals, and cloud basics through a structured training program.
+
+- role: Sysadmin Trainer
+  company: PT Jarvis Integrasi Solusi
+  period: Jul 2025 — Sep 2025
+  cat: infrastructure
+  badge: Sysadmin
+  desc: Hands-on Linux administration and server configuration in a professional environment, including Red Hat System Administration II (RH134) at Jarvis Camp.
+
+- role: Research & Development
+  company: BPH Litbang, STT Terpadu Nurul Fikri
+  period: Jun 2024 — Mar 2025
+  cat: research
+  badge: Research
+  desc: Contributed to research projects and development initiatives at the university research bureau.

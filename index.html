@@ -48,13 +48,13 @@ html[data-mode="dark"] {
 }
 
 /* ── Hero ── */
-/* Card with the profile photo, blurred, as its own backdrop; a theme-colored veil keeps text readable. */
+/* The original photo, blurred, is the card's backdrop; the cut-out subject stands in front of it. */
 .hero-block {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 140px 1fr;
   gap: 2rem;
   align-items: center;
   padding: 2rem;
@@ -82,17 +82,33 @@ html[data-mode="dark"] {
   opacity: 0.85;
 }
 
-/* Portrait crop of a tall photo: keep the subject and drop the letterbox bars. */
+/* Feet rest on the card's bottom edge, with a soft ground shadow. */
+.hero-avatar {
+  position: relative;
+  z-index: 0;
+  align-self: end;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -2rem;
+}
+
+.hero-avatar::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: 2px;
+  width: 130px;
+  height: 18px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38), transparent 70%);
+}
+
 .hero-avatar img {
   display: block;
-  width: 150px;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: 50% 74%;
-  border-radius: var(--radius);
-  border: 3px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.55);
+  width: auto;
+  height: 300px;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.3));
 }
 
 .hero-name {
@@ -928,8 +944,9 @@ html[data-mode="dark"] {
   .feat-body { padding: 1.1rem 1.1rem 1.25rem; }
   .feat-title { font-size: 1.6rem; }
   .hero-block { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem 1.25rem; }
-  .hero-block::after { background: var(--main-bg, #fff); }
-  .hero-avatar img { width: 120px; }
+  .hero-block::after { background: linear-gradient(180deg, transparent -40%, var(--main-bg, #fff) 50%); }
+  .hero-avatar { margin-bottom: 0; }
+  .hero-avatar img { height: 220px; }
   .hero-name { font-size: 1.9rem; }
   .skills-row,
   .skills-row.cols-2 { grid-template-columns: 1fr; }
@@ -940,17 +957,18 @@ html[data-mode="dark"] {
 <div class="about-wrap">
 
   <!-- Hero -->
-  <div class="hero-block" style="--hero-bg: url('https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg')">
+  {%- assign profile = site.data.profile %}
+  <div class="hero-block" style="--hero-bg: url('{{ profile.photo }}')">
     <div class="hero-avatar">
-      <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg" alt="Firmansyah Dzakwan Arifien" width="150" height="200" fetchpriority="high" decoding="async" data-no-popup />
+      <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="117" height="345" fetchpriority="high" decoding="async" data-no-popup />
     </div>
     <div class="hero-text">
       <h1 class="hero-name">Firmansyah <em>Dzakwan</em> Arifien</h1>
-      <p class="hero-role">Security &amp; Infrastructure · Implementation Engineer</p>
-      <p class="hero-bio">Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure, and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and security appliances (Fortinet NSE 1–5 certified), Linux servers, virtualization, cloud, monitoring, and incident response. On the research side, I work on User and Entity Behavior Analytics (UEBA) with Machine Learning and Explainable AI for insider threat detection, and I give back to the community through open source and knowledge sharing.</p>
+      <p class="hero-role">{{ profile.headline | escape }}</p>
+      <p class="hero-bio">{{ profile.bio }}</p>
       <div class="hero-cta">
-        <a href="https://drive.google.com/file/d/1xizAWX6gF48XjoKhd6ukP6c5O6RP7LzO/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cta">View My CV</a>
-        <a href="https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-cta ghost">View My Portfolio</a>
+        <a href="{{ '/cv/' | relative_url }}" class="btn-cta">View My CV</a>
+        <a href="{{ profile.portfolio_pdf }}" target="_blank" rel="noopener noreferrer" class="btn-cta ghost">View My Portfolio</a>
       </div>
     </div>
   </div>
@@ -1080,133 +1098,21 @@ html[data-mode="dark"] {
     </div>
 
     <div class="exp-timeline">
-
-      <details class="exp-card" name="exp" data-cat="infrastructure">
+      {%- for job in site.data.experience %}
+      <details class="exp-card" name="exp" data-cat="{{ job.cat }}">
         <summary class="exp-card-head">
           <div class="exp-card-left">
-            <p class="exp-role">Implementation Engineer</p>
-            <p class="exp-company">PT Jarvis Integrasi Solusi</p>
+            <p class="exp-role">{{ job.role | escape }}</p>
+            <p class="exp-company">{{ job.company | escape }}</p>
           </div>
           <div class="exp-card-right">
-            <span class="exp-period">Feb 2026 — Present</span>
-            <span class="exp-badge infrastructure">Infrastructure</span>
+            <span class="exp-period">{{ job.period }}</span>
+            <span class="exp-badge {{ job.cat }}">{{ job.badge }}</span>
           </div>
         </summary>
-        <p class="exp-desc">Implementing, securing, and troubleshooting network, security, and server infrastructure for enterprise clients; working with project teams to design secure, scalable systems tailored to each client's needs.</p>
+        <p class="exp-desc">{{ job.desc | escape }}</p>
       </details>
-
-      <details class="exp-card" name="exp" data-cat="infrastructure">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">IT Infrastructure Team</p>
-            <p class="exp-company">BlankOn Linux — Revival Project</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Nov 2025 — Present</span>
-            <span class="exp-badge infrastructure">Open Source</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Core contributor to the infrastructure team of BlankOn, Indonesia's Debian-based GNU/Linux distribution; maintaining and improving the build, hosting, and server infrastructure behind the distro.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="community">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Leader, Student Cybersecurity Community</p>
-            <p class="exp-company">NFSCC — STT Terpadu Nurul Fikri</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Apr 2025 — Mar 2026</span>
-            <span class="exp-badge community">Community</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Led cybersecurity initiatives including workshops, training programs, and community engagement; organized security awareness campaigns and facilitated CTF competitions.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="community">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Campus Ambassador</p>
-            <p class="exp-company">LINUXENIC Corporation</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Nov 2025 — Jan 2026</span>
-            <span class="exp-badge community">Community</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Promoted open-source technologies and organized campus engagement activities around the Linux and FOSS ecosystem.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="community">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Assistant Lecturer</p>
-            <p class="exp-company">STT Terpadu Nurul Fikri</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Sep 2025 — Jan 2026</span>
-            <span class="exp-badge community">Teaching</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Taught practical Incident Response topics and mentored students in real-world security scenarios and hands-on labs.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="security">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">SOC Analyst</p>
-            <p class="exp-company">Xcode / PT Teknologi Server Indonesia</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Sep 2025 — Dec 2025</span>
-            <span class="exp-badge security">Security</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Monitored network traffic and logs for security threats; analyzed incidents and coordinated response actions in a live SOC environment.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="devops">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">DevOps Engineer Trainee</p>
-            <p class="exp-company">PT Nurul Fikri Academy</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Aug 2025 — Oct 2025</span>
-            <span class="exp-badge devops">DevOps</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Learned infrastructure automation, CI/CD fundamentals, and cloud basics through a structured training program.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="infrastructure">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Sysadmin Trainer</p>
-            <p class="exp-company">PT Jarvis Integrasi Solusi</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Jul 2025 — Sep 2025</span>
-            <span class="exp-badge infrastructure">Sysadmin</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Hands-on Linux administration and server configuration in a professional environment, including Red Hat System Administration II (RH134) at Jarvis Camp.</p>
-      </details>
-
-      <details class="exp-card" name="exp" data-cat="research">
-        <summary class="exp-card-head">
-          <div class="exp-card-left">
-            <p class="exp-role">Research &amp; Development</p>
-            <p class="exp-company">BPH Litbang, STT Terpadu Nurul Fikri</p>
-          </div>
-          <div class="exp-card-right">
-            <span class="exp-period">Jun 2024 — Mar 2025</span>
-            <span class="exp-badge research">Research</span>
-          </div>
-        </summary>
-        <p class="exp-desc">Contributed to research projects and development initiatives at the university research bureau.</p>
-      </details>
-
+      {%- endfor %}
     </div>
   </div>
 
@@ -1234,72 +1140,39 @@ html[data-mode="dark"] {
     <p class="section-label">Skills &amp; Expertise</p>
 
     <div class="skills-row">
+      {%- for group in profile.skill_groups %}
       <div class="skill-card">
-        <p class="skill-card-title">Cybersecurity</p>
+        <p class="skill-card-title">{{ group.title | escape }}</p>
         <div class="skill-tags">
-          <span class="skill-tag">SOC &amp; Monitoring</span>
-          <span class="skill-tag">Incident Response</span>
-          <span class="skill-tag">Threat Investigation</span>
-          <span class="skill-tag">Vuln Assessment</span>
-          <span class="skill-tag">Web Pentest</span>
-          <span class="skill-tag">Firewall / NGFW</span>
+          {%- for tag in group.tags %}
+          <span class="skill-tag">{{ tag | escape }}</span>
+          {%- endfor %}
         </div>
       </div>
-      <div class="skill-card">
-        <p class="skill-card-title">Infrastructure</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Linux Administration</span>
-          <span class="skill-tag">Networking</span>
-          <span class="skill-tag">Virtualization</span>
-          <span class="skill-tag">System Integration</span>
-          <span class="skill-tag">Bash Scripting</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <p class="skill-card-title">Cloud &amp; DevOps</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Cloud Foundations</span>
-          <span class="skill-tag">CI/CD</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">IaC</span>
-          <span class="skill-tag">DevOps Practices</span>
-        </div>
-      </div>
+      {%- endfor %}
     </div>
 
     <div class="skills-row cols-2">
       <div class="skill-card">
         <p class="skill-card-title">Technical Stack</p>
         <div class="skill-kv">
+          {%- for row in profile.stack %}
           <div class="skill-kv-row">
-            <span class="skill-kv-label">Security</span>
-            <span>FortiGate · Wazuh · Wireshark · Volatility</span>
+            <span class="skill-kv-label">{{ row.label }}</span>
+            <span>{{ row.items }}</span>
           </div>
-          <div class="skill-kv-row">
-            <span class="skill-kv-label">Infra</span>
-            <span>RHEL / Debian · Proxmox VE · MikroTik</span>
-          </div>
-          <div class="skill-kv-row">
-            <span class="skill-kv-label">Dev</span>
-            <span>Python · Bash · TypeScript · Git · Docker · GitHub Actions</span>
-          </div>
+          {%- endfor %}
         </div>
       </div>
       <div class="skill-card">
         <p class="skill-card-title">Languages</p>
         <div class="skill-lang-row">
+          {%- for language in profile.languages %}
           <div class="skill-lang-item">
-            <span>Indonesian</span>
-            <span class="skill-lang-level">Native</span>
+            <span>{{ language.name }}</span>
+            <span class="skill-lang-level">{{ language.level }}</span>
           </div>
-          <div class="skill-lang-item">
-            <span>English</span>
-            <span class="skill-lang-level">Intermediate</span>
-          </div>
-          <div class="skill-lang-item">
-            <span>Arabic</span>
-            <span class="skill-lang-level">Elementary</span>
-          </div>
+          {%- endfor %}
         </div>
       </div>
     </div>
@@ -1309,40 +1182,58 @@ html[data-mode="dark"] {
   <div class="about-section">
     <p class="section-label">Education</p>
     <div class="edu-block">
-      <p class="edu-degree">Teknik Informatika — Informatics Engineering</p>
-      <p class="edu-meta">STT Terpadu Nurul Fikri &nbsp;·&nbsp; Sep 2023 – Present (final year)</p>
+      <p class="edu-degree">{{ profile.education.degree }}</p>
+      <p class="edu-meta">{{ profile.education.school }} &nbsp;·&nbsp; {{ profile.education.period }}</p>
     </div>
   </div>
 
   <!-- What's Next -->
   <div class="about-section">
     <p class="section-label">What's Next</p>
-    <p class="next-block">Growing as a security professional who bridges infrastructure, operations, and security strategy. Next up: deeper hands-on work with enterprise security platforms, sharper penetration testing skills, and DevSecOps practices built into the deployment pipeline. Alongside that, staying active in the community through open source, mentoring, and CTF competitions.</p>
+    <p class="next-block">{{ profile.next }}</p>
   </div>
 
   <!-- Connect -->
   <div class="about-section">
     <p class="section-label">Let's Connect</p>
     <div class="connect-grid">
-      <a href="https://www.linkedin.com/in/firmansyah-dzakwan-arifien-90b1b8293" class="connect-link" target="_blank" rel="noopener noreferrer">
-        <span><span class="cl-label">LinkedIn</span><span class="cl-value">firmansyah-dzakwan</span></span>
+      {%- for link in profile.links %}
+      <a href="{{ link.url }}" class="connect-link"{% unless link.url contains 'mailto:' %} target="_blank" rel="noopener noreferrer"{% endunless %}>
+        <span><span class="cl-label">{{ link.label }}</span><span class="cl-value">{{ link.value }}</span></span>
       </a>
-      <a href="https://github.com/firmansyahdzakwanarifien" class="connect-link" target="_blank" rel="noopener noreferrer">
-        <span><span class="cl-label">GitHub</span><span class="cl-value">firmansyahdzakwanarifien</span></span>
-      </a>
-      <a href="mailto:contact@cyphera.my.id" class="connect-link">
-        <span><span class="cl-label">Email</span><span class="cl-value">contact@cyphera.my.id</span></span>
-      </a>
-      <a href="https://t.me/fdzak01" class="connect-link" target="_blank" rel="noopener noreferrer">
-        <span><span class="cl-label">Telegram</span><span class="cl-value">@fdzak01</span></span>
-      </a>
-      <a href="https://medium.com/@fdzak01" class="connect-link" target="_blank" rel="noopener noreferrer">
-        <span><span class="cl-label">Medium</span><span class="cl-value">@fdzak01</span></span>
-      </a>
+      {%- endfor %}
     </div>
+    <p class="term-hint">Prefer the command line? Press <kbd>`</kbd> or <button type="button" data-term-open>open the terminal</button>.</p>
   </div>
 
 </div>
+
+{%- comment -%} Person schema so search engines link this site with the profiles below. {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ profile.name | jsonify }},
+  "alternateName": {{ profile.alias | jsonify }},
+  "url": {{ profile.website | jsonify }},
+  "image": {{ profile.photo | jsonify }},
+  "email": {{ profile.email | prepend: 'mailto:' | jsonify }},
+  "jobTitle": {{ profile.job_title | jsonify }},
+  "worksFor": { "@type": "Organization", "name": {{ profile.employer | jsonify }} },
+  "affiliation": { "@type": "CollegeOrUniversity", "name": {{ profile.education.school | jsonify }} },
+  "knowsAbout": ["Cybersecurity", "Network Security", "Linux System Administration", "Incident Response", "DevOps", "UEBA"],
+  "hasCredential": [
+    {%- for cert in site.data.certifications -%}
+    { "@type": "EducationalOccupationalCredential", "name": {{ cert.name | jsonify }}, "recognizedBy": { "@type": "Organization", "name": {{ cert.issuer | jsonify }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  "sameAs": [
+    {%- assign same_as = profile.links | where_exp: "l", "l.url contains 'https://'" -%}
+    {%- for link in same_as -%}{{ link.url | jsonify }}{% unless forloop.last %},{% endunless %}{%- endfor -%}
+    , {{ site.twitter.username | prepend: 'https://twitter.com/' | jsonify }}
+  ]
+}
+</script>
 
 <script>
 (function() {
