@@ -1,5 +1,28 @@
-/* Home page: experience filter, featured GIF previews, and uptime badges. */
+/* Home page: hero tilt, experience filter, featured GIF previews, and uptime badges. */
 (function() {
+  /* The hero card tilts toward the cursor and the art drifts a little further (parallax).
+     Mouse and trackpad only; skipped when the visitor prefers reduced motion. */
+  var hero = document.querySelector('.hero-block');
+  if (hero && matchMedia('(hover: hover) and (pointer: fine)').matches &&
+      !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var frame = 0;
+    hero.addEventListener('pointermove', function(e) {
+      var r = hero.getBoundingClientRect();
+      var x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      var y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(function() {
+        hero.style.setProperty('--tx', x.toFixed(3));
+        hero.style.setProperty('--ty', y.toFixed(3));
+      });
+    });
+    hero.addEventListener('pointerleave', function() {
+      cancelAnimationFrame(frame);
+      hero.style.removeProperty('--tx');
+      hero.style.removeProperty('--ty');
+    });
+  }
+
   /* Experience filter; the cards themselves are native <details name="exp"> accordions. */
   var filters = document.querySelector('.exp-filters');
   var cards = document.querySelectorAll('.exp-card');

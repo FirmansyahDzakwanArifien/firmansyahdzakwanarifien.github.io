@@ -71,6 +71,9 @@ html[data-mode="dark"] {
   border: 1px solid var(--border);
   border-radius: 16px;
   margin: 2.5rem 0 3rem;
+  /* --tx / --ty (-1..1) follow the cursor (assets/js/custom/home.js); 0 when it leaves. */
+  transform: perspective(1200px) rotateX(calc(var(--ty, 0) * -4deg)) rotateY(calc(var(--tx, 0) * 5deg));
+  transition: transform 0.35s ease-out;
 }
 
 .hero-bg {
@@ -131,7 +134,8 @@ html[data-mode="dark"] {
   margin: 0 auto;
   /* Mirrored, ink-outlined, with the pop-art shadow baked into the file (cheaper than CSS filters). */
   animation: pop-rise 0.9s cubic-bezier(0.22, 1.3, 0.36, 1) 0.25s backwards;
-  transition: transform 0.3s ease;
+  translate: calc(var(--tx, 0) * 10px) calc(var(--ty, 0) * 6px); /* parallax: drifts past the card tilt */
+  transition: transform 0.3s ease, translate 0.35s ease-out;
 }
 
 .hero-block:hover .hero-avatar img { transform: translateY(-4px); }
@@ -1244,16 +1248,12 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
   .feat-title { font-size: 1.6rem; }
   .hero-block { --avatar-h: 260px; grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 1.25rem; margin-top: 4rem; }
   .hero-bg::after { background: linear-gradient(180deg, transparent -40%, var(--main-bg, #fff) 45%); }
-  /* Stacked layout: the avatar row ends mid-card, so fade the waist out instead of a hard cut. */
-  .hero-avatar { align-self: auto; height: 190px; margin: -1.5rem 0 0; }
-  .hero-avatar img { bottom: -50px; } /* stays below the top bar; the fade hides the cut */
+  /* Stacked layout: the whole art fits in its row, poking a little above the card (not the top bar). */
+  .hero-avatar { align-self: auto; height: 250px; margin: -1.5rem 0 0; }
+  .hero-avatar img { bottom: 0; }
   .hero-bubble { margin-left: 0; }
   .hero-bubble::after { left: 22px; top: -9px; margin-top: 0; transform: rotate(135deg); }
-  .pop-clip {
-    border-radius: 0;
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
-            mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  }
+  .pop-clip { border-radius: 0; }
   .hero-name { font-size: 1.9rem; }
   .skills-row,
   .skills-row.cols-2 { grid-template-columns: 1fr; }
