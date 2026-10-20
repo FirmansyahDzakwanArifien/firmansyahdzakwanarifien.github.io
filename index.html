@@ -48,14 +48,14 @@ html[data-mode="dark"] {
 }
 
 /* ── Hero ── */
-/* The original photo, blurred, is the card's backdrop; the cut-out subject stands in front of it. */
+/* The original photo, blurred, is the card's backdrop; the pop-out avatar sits in front of it. */
 .hero-block {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 2rem;
+  grid-template-columns: 180px 1fr;
+  gap: 2.25rem;
   align-items: center;
   padding: 2rem;
   border: 1px solid var(--border);
@@ -82,33 +82,64 @@ html[data-mode="dark"] {
   opacity: 0.85;
 }
 
-/* Feet rest on the card's bottom edge, with a soft ground shadow. */
+/* Pop-out avatar: a half-body cutout rises out of a colored circle, head breaking past its rim.
+   The clip box is open at the top and rounded at the bottom to match the circle. */
 .hero-avatar {
+  --pop: 180px;
   position: relative;
   z-index: 0;
-  align-self: end;
-  display: flex;
-  justify-content: center;
-  margin-bottom: -2rem;
+  width: var(--pop);
+  height: calc(var(--pop) * 1.4);
 }
 
-.hero-avatar::after {
+.hero-avatar::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  left: 50%;
-  bottom: 2px;
-  width: 130px;
-  height: 18px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38), transparent 70%);
+  left: 0;
+  bottom: 0;
+  width: var(--pop);
+  height: var(--pop);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #60a5fa, #1d4ed8 72%);
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.55),
+    0 18px 36px -16px rgba(29, 78, 216, 0.75);
+  animation: pop-ring 0.5s ease-out backwards;
+}
+
+.pop-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0 0 calc(var(--pop) / 2) calc(var(--pop) / 2);
 }
 
 .hero-avatar img {
-  display: block;
-  width: auto;
-  height: 300px;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.3));
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--pop) * -0.12); /* hides the waist cut, even mid-bounce and on hover */
+  width: calc(var(--pop) * 0.92);
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  animation: pop-rise 0.9s cubic-bezier(0.22, 1.3, 0.36, 1) 0.25s backwards;
+  transition: transform 0.3s ease;
+}
+
+.hero-block:hover .hero-avatar img { transform: translateY(-4px); }
+
+@keyframes pop-ring {
+  from { transform: scale(0.6); opacity: 0; }
+}
+
+@keyframes pop-rise {
+  from { transform: translateY(75%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-avatar::before,
+  .hero-avatar img { animation: none; }
 }
 
 .hero-name {
@@ -945,8 +976,7 @@ html[data-mode="dark"] {
   .feat-title { font-size: 1.6rem; }
   .hero-block { grid-template-columns: 1fr; gap: 1.25rem; padding: 1.5rem 1.25rem; }
   .hero-block::after { background: linear-gradient(180deg, transparent -40%, var(--main-bg, #fff) 50%); }
-  .hero-avatar { margin-bottom: 0; }
-  .hero-avatar img { height: 220px; }
+  .hero-avatar { --pop: 150px; }
   .hero-name { font-size: 1.9rem; }
   .skills-row,
   .skills-row.cols-2 { grid-template-columns: 1fr; }
@@ -960,7 +990,9 @@ html[data-mode="dark"] {
   {%- assign profile = site.data.profile %}
   <div class="hero-block" style="--hero-bg: url('{{ profile.photo }}')">
     <div class="hero-avatar">
-      <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="117" height="345" fetchpriority="high" decoding="async" data-no-popup />
+      <div class="pop-clip">
+        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="166" height="248" fetchpriority="high" decoding="async" data-no-popup />
+      </div>
     </div>
     <div class="hero-text">
       <h1 class="hero-name">Firmansyah <em>Dzakwan</em> Arifien</h1>
