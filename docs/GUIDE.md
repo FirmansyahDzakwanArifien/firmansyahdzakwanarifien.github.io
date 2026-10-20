@@ -193,7 +193,7 @@ Untuk flag 5: menulis ulang metadata EXIF bisa dengan `exiftool -ImageDescriptio
 
 ## 7. Homelab
 
-Halaman `/homelab/` (`_tabs/homelab.html`) menampilkan **testbed TA**: lab Proxmox terisolasi untuk penelitian klasifikasi insiden dengan Wazuh, Suricata, n8n, dan LLM (Ollama). Semua isinya ada di `_data/homelab.yml`:
+Bagian **Homelab** di halaman Labs (`/labs/#homelab`, template `_includes/homelab.html`) menampilkan **testbed TA**: lab Proxmox terisolasi untuk penelitian klasifikasi insiden dengan Wazuh, Suricata, n8n, dan LLM (Ollama). Semua isinya ada di `_data/homelab.yml`:
 
 - `title`, `summary`: judul dan paragraf pembuka.
 - `canvas`: ukuran diagram `[lebar, tinggi]`. `boundary`: kotak putus-putus "Proxmox cluster" di sekeliling VM.
@@ -203,6 +203,8 @@ Halaman `/homelab/` (`_tabs/homelab.html`) menampilkan **testbed TA**: lab Proxm
 - `principles`: keputusan desain. `icon` memakai kelas lengkap, misalnya `fas fa-lock`.
 
 Pilihan `icon` untuk node ada di `GLYPHS` dalam `assets/js/custom/homelab.js` (`server`, `shield-halved`, `eye`, `brain`, `diagram-project`, `bell`, `laptop`, `chart-line`, `database`, dan lainnya). Untuk menambah ikon baru, masukkan kode glyph-nya di `GLYPHS`, lalu jalankan `python3 tools/fa-subset.py`.
+
+Alamat lama `/homelab/` otomatis diarahkan ke `/labs/#homelab` (`homelab.html` di root). Kalau `nodes` dikosongkan, bagian ini dan tombol lompatnya otomatis hilang dari Labs.
 
 **Halaman ini publik:** jangan menulis IP, hostname, port, atau kredensial apa pun.
 

@@ -1,11 +1,7 @@
----
-layout: page
-title: Homelab
-icon: fas fa-server
-order: 3.6
-description: The isolated Proxmox testbed behind my thesis on automating security incident classification with Wazuh, Suricata, n8n, and a self-hosted LLM.
----
-
+{%- comment -%}
+  Homelab section of the Labs page: the thesis testbed topology, alert flow, and design decisions.
+  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js.
+{%- endcomment -%}
 {%- assign lab = site.data.homelab -%}
 {%- assign cw = lab.canvas[0] | default: 800 -%}
 {%- assign ch = lab.canvas[1] | default: 460 -%}
@@ -42,7 +38,7 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
 .hl-legend span { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.35rem; border-radius: 3px; vertical-align: -1px; }
 
 .hl-panel { min-height: 6.5rem; padding: 1rem 1.1rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
-.hl-panel h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.hl-panel h4 { margin: 0 0 0.25rem; font-size: 1.05rem; }
 .hl-panel .hl-role { margin: 0 0 0.6rem; font-size: 0.82rem; color: var(--text-muted-color); }
 .hl-panel ul { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; }
 .hl-panel li { margin-bottom: 0.3rem; }
@@ -60,7 +56,7 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
   color: #fff; background: #2563eb; border-radius: 50%;
 }
 .hl-layer:not(:last-child)::after { content: ''; position: absolute; left: 0.88rem; top: 2rem; bottom: 0.2rem; width: 2px; background: var(--main-border-color); }
-.hl-layer h3 { margin: 0.15rem 0 0.15rem; font-size: 0.98rem; }
+.hl-layer h4 { margin: 0.15rem 0 0.15rem; font-size: 0.98rem; }
 .hl-layer .hl-tools { display: block; margin-bottom: 0.3rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted-color); }
 .hl-layer p { margin: 0; font-size: 0.88rem; line-height: 1.65; }
 
@@ -72,9 +68,11 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
 </style>
 
 {%- if lab.nodes.size > 0 %}
-<p class="hl-intro"><b>{{ lab.title }}.</b> {{ lab.summary }}</p>
+<section class="hl-section" aria-labelledby="homelab">
+<h2 id="homelab">Homelab: {{ lab.title }}</h2>
+<p class="hl-intro">{{ lab.summary }}</p>
 
-<h2>Topology</h2>
+<h3>Topology</h3>
 <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard.</p>
 
 <div class="hl-wrap">
@@ -133,11 +131,11 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
 </div>
 
 {%- if lab.layers.size > 0 %}
-<h2>How an alert flows</h2>
+<h3>How an alert flows</h3>
 <ol class="hl-layers">
   {%- for layer in lab.layers %}
   <li class="hl-layer">
-    <h3>{{ layer.name }}</h3>
+    <h4>{{ layer.name }}</h4>
     <span class="hl-tools">{{ layer.tools }}</span>
     <p>{{ layer.text }}</p>
   </li>
@@ -146,7 +144,7 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
 {%- endif %}
 
 {%- if lab.principles.size > 0 %}
-<h2>Design decisions</h2>
+<h3>Design decisions</h3>
 <ul class="hl-principles">
   {%- for p in lab.principles %}
   <li><i class="{{ p.icon }}" aria-hidden="true"></i><b>{{ p.title }}</b><p>{{ p.text }}</p></li>
@@ -156,6 +154,5 @@ description: The isolated Proxmox testbed behind my thesis on automating securit
 
 <script type="application/json" id="hl-data">{{ lab.nodes | jsonify }}</script>
 <script defer src="{{ '/assets/js/custom/homelab.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
-{%- else %}
-<p class="hl-empty">The lab map is not filled in yet. See docs/GUIDE.md, section "Homelab".</p>
+</section>
 {%- endif %}

@@ -27,7 +27,7 @@
     if (!n) { return; }
     document.querySelectorAll('.hl-node.is-active').forEach(function (x) { x.classList.remove('is-active'); });
     el.classList.add('is-active');
-    panel.innerHTML = '<h3>' + esc(n.label) + '</h3><p class="hl-role">' + esc(n.role || '') + '</p>' +
+    panel.innerHTML = '<h4>' + esc(n.label) + '</h4><p class="hl-role">' + esc(n.role || '') + '</p>' +
       (n.details && n.details.length ? '<ul>' + n.details.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul>' : '');
   }
 

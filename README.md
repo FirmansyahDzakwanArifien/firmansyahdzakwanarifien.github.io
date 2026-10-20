@@ -13,11 +13,11 @@ cybersecurity, network infrastructure, and Linux system administration.
 | Certifications | `_data/certifications.yml` | Rendered as medals on the home page |
 | Blog | `_posts/` | Certifications, training, and learning notes |
 | Projects | `_projects/` | Case studies (Memoir, Si Ngacir, IDN Blue Team capstone) |
-| Labs | `_data/labs.yml`, `_tabs/labs.html` | DFIR, forensics, and CTF writeups |
+| Labs | `_data/labs.yml`, `_tabs/labs.html` | Homelab, DFIR/forensics/CTF writeups, Threat Watch |
 | Album | `_album/` | Event and community photos |
 | Milestone | `_tabs/milestone.md` | Timeline of posts and events |
 | CTF | `ctf.html`, `_data/ctf.yml` | Five flags hidden around the site |
-| Homelab | `_tabs/homelab.html`, `_data/homelab.yml` | Interactive topology (unpublished until filled in) |
+| Homelab (section of Labs) | `_includes/homelab.html`, `_data/homelab.yml` | Interactive thesis testbed topology at `/labs/#homelab` |
 | Contact | `_tabs/contact.html` | Channels, copy-email, and a mailto message composer (no third-party form service) |
 
 ## Stack

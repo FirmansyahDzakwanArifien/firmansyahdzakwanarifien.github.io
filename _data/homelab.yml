@@ -1,4 +1,4 @@
-# Lab topology for /homelab/: the isolated testbed of my undergraduate thesis.
+# Homelab section of /labs/ (_includes/homelab.html): the isolated testbed of my undergraduate thesis.
 # Full instructions: docs/GUIDE.md, section "Homelab". Never put IPs, hostnames, ports, or credentials here:
 # this page is public.
 #

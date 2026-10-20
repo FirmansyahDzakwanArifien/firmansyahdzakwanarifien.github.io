@@ -3,7 +3,7 @@ layout: page
 title: Labs
 icon: fas fa-shield-halved
 order: 3.5
-description: Hands-on security writeups by Firmansyah Dzakwan Arifien — DFIR, network and log forensics, CTFs, and vulnerability analysis.
+description: Hands-on security work by Firmansyah Dzakwan Arifien — the homelab behind my thesis (Proxmox, Wazuh, Suricata, n8n, self-hosted LLM) and writeups on DFIR, network and log forensics, CTFs, and vulnerabilities.
 ---
 
 <style>
@@ -40,7 +40,34 @@ html[data-mode="dark"] .labs {
   }
 }
 
-.labs-intro { margin-bottom: 1.25rem; color: var(--labs-muted); }
+.labs-intro { margin-bottom: 1rem; color: var(--labs-muted); }
+
+.labs-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.labs-jump a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--labs-muted) !important;
+  border: 1px solid var(--labs-border) !important;
+  border-radius: 8px;
+  text-decoration: none !important;
+}
+
+.labs-jump a:hover { color: var(--labs-accent) !important; border-color: var(--labs-accent) !important; }
+
+.labs h2[id] { scroll-margin-top: 4.5rem; }
+.labs-section-intro { margin: -0.25rem 0 1rem; font-size: 0.88rem; color: var(--labs-muted); }
 
 .labs-filters {
   display: flex;
@@ -136,6 +163,8 @@ html[data-mode="dark"] .labs {
   color: var(--labs-muted);
 }
 
+.labs-threat { margin-top: 2rem; }
+
 .lab-tools { display: flex; flex-wrap: wrap; gap: 5px; }
 
 .lab-tools span {
@@ -148,9 +177,20 @@ html[data-mode="dark"] .labs {
 </style>
 
 <div class="labs">
-  <p class="labs-intro">Hands-on blue-team work: incident investigations, forensics challenges, and vulnerability write-ups. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>. Want to try one yourself? This site hides a small <a href="{{ '/ctf/' | relative_url }}">CTF</a>.</p>
+  <p class="labs-intro">Hands-on security work: the isolated homelab behind my undergraduate thesis, plus incident investigations, forensics challenges, and vulnerability write-ups. Want to try one yourself? This site hides a small <a href="{{ '/ctf/' | relative_url }}">CTF</a>.</p>
 
-  {% include widgets/threat-watch.html limit=5 heading=2 %}
+  <ul class="labs-jump" aria-label="On this page">
+    {%- if site.data.homelab.nodes.size > 0 %}
+    <li><a href="#homelab"><i class="fas fa-server" aria-hidden="true"></i>Homelab</a></li>
+    {%- endif %}
+    <li><a href="#writeups"><i class="fas fa-file-lines" aria-hidden="true"></i>Writeups</a></li>
+    <li><a href="#threat-watch-title"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i>Threat Watch</a></li>
+  </ul>
+
+  {% include homelab.html %}
+
+  <h2 id="writeups">Writeups</h2>
+  <p class="labs-section-intro">DFIR, forensics, and CTF challenges I have worked through. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>.</p>
 
   <div class="labs-filters" role="group" aria-label="Filter labs">
     <button type="button" class="labs-filter active" data-kind="all">All</button>
@@ -170,7 +210,7 @@ html[data-mode="dark"] .labs {
         {%- if lab.difficulty %}<span class="lab-diff">{{ lab.difficulty }}</span>{% endif %}
         <span class="lab-date">{{ lab.date | date: '%b %Y' }}</span>
       </div>
-      <h2 class="lab-title">{{ lab.title }}{% if external == 'http' %}<i class="fas fa-arrow-up-right-from-square"></i>{% endif %}</h2>
+      <h3 class="lab-title">{{ lab.title }}{% if external == 'http' %}<i class="fas fa-arrow-up-right-from-square"></i>{% endif %}</h3>
       <p class="lab-summary">{{ lab.summary }}</p>
       {%- if lab.tools.size > 0 %}
       <div class="lab-tools">
@@ -179,6 +219,10 @@ html[data-mode="dark"] .labs {
       {%- endif %}
     </a>
     {%- endfor %}
+  </div>
+
+  <div class="labs-threat">
+    {% include widgets/threat-watch.html limit=5 heading=2 %}
   </div>
 </div>
 
