@@ -14,12 +14,15 @@ updates:
         dependency-type: development
     schedule:
       interval: "weekly"
+  # Actions are pinned to commit SHAs (with a "# vX.Y.Z" comment); Dependabot bumps both together.
   - package-ecosystem: "github-actions"
     directory: "/"
     groups:
       gh-actions:
         update-types:
           - "major"
+          - "minor"
+          - "patch"
     schedule:
       interval: "weekly"
   - package-ecosystem: "devcontainers"
