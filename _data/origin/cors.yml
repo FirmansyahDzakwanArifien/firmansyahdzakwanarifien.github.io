@@ -24,7 +24,7 @@ toc:
   js: https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.js
 
 fontawesome:
-  css: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css
+  css: /assets/css/fa-subset.css  # self-hosted subset (tools/fa-subset.py)
 
 search:
   js: https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js

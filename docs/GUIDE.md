@@ -358,5 +358,12 @@ Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, avata
 - **Heading:** satu `<h1>` per halaman (dari layout), bagian memakai `<h2>`, isi kartu `<h3>`. Widget menerima parameter `heading=2` bila diletakkan langsung di bawah `<h1>`.
 - **Gambar besar di atas lipatan:** jangan di-lazy-load. Header post sudah otomatis `fetchpriority="high"`. Gambar lain di konten otomatis lazy.
 - **Font:** dimuat dengan `display=optional` (tidak ada lompatan layout saat font datang terlambat).
+- **Ikon (Font Awesome):** situs memakai **subset** yang di-host sendiri (`assets/css/fa-subset.css` dan `assets/fonts/fa/`, sekitar 25 KB, sebelumnya 232 KB dari CDN). Setiap kali memakai ikon **baru** (`fas fa-...`, `fab fa-...`) di template, data, post, atau JS, jalankan lalu commit hasilnya:
+  ```bash
+  pip install fonttools brotli   # sekali saja
+  python3 tools/fa-subset.py
+  ```
+  Kalau lupa, `site-checks` gagal dengan pesan ikon mana yang belum ada. Cari nama ikon di fontawesome.com/icons (versi Free).
+- **Intro:** keputusan tampil/tidaknya dibuat di `<head>` (`theme-variant.js` menambah `html.intro-active`), sedangkan animasinya (`intro.js`) dimuat `defer`, sehingga tidak memblokir render.
 - **Analytics:** hanya Cloudflare Web Analytics. Google Analytics dimatikan di `_config.yml` (`analytics.google.id` kosong); kalau diaktifkan lagi, domain Google harus kembali ditambahkan ke CSP.
 - **Ukur ulang:** `npx lighthouse https://cyphera.my.id/ --view` atau PageSpeed Insights.

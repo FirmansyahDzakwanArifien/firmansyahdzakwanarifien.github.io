@@ -18,6 +18,15 @@
 
   apply(read());
 
+  /* Intro splash (home page): decide before first paint, so CSS can show it without waiting for
+     intro.js, which is deferred. Shown once per session and never with reduced motion. */
+  try {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && sessionStorage.getItem('intro-seen') !== '1') {
+      root.classList.add('intro-active');
+    }
+  } catch (e) { /* storage blocked: skip the intro */ }
+
   window.ThemeVariant = {
     get: function () { return root.getAttribute('data-variant') || 'default'; },
     set: function (variant) {

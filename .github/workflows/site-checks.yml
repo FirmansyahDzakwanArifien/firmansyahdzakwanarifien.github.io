@@ -61,6 +61,12 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 tools/check-inline.py _site
 
+      - name: Check the Font Awesome subset covers every icon in use
+        if: ${{ !cancelled() }}
+        run: |
+          python3 -m pip install --quiet fonttools brotli
+          python3 tools/fa-subset.py --check
+
       - name: Check Subresource Integrity hashes
         if: ${{ !cancelled() }}
         run: python3 tools/sri.py --check

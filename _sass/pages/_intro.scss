@@ -2,13 +2,18 @@
 
 /* Terminal intro splash shown before the home page */
 
-html.intro-lock,
-html.intro-lock body {
+/* Hidden unless the <head> script decided to show it (html.intro-active, see theme-variant.js). */
+#intro { display: none !important; }
+
+html.intro-active #intro { display: flex !important; }
+
+html.intro-active:not(.intro-closing):has(#intro),
+html.intro-active:not(.intro-closing):has(#intro) body {
   overflow: hidden;
 }
 
 /* keep the PWA update toast reachable while the intro overlay is up */
-html.intro-lock #notification.toast.show {
+html.intro-active #notification.toast.show {
   z-index: 3001;
 }
 

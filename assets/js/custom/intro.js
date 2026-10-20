@@ -1,25 +1,18 @@
-/* Terminal intro; loaded synchronously right after #intro so the page never flashes first. */
+/* Terminal intro. Whether it shows is decided in <head> (theme-variant.js adds html.intro-active,
+   and CSS displays #intro), so this script can be deferred without the page flashing first. */
 (function () {
   var root = document.getElementById('intro');
   if (!root) { return; }
 
-  var KEY = 'intro-seen';
-  var seen = false;
-  try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var styled = window.getComputedStyle(root).position === 'fixed';
-  if (seen || reduced || !styled) { root.remove(); return; }
-
-  try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-
   var html = document.documentElement;
+  if (!html.classList.contains('intro-active')) { root.remove(); return; }
+
+  try { sessionStorage.setItem('intro-seen', '1'); } catch (e) {}
+
   var lines = root.querySelectorAll('.intro-line');
   var timers = [];
   var done = false;
 
-  root.style.display = '';
-  html.classList.add('intro-lock');
 
   function later(fn, ms) { timers.push(window.setTimeout(fn, ms)); }
 
@@ -28,8 +21,11 @@
     done = true;
     timers.forEach(window.clearTimeout);
     root.classList.add('is-done');
-    html.classList.remove('intro-lock');
-    later(function () { root.remove(); }, 600);
+    html.classList.add('intro-closing'); /* unlock scrolling now; the overlay fades out */
+    later(function () {
+      root.remove();
+      html.classList.remove('intro-active', 'intro-closing');
+    }, 600);
     ['keydown', 'wheel', 'touchstart'].forEach(function (type) {
       window.removeEventListener(type, finish);
     });

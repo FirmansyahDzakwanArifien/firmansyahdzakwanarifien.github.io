@@ -66,7 +66,7 @@ Every push to `main` builds and deploys the site through GitHub Actions.
 | Workflow | When | What it does |
 |---|---|---|
 | `jekyll.yml` | push to `main` | Builds and deploys to GitHub Pages |
-| `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, no inline JavaScript, SRI hashes still valid, every jsDelivr URL returns 200, assets repo under jsDelivr's 50 MB limit |
+| `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, no inline JavaScript, Font Awesome subset covers all icons, SRI hashes still valid, every jsDelivr URL returns 200, assets repo under jsDelivr's 50 MB limit |
 | `labs-sync.yml` | daily | Adds new Hashnode writeups to `_data/labs.yml` and opens a PR for review (`tools/sync-labs.py`) |
 | `security-txt.yml` | weekly | Fails (and emails) when `.well-known/security.txt` is within 30 days of its `Expires` date |
 | `og-images.yml` | posts/projects change | Generates 1200×630 social preview cards in `assets/img/og/` (`tools/og-image.py`), then redeploys |

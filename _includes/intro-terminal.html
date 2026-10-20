@@ -1,6 +1,6 @@
 <!-- Terminal intro: types a short boot sequence, then fades into the page. Shown once per session. -->
 
-<div id="intro" role="dialog" aria-label="Intro" aria-modal="true" style="display: none">
+<div id="intro" role="dialog" aria-label="Intro" aria-modal="true">
   <button type="button" class="intro-skip" data-intro-skip>Skip</button>
 
   <div class="intro-term">
@@ -20,4 +20,4 @@
   </div>
 </div>
 
-<script src="{{ '/assets/js/custom/intro.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script defer src="{{ '/assets/js/custom/intro.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
