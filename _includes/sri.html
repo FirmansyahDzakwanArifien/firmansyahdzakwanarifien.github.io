@@ -1,0 +1,6 @@
+{%- comment -%}
+  Subresource Integrity attributes for a pinned jsDelivr file, from _data/sri.yml (tools/sri.py).
+  Pass the file URL as the "url" parameter; prints nothing for files without a hash.
+{%- endcomment -%}
+{%- assign sri = site.data.sri[include.url] -%}
+{%- if sri %} integrity="{{ sri }}" crossorigin="anonymous"{% endif -%}

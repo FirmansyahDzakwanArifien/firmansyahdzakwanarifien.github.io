@@ -1,5 +1,6 @@
-# Builds the site and checks it: internal links/images (html-proofer), every jsDelivr asset URL,
-# and the assets repo size against jsDelivr's 50 MB limit. Runs on every push, weekly, and on demand.
+# Builds the site and checks it: internal links/images (html-proofer), no inline JavaScript (the CSP
+# forbids it), SRI hashes of the pinned jsDelivr libraries, every jsDelivr asset URL, and the assets
+# repo size against jsDelivr's 50 MB limit. Runs on every push, weekly, and on demand.
 name: Site checks
 
 on:
@@ -48,6 +49,14 @@ jobs:
           bundle exec htmlproofer _site \
             --disable-external \
             --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+
+      - name: Check for inline JavaScript
+        if: ${{ !cancelled() }}
+        run: python3 tools/check-inline.py _site
+
+      - name: Check Subresource Integrity hashes
+        if: ${{ !cancelled() }}
+        run: python3 tools/sri.py --check
 
       - name: Check jsDelivr assets and assets repo size
         if: ${{ !cancelled() }}

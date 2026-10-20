@@ -7,7 +7,7 @@
         {%- capture avatar_url -%}
           {% include media-url.html src=site.avatar %}
         {%- endcapture -%}
-        <img src="{{- avatar_url -}}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+        <img src="{{- avatar_url -}}" width="112" height="112" alt="avatar" data-hide-on-error>
       {%- endif -%}
     </a>
 
@@ -87,10 +87,8 @@
           {%- unless site.social.email -%}
             {%- continue -%}
           {%- endunless -%}
-          {%- assign email = site.social.email | split: '@' -%}
-          {%- capture url -%}
-            javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
-          {%- endcapture -%}
+          {%- comment -%} Plain mailto: a javascript: URL would be blocked by the CSP, and Cloudflare already obfuscates addresses. {%- endcomment -%}
+          {%- assign url = site.social.email | prepend: 'mailto:' -%}
         {% when 'rss' %}
           {% assign url = '/feed.xml' | relative_url %}
         {% else %}
