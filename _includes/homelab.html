@@ -116,7 +116,7 @@ html[data-mode='dark'] .hl-step.is-in-progress { --step: #f6ad55; }
 
 .hl-results-note { margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted-color); }
 .hl-table { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; }
-.hl-table table { width: 100%; margin: 0; border-collapse: collapse; font-size: 0.85rem; }
+.hl-table table { width: 100%; margin: 0 !important; border-collapse: collapse; font-size: 0.85rem; }
 .hl-table th, .hl-table td { padding: 0.6rem 0.85rem; text-align: left; border-bottom: 1px solid var(--main-border-color); vertical-align: top; }
 .hl-table tr:last-child > * { border-bottom: 0; }
 .hl-table thead th { font-size: 0.75rem; letter-spacing: 0.03em; color: var(--text-muted-color); background: var(--card-bg); }
@@ -125,7 +125,7 @@ html[data-mode='dark'] .hl-step.is-in-progress { --step: #f6ad55; }
 html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 @media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-table .is-best { color: #48bb78; } }
 .hl-table .is-pending { color: var(--text-muted-color); font-style: italic; }
-.hl-table small { display: block; margin-top: 0.15rem; font-size: 0.75rem; color: var(--text-muted-color); }
+.hl-table small { display: block; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 400; color: var(--text-muted-color); }
 </style>
 
 {%- if lab.nodes.size > 0 %}
