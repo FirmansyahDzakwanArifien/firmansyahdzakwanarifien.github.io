@@ -46,3 +46,15 @@
       .catch(function() {});
   }
 })();
+
+/* GitHub heatmap: one shared caption shows the hovered day (cheaper than a <title> per cell). */
+(function() {
+  var cal = document.querySelector('.gh-calendar');
+  var tip = document.getElementById('gh-tip');
+  if (!cal || !tip) { return; }
+  var fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  cal.addEventListener('mouseover', function(e) {
+    var d = e.target.getAttribute && e.target.getAttribute('data-d');
+    if (d) { tip.textContent = fmt.format(new Date(d + 'T00:00:00')); }
+  });
+})();

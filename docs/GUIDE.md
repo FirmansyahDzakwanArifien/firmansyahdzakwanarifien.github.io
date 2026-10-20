@@ -175,7 +175,7 @@ Halaman `/ctf/` memeriksa flag dengan membandingkan **hash SHA-256**. Flag aslin
 | 2 | Komentar di `robots.txt` | `assets/robots.txt` |
 | 3 | Komentar di `security.txt` | `.well-known/security.txt` |
 | 4 | Terminal: `ls -a` lalu `cat .flag` (disimpan base64) | `assets/js/custom/terminal.js` |
-| 5 | EXIF `ImageDescription` avatar komik | repo assets: `blog/img/avatar/avatar-popout-comic.webp` |
+| 5 | EXIF `ImageDescription` avatar komik | repo assets: `blog/img/avatar/avatar-popout-comic-baked.webp` (dan `avatar-popout-comic.webp`) |
 
 **Mengganti atau menambah flag:**
 1. Taruh flag baru (format `cyphera{...}`) di tempat persembunyiannya.

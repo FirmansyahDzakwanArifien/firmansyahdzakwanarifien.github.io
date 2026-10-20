@@ -123,17 +123,11 @@ html[data-mode="dark"] {
   left: 0;
   right: 0;
   bottom: -50px; /* sits low in the frame; also keeps the waist cut hidden mid-bounce and on hover */
-  height: var(--avatar-h);
+  height: calc(var(--avatar-h) * 1.028); /* the baked file adds 24px of shadow padding */
   width: auto;
   max-width: none;
   margin: 0 auto;
-  scale: -1 1; /* mirrored so the subject faces the text */
-  /* Comic ink outline, then a hard pop-art offset shadow. The filter runs before the mirror,
-     so a negative x offset lands on the right on screen. */
-  filter:
-    drop-shadow(2.5px 0 0 #14141c) drop-shadow(-2.5px 0 0 #14141c)
-    drop-shadow(0 2.5px 0 #14141c) drop-shadow(0 -2.5px 0 #14141c)
-    drop-shadow(-7px 7px 0 var(--accent));
+  /* Mirrored, ink-outlined, with the pop-art shadow baked into the file (cheaper than CSS filters). */
   animation: pop-rise 0.9s cubic-bezier(0.22, 1.3, 0.36, 1) 0.25s backwards;
   transition: transform 0.3s ease;
 }
@@ -726,9 +720,22 @@ html[data-mode="dark"] {
 .feat-card.reverse { grid-template-columns: 1fr 1.1fr; }
 .feat-card.reverse .feat-shot { order: 2; }
 
-.feat-memoir { --feat-tone: #d9805f; --feat-on-tone: #1a0f0a; --feat-bg: #16120f; }
-.feat-game   { --feat-tone: #1fb5a8; --feat-on-tone: #06201d; --feat-bg: #f6ead2; }
-.feat-blue   { --feat-tone: #2563eb; --feat-bg: #0b1220; }
+.feat-memoir { --feat-tone: #d9805f; --feat-ink: #a3502b; --feat-on-tone: #1a0f0a; --feat-bg: #16120f; }
+.feat-game   { --feat-tone: #1fb5a8; --feat-ink: #0f766e; --feat-on-tone: #06201d; --feat-bg: #f6ead2; }
+.feat-blue   { --feat-tone: #3b82f6; --feat-ink: #1d4ed8; --feat-bg: #0b1220; }
+
+/* --feat-ink: the card tone as readable text (titles, stats, hover). */
+html[data-mode="dark"] .feat-memoir { --feat-ink: #e8976f; }
+html[data-mode="dark"] .feat-game   { --feat-ink: #2fc7b9; }
+html[data-mode="dark"] .feat-blue   { --feat-ink: #7aa7ff; }
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .feat-memoir { --feat-ink: #e8976f; }
+  html:not([data-mode]) .feat-game   { --feat-ink: #2fc7b9; }
+  html:not([data-mode]) .feat-blue   { --feat-ink: #7aa7ff; }
+}
+
+.feat-blue .feat-btn.primary { background: #2563eb; border-color: #2563eb; }
 
 .feat-blue .feat-shot {
   background:
@@ -967,7 +974,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
 
 .feat-title em {
   font-style: italic;
-  color: var(--feat-tone);
+  color: var(--feat-ink);
 }
 
 .feat-tagline {
@@ -1002,7 +1009,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.1;
-  color: var(--feat-tone);
+  color: var(--feat-ink);
 }
 
 .feat-stat span {
@@ -1050,7 +1057,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
 
 .feat-btn:hover {
   border-color: var(--feat-tone);
-  color: var(--feat-tone) !important;
+  color: var(--feat-ink) !important;
 }
 
 .feat-btn.primary {
@@ -1107,7 +1114,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
     <div class="hero-avatar">
       <p class="hero-bubble" aria-hidden="true">Hi, I'm {{ profile.alias }}!</p>
       <div class="pop-clip">
-        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="247" height="430" fetchpriority="high" decoding="async" data-no-popup />
+        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="271" height="442" fetchpriority="high" decoding="async" data-no-popup />
       </div>
     </div>
     <div class="hero-text">
@@ -1131,7 +1138,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         <a class="feat-shot" href="https://memoir.cyphera.my.id" target="_blank" rel="noopener noreferrer">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>memoir.cyphera.my.id</span></div>
-            <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/memoir/landing.webp"{% include srcset.html src='https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/memoir/landing.webp' sizes='(min-width: 860px) 360px, 100vw' %} alt="Memoir landing page" loading="lazy" data-no-popup />
+            <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/memoir/landing.webp"{% include srcset.html src='https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/memoir/landing.webp' sizes='(min-width: 860px) 360px, calc(100vw - 3.5rem)' %} alt="Memoir landing page" loading="lazy" data-no-popup />
           </div>
           <span class="feat-shot-hint">Visit live ↗</span>
         </a>
@@ -1163,7 +1170,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         <a class="feat-shot" href="https://cyphera-game.itch.io/si-ngacir" target="_blank" rel="noopener noreferrer">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>cyphera-game.itch.io/si-ngacir</span></div>
-            <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/04_gameplay_pasar.webp"{% include srcset.html src='https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/04_gameplay_pasar.webp' sizes='(min-width: 860px) 360px, 100vw' %} data-gif="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/gameplay.webp" alt="Si Ngacir gameplay: Masbro the capybara crossing a market street" loading="lazy" data-no-popup />
+            <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/04_gameplay_pasar.webp"{% include srcset.html src='https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/04_gameplay_pasar.webp' sizes='(min-width: 860px) 360px, calc(100vw - 3.5rem)' %} data-gif="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/gameplay.webp" alt="Si Ngacir gameplay: Masbro the capybara crossing a market street" loading="lazy" data-no-popup />
           </div>
           <span class="feat-shot-hint">Play in browser ▶</span>
         </a>

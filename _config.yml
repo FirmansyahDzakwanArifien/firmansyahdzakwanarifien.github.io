@@ -86,7 +86,7 @@ theme_mode: # [light | dark]
 cdn: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main"
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/Logo.png"
+avatar: "https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/Logo-224.webp"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # Create a 1200x630px image for better social media previews

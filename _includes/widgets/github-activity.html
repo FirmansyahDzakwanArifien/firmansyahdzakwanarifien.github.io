@@ -24,13 +24,14 @@
         {%- assign y = row | times: 12 | plus: 14 -%}
         {%- assign dom = day[0] | slice: 8, 2 -%}
         {%- if dom == '01' %}<text class="gh-month" x="{{ x }}" y="9">{{ day[0] | date: '%b' }}</text>{% endif -%}
-        <rect class="lv{{ day[1] }}" x="{{ x }}" y="{{ y }}" width="10" height="10" rx="2"><title>{{ day[0] | date: '%d %b %Y' }}</title></rect>
+        <rect class="lv{{ day[1] }}" x="{{ x }}" y="{{ y }}" width="10" height="10" rx="2" data-d="{{ day[0] }}"></rect>
       {%- endfor %}
       <text class="gh-month" x="0" y="35">Mon</text>
       <text class="gh-month" x="0" y="59">Wed</text>
       <text class="gh-month" x="0" y="83">Fri</text>
     </svg>
   </div>
+  <p class="gh-tip" id="gh-tip" aria-hidden="true">Hover a day to see its date.</p>
   {%- if gh.repos.size > 0 %}
   <ul class="gh-repos">
     {%- for r in gh.repos %}
