@@ -44,6 +44,14 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Upload built site (manual runs only, for local inspection)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+          retention-days: 1
+
       - name: Check internal links and images
         run: |
           bundle exec htmlproofer _site \
