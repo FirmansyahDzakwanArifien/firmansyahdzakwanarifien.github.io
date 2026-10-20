@@ -81,7 +81,7 @@ html[data-mode="dark"] {
 }
 
 .hero-bg::before {
-  background: var(--hero-bg) center 62% / cover no-repeat;
+  background: var(--hero-bg) center / cover no-repeat;
   filter: blur(14px) saturate(1.2);
   transform: scale(1.15);
 }
@@ -985,11 +985,11 @@ html[data-mode="dark"] {
 
   <!-- Hero -->
   {%- assign profile = site.data.profile %}
-  <div class="hero-block" style="--hero-bg: url('{{ profile.photo }}')">
+  <div class="hero-block" style="--hero-bg: url('{{ profile.backdrop }}')">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-avatar">
       <div class="pop-clip">
-        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="285" height="430" fetchpriority="high" decoding="async" data-no-popup />
+        <img src="{{ profile.cutout }}" alt="{{ profile.name }}" width="247" height="430" fetchpriority="high" decoding="async" data-no-popup />
       </div>
     </div>
     <div class="hero-text">
