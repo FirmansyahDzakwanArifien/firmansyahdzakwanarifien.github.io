@@ -903,6 +903,33 @@ html[data-mode="dark"] {
   to   { transform: scale(2.8); opacity: 0; }
 }
 
+/* Live status from the Upptime monitor (status.cyphera.my.id), filled in by script. */
+.feat-uptime {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--muted) !important;
+  text-decoration: none !important;
+}
+
+.feat-uptime[hidden] { display: none; }
+
+.feat-uptime::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.18);
+}
+
+.feat-uptime.down::before { background: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18); }
+
+.feat-uptime:hover { color: inherit !important; }
+
 .feat-kind {
   font-size: 0.7rem;
   font-weight: 500;
@@ -1092,6 +1119,7 @@ html[data-mode="dark"] {
           <div class="feat-meta">
             <span class="feat-status beta"><span class="pulse"></span>Beta · In development</span>
             <span class="feat-kind">Product · Web App</span>
+            <a class="feat-uptime" data-uptime="Memoir" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer" hidden></a>
           </div>
           <h3 class="feat-title"><em>memoir</em></h3>
           <p class="feat-tagline">Every guest's view of the day, in one album.</p>
@@ -1123,6 +1151,7 @@ html[data-mode="dark"] {
           <div class="feat-meta">
             <span class="feat-status live"><span class="pulse"></span>v0.12 · Playable</span>
             <span class="feat-kind">Game · Game Programming course</span>
+            <a class="feat-uptime" data-uptime="Si Ngacir (itch.io)" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer" hidden></a>
           </div>
           <h3 class="feat-title">Si Ngacir <em>— Trobos Ajalah!</em></h3>
           <p class="feat-tagline">A capybara courier, five days of probation, and a lot of traffic.</p>
@@ -1363,5 +1392,24 @@ html[data-mode="dark"] {
     card.addEventListener('mouseenter', function() { img.src = img.dataset.gif; });
     card.addEventListener('mouseleave', function() { img.src = still; });
   });
+
+  /* Uptime badges: read the Upptime summary; badges stay hidden if it cannot be loaded. */
+  var badges = document.querySelectorAll('[data-uptime]');
+  if (badges.length && window.fetch) {
+    fetch('https://raw.githubusercontent.com/FirmansyahDzakwanArifien/upptime/master/history/summary.json')
+      .then(function(res) { return res.ok ? res.json() : []; })
+      .then(function(sites) {
+        badges.forEach(function(badge) {
+          var site = sites.filter(function(s) { return s.name === badge.dataset.uptime; })[0];
+          if (!site) { return; }
+          var up = site.status === 'up';
+          badge.classList.toggle('down', !up);
+          badge.textContent = (up ? 'Online' : 'Down') + ' · ' + site.uptime + ' uptime';
+          badge.title = 'Monitored by status.cyphera.my.id';
+          badge.hidden = false;
+        });
+      })
+      .catch(function() {});
+  }
 })();
 </script>

@@ -1,0 +1,57 @@
+# Daily: add new Hashnode writeups to _data/labs.yml and open (or refresh) a pull request for review.
+name: Labs sync
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # 01:00 UTC / 08:00 WIB
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: labs-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: bot/labs-sync
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Look for new writeups
+        id: sync
+        run: |
+          added=$(python3 tools/sync-labs.py _data/labs.yml)
+          if git diff --quiet; then
+            echo "No new writeups."
+            exit 0
+          fi
+          {
+            echo "added<<EOF"
+            echo "$added"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open or update the pull request
+        if: steps.sync.outputs.added != ''
+        env:
+          ADDED: ${{ steps.sync.outputs.added }} # via env, never inlined into the script (titles are untrusted)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git commit -am "feat: add new writeups to Labs"
+          git push --force origin "$BRANCH"
+
+          body=$(printf 'New writeups found on blog.cyphera.my.id:\n\n%s\n\nPlatform, kind, difficulty, and summary are guesses from the RSS feed. Review them (and fill in `tools`) before merging.' \
+            "$(printf '%s\n' "$ADDED" | sed 's/^/- /')")
+          if gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --body "$body"
+          else
+            gh pr create --head "$BRANCH" --base main --title "Add new writeups to Labs" --body "$body"
+          fi

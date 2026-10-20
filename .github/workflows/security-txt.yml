@@ -1,0 +1,37 @@
+# Fails (and so emails the repo owner) when .well-known/security.txt is close to its Expires date.
+# RFC 9116 says an expired security.txt should be treated as stale, so renew it before then.
+name: security.txt expiry
+
+on:
+  schedule:
+    - cron: "0 2 * * 1" # Mondays 02:00 UTC
+  push:
+    branches: ["main"]
+    paths: [".well-known/security.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Expires date
+        env:
+          WARN_DAYS: "30"
+        run: |
+          expires=$(grep -i '^Expires:' .well-known/security.txt | head -1 | cut -d' ' -f2-)
+          if [ -z "$expires" ]; then
+            echo "::error file=.well-known/security.txt::No Expires field found."
+            exit 1
+          fi
+          days=$(( ( $(date -d "$expires" +%s) - $(date +%s) ) / 86400 ))
+          echo "security.txt expires on $expires ($days days left)"
+          if [ "$days" -le "$WARN_DAYS" ]; then
+            echo "::error file=.well-known/security.txt::security.txt expires in $days days ($expires). Bump the Expires field (keep it under one year ahead)."
+            exit 1
+          fi
+          echo "::notice::security.txt is valid for $days more days."

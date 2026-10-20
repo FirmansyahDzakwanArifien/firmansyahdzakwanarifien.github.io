@@ -13,6 +13,7 @@ cybersecurity, network infrastructure, and Linux system administration.
 | Certifications | `_data/certifications.yml` | Rendered as medals on the home page |
 | Blog | `_posts/` | Certifications, training, and learning notes |
 | Projects | `_projects/` | Case studies (Memoir, Si Ngacir, IDN Blue Team capstone) |
+| Labs | `_data/labs.yml`, `_tabs/labs.html` | DFIR, forensics, and CTF writeups |
 | Album | `_album/` | Event and community photos |
 | Milestone | `_tabs/milestone.md` | Timeline of posts and events |
 
@@ -51,6 +52,17 @@ Inline `<script>` blocks are compressed onto a single line in production, so use
 ## Deployment
 
 Every push to `main` builds and deploys the site through GitHub Actions.
+
+## Automation
+
+| Workflow | When | What it does |
+|---|---|---|
+| `jekyll.yml` | push to `main` | Builds and deploys to GitHub Pages |
+| `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, every jsDelivr URL must return 200, assets repo must stay under jsDelivr's 50 MB limit (`tools/check-assets.sh`) |
+| `labs-sync.yml` | daily | Adds new Hashnode writeups to `_data/labs.yml` and opens a PR for review (`tools/sync-labs.py`) |
+| `security-txt.yml` | weekly | Fails (and emails) when `.well-known/security.txt` is within 30 days of its `Expires` date |
+
+Uptime of the site, its pages, and the projects is monitored at [status.cyphera.my.id](https://status.cyphera.my.id) (Upptime).
 
 ## License
 
