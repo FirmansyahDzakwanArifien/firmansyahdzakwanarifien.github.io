@@ -9,7 +9,7 @@ email: contact@cyphera.my.id
 website: https://cyphera.my.id
 photo: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-new.jpg
 cutout: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/avatar-popout-comic.webp
-backdrop: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/new.jpg
+backdrop: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/avatar/new-backdrop.jpg  # 64px: it is shown blurred, so a tiny file looks the same
 portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl/view?usp=sharing
 
 # Short version for the home page hero; the full bio is used on /cv/ and in the terminal.
@@ -74,6 +74,11 @@ projects:
     kind: Game · Godot 4
     summary: 2D story-driven arcade game by a team of six; built gameplay, UI, and the automated release pipeline for web, Windows, and Android.
     url: https://cyphera-game.itch.io/si-ngacir
+
+# "Buy me a coffee" links. Fill in a username to show that option; leave both empty to hide the section.
+support:
+  trakteer:   # https://trakteer.id/<username>  (Indonesia: QRIS, GoPay, OVO, DANA, ShopeePay, bank transfer)
+  kofi:       # https://ko-fi.com/<username>    (international: PayPal, card)
 
 links:
   - label: LinkedIn

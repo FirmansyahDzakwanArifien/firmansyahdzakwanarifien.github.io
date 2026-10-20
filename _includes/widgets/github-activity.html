@@ -2,6 +2,7 @@
   Public GitHub contribution calendar and recently pushed repositories.
   Data: _data/github.json, refreshed daily by .github/workflows/data-refresh.yml.
 {%- endcomment -%}
+{%- assign hl = include.heading | default: 3 -%}
 {%- assign gh = site.data.github -%}
 {%- if gh.days.size > 0 %}
 {%- assign offset = gh.first | date: '%w' | plus: 0 -%}
@@ -10,7 +11,7 @@
 {%- assign width = weeks | times: 12 | plus: 28 -%}
 <section class="widget gh-activity" aria-labelledby="gh-title">
   <div class="widget-head">
-    <h2 id="gh-title" class="widget-title"><i class="fab fa-github"></i> Open Source Activity</h2>
+    <h{{ hl }} id="gh-title" class="widget-title"><i class="fab fa-github"></i> Open Source Activity</h{{ hl }}>
     <span class="widget-sub">{{ gh.total }} contributions in the last year · <a href="https://github.com/{{ site.github.username }}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
   </div>
   <div class="gh-scroll">

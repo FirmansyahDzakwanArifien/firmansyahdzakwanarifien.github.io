@@ -37,10 +37,13 @@ if ('serviceWorker' in navigator) {
     });
 
     let refreshing = false;
+    // A first-time visitor has no controller yet: when the new worker claims the page there is no
+    // stale cache to drop, so reloading would only load the page twice.
+    const hadController = Boolean(navigator.serviceWorker.controller);
 
     // Detect controller change and refresh all the opened tabs
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
+      if (hadController && !refreshing) {
         window.location.reload();
         refreshing = true;
       }

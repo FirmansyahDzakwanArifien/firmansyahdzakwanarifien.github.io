@@ -20,6 +20,9 @@ Setiap push ke `main` otomatis di-build dan di-deploy (sekitar 2 menit). Kalau a
 10. [Aturan JavaScript, CSP, dan SRI](#10-aturan-javascript-csp-dan-sri)
 11. [Gambar dan repo assets](#11-gambar-dan-repo-assets)
 12. [Menjalankan di lokal dan troubleshooting](#12-menjalankan-di-lokal-dan-troubleshooting)
+13. [Kontak dan traktir kopi](#13-kontak-dan-traktir-kopi)
+14. [Kartu preview sosial media](#14-kartu-preview-sosial-media)
+15. [Performa dan aksesibilitas](#15-performa-dan-aksesibilitas)
 
 ---
 
@@ -77,6 +80,7 @@ published: false   # simpan sebagai draft
 **Yang terjadi otomatis setelah push:**
 - Post muncul di Achievements, Milestone, pencarian, RSS, dan sitemap.
 - Post muncul di **command palette** (`Ctrl+K`), grup "Posts".
+- **Kartu preview** (gambar saat link dibagikan) dibuat otomatis oleh workflow `og-images.yml` beberapa menit setelah push (bagian 14).
 - Heading `##` dan `###` mendapat anchor `#`. Klik anchor itu untuk menyalin link ke bagian tersebut.
 - Progress bar baca muncul otomatis.
 
@@ -228,7 +232,7 @@ Workflow `data-refresh.yml` berjalan setiap hari pukul 07.30 WIB, menjalankan `t
 - Menambah **aksi** baru: array `ACTIONS` di `assets/js/custom/command.js`.
 
 **Pintasan keyboard** (`?` untuk melihat daftarnya):
-- `g` lalu `h` / `l` / `p` / `c` / `a` / `m` / `f`: pindah ke Home, Labs, Projects, CV, Album, Milestone, CTF.
+- `g` lalu `h` / `l` / `p` / `c` / `a` / `m` / `f` / `k`: pindah ke Home, Labs, Projects, CV, Album, Milestone, CTF, Contact.
 - `d`: light/dark, `x`: tema hacker, `` ` ``: terminal.
 - Menambah rute: objek `ROUTES` di `command.js`.
 
@@ -267,6 +271,11 @@ Gambar disajikan dari repo `firmansyahdzakwanarifien-assets` lewat jsDelivr:
 `https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/...`
 
 - **Kompres dulu:** foto maksimal 1600 px (JPG kualitas sekitar 80), screenshot dan sertifikat ke **WebP**.
+- **Buat varian 640 px (wajib untuk gambar post dan album):** template memakai `nama-640.ext` lewat `srcset` agar HP mengunduh versi kecil. Setelah menambah gambar di `blog/img/posts/` atau `blog/img/album/`, jalankan dari repo situs lalu commit repo assets:
+  ```bash
+  python3 tools/make-variants.py ../firmansyahdzakwanarifien-assets
+  ```
+  Kalau lupa, `site-checks` gagal karena URL `-640` mengembalikan 404.
 - **Batas 50 MB:** jsDelivr menolak (403) repo yang lebih besar dari 50 MB. CI memberi peringatan di atas 40 MB.
 - **Mengganti file dengan nama yang sama:** jsDelivr menyimpan cache file lama. Bersihkan dengan:
   ```bash
@@ -301,3 +310,41 @@ bash tools/check-assets.sh _site
 | Gambar lama masih tampil | Cache jsDelivr; purge (bagian 11) |
 | Deploy tidak jalan setelah commit bot | Commit `GITHUB_TOKEN` tidak memicu workflow; `data-refresh` sudah memicu deploy sendiri |
 | `security.txt expiry` gagal | `Expires` di `.well-known/security.txt` kurang dari 30 hari lagi; perpanjang (maksimal 1 tahun) |
+
+---
+
+## 13. Kontak dan traktir kopi
+
+**Halaman `/contact/`** (`_tabs/contact.html`): daftar saluran dari `links` di `_data/profile.yml`, tombol salin email, dan form "Write a message". Form ini **tidak mengirim apa pun dari situs**: ia membuka aplikasi email pengunjung dengan subjek `[Topik] Nama (Organisasi)` dan isi pesan yang sudah terisi (`assets/js/custom/contact.js`). Topik "Security report" menampilkan petunjuk ke `security.txt`. Pilihan topik bisa diubah langsung di `<select name="topic">`.
+
+**Traktir kopi:** isi username di `_data/profile.yml`:
+
+```yaml
+support:
+  trakteer: usernameanda   # https://trakteer.id/usernameanda (QRIS, GoPay, OVO, DANA, ShopeePay, bank)
+  kofi: usernameanda       # https://ko-fi.com/usernameanda (PayPal, kartu, internasional)
+```
+
+Setelah diisi, tombolnya otomatis muncul di halaman utama (bagian Connect), halaman Contact, command palette, dan perintah `coffee` di terminal. Kosongkan untuk menyembunyikan. Tidak ada skrip pihak ketiga yang dimuat, jadi CSP tidak perlu diubah.
+
+---
+
+## 14. Kartu preview sosial media
+
+Setiap post dan proyek mendapat kartu 1200×630 (judul, kategori, tanggal, avatar komik) di `assets/img/og/<collection>-<slug>.jpg`. `_includes/head.html` memakainya sebagai `og:image` dan `twitter:image` menggantikan gambar post.
+
+- **Otomatis:** workflow `og-images.yml` berjalan saat `_posts/` atau `_projects/` berubah, membuat kartu yang baru atau yang judulnya berubah, commit, lalu deploy.
+- **Manual / lokal:** `python3 tools/og-image.py` (butuh `pillow` dan `pyyaml`); `--force` untuk membuat ulang semua.
+- **Mengubah desain:** edit `card()` di `tools/og-image.py` lalu naikkan `VERSION` supaya semua kartu dibuat ulang. Font ada di `tools/fonts/` (lisensi OFL).
+- **Menguji tampilan saat dibagikan:** LinkedIn Post Inspector (linkedin.com/post-inspector) juga memaksa LinkedIn membaca ulang kartu.
+
+---
+
+## 15. Performa dan aksesibilitas
+
+- **Warna teks:** pakai token `var(--muted)` / `var(--accent)` (halaman utama) atau `var(--text-muted-color)` (tema). Token ini sudah memenuhi kontras WCAG AA (≥ 4,5:1) di mode terang dan gelap. Jangan meredupkan teks dengan `opacity`, karena kontrasnya turun diam-diam.
+- **Heading:** satu `<h1>` per halaman (dari layout), bagian memakai `<h2>`, isi kartu `<h3>`. Widget menerima parameter `heading=2` bila diletakkan langsung di bawah `<h1>`.
+- **Gambar besar di atas lipatan:** jangan di-lazy-load. Header post sudah otomatis `fetchpriority="high"`. Gambar lain di konten otomatis lazy.
+- **Font:** dimuat dengan `display=optional` (tidak ada lompatan layout saat font datang terlambat).
+- **Analytics:** hanya Cloudflare Web Analytics. Google Analytics dimatikan di `_config.yml` (`analytics.google.id` kosong); kalau diaktifkan lagi, domain Google harus kembali ditambahkan ke CSP.
+- **Ukur ulang:** `npx lighthouse https://cyphera.my.id/ --view` atau PageSpeed Insights.

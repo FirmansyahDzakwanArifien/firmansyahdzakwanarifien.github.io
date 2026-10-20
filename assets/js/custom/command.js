@@ -11,7 +11,8 @@
     p: {{ '/projects/' | relative_url | jsonify }},
     a: {{ '/album/' | relative_url | jsonify }},
     m: {{ '/milestone/' | relative_url | jsonify }},
-    f: {{ '/ctf/' | relative_url | jsonify }}
+    f: {{ '/ctf/' | relative_url | jsonify }},
+    k: {{ '/contact/' | relative_url | jsonify }}
   };
   var GROUP_ORDER = ['Actions', 'Pages', 'Labs', 'Projects', 'Certifications', 'Posts'];
 
@@ -20,6 +21,7 @@
     { t: 'Toggle light / dark mode', i: 'fas fa-circle-half-stroke', h: 'd', run: toggleMode },
     { t: 'Toggle hacker theme', i: 'fas fa-user-secret', h: 'x', run: toggleHacker },
     { t: 'Copy email address', i: 'fas fa-envelope', h: EMAIL, run: copyEmail },
+    { t: 'Send a message', i: 'fas fa-pen-to-square', h: 'Contact page', run: function () { location.href = ROUTES.k; } },
     { t: 'Print / save CV as PDF', i: 'fas fa-print', h: 'Opens the CV', run: function () { location.href = ROUTES.c + '?print=1'; } },
     { t: 'Start the CTF', i: 'fas fa-flag', h: 'Find the hidden flags', run: function () { location.href = ROUTES.f; } },
     { t: 'Keyboard shortcuts', i: 'fas fa-keyboard', h: '?', run: function () { openShortcuts(); } }
@@ -208,6 +210,7 @@
         ['<kbd>g</kbd> <kbd>a</kbd>', 'Album'],
         ['<kbd>g</kbd> <kbd>m</kbd>', 'Milestone'],
         ['<kbd>g</kbd> <kbd>f</kbd>', 'CTF'],
+        ['<kbd>g</kbd> <kbd>k</kbd>', 'Contact'],
         ['<kbd>d</kbd>', 'Toggle light / dark'],
         ['<kbd>x</kbd>', 'Toggle hacker theme'],
         ['<kbd>Esc</kbd>', 'Close dialogs']

@@ -1,11 +1,12 @@
 ---
 layout: page
 intro: true
+preload_hero: true
 # Index page: About
 ---
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400..600&display=optional">
 
 <style>
 :root {
@@ -13,7 +14,7 @@ intro: true
   --accent-soft: rgba(37, 99, 235, 0.07);
   --border: rgba(128, 128, 128, 0.15);
   --border-hover: rgba(37, 99, 235, 0.3);
-  --muted: rgba(128, 128, 128, 0.6);
+  --muted: #5c6370;
   --radius: 12px;
   --tone-security: #1d4ed8;
   --tone-infrastructure: #0f6e56;
@@ -22,8 +23,12 @@ intro: true
   --tone-research: #5f5e5a;
 }
 
-/* Lighter category tones so badges stay legible on Chirpy's dark theme. */
+/* Lighter accent, muted text, and category tones so text stays legible (>= 4.5:1) on Chirpy's dark theme. */
 html[data-mode="dark"] {
+  --accent: #7aa7ff;
+  --accent-soft: rgba(122, 167, 255, 0.1);
+  --border-hover: rgba(122, 167, 255, 0.35);
+  --muted: #a3a7ae;
   --tone-security: #7aa7ff;
   --tone-infrastructure: #4fc7a4;
   --tone-devops: #a99ff0;
@@ -33,6 +38,10 @@ html[data-mode="dark"] {
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]) {
+    --accent: #7aa7ff;
+    --accent-soft: rgba(122, 167, 255, 0.1);
+    --border-hover: rgba(122, 167, 255, 0.35);
+    --muted: #a3a7ae;
     --tone-security: #7aa7ff;
     --tone-infrastructure: #4fc7a4;
     --tone-devops: #a99ff0;
@@ -221,7 +230,6 @@ html[data-mode="dark"] {
 .hero-bio {
   font-size: 0.97rem;
   line-height: 1.75;
-  opacity: 0.85;
   margin: 0;
 }
 
@@ -237,7 +245,7 @@ html[data-mode="dark"] {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
-  background: var(--accent);
+  background: #2563eb;
   color: #fff !important;
   font-size: 0.84rem;
   font-weight: 500;
@@ -259,8 +267,10 @@ html[data-mode="dark"] {
 
 .btn-cta.ghost:hover { background: var(--accent-soft); }
 
-/* ── Section title ── */
-.section-label {
+/* ── Section title (an <h2> for the outline, styled as a small label) ── */
+.about-wrap .section-label {
+  font-family: inherit;
+  line-height: 1.4;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -272,7 +282,7 @@ html[data-mode="dark"] {
   gap: 0.75rem;
 }
 
-.section-label::after {
+.about-wrap .section-label::after {
   content: '';
   flex: 1;
   height: 1px;
@@ -573,7 +583,6 @@ html[data-mode="dark"] {
   background: rgba(128,128,128,0.07);
   border: 1px solid var(--border);
   color: inherit;
-  opacity: 0.85;
 }
 
 .skill-kv {
@@ -594,7 +603,7 @@ html[data-mode="dark"] {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  opacity: 0.45;
+  color: var(--muted);
   min-width: 72px;
   flex-shrink: 0;
 }
@@ -614,7 +623,7 @@ html[data-mode="dark"] {
 
 .skill-lang-level {
   font-size: 0.72rem;
-  opacity: 0.5;
+  color: var(--muted);
 }
 
 /* ── Education ── */
@@ -632,7 +641,7 @@ html[data-mode="dark"] {
 
 .edu-meta {
   font-size: 0.83rem;
-  opacity: 0.6;
+  color: var(--muted);
   margin: 0;
 }
 
@@ -640,7 +649,6 @@ html[data-mode="dark"] {
 .next-block {
   font-size: 0.95rem;
   line-height: 1.8;
-  opacity: 0.8;
 }
 
 /* ── Connect ── */
@@ -670,7 +678,7 @@ html[data-mode="dark"] {
 }
 
 .connect-link .cl-label {
-  opacity: 0.45;
+  color: var(--muted);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -685,6 +693,8 @@ html[data-mode="dark"] {
 }
 
 /* ── Featured work ── */
+.contact-more { margin: 0.9rem 0 1rem; font-size: 0.85rem; font-weight: 500; }
+
 .feat-more {
   display: inline-block;
   margin-top: 1rem;
@@ -716,9 +726,9 @@ html[data-mode="dark"] {
 .feat-card.reverse { grid-template-columns: 1fr 1.1fr; }
 .feat-card.reverse .feat-shot { order: 2; }
 
-.feat-memoir { --feat-tone: #d9805f; --feat-bg: #16120f; }
-.feat-game   { --feat-tone: #1fb5a8; --feat-bg: #f6ead2; }
-.feat-blue   { --feat-tone: #3b82f6; --feat-bg: #0b1220; }
+.feat-memoir { --feat-tone: #d9805f; --feat-on-tone: #1a0f0a; --feat-bg: #16120f; }
+.feat-game   { --feat-tone: #1fb5a8; --feat-on-tone: #06201d; --feat-bg: #f6ead2; }
+.feat-blue   { --feat-tone: #2563eb; --feat-bg: #0b1220; }
 
 .feat-blue .feat-shot {
   background:
@@ -877,9 +887,19 @@ html[data-mode="dark"] {
   border-radius: 20px;
 }
 
-.feat-status.beta { background: rgba(217, 128, 95, 0.14); color: #c4643f; }
-.feat-status.live { background: rgba(15, 140, 120, 0.12); color: #0f8c78; }
-.feat-status.done { background: rgba(59, 130, 246, 0.12); color: #2563eb; }
+.feat-status.beta { background: rgba(217, 128, 95, 0.14); color: #a8502e; }
+.feat-status.live { background: rgba(15, 140, 120, 0.12); color: #0b6e5e; }
+.feat-status.done { background: rgba(59, 130, 246, 0.12); color: #1d4ed8; }
+
+html[data-mode="dark"] .feat-status.beta { color: #f2a27e; }
+html[data-mode="dark"] .feat-status.live { color: #45d6bd; }
+html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) .feat-status.beta { color: #f2a27e; }
+  html:not([data-mode]) .feat-status.live { color: #45d6bd; }
+  html:not([data-mode]) .feat-status.done { color: #86b0ff; }
+}
 
 .feat-status .pulse {
   position: relative;
@@ -915,7 +935,7 @@ html[data-mode="dark"] {
   text-decoration: none !important;
 }
 
-.feat-uptime[hidden] { display: none; }
+.feat-uptime.is-pending { visibility: hidden; } /* keeps its space until the real status arrives */
 
 .feat-uptime::before {
   content: '';
@@ -960,7 +980,6 @@ html[data-mode="dark"] {
 .feat-desc {
   font-size: 0.86rem;
   line-height: 1.7;
-  opacity: 0.85;
   margin: 0 0 0.9rem;
 }
 
@@ -1037,12 +1056,12 @@ html[data-mode="dark"] {
 .feat-btn.primary {
   background: var(--feat-tone);
   border-color: var(--feat-tone);
-  color: #fff !important;
+  color: var(--feat-on-tone, #fff) !important;
 }
 
 .feat-btn.primary:hover {
   filter: brightness(1.08);
-  color: #fff !important;
+  color: var(--feat-on-tone, #fff) !important;
   transform: translateY(-1px);
 }
 
@@ -1104,12 +1123,12 @@ html[data-mode="dark"] {
 
   <!-- Featured work -->
   <div class="about-section">
-    <p class="section-label">Featured Work</p>
+    <h2 class="section-label">Featured Work</h2>
 
     <div class="feat-list">
 
       <article class="feat-card feat-memoir">
-        <a class="feat-shot" href="https://memoir.cyphera.my.id" target="_blank" rel="noopener noreferrer" aria-label="Open Memoir">
+        <a class="feat-shot" href="https://memoir.cyphera.my.id" target="_blank" rel="noopener noreferrer">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>memoir.cyphera.my.id</span></div>
             <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/memoir/landing.webp" alt="Memoir landing page" loading="lazy" data-no-popup />
@@ -1120,7 +1139,7 @@ html[data-mode="dark"] {
           <div class="feat-meta">
             <span class="feat-status beta"><span class="pulse"></span>Beta · In development</span>
             <span class="feat-kind">Product · Web App</span>
-            <a class="feat-uptime" data-uptime="Memoir" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer" hidden></a>
+            <a class="feat-uptime is-pending" data-uptime="Memoir" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer">Online · 100.00% uptime</a>
           </div>
           <h3 class="feat-title"><em>memoir</em></h3>
           <p class="feat-tagline">Every guest's view of the day, in one album.</p>
@@ -1141,7 +1160,7 @@ html[data-mode="dark"] {
       </article>
 
       <article class="feat-card feat-game reverse">
-        <a class="feat-shot" href="https://cyphera-game.itch.io/si-ngacir" target="_blank" rel="noopener noreferrer" aria-label="Play Si Ngacir on itch.io">
+        <a class="feat-shot" href="https://cyphera-game.itch.io/si-ngacir" target="_blank" rel="noopener noreferrer">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>cyphera-game.itch.io/si-ngacir</span></div>
             <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/04_gameplay_pasar.webp" data-gif="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/si-ngacir/gameplay.webp" alt="Si Ngacir gameplay: Masbro the capybara crossing a market street" loading="lazy" data-no-popup />
@@ -1152,7 +1171,7 @@ html[data-mode="dark"] {
           <div class="feat-meta">
             <span class="feat-status live"><span class="pulse"></span>v0.12 · Playable</span>
             <span class="feat-kind">Game · Game Programming course</span>
-            <a class="feat-uptime" data-uptime="Si Ngacir (itch.io)" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer" hidden></a>
+            <a class="feat-uptime is-pending" data-uptime="Si Ngacir (itch.io)" href="https://status.cyphera.my.id" target="_blank" rel="noopener noreferrer">Online · 100.00% uptime</a>
           </div>
           <h3 class="feat-title">Si Ngacir <em>— Trobos Ajalah!</em></h3>
           <p class="feat-tagline">A capybara courier, five days of probation, and a lot of traffic.</p>
@@ -1176,7 +1195,7 @@ html[data-mode="dark"] {
       {%- assign capstone = site.projects | where_exp: "p", "p.title contains 'IDN Blue Team'" | first -%}
       {%- assign capstone_url = capstone.url | relative_url -%}
       <article class="feat-card feat-blue">
-        <a class="feat-shot" href="{{ capstone_url }}" aria-label="Read the IDN Blue Team capstone write-up">
+        <a class="feat-shot" href="{{ capstone_url }}">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>investigation · metasploitable / apache2</span></div>
             <ul class="feat-alerts">
@@ -1218,7 +1237,7 @@ html[data-mode="dark"] {
 
   <!-- Experience -->
   <div class="about-section">
-    <p class="section-label">Professional Experience</p>
+    <h2 class="section-label">Professional Experience</h2>
 
     <div class="exp-filters">
       <button type="button" class="exp-filter-btn active" data-filter="all">All</button>
@@ -1250,7 +1269,7 @@ html[data-mode="dark"] {
 
   <!-- Certifications -->
   <div class="about-section">
-    <p class="section-label">Certifications &amp; Training</p>
+    <h2 class="section-label">Certifications &amp; Training</h2>
     <div class="medal-marquee">
       <div class="medal-track">
         {%- for copy in (1..2) -%}
@@ -1269,14 +1288,14 @@ html[data-mode="dark"] {
 
   <!-- Activity & Security -->
   <div class="about-section">
-    <p class="section-label">Activity &amp; Security</p>
+    <h2 class="section-label">Activity &amp; Security</h2>
     {% include widgets/github-activity.html %}
     {% include widgets/scorecard.html %}
   </div>
 
   <!-- Skills -->
   <div class="about-section">
-    <p class="section-label">Skills &amp; Expertise</p>
+    <h2 class="section-label">Skills &amp; Expertise</h2>
 
     <div class="skills-row">
       {%- for group in profile.skill_groups %}
@@ -1319,7 +1338,7 @@ html[data-mode="dark"] {
 
   <!-- Education -->
   <div class="about-section">
-    <p class="section-label">Education</p>
+    <h2 class="section-label">Education</h2>
     <div class="edu-block">
       <p class="edu-degree">{{ profile.education.degree }}</p>
       <p class="edu-meta">{{ profile.education.school }} &nbsp;·&nbsp; {{ profile.education.period }}</p>
@@ -1328,13 +1347,13 @@ html[data-mode="dark"] {
 
   <!-- What's Next -->
   <div class="about-section">
-    <p class="section-label">What's Next</p>
+    <h2 class="section-label">What's Next</h2>
     <p class="next-block">{{ profile.next }}</p>
   </div>
 
   <!-- Connect -->
   <div class="about-section">
-    <p class="section-label">Let's Connect</p>
+    <h2 class="section-label">Let's Connect</h2>
     <div class="connect-grid">
       {%- for link in profile.links %}
       <a href="{{ link.url }}" class="connect-link"{% unless link.url contains 'mailto:' %} target="_blank" rel="noopener noreferrer"{% endunless %}>
@@ -1342,6 +1361,8 @@ html[data-mode="dark"] {
       </a>
       {%- endfor %}
     </div>
+    <p class="contact-more"><a href="{{ '/contact/' | relative_url }}"><i class="fas fa-pen-to-square"></i> Write me a message</a></p>
+    {% include widgets/support.html %}
     <p class="term-hint">Prefer the keyboard? Press <kbd>Ctrl</kbd> <kbd>K</kbd> for the <button type="button" data-cmdk-open>command palette</button>, <kbd>`</kbd> for the <button type="button" data-term-open>terminal</button>, or <kbd>?</kbd> for shortcuts. Curious? There's a <a href="{{ '/ctf/' | relative_url }}">CTF</a> hidden on this site.</p>
   </div>
 

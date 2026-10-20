@@ -1,1 +1,6 @@
 <!-- A placeholder to allow defining custom metadata -->
+{%- if page.preload_hero %}
+  {%- comment -%} Home hero: start the LCP images (blurred backdrop, cutout) before the CSS is parsed. {%- endcomment -%}
+  <link rel="preload" as="image" href="{{ site.data.profile.backdrop }}" fetchpriority="high">
+  <link rel="preload" as="image" href="{{ site.data.profile.cutout }}" fetchpriority="high">
+{%- endif %}

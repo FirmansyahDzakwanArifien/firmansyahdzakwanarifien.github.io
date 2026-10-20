@@ -17,6 +17,8 @@
     experience: {{ site.data.experience | jsonify }},
     certs: {{ site.data.certifications | jsonify }},
     labs: {{ site.data.labs | jsonify }},
+    support: {{ profile.support | jsonify }},
+    contactPage: {{ '/contact/' | relative_url | jsonify }},
     cv: {{ '/cv/' | relative_url | jsonify }},
     home: {{ '/' | relative_url | jsonify }}
   };
@@ -160,6 +162,15 @@
       run: function () {
         print('5 flags in the format <span class="term-ok">cyphera{...}</span> are hidden around this site.');
         print('submit them at ' + link(DATA.home.replace(/\/$/, '') + '/ctf/', '/ctf/') + '. one of them is closer than you think.', 'term-dim');
+      }
+    },
+    coffee: {
+      desc: 'buy me a coffee',
+      run: function () {
+        var s = DATA.support || {};
+        if (!s.trakteer && !s.kofi) { print('no coffee links yet. a message is just as nice: ' + link(DATA.contactPage, 'contact page')); return; }
+        if (s.trakteer) { print('<span class="term-key">Trakteer</span>' + link('https://trakteer.id/' + s.trakteer) + ' <span class="term-dim">QRIS, e-wallet, bank</span>'); }
+        if (s.kofi) { print('<span class="term-key">Ko-fi</span>' + link('https://ko-fi.com/' + s.kofi) + ' <span class="term-dim">PayPal, card</span>'); }
       }
     },
     sudo: {

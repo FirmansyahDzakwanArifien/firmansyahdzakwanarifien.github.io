@@ -25,7 +25,7 @@
     card.addEventListener('mouseleave', function() { img.src = still; });
   });
 
-  /* Uptime badges: read the Upptime summary; badges stay hidden if it cannot be loaded. */
+  /* Uptime badges: read the Upptime summary; badges stay invisible (space kept) if it cannot be loaded. */
   var badges = document.querySelectorAll('[data-uptime]');
   if (badges.length && window.fetch) {
     fetch('https://raw.githubusercontent.com/FirmansyahDzakwanArifien/upptime/master/history/summary.json')
@@ -38,7 +38,7 @@
           badge.classList.toggle('down', !up);
           badge.textContent = (up ? 'Online' : 'Down') + ' · ' + site.uptime + ' uptime';
           badge.title = 'Monitored by status.cyphera.my.id';
-          badge.hidden = false;
+          badge.classList.remove('is-pending');
         });
       })
       .catch(function() {});

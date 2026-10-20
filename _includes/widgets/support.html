@@ -1,0 +1,26 @@
+{%- comment -%}
+  "Buy me a coffee" buttons. Shown only when a username is set under `support:` in _data/profile.yml.
+{%- endcomment -%}
+{%- assign sup = site.data.profile.support -%}
+{%- if sup.trakteer or sup.kofi %}
+{%- assign hl = include.heading | default: 3 -%}
+<section class="widget support" aria-labelledby="support-title">
+  <div class="widget-head">
+    <h{{ hl }} id="support-title" class="widget-title"><i class="fas fa-mug-hot"></i> Buy me a coffee</h{{ hl }}>
+    <span class="widget-sub">Optional, always appreciated</span>
+  </div>
+  <p class="support-note">If a writeup, tool, or the CTF helped you, a coffee keeps the labs running.</p>
+  <div class="support-links">
+    {%- if sup.trakteer %}
+    <a class="support-btn trakteer" href="https://trakteer.id/{{ sup.trakteer }}" target="_blank" rel="noopener noreferrer">
+      <i class="fas fa-mug-hot"></i><span><b>Trakteer</b><small>QRIS, GoPay, OVO, DANA, bank</small></span>
+    </a>
+    {%- endif %}
+    {%- if sup.kofi %}
+    <a class="support-btn kofi" href="https://ko-fi.com/{{ sup.kofi }}" target="_blank" rel="noopener noreferrer">
+      <i class="fas fa-mug-saucer"></i><span><b>Ko-fi</b><small>PayPal, card (international)</small></span>
+    </a>
+    {%- endif %}
+  </div>
+</section>
+{%- endif -%}

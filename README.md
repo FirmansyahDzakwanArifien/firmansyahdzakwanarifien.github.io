@@ -18,6 +18,7 @@ cybersecurity, network infrastructure, and Linux system administration.
 | Milestone | `_tabs/milestone.md` | Timeline of posts and events |
 | CTF | `ctf.html`, `_data/ctf.yml` | Five flags hidden around the site |
 | Homelab | `_tabs/homelab.html`, `_data/homelab.yml` | Interactive topology (unpublished until filled in) |
+| Contact | `_tabs/contact.html` | Channels, copy-email, and a mailto message composer (no third-party form service) |
 
 ## Stack
 
@@ -68,6 +69,7 @@ Every push to `main` builds and deploys the site through GitHub Actions.
 | `site-checks.yml` | push, PR, weekly | html-proofer on internal links/images, no inline JavaScript, SRI hashes still valid, every jsDelivr URL returns 200, assets repo under jsDelivr's 50 MB limit |
 | `labs-sync.yml` | daily | Adds new Hashnode writeups to `_data/labs.yml` and opens a PR for review (`tools/sync-labs.py`) |
 | `security-txt.yml` | weekly | Fails (and emails) when `.well-known/security.txt` is within 30 days of its `Expires` date |
+| `og-images.yml` | posts/projects change | Generates 1200×630 social preview cards in `assets/img/og/` (`tools/og-image.py`), then redeploys |
 | `data-refresh.yml` | daily | Refreshes Threat Watch (CISA KEV), GitHub activity, and the security scorecard (`tools/refresh-data.py`), then redeploys |
 
 Uptime of the site, its pages, and the projects is monitored at [status.cyphera.my.id](https://status.cyphera.my.id) (Upptime).

@@ -2,12 +2,13 @@
   Threat Watch: newest entries of the CISA Known Exploited Vulnerabilities catalog.
   Data: _data/kev.json, refreshed daily by .github/workflows/data-refresh.yml.
 {%- endcomment -%}
+{%- assign hl = include.heading | default: 3 -%}
 {%- assign kev = site.data.kev -%}
 {%- assign kev_limit = include.limit | default: 6 -%}
 {%- if kev.items.size > 0 %}
 <section class="widget threat-watch" aria-labelledby="threat-watch-title">
   <div class="widget-head">
-    <h2 id="threat-watch-title" class="widget-title"><i class="fas fa-triangle-exclamation"></i> Threat Watch</h2>
+    <h{{ hl }} id="threat-watch-title" class="widget-title"><i class="fas fa-triangle-exclamation"></i> Threat Watch</h{{ hl }}>
     <span class="widget-sub">Newest of {{ kev.total }} actively exploited CVEs · <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a></span>
   </div>
   <ul class="kev-list">

@@ -184,7 +184,7 @@ header {
       color: var(--text-muted-color);
       font-size: 0.65rem;
       text-transform: uppercase;
-      content: attr(aria-label);
+      content: attr(data-label);
     }
 
     &:first-child {

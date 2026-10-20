@@ -11,6 +11,11 @@
 
   /* The lightbox image is created at runtime (rather than emitted as static
      markup) so the build-time content refactor doesn't wrap it in a link. */
+  /* Grid tiles use the 640px "-640" variant (tools/make-variants.py); the lightbox shows the original. */
+  function small(src) {
+    return /\/blog\/img\/album\//.test(src) ? src.replace(/\.(jpe?g|webp|png)$/i, '-640.$1') : src;
+  }
+
   var lbImg = document.createElement('img');
   lbImg.alt = '';
   figure.insertBefore(lbImg, figure.firstChild);
@@ -75,7 +80,7 @@
       tile.setAttribute('aria-label', item.title || '');
 
       var thumb = document.createElement('img');
-      thumb.src = item.src;
+      thumb.src = small(item.src);
       thumb.alt = item.alt || item.title || '';
       thumb.loading = 'lazy';
       tile.appendChild(thumb);

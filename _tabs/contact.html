@@ -1,0 +1,151 @@
+---
+layout: page
+title: Contact
+icon: fas fa-envelope
+order: 8
+description: How to reach Firmansyah Dzakwan Arifien for job opportunities, collaborations, speaking, or security reports.
+---
+
+{%- assign profile = site.data.profile -%}
+
+<style>
+.contact { max-width: 760px; }
+.contact-intro { color: var(--text-muted-color); }
+
+.contact-channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.contact-channel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.contact-channel:hover { border-color: var(--link-color); }
+.contact-channel > i { width: 1.4rem; text-align: center; font-size: 1.15rem; color: var(--link-color); }
+.contact-channel span { display: flex; flex-direction: column; min-width: 0; }
+.contact-channel b { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted-color); }
+.contact-channel small { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.contact-copy {
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted-color);
+  background: transparent;
+  border: 1px solid var(--main-border-color);
+  border-radius: 6px;
+}
+
+.contact .widget-title { font-size: 1rem; }
+
+.compose { display: grid; gap: 0.75rem; }
+.compose-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 640px) { .compose-row { grid-template-columns: 1fr; } }
+
+.compose label { display: grid; gap: 0.3rem; font-size: 0.8rem; font-weight: 600; }
+
+.compose input,
+.compose select,
+.compose textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-color);
+  background: var(--main-bg);
+  border: 1px solid var(--main-border-color);
+  border-radius: 10px;
+}
+
+.compose textarea { min-height: 9rem; resize: vertical; }
+
+.compose input:focus,
+.compose select:focus,
+.compose textarea:focus { outline: 2px solid var(--link-color); outline-offset: 1px; }
+
+.compose-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+
+.compose-actions button {
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  border: 0;
+  border-radius: 10px;
+}
+
+.compose-note { margin: 0; font-size: 0.78rem; color: var(--text-muted-color); }
+.compose-security { margin: 0; padding: 0.6rem 0.8rem; font-size: 0.82rem; border-left: 3px solid #c53030; background: var(--card-bg); }
+</style>
+
+<div class="contact">
+  <p class="contact-intro">Open to opportunities in security and infrastructure, project collaborations, and community or speaking invitations. Email is the most reliable way to reach me; I read every message.</p>
+
+  <div class="contact-channels">
+    {%- for link in profile.links %}
+      {%- assign icon = 'fas fa-link' -%}
+      {%- case link.label -%}
+        {%- when 'Email' -%}{%- assign icon = 'fas fa-envelope' -%}
+        {%- when 'LinkedIn' -%}{%- assign icon = 'fab fa-linkedin' -%}
+        {%- when 'GitHub' -%}{%- assign icon = 'fab fa-github' -%}
+        {%- when 'Telegram' -%}{%- assign icon = 'fab fa-telegram' -%}
+        {%- when 'Medium' -%}{%- assign icon = 'fab fa-medium' -%}
+      {%- endcase %}
+    {%- if link.label == 'Email' %}
+    <div class="contact-channel">
+      <i class="{{ icon }}"></i>
+      <span><b>{{ link.label }}</b><a href="{{ link.url }}"><small>{{ link.value }}</small></a></span>
+      <button type="button" class="contact-copy" data-copy="{{ profile.email }}" aria-label="Copy email address">Copy</button>
+    </div>
+    {%- else %}
+    <a class="contact-channel" href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+      <i class="{{ icon }}"></i>
+      <span><b>{{ link.label }}</b><small>{{ link.value }}</small></span>
+    </a>
+    {%- endif %}
+    {%- endfor %}
+  </div>
+
+  <section class="widget" aria-labelledby="compose-title">
+    <div class="widget-head">
+      <h2 id="compose-title" class="widget-title"><i class="fas fa-pen-to-square"></i> Write a message</h2>
+    </div>
+    <form class="compose" id="compose" data-to="{{ profile.email }}">
+      <div class="compose-row">
+        <label>Your name<input name="name" type="text" autocomplete="name" required></label>
+        <label>Company / organization <input name="org" type="text" autocomplete="organization" placeholder="Optional"></label>
+      </div>
+      <label>Topic
+        <select name="topic">
+          <option>Job opportunity</option>
+          <option>Project collaboration</option>
+          <option>Speaking or community event</option>
+          <option value="Security report">Security report (vulnerability in one of my sites)</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <p class="compose-security" id="compose-security" hidden>For vulnerabilities, please follow <a href="{{ '/.well-known/security.txt' | relative_url }}">security.txt</a>: include the affected URL, steps to reproduce, and impact. Please do not include exploit details for live third-party systems.</p>
+      <label>Message<textarea name="message" required></textarea></label>
+      <div class="compose-actions">
+        <button type="submit"><i class="fas fa-paper-plane"></i> Open in my email app</button>
+        <p class="compose-note">Nothing is sent from this site: your email app opens with the message filled in.</p>
+      </div>
+    </form>
+  </section>
+
+  {% include widgets/support.html heading=2 %}
+</div>
+
+<script defer src="{{ '/assets/js/custom/contact.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

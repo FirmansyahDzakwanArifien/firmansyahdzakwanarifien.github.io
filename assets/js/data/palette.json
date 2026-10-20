@@ -22,5 +22,12 @@ layout: compress
   {%- for post in site.posts %}
   {"g":"Posts","t":{{ post.title | jsonify }},"u":{{ post.url | relative_url | jsonify }},"i":"far fa-newspaper","h":{{ post.date | date: '%b %Y' | jsonify }}},
   {%- endfor %}
+  {%- assign sup = site.data.profile.support %}
+  {%- if sup.trakteer %}
+  {"g":"Pages","t":"Buy me a coffee (Trakteer)","u":{{ 'https://trakteer.id/' | append: sup.trakteer | jsonify }},"i":"fas fa-mug-hot","h":"QRIS, e-wallet, bank"},
+  {%- endif %}
+  {%- if sup.kofi %}
+  {"g":"Pages","t":"Buy me a coffee (Ko-fi)","u":{{ 'https://ko-fi.com/' | append: sup.kofi | jsonify }},"i":"fas fa-mug-saucer","h":"PayPal, card"},
+  {%- endif %}
   {"g":"Pages","t":"Status page","u":"https://status.cyphera.my.id","i":"fas fa-heart-pulse","h":"status.cyphera.my.id"}
 ]

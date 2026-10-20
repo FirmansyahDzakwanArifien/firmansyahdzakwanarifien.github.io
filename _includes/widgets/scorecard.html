@@ -2,12 +2,13 @@
   This site's own security posture: Mozilla Observatory grade and security headers.
   Data: _data/scorecard.json, refreshed daily by .github/workflows/data-refresh.yml.
 {%- endcomment -%}
+{%- assign hl = include.heading | default: 3 -%}
 {%- assign sc = site.data.scorecard -%}
 {%- if sc.grade %}
 {%- assign grade_class = sc.grade | slice: 0 | downcase -%}
 <section class="widget scorecard" aria-labelledby="scorecard-title">
   <div class="widget-head">
-    <h2 id="scorecard-title" class="widget-title"><i class="fas fa-shield-halved"></i> This Site's Security</h2>
+    <h{{ hl }} id="scorecard-title" class="widget-title"><i class="fas fa-shield-halved"></i> This Site's Security</h{{ hl }}>
     <span class="widget-sub">Checked {{ sc.checked | date: '%d %b %Y' }} · <a href="{{ sc.report }}" target="_blank" rel="noopener noreferrer">Full report</a></span>
   </div>
   <div class="sc-body">

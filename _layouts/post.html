@@ -45,7 +45,8 @@ script_includes:
         {% endif %}
 
         <div class="mt-3 mb-3">
-          <img {{ src }} {{ class }} {{ alt }} w="1200" h="630" {{ lqip }}>
+          {%- assign header_src = page.image.path | default: page.image -%}
+          <img {{ src }} {{ class }} {{ alt }} w="1200" h="630" {{ lqip }}{% include srcset.html src=header_src %} fetchpriority="high" data-eager>
           {%- if page.image.alt -%}
             <figcaption class="text-center pt-2 pb-2">{{ page.image.alt }}</figcaption>
           {%- endif -%}

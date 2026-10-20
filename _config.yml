@@ -57,7 +57,9 @@ webmaster_verifications:
 # Web Analytics Settings
 analytics:
   google:
-    id: G-67FEX9GQMB
+    # Removed for privacy and page weight (~140 KB of JS); Cloudflare Web Analytics is on.
+    # Put the ID back (G-67FEX9GQMB) to re-enable; the CSP would then need the Google domains again.
+    id:
   goatcounter:
     id: # Alternative to GA (privacy-focused)
   umami:

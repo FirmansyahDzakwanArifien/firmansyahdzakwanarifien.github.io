@@ -9,7 +9,8 @@ description: Hands-on security writeups by Firmansyah Dzakwan Arifien — DFIR, 
 <style>
 .labs {
   --labs-border: rgba(128, 128, 128, 0.18);
-  --labs-muted: rgba(128, 128, 128, 0.85);
+  --labs-muted: #5c6370;
+  --labs-accent: #2563eb;
   --tone-dfir: #2563eb;
   --tone-network: #0f8c78;
   --tone-logs: #b4690e;
@@ -18,6 +19,8 @@ description: Hands-on security writeups by Firmansyah Dzakwan Arifien — DFIR, 
 }
 
 html[data-mode="dark"] .labs {
+  --labs-muted: #a3a7ae;
+  --labs-accent: #7aa7ff;
   --tone-dfir: #7aa7ff;
   --tone-network: #4fc7a4;
   --tone-logs: #e0ac5c;
@@ -27,6 +30,8 @@ html[data-mode="dark"] .labs {
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]) .labs {
+    --labs-muted: #a3a7ae;
+    --labs-accent: #7aa7ff;
     --tone-dfir: #7aa7ff;
     --tone-network: #4fc7a4;
     --tone-logs: #e0ac5c;
@@ -57,8 +62,8 @@ html[data-mode="dark"] .labs {
 
 .labs-filter.active,
 .labs-filter:hover {
-  color: #2563eb;
-  border-color: #2563eb;
+  color: var(--labs-accent);
+  border-color: var(--labs-accent);
   background: rgba(37, 99, 235, 0.07);
 }
 
@@ -145,7 +150,7 @@ html[data-mode="dark"] .labs {
 <div class="labs">
   <p class="labs-intro">Hands-on blue-team work: incident investigations, forensics challenges, and vulnerability write-ups. Most full write-ups live on my <a href="https://blog.cyphera.my.id" target="_blank" rel="noopener noreferrer">Hashnode blog</a>. Want to try one yourself? This site hides a small <a href="{{ '/ctf/' | relative_url }}">CTF</a>.</p>
 
-  {% include widgets/threat-watch.html limit=5 %}
+  {% include widgets/threat-watch.html limit=5 heading=2 %}
 
   <div class="labs-filters" role="group" aria-label="Filter labs">
     <button type="button" class="labs-filter active" data-kind="all">All</button>

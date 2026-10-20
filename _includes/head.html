@@ -48,6 +48,26 @@
     {% assign seo_tags = seo_tags | replace: old_meta_clip, new_meta_clip %}
   {% endif %}
 
+  {%- comment -%}
+    Generated social card (tools/og-image.py, .github/workflows/og-images.yml) for posts and projects:
+    it replaces the page image as og:image / twitter:image when one exists.
+  {%- endcomment -%}
+  {%- if page.collection == 'posts' or page.collection == 'projects' -%}
+    {%- assign og_slug = page.url | split: '/' | last -%}
+    {%- capture og_path -%}/assets/img/og/{{ page.collection }}-{{ og_slug }}.jpg{%- endcapture -%}
+    {%- assign og_file = site.static_files | where: 'path', og_path | first -%}
+    {%- if og_file -%}
+      {%- assign og_url = og_path | absolute_url -%}
+      {%- if page.image -%}
+        {%- assign page_img = page.image.path | default: page.image -%}
+        {%- assign seo_tags = seo_tags | replace: page_img, og_url -%}
+      {%- else -%}
+        {%- capture og_meta -%}<meta property="og:image" content="{{ og_url }}" /><meta name="twitter:card" content="summary_large_image" /><meta property="twitter:image" content="{{ og_url }}" />{%- endcapture -%}
+        {%- assign seo_tags = seo_tags | replace: '<meta name="twitter:card" content="summary" />', og_meta -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif %}
+
   {{ seo_tags }}
 
   {%- if site.social.fediverse_handle %}

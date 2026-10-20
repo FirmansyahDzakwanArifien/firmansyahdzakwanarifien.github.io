@@ -21,8 +21,11 @@
   margin-bottom: 0.75rem;
 }
 
-.widget-title {
+/* Two classes so Chirpy's ".content h2/h3" sizing does not apply. */
+.widget .widget-title {
   margin: 0;
+  font-family: inherit;
+  line-height: 1.4;
   font-size: 0.95rem;
   font-weight: 600;
 
@@ -428,4 +431,44 @@ html.cmdk-lock body { overflow: hidden; }
   #cmdk,
   #shortcuts,
   .site-toast { display: none !important; }
+}
+
+/* ---------- Support / contact ---------- */
+
+.support-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-muted-color);
+}
+
+.support-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.95rem;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 10px;
+  transition: transform 0.15s, filter 0.15s;
+
+  i { font-size: 1.1rem; }
+
+  span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  small { font-size: 0.68rem; opacity: 0.92; }
+
+  &:hover { transform: translateY(-1px); filter: brightness(1.06); }
+
+  &.trakteer { background: #b91c1c; }
+  &.kofi { background: #1d4f91; }
 }
