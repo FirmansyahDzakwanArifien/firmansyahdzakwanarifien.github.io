@@ -1,5 +1,5 @@
 {
-  "total": 1298,
+  "total": 1324,
   "first": "2025-10-19",
   "days": [
     [
@@ -1469,23 +1469,19 @@
     [
       "2026-10-20",
       1
+    ],
+    [
+      "2026-10-21",
+      1
     ]
   ],
   "repos": [
-    {
-      "name": "firmansyahdzakwanarifien-assets",
-      "description": "File, Image, and media assets ",
-      "language": "",
-      "stars": 0,
-      "pushed": "2026-10-20",
-      "url": "https://github.com/FirmansyahDzakwanArifien/firmansyahdzakwanarifien-assets"
-    },
     {
       "name": "upptime",
       "description": "",
       "language": "Markdown",
       "stars": 0,
-      "pushed": "2026-10-20",
+      "pushed": "2026-10-21",
       "url": "https://github.com/FirmansyahDzakwanArifien/upptime"
     },
     {
@@ -1493,16 +1489,24 @@
       "description": "Github Profile",
       "language": "",
       "stars": 0,
-      "pushed": "2026-10-20",
+      "pushed": "2026-10-21",
       "url": "https://github.com/FirmansyahDzakwanArifien/FirmansyahDzakwanArifien"
     },
     {
-      "name": "tldr",
-      "description": "",
+      "name": "sistem-informasi-geografis",
+      "description": "Tugas mata kuliah Sistem Informasi Geografis, disusun per pertemuan",
       "language": "",
       "stars": 0,
-      "pushed": "2026-10-18",
-      "url": "https://github.com/FirmansyahDzakwanArifien/tldr"
+      "pushed": "2026-10-20",
+      "url": "https://github.com/FirmansyahDzakwanArifien/sistem-informasi-geografis"
+    },
+    {
+      "name": "firmansyahdzakwanarifien-assets",
+      "description": "File, Image, and media assets ",
+      "language": "",
+      "stars": 0,
+      "pushed": "2026-10-20",
+      "url": "https://github.com/FirmansyahDzakwanArifien/firmansyahdzakwanarifien-assets"
     }
   ]
 }
