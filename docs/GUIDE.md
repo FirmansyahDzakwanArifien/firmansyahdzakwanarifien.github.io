@@ -230,6 +230,9 @@ results:
       values: [87.5, 82.1]   # Llama 3 8B, Mistral 7B
 ```
 
+- `drawing`, `revision`: isi title block di atas diagram (seperti pojok lembar gambar teknik). Naikkan `revision` setiap topologi berubah.
+- `nodes[].kind`: baris kedua di kotak node, jenis mesin (misalnya `VM · Docker`).
+- **Skenario konsol `labctl`** ada di `_data/homelab_scenarios.yml` (skrip: `assets/js/custom/homelab-sim.js`). Setiap skenario punya `id`, `name`, `kind` (`benign`, `attack`, `fault`), `mitre`, `expect` (label kebenaran), `summary`, `steps`, dan `show`. Setiap `steps` berisi `t` (detik pada jam simulasi), `src` (kolom sumber), `text`, `level` (warna: `info`, `low`, `medium`, `high`, `critical`, `ok`, `warn`, `fail`), opsional `hop: [dari, ke]` (paket bergerak di diagram, harus berupa link yang ada), dan `layer` + `state` (`ok`, `archive`, `skip`, `warn`, `fail`) untuk trace L1–L5. `show` berisi JSON untuk perintah `show raw|normalized|llm|record`; `{model}` diganti nama model yang dipilih. Semua isinya ilustrasi: samarkan alamat dan host, dan tulis serangan sebagai deskripsi, bukan perintah yang bisa dijalankan.
 - `example`: satu alert yang ditelusuri melewati pipeline (tab **Pipeline**): alert Wazuh mentah, hasil normalisasi dan deduplikasi, JSON rekomendasi LLM, dan catatan hasil validasi yang disimpan ke PostgreSQL. Isinya ilustrasi; selalu samarkan alamat dengan placeholder seperti `<attacker-ip>` dan nama host generik seperti `target-01`. Kalau sudah ada data asli dari lab, ganti isi `code` (tetap disamarkan).
 - `log`: catatan progres TA, terbaru di atas (`date`, `text`). Tampil di tab **Progress** dan otomatis menjadi feed Atom di `/labs/ta-log.xml`, yang bisa dilanggan dosen pembimbing lewat RSS reader. Tulis fakta saja, satu atau dua kalimat:
 

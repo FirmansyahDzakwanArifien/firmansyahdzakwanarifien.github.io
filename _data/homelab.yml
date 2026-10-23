@@ -5,12 +5,16 @@
 # canvas: [width, height] of the diagram. Each node needs a unique id and x/y for its centre.
 # icon: one of the glyph names in assets/js/custom/homelab.js (server, eye, brain, laptop, ...).
 # principles use full Font Awesome classes (fas fa-...) so tools/fa-subset.py picks them up.
-# zone colours the node: edge | security | compute | monitor | client
+# kind: short second line in the node box (machine type). zone colours the node: edge | security | compute | monitor | client
 # links: from/to node ids, optional label, optional dashed: true (on-demand connections), optional both: true.
 # boundaries: dashed frames fitted around a list of node ids. Visitors can drag nodes on the page; that
 # layout stays in their browser only, so the positions here remain the published default.
 
 title: Thesis testbed
+# Title block above the diagram, like the corner of an engineering drawing. Bump the revision when the
+# topology changes.
+drawing: TA-TESTBED-01
+revision: C
 summary: >-
   The isolated lab behind my undergraduate thesis on automating security incident classification with
   n8n and a self-hosted LLM. Alerts from Wazuh and Suricata flow through a normalization and rule-based
@@ -115,6 +119,7 @@ boundaries:
 nodes:
   - id: laptop
     label: Researcher
+    kind: laptop · VPN client
     icon: laptop
     zone: client
     x: 90
@@ -126,6 +131,7 @@ nodes:
       - Attack traffic still passes the gateway, where it is mirrored to Suricata
   - id: gateway
     label: Gateway
+    kind: VM · OPNsense / pfSense
     icon: shield-halved
     zone: security
     x: 350
@@ -138,6 +144,7 @@ nodes:
       - Mirrors target-segment traffic to Suricata and serves NTP so every log uses the same clock
   - id: targets
     label: Target VMs
+    kind: VM · Linux, 1-2 hosts
     icon: server
     zone: compute
     x: 620
@@ -149,6 +156,7 @@ nodes:
       - Snapshot before each scenario and roll back after it, so every run starts from the same state
   - id: librenms
     label: LibreNMS
+    kind: VM · SNMP poller
     icon: chart-line
     zone: monitor
     x: 890
@@ -159,6 +167,7 @@ nodes:
       - Watches CPU, memory, and disk of the lab VMs, so a slow inference can be told apart from a busy host
   - id: detection
     label: Wazuh + Suricata
+    kind: VM · manager + IDS
     icon: eye
     zone: security
     x: 350
@@ -171,6 +180,7 @@ nodes:
       - Combined on one VM to save resources; can be split if CPU or storage becomes a bottleneck
   - id: n8n
     label: n8n + Postgres
+    kind: VM · Docker
     icon: diagram-project
     zone: compute
     x: 620
@@ -183,6 +193,7 @@ nodes:
       - PostgreSQL stores raw and normalized alerts, the LLM output, prompt version, model, latency, and the analyst verdict
   - id: ollama
     label: Ollama LLM
+    kind: VM · inference only
     icon: brain
     zone: compute
     x: 890
@@ -195,6 +206,7 @@ nodes:
       - Kept apart from n8n so heavy inference does not slow orchestration
   - id: analyst
     label: Analyst
+    kind: Slack / email
     icon: bell
     zone: client
     x: 620

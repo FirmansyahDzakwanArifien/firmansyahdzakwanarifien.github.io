@@ -74,6 +74,32 @@ Tata letak hasil geseran hanya tersimpan di browser Anda.
 
 {% include homelab.html parts="topology" %}
 
+### Simulasi skenario
+
+Konsol `labctl` di bawah diagram memutar setiap skenario pengujian melewati pipeline. Paket bergerak di diagram, trace L1–L5 menunjukkan lapisan mana yang meloloskan, mengarsipkan, atau menandai insiden, dan setiap baris log memakai format yang sama dengan keluaran Wazuh, Suricata, dan n8n.
+
+| Perintah | Fungsi |
+|---|---|
+| `scenarios` | Daftar skenario beserta teknik MITRE dan label kebenarannya |
+| `run <id> [--model mistral]` | Menjalankan satu skenario dengan model pilihan |
+| `show raw` / `normalized` / `llm` / `record` | Data pada tiap tahap dari skenario terakhir |
+| `verdict accept` / `verdict correct <severity>` | Tinjauan analis, yang disimpan sebagai data evaluasi |
+| `replay <id>` | Memutar ulang alert terekam yang sama ke setiap model, seperti pada tahap evaluasi |
+
+Setiap skenario menguji satu bagian penelitian:
+
+| Skenario | Teknik | Yang diuji |
+|---|---|---|
+| `baseline-benign` | — | Aktivitas admin normal; mengukur *false positive*, tidak boleh sampai ke LLM |
+| `recon-scan` | T1046 | Deduplikasi (14 alert jadi 1 insiden) dan pengarsipan insiden berkeparahan rendah |
+| `ssh-bruteforce` | T1110.001 | Jalur lengkap: normalisasi, triase, LLM, validasi, notifikasi |
+| `ssh-login-after-bruteforce` | T1078 | Korelasi: login sukses setelah brute force dinaikkan menjadi *critical* |
+| `web-sqli` | T1190 | Deduplikasi lintas sumber (Suricata dan Wazuh untuk satu serangan) |
+| `prompt-injection` | ATLAS AML.T0051 | Isi log yang mencoba mengarahkan LLM; *guardrail* dan batas bawah keparahan |
+| `fault-llm-schema` | — | Keluaran LLM tidak valid: coba ulang, lalu jatuh ke triase manual |
+
+Data di konsol bersifat ilustratif dan disamarkan. Serangan hanya dideskripsikan, tidak dieksekusi, dan tidak ada keluaran konsol yang merupakan hasil evaluasi.
+
 | Komponen | Segmen | Peran |
 |---|---|---|
 | Gateway (pfSense / OPNsense) | Antarsegmen | Titik masuk terkendali, endpoint VPN, firewall *default deny* antarsegmen, pencerminan lalu lintas ke Suricata, dan sumber waktu (NTP) |

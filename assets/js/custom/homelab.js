@@ -284,6 +284,47 @@
     setView();
     svg.classList.add('hl-editable');
     bar.hidden = false;
+
+    /* Used by homelab-sim.js: a packet that travels along a link at the current (possibly dragged) layout. */
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SVGNS = 'http://www.w3.org/2000/svg';
+    window.HLMap = {
+      busy: function (id, on) { if (els[id]) { els[id].classList.toggle('is-busy', !!on); } },
+      inspect: function (id) { if (els[id]) { show(els[id]); } },
+      hot: function (a, b) {
+        svg.querySelectorAll('.hl-link, .hl-link-label').forEach(function (x) {
+          var l = links[x.dataset.link];
+          x.classList.toggle('is-hot', !!l && ((l.from === a && l.to === b) || (l.from === b && l.to === a)));
+        });
+      },
+      clear: function () {
+        svg.querySelectorAll('.is-busy, .is-hot, .hl-packet').forEach(function (x) {
+          if (x.classList.contains('hl-packet')) { x.remove(); } else { x.classList.remove('is-busy', 'is-hot'); }
+        });
+      },
+      travel: function (a, b, ms, tone) {
+        var p = pos[a], q = pos[b];
+        window.HLMap.hot(a, b);
+        if (!p || !q || still) { return Promise.resolve(); }
+        var dot = document.createElementNS(SVGNS, 'circle');
+        dot.setAttribute('r', 5);
+        dot.setAttribute('class', 'hl-packet' + (tone ? ' is-' + tone : ''));
+        svg.insertBefore(dot, svg.querySelector('.hl-nodes'));
+        return new Promise(function (done) {
+          var t0 = null;
+          function frame(now) {
+            if (!dot.isConnected) { done(); return; }
+            if (t0 === null) { t0 = now; }
+            var k = Math.min(1, (now - t0) / ms);
+            var e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+            dot.setAttribute('cx', p.x + (q.x - p.x) * e);
+            dot.setAttribute('cy', p.y + (q.y - p.y) * e);
+            if (k < 1) { requestAnimationFrame(frame); } else { dot.remove(); done(); }
+          }
+          requestAnimationFrame(frame);
+        });
+      }
+    };
   }
 
   /* Tabs (Topology, Pipeline, Progress, Results). Without JavaScript every pane stays visible. */

@@ -1,166 +1,228 @@
 {%- comment -%}
-  Homelab section of the Labs page: the thesis testbed topology, alert flow, progress, and results.
-  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js (node panel, draggable topology editor, tabs).
-  Without JavaScript the diagram is a static SVG at the positions from the data file.
-  parts="topology" renders only the diagram, for reuse on another page (e.g. the thesis project page).
+  Homelab section of the Labs page: the thesis testbed topology, scenario console, pipeline, progress, and results.
+  Data: _data/homelab.yml and _data/homelab_scenarios.yml.
+  Scripts: assets/js/custom/homelab.js (node panel, draggable topology editor, tabs) and homelab-sim.js (labctl console).
+  Without JavaScript the diagram is a static SVG at the positions from the data file and the console is hidden.
+  parts="topology" renders only the diagram and the console, for reuse on another page (e.g. the thesis project page).
+  Look: an engineering drawing / SOC console rather than cards. Square corners, hairlines, monospace labels,
+  severity colours on the Wazuh scale.
 {%- endcomment -%}
 {%- assign lab = site.data.homelab -%}
+{%- assign sim = site.data.homelab_scenarios -%}
 {%- assign parts = include.parts | default: 'all' -%}
 {%- assign cw = lab.canvas[0] | default: 800 -%}
 {%- assign ch = lab.canvas[1] | default: 460 -%}
 
 <style>
+:root {
+  --hl-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --hl-ink: #1d2127; --hl-mute: #606770; --hl-rule: #cfd2d6; --hl-sheet: #fcfcfa; --hl-grid: rgba(29, 33, 39, 0.055); --hl-grid-major: rgba(29, 33, 39, 0.1);
+  --hl-sec: #b42318; --hl-cmp: #1d4ed8; --hl-mon: #0b7a64; --hl-cli: #6941c6; --hl-edge: #606770;
+  --hl-ok: #1a7f37; --hl-low: #606770; --hl-med: #9a6700; --hl-high: #c2410c; --hl-crit: #b42318; --hl-hot: #1d4ed8;
+  --hl-term: #0e1116; --hl-term-fg: #c9d1d9; --hl-term-mute: #7d8590; --hl-term-rule: #262c36;
+}
+html[data-mode='dark'] {
+  --hl-ink: #dadde2; --hl-mute: #969da7; --hl-rule: #3a3f47; --hl-sheet: #15171b; --hl-grid: rgba(218, 221, 226, 0.045); --hl-grid-major: rgba(218, 221, 226, 0.085);
+  --hl-sec: #f97066; --hl-cmp: #84a9ff; --hl-mon: #3ccfae; --hl-cli: #b39ef0; --hl-edge: #969da7;
+  --hl-ok: #4ac26b; --hl-low: #969da7; --hl-med: #e3b341; --hl-high: #fb923c; --hl-crit: #f97066; --hl-hot: #84a9ff;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) {
+    --hl-ink: #dadde2; --hl-mute: #969da7; --hl-rule: #3a3f47; --hl-sheet: #15171b; --hl-grid: rgba(218, 221, 226, 0.045); --hl-grid-major: rgba(218, 221, 226, 0.085);
+    --hl-sec: #f97066; --hl-cmp: #84a9ff; --hl-mon: #3ccfae; --hl-cli: #b39ef0; --hl-edge: #969da7;
+    --hl-ok: #4ac26b; --hl-low: #969da7; --hl-med: #e3b341; --hl-high: #fb923c; --hl-crit: #f97066; --hl-hot: #84a9ff;
+  }
+}
+
 .hl-intro { color: var(--text-muted-color); }
 .hl-intro b { color: var(--text-color); }
+.hl-cap { margin: 0 0 0.4rem; font-family: var(--hl-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hl-mute); }
 
-.hl-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
-.hl-head h2 { margin-right: auto; }
-.hl-status { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.7rem; font-size: 0.75rem; font-weight: 600; color: #b45309; border: 1px solid currentColor; border-radius: 999px; }
-.hl-status::before { content: ''; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
-html[data-mode='dark'] .hl-status { color: #f6ad55; }
-@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-status { color: #f6ad55; } }
+/* Title block, like the corner of a drawing sheet. */
+.hl-block { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr)); margin: 1rem 0 1.4rem; border: 1px solid var(--hl-ink); }
+.hl-block div { padding: 0.35rem 0.6rem 0.45rem; border-right: 1px solid var(--hl-rule); border-bottom: 1px solid var(--hl-rule); min-width: 0; }
+.hl-block dt { font-family: var(--hl-mono); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hl-mute); }
+.hl-block dd { margin: 0.1rem 0 0; font-family: var(--hl-mono); font-size: 0.86rem; color: var(--hl-ink); overflow-wrap: anywhere; }
+.hl-block .is-wide { grid-column: span 2; }
+.hl-block .is-now dd { color: var(--hl-med); }
 
-.hl-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 0.6rem; margin: 1rem 0 1.25rem; padding: 0; list-style: none; }
-.hl-facts li { padding: 0.65rem 0.85rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
-.hl-facts b { display: block; font-size: 1.45rem; line-height: 1.1; color: #2563eb; }
-.hl-facts span { font-size: 0.78rem; color: var(--text-muted-color); }
-html[data-mode='dark'] .hl-facts b { color: #7aa7ff; }
-@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-facts b { color: #7aa7ff; } }
-
-.hl-tabs { display: flex; gap: 0.25rem; margin: 0 0 1rem; box-shadow: inset 0 -1px 0 var(--main-border-color); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.hl-tabs { display: flex; gap: 0; margin: 0 0 1rem; border-bottom: 1px solid var(--hl-ink); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
 .hl-tabs[hidden] { display: none; }
-.hl-tabs button { flex: none; padding: 0.5rem 0.9rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted-color); background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer; }
-.hl-tabs button:hover { color: var(--text-color); }
-.hl-tabs button[aria-selected='true'] { color: #2563eb; border-bottom-color: #2563eb; }
-html[data-mode='dark'] .hl-tabs button[aria-selected='true'] { color: #7aa7ff; border-bottom-color: #7aa7ff; }
-@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-tabs button[aria-selected='true'] { color: #7aa7ff; border-bottom-color: #7aa7ff; } }
+.hl-tabs button { flex: none; margin-bottom: -1px; padding: 0.45rem 0.85rem; font-family: var(--hl-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--hl-mute); background: none; border: 1px solid transparent; border-bottom: 0; cursor: pointer; }
+.hl-tabs button:hover { color: var(--hl-ink); }
+.hl-tabs button[aria-selected='true'] { color: var(--hl-ink); background: var(--main-bg); border-color: var(--hl-ink); border-bottom: 1px solid var(--main-bg); }
 .hl-tabbed .hl-pane-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .hl-pane { margin-bottom: 2rem; }
 .hl-pane[hidden] { display: none; }
 
 .hl-wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1rem 0 0; }
 
-.hl-scroll { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
+/* Diagram sheet */
+.hl-scroll { overflow-x: auto; border: 1px solid var(--hl-ink); background: var(--hl-sheet); }
 .hl-map { display: block; width: 100%; min-width: 640px; height: auto; user-select: none; -webkit-user-select: none; }
+.hl-map text { font-family: inherit; }
 
-.hl-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0 0 0.5rem; }
+.hl-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0; margin: 0 0 -1px; }
 .hl-toolbar[hidden] { display: none; }
-.hl-toolbar button { min-width: 2rem; padding: 0.25rem 0.6rem; font-size: 0.78rem; font-weight: 600; color: var(--text-color); background: var(--card-bg); border: 1px solid var(--main-border-color); border-radius: 8px; cursor: pointer; }
-.hl-toolbar button:hover { border-color: var(--text-muted-color); }
-.hl-toolbar output { min-width: 3.2rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; text-align: center; color: var(--text-muted-color); }
-.hl-toolbar small { margin-left: auto; font-size: 0.72rem; color: var(--text-muted-color); }
+.hl-toolbar button, .hl-toolbar output { min-width: 2.1rem; margin-right: -1px; padding: 0.22rem 0.6rem; font-family: var(--hl-mono); font-size: 0.72rem; color: var(--hl-ink); background: var(--main-bg); border: 1px solid var(--hl-ink); }
+.hl-toolbar button { cursor: pointer; }
+.hl-toolbar button:hover { background: var(--hl-sheet); }
+.hl-toolbar output { min-width: 3.4rem; text-align: center; font-variant-numeric: tabular-nums; color: var(--hl-mute); }
+.hl-toolbar small { margin-left: auto; padding-left: 0.75rem; font-family: var(--hl-mono); font-size: 0.66rem; color: var(--hl-mute); }
 
-.hl-grid-dot { fill: var(--text-muted-color); opacity: 0.28; }
+.hl-grid-minor { fill: none; stroke: var(--hl-grid); stroke-width: 1; }
+.hl-grid-major { fill: none; stroke: var(--hl-grid-major); stroke-width: 1; }
 .hl-canvas { fill: transparent; }
 .hl-editable .hl-canvas { cursor: grab; }
 .hl-editable.is-panning, .hl-editable.is-panning .hl-canvas { cursor: grabbing; }
 
-.hl-boundary { fill: color-mix(in srgb, #2563eb 4%, transparent); stroke: var(--text-muted-color); stroke-width: 1.2; stroke-dasharray: 6 5; pointer-events: none; }
-.hl-boundary.is-segment { fill: color-mix(in srgb, #2563eb 5%, transparent); stroke-width: 1; stroke-dasharray: 2 4; }
-.hl-boundary-label { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; fill: var(--text-muted-color); pointer-events: none; }
-.hl-boundary-label.is-segment { font-size: 11px; font-weight: 500; letter-spacing: 0.02em; }
+.hl-boundary { fill: none; stroke: var(--hl-ink); stroke-width: 1; stroke-dasharray: 9 4 2 4; pointer-events: none; }
+.hl-boundary.is-segment { stroke: var(--hl-mute); stroke-dasharray: 3 3; }
+.hl-boundary-label { font-family: var(--hl-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--hl-ink); pointer-events: none; }
+.hl-boundary-label.is-segment { font-weight: 500; fill: var(--hl-mute); }
 
-.hl-link { stroke: var(--text-muted-color); stroke-width: 1.5; opacity: 0.75; pointer-events: none; }
-.hl-link.is-dashed { stroke-dasharray: 5 4; }
-.hl-link.is-hot { stroke: #2563eb; stroke-width: 2.2; opacity: 1; }
-.hl-arrow path { fill: var(--text-muted-color); }
-.hl-link-label { font-size: 12px; fill: var(--text-muted-color); paint-order: stroke; stroke: var(--card-bg); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
-.hl-link-label.is-hot { fill: var(--text-color); }
+.hl-link { stroke: var(--hl-ink); stroke-width: 1.1; opacity: 0.6; pointer-events: none; }
+.hl-link.is-dashed { stroke-dasharray: 6 4; }
+.hl-link.is-hot { stroke: var(--hl-hot); stroke-width: 1.8; opacity: 1; }
+.hl-arrow path { fill: var(--hl-ink); }
+.hl-link-label { font-family: var(--hl-mono); font-size: 10.5px; fill: var(--hl-mute); paint-order: stroke; stroke: var(--hl-sheet); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.hl-link-label.is-hot { fill: var(--hl-hot); }
 
 .hl-node { cursor: pointer; outline: none; }
 .hl-editable .hl-node { cursor: grab; touch-action: none; }
 .hl-editable .hl-node.is-dragging { cursor: grabbing; }
-.hl-node:focus-visible rect { stroke-dasharray: 4 3; }
-.hl-node rect { fill: var(--main-bg); stroke: var(--zone); stroke-width: 2; }
-.hl-node:hover rect, .hl-node:focus rect, .hl-node.is-active rect { fill: color-mix(in srgb, var(--zone) 14%, var(--main-bg)); stroke-width: 3; }
-.hl-node text { font-size: 13px; font-weight: 600; fill: var(--text-color); }
-.hl-node .hl-icon { font-family: 'Font Awesome 7 Free'; font-weight: 900; font-size: 15px; fill: var(--zone); }
+.hl-node .hl-box { fill: var(--main-bg); stroke: var(--hl-ink); stroke-width: 1.1; }
+.hl-node .hl-stripe { fill: var(--zone); }
+.hl-node:hover .hl-box, .hl-node.is-active .hl-box { stroke: var(--zone); stroke-width: 2; }
+.hl-node:focus-visible .hl-box { stroke: var(--zone); stroke-width: 2; stroke-dasharray: 4 2; }
+.hl-node .hl-name { font-size: 12.5px; font-weight: 600; fill: var(--hl-ink); }
+.hl-node .hl-kind { font-family: var(--hl-mono); font-size: 9.5px; fill: var(--hl-mute); }
+.hl-node .hl-icon { font-family: 'Font Awesome 7 Free'; font-weight: 900; font-size: 13px; fill: var(--zone); }
+.hl-node.is-busy .hl-box { stroke: var(--hl-hot); stroke-width: 2.4; }
+.hl-node.is-busy .hl-stripe { fill: var(--hl-hot); }
+.hl-packet { fill: var(--hl-hot); stroke: var(--hl-sheet); stroke-width: 2; pointer-events: none; }
+.hl-packet.is-high { fill: var(--hl-high); }
+.hl-packet.is-critical { fill: var(--hl-crit); }
 
-.hl-node[data-zone='edge']     { --zone: #718096; }
-.hl-node[data-zone='security'] { --zone: #d14343; }
-.hl-node[data-zone='compute']  { --zone: #2563eb; }
-.hl-node[data-zone='monitor']  { --zone: #0f8c78; }
-.hl-node[data-zone='client']   { --zone: #7c5cd6; }
+.hl-node[data-zone='edge']     { --zone: var(--hl-edge); }
+.hl-node[data-zone='security'] { --zone: var(--hl-sec); }
+.hl-node[data-zone='compute']  { --zone: var(--hl-cmp); }
+.hl-node[data-zone='monitor']  { --zone: var(--hl-mon); }
+.hl-node[data-zone='client']   { --zone: var(--hl-cli); }
 
-.hl-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0.6rem 0 0; padding: 0; list-style: none; font-size: 0.75rem; color: var(--text-muted-color); }
-.hl-legend span { display: inline-block; width: 0.7rem; height: 0.7rem; margin-right: 0.35rem; border-radius: 3px; vertical-align: -1px; }
+.hl-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; margin: 0.5rem 0 0; padding: 0; list-style: none; font-family: var(--hl-mono); font-size: 0.68rem; color: var(--hl-mute); }
+.hl-legend span { display: inline-block; width: 0.25rem; height: 0.75rem; margin-right: 0.4rem; vertical-align: -1px; }
+.hl-legend .z-sec { background: var(--hl-sec); } .hl-legend .z-cmp { background: var(--hl-cmp); }
+.hl-legend .z-mon { background: var(--hl-mon); } .hl-legend .z-cli { background: var(--hl-cli); }
 
-.hl-panel { min-height: 6.5rem; padding: 1rem 1.1rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
-.hl-panel h4 { margin: 0 0 0.25rem; font-size: 1.05rem; }
-.hl-panel .hl-role { margin: 0 0 0.6rem; font-size: 0.82rem; color: var(--text-muted-color); }
+/* Node inspector */
+.hl-panel { min-height: 6rem; padding: 0.75rem 0.9rem; border: 1px solid var(--hl-rule); border-left: 3px solid var(--hl-ink); background: var(--main-bg); }
+.hl-panel h4 { margin: 0 0 0.15rem; font-size: 1rem; }
+.hl-panel .hl-role { margin: 0 0 0.5rem; font-family: var(--hl-mono); font-size: 0.74rem; color: var(--hl-mute); }
 .hl-panel ul { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; }
-.hl-panel li { margin-bottom: 0.3rem; }
+.hl-panel li { margin-bottom: 0.25rem; }
 .hl-empty { color: var(--text-muted-color); font-size: 0.85rem; margin: 0; }
 
-.hl-layers { counter-reset: layer; margin: 0 0 1.5rem; padding: 0; list-style: none; }
-.hl-layer { position: relative; padding: 0 0 1rem 2.6rem; }
-.hl-layer::before {
-  counter-increment: layer;
-  content: counter(layer);
-  position: absolute; left: 0; top: 0;
-  display: grid; place-items: center;
-  width: 1.8rem; height: 1.8rem;
-  font-size: 0.85rem; font-weight: 700;
-  color: #fff; background: #2563eb; border-radius: 50%;
-}
-.hl-layer:not(:last-child)::after { content: ''; position: absolute; left: 0.88rem; top: 2rem; bottom: 0.2rem; width: 2px; background: var(--main-border-color); }
-.hl-layer h5 { margin: 0.15rem 0 0.15rem; font-size: 0.98rem; }
-.hl-layer .hl-tools { display: block; margin-bottom: 0.3rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted-color); }
+/* labctl console and pipeline trace */
+.hl-sim { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; margin-top: 0.9rem; }
+.hl-sim[hidden] { display: none; }
+@media (min-width: 900px) { .hl-sim { grid-template-columns: minmax(0, 1fr) 14.5rem; } }
+.hl-term { display: flex; flex-direction: column; min-width: 0; color: var(--hl-term-fg); background: var(--hl-term); border: 1px solid var(--hl-term-rule); font-family: var(--hl-mono); font-size: 0.74rem; line-height: 1.55; }
+.hl-term-bar { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.35rem 0.7rem; border-bottom: 1px solid var(--hl-term-rule); color: var(--hl-term-mute); font-size: 0.68rem; }
+.hl-term-bar b { color: var(--hl-term-fg); font-weight: 600; }
+.hl-term-bar span:last-child { margin-left: auto; }
+.hl-term-out { height: 15.5rem; padding: 0.5rem 0.7rem; overflow-y: auto; overflow-wrap: anywhere; white-space: pre-wrap; }
+.hl-term-out p { margin: 0; }
+.hl-term-out .t { color: var(--hl-term-mute); }
+.hl-term-out .s { display: inline-block; min-width: 7.2em; color: #8ab4f8; }
+.hl-term-out .cmd { color: #e6edf3; }
+.hl-term-out .cmd::before { content: '$ '; color: #4ac26b; }
+.hl-term-out .dim { color: var(--hl-term-mute); }
+.hl-term-out .ok { color: #4ac26b; } .hl-term-out .low { color: #9da7b3; } .hl-term-out .medium { color: #e3b341; }
+.hl-term-out .high { color: #fb923c; } .hl-term-out .critical { color: #ff7b72; font-weight: 700; }
+.hl-term-out .warn { color: #e3b341; } .hl-term-out .fail { color: #ff7b72; }
+.hl-term-out .json { display: block; margin: 0.15rem 0 0.35rem; padding-left: 0.8rem; border-left: 2px solid var(--hl-term-rule); color: #a5d6ff; }
+.hl-term-out table { border-collapse: collapse; margin: 0.15rem 0 0.35rem; }
+.hl-term-out td { padding: 0 1.2em 0 0; vertical-align: top; }
+.hl-term-form { display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.7rem; border-top: 1px solid var(--hl-term-rule); }
+.hl-term-form label { flex: none; color: #4ac26b; white-space: nowrap; }
+.hl-term-form input { flex: 1; min-width: 0; padding: 0.1rem 0; font: inherit; color: #e6edf3; background: transparent; border: 0; outline: none; caret-color: #4ac26b; }
+@media (max-width: 600px) { .hl-term-form input { font-size: 16px; } }
+.hl-term-quick { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0 0.7rem 0.55rem; }
+.hl-term-quick button { padding: 0.12rem 0.45rem; font: inherit; font-size: 0.68rem; color: var(--hl-term-fg); background: transparent; border: 1px solid var(--hl-term-rule); cursor: pointer; }
+.hl-term-quick button:hover { border-color: var(--hl-term-mute); }
+
+.hl-trace { margin: 0; padding: 0; list-style: none; border: 1px solid var(--hl-rule); font-size: 0.8rem; }
+.hl-trace .hl-trace-head { display: block; padding: 0.4rem 0.7rem; border-left: 3px solid var(--hl-ink); }
+.hl-trace-head .hl-cap { margin: 0; }
+.hl-trace-head p { margin: 0.15rem 0 0; font-family: var(--hl-mono); font-size: 0.72rem; color: var(--hl-ink); overflow-wrap: anywhere; }
+.hl-trace li { --st: var(--hl-rule); display: grid; grid-template-columns: 2rem 1fr; gap: 0.1rem 0.5rem; padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--hl-rule); border-left: 3px solid var(--st); }
+.hl-trace li:last-child { border-bottom: 0; }
+.hl-trace .n { font-family: var(--hl-mono); font-size: 0.72rem; font-weight: 700; color: var(--hl-mute); }
+.hl-trace b { font-size: 0.8rem; font-weight: 600; }
+.hl-trace em { grid-column: 2; font-family: var(--hl-mono); font-size: 0.66rem; font-style: normal; text-transform: uppercase; letter-spacing: 0.05em; color: var(--st); }
+.hl-trace li[data-state='idle'] em { color: var(--hl-mute); }
+.hl-trace li[data-state='ok'] { --st: var(--hl-ok); }
+.hl-trace li[data-state='archive'], .hl-trace li[data-state='skip'] { --st: var(--hl-low); }
+.hl-trace li[data-state='warn'] { --st: var(--hl-med); }
+.hl-trace li[data-state='fail'] { --st: var(--hl-crit); }
+.hl-trace li[data-state='run'] { --st: var(--hl-hot); }
+.hl-sim-note { grid-column: 1 / -1; margin: 0; font-size: 0.75rem; color: var(--text-muted-color); }
+
+/* Pipeline */
+.hl-layers { margin: 0 0 1.5rem; padding: 0; list-style: none; border-top: 1px solid var(--hl-ink); }
+.hl-layer { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 0.75rem; padding: 0.7rem 0; border-bottom: 1px solid var(--hl-rule); }
+.hl-layer .n { font-family: var(--hl-mono); font-size: 0.85rem; font-weight: 700; color: var(--hl-ink); }
+.hl-layer h5 { margin: 0 0 0.1rem; font-size: 0.96rem; }
+.hl-layer .hl-tools { display: block; margin-bottom: 0.3rem; font-family: var(--hl-mono); font-size: 0.7rem; color: var(--hl-mute); }
 .hl-layer p { margin: 0; font-size: 0.88rem; line-height: 1.65; }
 
-.hl-sub { margin: 0 0 0.75rem; font-size: 1rem; }
+.hl-sub { margin: 0 0 0.6rem; font-size: 1rem; }
 
-.hl-principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 0.65rem; margin: 0; padding: 0; list-style: none; }
-.hl-principles li { padding: 0.85rem 0.95rem; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
-.hl-principles i { color: #2563eb; margin-right: 0.4rem; }
+.hl-principles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hl-ink); }
+.hl-principles li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--hl-rule); }
+.hl-principles i { margin-top: 0.2rem; font-size: 0.85rem; color: var(--hl-mute); }
 .hl-principles b { font-size: 0.9rem; }
-.hl-principles p { margin: 0.35rem 0 0; font-size: 0.82rem; line-height: 1.55; color: var(--text-muted-color); }
+.hl-principles p { grid-column: 2; margin: 0.1rem 0 0; font-size: 0.84rem; line-height: 1.55; color: var(--text-muted-color); }
 
-.hl-progress { margin: 0; padding: 0; list-style: none; }
-.hl-step { --step: var(--text-muted-color); position: relative; padding: 0 0 1.1rem 2rem; }
-.hl-step::before { content: ''; position: absolute; left: 0.2rem; top: 0.3rem; width: 0.9rem; height: 0.9rem; border: 2px solid var(--step); border-radius: 50%; background: var(--main-bg); box-sizing: border-box; }
-.hl-step:not(:last-child)::after { content: ''; position: absolute; left: 0.6rem; top: 1.35rem; bottom: 0.1rem; width: 2px; background: var(--main-border-color); }
-.hl-step.is-done { --step: #2f855a; }
-.hl-step.is-done::before { background: var(--step); }
-.hl-step.is-in-progress { --step: #b45309; }
-.hl-step.is-in-progress::before { box-shadow: 0 0 0 4px color-mix(in srgb, var(--step) 22%, transparent); }
-html[data-mode='dark'] .hl-step.is-done { --step: #48bb78; }
-html[data-mode='dark'] .hl-step.is-in-progress { --step: #f6ad55; }
-@media (prefers-color-scheme: dark) {
-  html:not([data-mode]) .hl-step.is-done { --step: #48bb78; }
-  html:not([data-mode]) .hl-step.is-in-progress { --step: #f6ad55; }
-}
-.hl-step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem; }
-.hl-step-head b { font-size: 0.95rem; }
-.hl-step-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--step); }
-.hl-step p { margin: 0.15rem 0 0; font-size: 0.85rem; line-height: 1.55; color: var(--text-muted-color); }
+.hl-example-note { margin: -0.3rem 0 0.75rem; font-size: 0.8rem; color: var(--text-muted-color); }
+.hl-example { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.6rem; margin: 0 0 1.75rem; padding: 0; list-style: none; counter-reset: step; }
+.hl-example li { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--hl-term-rule); }
+.hl-example-head { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.35rem 0.7rem; font-family: var(--hl-mono); color: var(--hl-term-fg); background: #161b22; border-bottom: 1px solid var(--hl-term-rule); }
+.hl-example-head::before { counter-increment: step; content: counter(step, decimal-leading-zero); font-size: 0.72rem; color: var(--hl-term-mute); }
+.hl-example-head b { font-size: 0.78rem; }
+.hl-example-head span { margin-left: auto; font-size: 0.66rem; color: var(--hl-term-mute); white-space: nowrap; }
+.hl-example pre { flex: 1; margin: 0; padding: 0.7rem 0.8rem; max-height: 18rem; overflow: auto; font-size: 0.72rem; line-height: 1.5; background: var(--hl-term); color: #a5d6ff; border-radius: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 
-.hl-example-note { margin: -0.4rem 0 0.75rem; font-size: 0.8rem; color: var(--text-muted-color); }
-.hl-example { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; margin: 0 0 1.75rem; padding: 0; list-style: none; counter-reset: step; }
-.hl-example li { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); overflow: hidden; }
-.hl-example-head { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--main-border-color); }
-.hl-example-head::before { counter-increment: step; content: counter(step); flex: none; display: grid; place-items: center; width: 1.35rem; height: 1.35rem; font-size: 0.72rem; font-weight: 700; color: #fff; background: #2563eb; border-radius: 50%; align-self: center; }
-.hl-example-head b { font-size: 0.85rem; }
-.hl-example-head span { margin-left: auto; font-size: 0.7rem; color: var(--text-muted-color); white-space: nowrap; }
-.hl-example pre { flex: 1; margin: 0; padding: 0.75rem 0.85rem; max-height: 18rem; overflow: auto; font-size: 0.74rem; line-height: 1.5; background: #0f172a; color: #e2e8f0; border-radius: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+/* Progress */
+.hl-progress { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hl-ink); }
+.hl-step { --step: var(--hl-mute); display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--hl-rule); }
+.hl-step.is-done { --step: var(--hl-ok); }
+.hl-step.is-in-progress { --step: var(--hl-med); }
+.hl-step-tag { font-family: var(--hl-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--step); }
+.hl-step-tag::before { content: '\25CB  '; }
+.hl-step.is-done .hl-step-tag::before { content: '\25CF  '; }
+.hl-step.is-in-progress .hl-step-tag::before { content: '\25D0  '; }
+.hl-step b { font-size: 0.92rem; }
+.hl-step p { margin: 0.1rem 0 0; font-size: 0.84rem; line-height: 1.55; color: var(--text-muted-color); }
 
-.hl-log { margin: 0.25rem 0 0; padding: 0; list-style: none; }
-.hl-log li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.75rem; padding: 0.5rem 0; border-top: 1px solid var(--main-border-color); font-size: 0.85rem; }
-.hl-log time { font-variant-numeric: tabular-nums; color: var(--text-muted-color); }
-.hl-feed { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.6rem; font-size: 0.8rem; }
+.hl-progress + .hl-sub { margin-top: 1.5rem; }
+.hl-log { margin: 0.25rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--hl-ink); }
+.hl-log li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.75rem; padding: 0.45rem 0; border-bottom: 1px solid var(--hl-rule); font-size: 0.85rem; }
+.hl-log time { font-family: var(--hl-mono); font-size: 0.76rem; color: var(--hl-mute); }
+.hl-feed { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.6rem; font-family: var(--hl-mono); font-size: 0.74rem; }
 
+/* Results */
 .hl-results-note { margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted-color); }
-.hl-table { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; }
+.hl-table { overflow-x: auto; border: 1px solid var(--hl-ink); }
 .hl-table .table-wrapper { margin: 0 !important; overflow: visible; }
 .hl-table table { width: 100%; margin: 0 !important; border-collapse: collapse; font-size: 0.85rem; }
-.hl-table th, .hl-table td { padding: 0.6rem 0.85rem; text-align: left; border-bottom: 1px solid var(--main-border-color); vertical-align: top; }
+.hl-table th, .hl-table td { padding: 0.5rem 0.8rem; text-align: left; border-bottom: 1px solid var(--hl-rule); vertical-align: top; }
 .hl-table tr:last-child > * { border-bottom: 0; }
-.hl-table thead th { font-size: 0.75rem; letter-spacing: 0.03em; color: var(--text-muted-color); background: var(--card-bg); }
-.hl-table td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.hl-table .is-best { font-weight: 700; color: #2f855a; }
-html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
-@media (prefers-color-scheme: dark) { html:not([data-mode]) .hl-table .is-best { color: #48bb78; } }
-.hl-table .is-pending { color: var(--text-muted-color); font-style: italic; }
+.hl-table thead th { font-family: var(--hl-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--hl-mute); background: var(--hl-sheet); border-bottom: 1px solid var(--hl-ink); }
+.hl-table td.num { white-space: nowrap; font-family: var(--hl-mono); font-size: 0.8rem; }
+.hl-table .is-best { font-weight: 700; color: var(--hl-ok); }
+.hl-table .is-pending { color: var(--hl-mute); }
 .hl-table small { display: block; margin-top: 0.15rem; font-size: 0.75rem; font-weight: 400; color: var(--text-muted-color); }
 </style>
 
@@ -168,22 +230,21 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 {%- assign current = lab.progress | where: 'status', 'in-progress' | first -%}
 {%- if parts == 'all' %}
 <section class="hl-section" aria-labelledby="homelab">
-<div class="hl-head">
-  <h2 id="homelab">Homelab: {{ lab.title }}</h2>
-  {%- if current %}<span class="hl-status">Now: {{ current.stage }}</span>{% endif %}
-</div>
+<h2 id="homelab">Homelab: {{ lab.title }}</h2>
 <p class="hl-intro">{{ lab.summary }}</p>
 
-{%- if lab.facts.size > 0 %}
-<ul class="hl-facts">
+<dl class="hl-block" aria-label="Testbed summary">
+  {%- if lab.drawing %}<div><dt>Drawing</dt><dd>{{ lab.drawing }}</dd></div>{% endif %}
+  {%- if lab.revision %}<div><dt>Rev</dt><dd>{{ lab.revision }}</dd></div>{% endif %}
   {%- for f in lab.facts %}
-  <li><b>{{ f.value }}</b><span>{{ f.label }}</span></li>
+  <div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
   {%- endfor %}
-</ul>
-{%- endif %}
+  {%- if current %}<div class="is-wide is-now"><dt>Stage</dt><dd>{{ current.stage }}</dd></div>{% endif %}
+  {%- if lab.log.size > 0 %}<div><dt>Updated</dt><dd>{{ lab.log[0].date | date: '%Y-%m-%d' }}</dd></div>{% endif %}
+</dl>
 
 <div class="hl-tabs" role="tablist" aria-label="Homelab views" hidden>
-  <button type="button" role="tab" id="hl-tab-topology" aria-controls="hl-pane-topology" aria-selected="true">Topology</button>
+  <button type="button" role="tab" id="hl-tab-topology" aria-controls="hl-pane-topology" aria-selected="true">Topology &amp; scenarios</button>
   {%- if lab.layers.size > 0 %}<button type="button" role="tab" id="hl-tab-pipeline" aria-controls="hl-pane-pipeline" aria-selected="false" tabindex="-1">Pipeline</button>{% endif %}
   {%- if lab.progress.size > 0 %}<button type="button" role="tab" id="hl-tab-progress" aria-controls="hl-pane-progress" aria-selected="false" tabindex="-1">Progress</button>{% endif %}
   {%- if lab.results %}<button type="button" role="tab" id="hl-tab-results" aria-controls="hl-pane-results" aria-selected="false" tabindex="-1">Results</button>{% endif %}
@@ -191,8 +252,8 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 {%- endif %}
 
 <div class="hl-pane" id="hl-pane-topology"{% if parts == 'all' %} role="tabpanel" aria-labelledby="hl-tab-topology"{% endif %}>
-  {%- if parts == 'all' %}<h3 class="hl-pane-title">Topology</h3>{% endif %}
-  <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard. Arrows show which way data flows.</p>
+  {%- if parts == 'all' %}<h3 class="hl-pane-title">Topology and scenarios</h3>{% endif %}
+  <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard. Arrows show which way data flows. Run a scenario in the console below to watch one attack type travel through the pipeline.</p>
   <div class="hl-wrap">
     <div>
       <div class="hl-toolbar" role="toolbar" aria-label="Diagram controls" hidden>
@@ -201,13 +262,13 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
         <button type="button" data-hl="zoom-in" aria-label="Zoom in">+</button>
         <button type="button" data-hl="fit">Fit</button>
         <button type="button" data-hl="reset">Reset layout</button>
-        <small id="hl-map-hint">Drag nodes to rearrange · drag the canvas to pan · <kbd>Ctrl</kbd> + scroll to zoom · arrow keys move the focused node</small>
+        <small id="hl-map-hint">drag nodes · drag canvas to pan · ctrl+scroll to zoom · arrow keys move the focused node</small>
       </div>
       <div class="hl-scroll">
         <svg class="hl-map" viewBox="0 0 {{ cw }} {{ ch }}" role="group" aria-label="{{ lab.title }} topology" data-canvas="{{ cw }} {{ ch }}">
           <defs>
-            <pattern id="hl-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle class="hl-grid-dot" cx="1" cy="1" r="1"></circle></pattern>
-            <marker id="hl-arrow" class="hl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"></path></marker>
+            <pattern id="hl-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path class="hl-grid-minor" d="M10 0V50M20 0V50M30 0V50M40 0V50M0 10H50M0 20H50M0 30H50M0 40H50"></path><path class="hl-grid-major" d="M50 0H0V50"></path></pattern>
+            <marker id="hl-arrow" class="hl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z"></path></marker>
           </defs>
           <rect class="hl-canvas" x="-2000" y="-2000" width="{{ cw | plus: 4000 }}" height="{{ ch | plus: 4000 }}" fill="url(#hl-grid)"></rect>
           {%- for bd in lab.boundaries %}
@@ -224,8 +285,8 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
             {%- assign pad = bd.pad | default: 16 -%}
             {%- assign bottom = bd.bottom | default: pad -%}
             {%- assign seg = false -%}{%- if bd.style == 'segment' -%}{%- assign seg = true -%}{%- endif %}
-          <rect class="hl-boundary{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad }}" y="{{ y1 | minus: pad }}" width="{{ x2 | minus: x1 | plus: pad | plus: pad }}" height="{{ y2 | minus: y1 | plus: pad | plus: bottom }}" rx="{% if seg %}10{% else %}14{% endif %}"></rect>
-          <text class="hl-boundary-label{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad | plus: 14 }}" y="{{ y2 | plus: bottom | minus: 12 }}">{{ bd.label }}</text>
+          <rect class="hl-boundary{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad }}" y="{{ y1 | minus: pad }}" width="{{ x2 | minus: x1 | plus: pad | plus: pad }}" height="{{ y2 | minus: y1 | plus: pad | plus: bottom }}"></rect>
+          <text class="hl-boundary-label{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad | plus: 12 }}" y="{{ y2 | plus: bottom | minus: 12 }}">{{ bd.label }}</text>
           {%- endfor %}
           {%- for l in lab.links %}
             {%- assign a = lab.nodes | where: 'id', l.from | first -%}
@@ -237,9 +298,11 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
           <g class="hl-nodes">
           {%- for n in lab.nodes %}
           <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 82 }} {{ n.y | minus: 22 }})">
-            <rect width="164" height="44" rx="10"></rect>
-            <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
-            <text x="38" y="27">{{ n.label }}</text>
+            <rect class="hl-box" width="164" height="44"></rect>
+            <rect class="hl-stripe" width="4" height="44"></rect>
+            <text class="hl-icon" x="13" y="27" data-icon="{{ n.icon | default: 'server' }}"></text>
+            <text class="hl-name" x="34" y="{% if n.kind %}19{% else %}27{% endif %}">{{ n.label }}</text>
+            {%- if n.kind %}<text class="hl-kind" x="34" y="34">{{ n.kind }}</text>{% endif %}
           </g>
           {%- endfor %}
           </g>
@@ -260,16 +323,42 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
         </svg>
       </div>
       <ul class="hl-legend" aria-label="Legend">
-        <li><span style="background:#d14343"></span>Security</li>
-        <li><span style="background:#2563eb"></span>Compute / pipeline</li>
-        <li><span style="background:#0f8c78"></span>Monitoring</li>
-        <li><span style="background:#7c5cd6"></span>Outside the lab</li>
-        <li>&rarr; data flow, &harr; request and reply</li>
-        <li>- - - on-demand connection</li>
+        <li><span class="z-sec"></span>security</li>
+        <li><span class="z-cmp"></span>compute / pipeline</li>
+        <li><span class="z-mon"></span>monitoring</li>
+        <li><span class="z-cli"></span>outside the lab</li>
+        <li>&rarr; data flow &nbsp;&harr; request + reply</li>
+        <li>- - on demand</li>
         <li>&middot;&middot;&middot; network segment</li>
       </ul>
     </div>
+  </div>
 
+  {%- if sim.scenarios.size > 0 %}
+  <div class="hl-sim" id="hl-sim" hidden>
+    <div class="hl-term">
+      <div class="hl-term-bar"><b>labctl</b><span>researcher laptop · VPN</span><span data-sim="clock">--:--:--Z</span></div>
+      <div class="hl-term-out" role="log" aria-live="polite" aria-label="Console output" tabindex="0"></div>
+      <form class="hl-term-form" autocomplete="off">
+        <label for="hl-term-in">researcher@lab:~$</label>
+        <input id="hl-term-in" type="text" spellcheck="false" autocapitalize="off" aria-describedby="hl-sim-note" placeholder="help">
+      </form>
+      <div class="hl-term-quick" aria-label="Run a scenario">
+        {%- for s in sim.scenarios %}
+        <button type="button" data-cmd="run {{ s.id }}">{{ s.id }}</button>
+        {%- endfor %}
+      </div>
+    </div>
+    <ol class="hl-trace" aria-label="Pipeline trace">
+      <li class="hl-trace-head"><p class="hl-cap">Pipeline trace</p><p data-sim="title">no scenario running</p></li>
+      {%- for layer in lab.layers %}
+      <li data-layer="{{ forloop.index }}" data-state="idle"><span class="n">L{{ forloop.index }}</span><b>{{ layer.name }}</b><em>idle</em></li>
+      {%- endfor %}
+    </ol>
+    <p class="hl-sim-note" id="hl-sim-note">Simulation of the pipeline design with masked, illustrative data. Attacks are described rather than executed, and no output here is an evaluation result; those go on the Results tab once measured.</p>
+  </div>
+  {%- endif %}
+  <div class="hl-wrap">
     <aside class="hl-panel" id="hl-panel" aria-live="polite">
       <p class="hl-empty">Select a node to see its role and details.</p>
     </aside>
@@ -284,9 +373,12 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
   <ol class="hl-layers">
     {%- for layer in lab.layers %}
     <li class="hl-layer">
-      <h5>{{ layer.name }}</h5>
-      <span class="hl-tools">{{ layer.tools }}</span>
-      <p>{{ layer.text }}</p>
+      <span class="n">L{{ forloop.index }}</span>
+      <div>
+        <h5>{{ layer.name }}</h5>
+        <span class="hl-tools">{{ layer.tools }}</span>
+        <p>{{ layer.text }}</p>
+      </div>
     </li>
     {%- endfor %}
   </ol>
@@ -320,11 +412,11 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
     {%- for s in lab.progress %}
     {%- assign st = s.status | default: 'planned' %}
     <li class="hl-step is-{{ st }}">
-      <div class="hl-step-head">
+      <span class="hl-step-tag">{% if st == 'done' %}Done{% elsif st == 'in-progress' %}Now{% else %}Planned{% endif %}{% if s.when %} · {{ s.when }}{% endif %}</span>
+      <div>
         <b>{{ s.stage }}</b>
-        <span class="hl-step-tag">{% if st == 'done' %}Done{% elsif st == 'in-progress' %}In progress{% else %}Planned{% endif %}{% if s.when %} · {{ s.when }}{% endif %}</span>
+        {%- if s.text %}<p>{{ s.text }}</p>{% endif %}
       </div>
-      {%- if s.text %}<p>{{ s.text }}</p>{% endif %}
     </li>
     {%- endfor %}
   </ol>
@@ -332,10 +424,10 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
   <h4 class="hl-sub">Log</h4>
   <ul class="hl-log">
     {%- for e in lab.log limit: 8 %}
-    <li><time datetime="{{ e.date | date: '%Y-%m-%d' }}">{{ e.date | date: '%d %b %Y' }}</time><span>{{ e.text }}</span></li>
+    <li><time datetime="{{ e.date | date: '%Y-%m-%d' }}">{{ e.date | date: '%Y-%m-%d' }}</time><span>{{ e.text }}</span></li>
     {%- endfor %}
   </ul>
-  <a class="hl-feed" href="{{ '/labs/ta-log.xml' | relative_url }}"><i class="fas fa-rss" aria-hidden="true"></i>Follow the thesis log (Atom feed)</a>
+  <a class="hl-feed" href="{{ '/labs/ta-log.xml' | relative_url }}"><i class="fas fa-rss" aria-hidden="true"></i>ta-log.xml (Atom feed)</a>
   {%- endif %}
 </div>
 {%- endif %}
@@ -386,4 +478,8 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 
 <script type="application/json" id="hl-data">{"nodes": {{ lab.nodes | jsonify }}, "links": {{ lab.links | jsonify }}, "boundaries": {{ lab.boundaries | jsonify }}}</script>
 <script defer src="{{ '/assets/js/custom/homelab.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+{%- if sim.scenarios.size > 0 %}
+<script type="application/json" id="hl-sim-data">{"models": {{ sim.models | jsonify }}, "scenarios": {{ sim.scenarios | jsonify }}, "layers": {{ lab.layers | map: 'name' | jsonify }}}</script>
+<script defer src="{{ '/assets/js/custom/homelab-sim.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+{%- endif %}
 {%- endif %}
