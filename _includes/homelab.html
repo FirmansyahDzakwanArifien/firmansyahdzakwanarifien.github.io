@@ -1,6 +1,7 @@
 {%- comment -%}
   Homelab section of the Labs page: the thesis testbed topology, alert flow, progress, and results.
-  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js (node panel and tabs).
+  Data: _data/homelab.yml. Script: assets/js/custom/homelab.js (node panel, draggable topology editor, tabs).
+  Without JavaScript the diagram is a static SVG at the positions from the data file.
   parts="topology" renders only the diagram, for reuse on another page (e.g. the thesis project page).
 {%- endcomment -%}
 {%- assign lab = site.data.homelab -%}
@@ -40,16 +41,36 @@ html[data-mode='dark'] .hl-tabs button[aria-selected='true'] { color: #7aa7ff; b
 .hl-wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 1rem 0 0; }
 
 .hl-scroll { overflow-x: auto; border: 1px solid var(--main-border-color); border-radius: 12px; background: var(--card-bg); }
-.hl-map { display: block; width: 100%; min-width: 640px; height: auto; }
+.hl-map { display: block; width: 100%; min-width: 640px; height: auto; user-select: none; -webkit-user-select: none; }
 
-.hl-boundary { fill: color-mix(in srgb, #2563eb 4%, transparent); stroke: var(--text-muted-color); stroke-width: 1.2; stroke-dasharray: 6 5; }
-.hl-boundary-label { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; fill: var(--text-muted-color); }
+.hl-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0 0 0.5rem; }
+.hl-toolbar[hidden] { display: none; }
+.hl-toolbar button { min-width: 2rem; padding: 0.25rem 0.6rem; font-size: 0.78rem; font-weight: 600; color: var(--text-color); background: var(--card-bg); border: 1px solid var(--main-border-color); border-radius: 8px; cursor: pointer; }
+.hl-toolbar button:hover { border-color: var(--text-muted-color); }
+.hl-toolbar output { min-width: 3.2rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; text-align: center; color: var(--text-muted-color); }
+.hl-toolbar small { margin-left: auto; font-size: 0.72rem; color: var(--text-muted-color); }
 
-.hl-link { stroke: var(--text-muted-color); stroke-width: 1.5; opacity: 0.7; }
+.hl-grid-dot { fill: var(--text-muted-color); opacity: 0.28; }
+.hl-canvas { fill: transparent; }
+.hl-editable .hl-canvas { cursor: grab; }
+.hl-editable.is-panning, .hl-editable.is-panning .hl-canvas { cursor: grabbing; }
+
+.hl-boundary { fill: color-mix(in srgb, #2563eb 4%, transparent); stroke: var(--text-muted-color); stroke-width: 1.2; stroke-dasharray: 6 5; pointer-events: none; }
+.hl-boundary.is-segment { fill: color-mix(in srgb, #2563eb 5%, transparent); stroke-width: 1; stroke-dasharray: 2 4; }
+.hl-boundary-label { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; fill: var(--text-muted-color); pointer-events: none; }
+.hl-boundary-label.is-segment { font-size: 11px; font-weight: 500; letter-spacing: 0.02em; }
+
+.hl-link { stroke: var(--text-muted-color); stroke-width: 1.5; opacity: 0.75; pointer-events: none; }
 .hl-link.is-dashed { stroke-dasharray: 5 4; }
-.hl-link-label { font-size: 12px; fill: var(--text-muted-color); paint-order: stroke; stroke: var(--card-bg); stroke-width: 4px; stroke-linejoin: round; }
+.hl-link.is-hot { stroke: #2563eb; stroke-width: 2.2; opacity: 1; }
+.hl-arrow path { fill: var(--text-muted-color); }
+.hl-link-label { font-size: 12px; fill: var(--text-muted-color); paint-order: stroke; stroke: var(--card-bg); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.hl-link-label.is-hot { fill: var(--text-color); }
 
 .hl-node { cursor: pointer; outline: none; }
+.hl-editable .hl-node { cursor: grab; touch-action: none; }
+.hl-editable .hl-node.is-dragging { cursor: grabbing; }
+.hl-node:focus-visible rect { stroke-dasharray: 4 3; }
 .hl-node rect { fill: var(--main-bg); stroke: var(--zone); stroke-width: 2; }
 .hl-node:hover rect, .hl-node:focus rect, .hl-node.is-active rect { fill: color-mix(in srgb, var(--zone) 14%, var(--main-bg)); stroke-width: 3; }
 .hl-node text { font-size: 13px; font-weight: 600; fill: var(--text-color); }
@@ -171,22 +192,57 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 
 <div class="hl-pane" id="hl-pane-topology"{% if parts == 'all' %} role="tabpanel" aria-labelledby="hl-tab-topology"{% endif %}>
   {%- if parts == 'all' %}<h3 class="hl-pane-title">Topology</h3>{% endif %}
-  <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard.</p>
+  <p class="hl-intro">Hover or tap a node to see what it does; <kbd>Tab</kbd> moves between nodes with the keyboard. Arrows show which way data flows.</p>
   <div class="hl-wrap">
     <div>
+      <div class="hl-toolbar" role="toolbar" aria-label="Diagram controls" hidden>
+        <button type="button" data-hl="zoom-out" aria-label="Zoom out">&minus;</button>
+        <output aria-live="polite">100%</output>
+        <button type="button" data-hl="zoom-in" aria-label="Zoom in">+</button>
+        <button type="button" data-hl="fit">Fit</button>
+        <button type="button" data-hl="reset">Reset layout</button>
+        <small id="hl-map-hint">Drag nodes to rearrange · drag the canvas to pan · <kbd>Ctrl</kbd> + scroll to zoom · arrow keys move the focused node</small>
+      </div>
       <div class="hl-scroll">
-        <svg class="hl-map" viewBox="0 0 {{ cw }} {{ ch }}" role="group" aria-label="{{ lab.title }} topology">
-          {%- if lab.boundary %}
-          <rect class="hl-boundary" x="{{ lab.boundary.x }}" y="{{ lab.boundary.y }}" width="{{ lab.boundary.width }}" height="{{ lab.boundary.height }}" rx="14"></rect>
-          <text class="hl-boundary-label" x="{{ lab.boundary.x | plus: 14 }}" y="{{ lab.boundary.y | plus: lab.boundary.height | minus: 12 }}">{{ lab.boundary.label }}</text>
-          {%- endif %}
+        <svg class="hl-map" viewBox="0 0 {{ cw }} {{ ch }}" role="group" aria-label="{{ lab.title }} topology" data-canvas="{{ cw }} {{ ch }}">
+          <defs>
+            <pattern id="hl-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle class="hl-grid-dot" cx="1" cy="1" r="1"></circle></pattern>
+            <marker id="hl-arrow" class="hl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z"></path></marker>
+          </defs>
+          <rect class="hl-canvas" x="-2000" y="-2000" width="{{ cw | plus: 4000 }}" height="{{ ch | plus: 4000 }}" fill="url(#hl-grid)"></rect>
+          {%- for bd in lab.boundaries %}
+            {%- assign x1 = 100000 -%}{%- assign y1 = 100000 -%}{%- assign x2 = -100000 -%}{%- assign y2 = -100000 -%}
+            {%- for id in bd.nodes -%}
+              {%- assign n = lab.nodes | where: 'id', id | first -%}
+              {%- if n -%}
+                {%- assign v = n.x | minus: 82 -%}{%- assign x1 = x1 | at_most: v -%}
+                {%- assign v = n.x | plus: 82 -%}{%- assign x2 = x2 | at_least: v -%}
+                {%- assign v = n.y | minus: 22 -%}{%- assign y1 = y1 | at_most: v -%}
+                {%- assign v = n.y | plus: 22 -%}{%- assign y2 = y2 | at_least: v -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- assign pad = bd.pad | default: 16 -%}
+            {%- assign bottom = bd.bottom | default: pad -%}
+            {%- assign seg = false -%}{%- if bd.style == 'segment' -%}{%- assign seg = true -%}{%- endif %}
+          <rect class="hl-boundary{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad }}" y="{{ y1 | minus: pad }}" width="{{ x2 | minus: x1 | plus: pad | plus: pad }}" height="{{ y2 | minus: y1 | plus: pad | plus: bottom }}" rx="{% if seg %}10{% else %}14{% endif %}"></rect>
+          <text class="hl-boundary-label{% if seg %} is-segment{% endif %}" data-boundary="{{ forloop.index0 }}" x="{{ x1 | minus: pad | plus: 14 }}" y="{{ y2 | plus: bottom | minus: 12 }}">{{ bd.label }}</text>
+          {%- endfor %}
           {%- for l in lab.links %}
             {%- assign a = lab.nodes | where: 'id', l.from | first -%}
             {%- assign b = lab.nodes | where: 'id', l.to | first -%}
             {%- if a and b %}
-          <line class="hl-link{% if l.dashed %} is-dashed{% endif %}" x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}"></line>
+          <line class="hl-link{% if l.dashed %} is-dashed{% endif %}" data-link="{{ forloop.index0 }}" x1="{{ a.x }}" y1="{{ a.y }}" x2="{{ b.x }}" y2="{{ b.y }}" marker-end="url(#hl-arrow)"{% if l.both %} marker-start="url(#hl-arrow)"{% endif %}></line>
             {%- endif %}
           {%- endfor %}
+          <g class="hl-nodes">
+          {%- for n in lab.nodes %}
+          <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 82 }} {{ n.y | minus: 22 }})">
+            <rect width="164" height="44" rx="10"></rect>
+            <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
+            <text x="38" y="27">{{ n.label }}</text>
+          </g>
+          {%- endfor %}
+          </g>
           {%- for l in lab.links %}
             {%- assign a = lab.nodes | where: 'id', l.from | first -%}
             {%- assign b = lab.nodes | where: 'id', l.to | first -%}
@@ -194,20 +250,12 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
               {%- assign mx = a.x | plus: b.x | divided_by: 2 -%}
               {%- assign my = a.y | plus: b.y | divided_by: 2 -%}
               {%- assign dx = a.x | minus: b.x | abs -%}
-              {%- assign dy = a.y | minus: b.y | abs -%}
               {%- if dx < 5 %}
-          <text class="hl-link-label" x="{{ mx | plus: 8 }}" y="{{ my | plus: 4 }}">{{ l.label }}</text>
+          <text class="hl-link-label" data-link="{{ forloop.index0 }}" x="{{ mx | plus: 8 }}" y="{{ my | plus: 4 }}">{{ l.label }}</text>
               {%- else %}
-          <text class="hl-link-label" x="{{ mx }}" y="{{ my | minus: 8 }}" text-anchor="middle">{{ l.label }}</text>
+          <text class="hl-link-label" data-link="{{ forloop.index0 }}" x="{{ mx }}" y="{{ my | minus: 8 }}" text-anchor="middle">{{ l.label }}</text>
               {%- endif %}
             {%- endif %}
-          {%- endfor %}
-          {%- for n in lab.nodes %}
-          <g class="hl-node" data-node="{{ n.id }}" data-zone="{{ n.zone | default: 'compute' }}" tabindex="0" role="button" aria-label="{{ n.label }}: {{ n.role }}" transform="translate({{ n.x | minus: 82 }} {{ n.y | minus: 22 }})">
-            <rect width="164" height="44" rx="10"></rect>
-            <text class="hl-icon" x="14" y="28" data-icon="{{ n.icon | default: 'server' }}"></text>
-            <text x="38" y="27">{{ n.label }}</text>
-          </g>
           {%- endfor %}
         </svg>
       </div>
@@ -216,7 +264,9 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
         <li><span style="background:#2563eb"></span>Compute / pipeline</li>
         <li><span style="background:#0f8c78"></span>Monitoring</li>
         <li><span style="background:#7c5cd6"></span>Outside the lab</li>
+        <li>&rarr; data flow, &harr; request and reply</li>
         <li>- - - on-demand connection</li>
+        <li>&middot;&middot;&middot; network segment</li>
       </ul>
     </div>
 
@@ -334,6 +384,6 @@ html[data-mode='dark'] .hl-table .is-best { color: #48bb78; }
 </section>
 {%- endif %}
 
-<script type="application/json" id="hl-data">{{ lab.nodes | jsonify }}</script>
+<script type="application/json" id="hl-data">{"nodes": {{ lab.nodes | jsonify }}, "links": {{ lab.links | jsonify }}, "boundaries": {{ lab.boundaries | jsonify }}}</script>
 <script defer src="{{ '/assets/js/custom/homelab.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 {%- endif %}

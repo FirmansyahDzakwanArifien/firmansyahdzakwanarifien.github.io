@@ -200,9 +200,12 @@ Untuk flag 5: ubah `CTF_NOTE` di `tools/hero-art.py` (base64 dari teks flag), la
 Bagian **Homelab** di halaman Labs (`/labs/#homelab`, template `_includes/homelab.html`) menampilkan **testbed TA**: lab Proxmox terisolasi untuk penelitian klasifikasi insiden dengan Wazuh, Suricata, n8n, dan LLM (Ollama). Semua isinya ada di `_data/homelab.yml`:
 
 - `title`, `summary`: judul dan paragraf pembuka.
-- `canvas`: ukuran diagram `[lebar, tinggi]`. `boundary`: kotak putus-putus "Proxmox cluster" di sekeliling VM.
+- `canvas`: ukuran diagram `[lebar, tinggi]`.
+- `boundaries`: kotak putus-putus di sekeliling sekelompok node (`nodes: [id, ...]`). Ukurannya dihitung otomatis dari posisi node (`pad` di sisi dan atas, `bottom` di bawah untuk label), jadi tidak perlu menulis koordinat. `style: cluster` untuk frame luar (Proxmox), `style: segment` untuk segmen jaringan di dalamnya. Tulis frame luar lebih dulu.
 - `nodes`: `id`, `label` (pendek, maksimal sekitar 16 karakter agar muat di kotak), `icon`, `zone` (warna: `security`, `compute`, `monitor`, `client`, `edge`), posisi `x`/`y`, `role`, dan `details` (muncul di panel saat node disorot atau diklik).
-- `links`: `from`, `to`, `label` (opsional), dan `dashed: true` untuk koneksi sesuai kebutuhan (misalnya VPN).
+- `links`: `from`, `to`, `label` (opsional), `dashed: true` untuk koneksi sesuai kebutuhan (misalnya VPN), dan `both: true` untuk panah di kedua ujung (request dan balasan). Panah menunjuk dari `from` ke `to`.
+
+**Diagram interaktif.** Pengunjung bisa menggeser node seperti di draw.io: garis, panah, dan frame ikut bergerak. Kanvas bisa digeser dengan mouse, di-zoom dengan tombol atau <kbd>Ctrl</kbd> + scroll, dan node yang sedang difokus bisa dipindah dengan tombol panah (<kbd>Shift</kbd> untuk langkah besar, <kbd>Alt</kbd> untuk 1 unit; tahan <kbd>Alt</kbd> saat drag untuk mematikan snap ke grid). Layout hasil geseran hanya disimpan di browser pengunjung (localStorage), bukan di repo. **Reset layout** mengembalikannya ke posisi di `homelab.yml`, dan layout tersimpan otomatis dibuang begitu posisi di `homelab.yml` diubah. Untuk mencari posisi baru, geser node di halaman, lalu salin angkanya dari DevTools → Application → Local Storage (kunci `hl-layout-…`, isinya `pos: {id: [x, y]}`) ke `x`/`y` di `homelab.yml`.
 - `layers`: lima lapisan pipeline (bagian "How an alert flows").
 - `principles`: keputusan desain. `icon` memakai kelas lengkap, misalnya `fas fa-lock`.
 - `facts`: angka ringkas di atas diagram (misalnya jumlah VM).
@@ -227,7 +230,7 @@ results:
       values: [87.5, 82.1]   # Llama 3 8B, Mistral 7B
 ```
 
-- `example`: satu alert yang ditelusuri melewati pipeline (tab **Pipeline**): alert Wazuh mentah, hasil normalisasi, dan JSON rekomendasi LLM. Isinya ilustrasi; selalu samarkan alamat dengan placeholder seperti `<attacker-ip>` dan nama host generik seperti `target-01`. Kalau sudah ada data asli dari lab, ganti isi `code` (tetap disamarkan).
+- `example`: satu alert yang ditelusuri melewati pipeline (tab **Pipeline**): alert Wazuh mentah, hasil normalisasi dan deduplikasi, JSON rekomendasi LLM, dan catatan hasil validasi yang disimpan ke PostgreSQL. Isinya ilustrasi; selalu samarkan alamat dengan placeholder seperti `<attacker-ip>` dan nama host generik seperti `target-01`. Kalau sudah ada data asli dari lab, ganti isi `code` (tetap disamarkan).
 - `log`: catatan progres TA, terbaru di atas (`date`, `text`). Tampil di tab **Progress** dan otomatis menjadi feed Atom di `/labs/ta-log.xml`, yang bisa dilanggan dosen pembimbing lewat RSS reader. Tulis fakta saja, satu atau dua kalimat:
 
   ```yaml

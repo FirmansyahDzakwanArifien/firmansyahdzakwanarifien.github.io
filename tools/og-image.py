@@ -129,18 +129,39 @@ def homelab_card(w=W, h=H, header=True):
     def pt(x, y):
         return ox + x * k, oy + y * k
 
-    b = lab.get("boundary")
-    if b:
-        bx, by = pt(b["x"], b["y"])
-        bx2, by2 = pt(b["x"] + b["width"], b["y"] + b["height"])
-        d.rounded_rectangle((bx, by, bx2, by2), radius=14 * k, fill=(22, 28, 46), outline=(70, 80, 105), width=2)
-        d.text((bx + 14 * k, by2 - 12 * k), b.get("label", ""), font=font("DMSans-Variable.ttf", round(12 * k), 600),
-               fill=MUTED, anchor="ls")
     nodes = {n["id"]: n for n in lab.get("nodes", [])}
+    # Frames fitted around their nodes, as in _includes/homelab.html.
+    for b in lab.get("boundaries", []):
+        inside = [nodes[i] for i in b.get("nodes", []) if i in nodes]
+        if not inside:
+            continue
+        pad = b.get("pad", 16)
+        bottom = b.get("bottom", pad)
+        segment = b.get("style") == "segment"
+        bx, by = pt(min(n["x"] for n in inside) - 82 - pad, min(n["y"] for n in inside) - 22 - pad)
+        bx2, by2 = pt(max(n["x"] for n in inside) + 82 + pad, max(n["y"] for n in inside) + 22 + bottom)
+        d.rounded_rectangle((bx, by, bx2, by2), radius=(10 if segment else 14) * k,
+                            fill=(26, 33, 54) if segment else (22, 28, 46), outline=(70, 80, 105), width=1 if segment else 2)
+        d.text((bx + 14 * k, by2 - 12 * k), b.get("label", ""),
+               font=font("DMSans-Variable.ttf", round((11 if segment else 12) * k), 500 if segment else 600),
+               fill=MUTED, anchor="ls")
     for l in lab.get("links", []):
         a, c = nodes.get(l["from"]), nodes.get(l["to"])
-        if a and c:
-            d.line((*pt(a["x"], a["y"]), *pt(c["x"], c["y"])), fill=(95, 105, 130), width=2)
+        if not (a and c):
+            continue
+        dx, dy = c["x"] - a["x"], c["y"] - a["y"]
+        t = min(87 / abs(dx) if dx else float("inf"), 27 / abs(dy) if dy else float("inf"))
+        if t >= 0.5:
+            continue
+        p1, p2 = pt(a["x"] + dx * t, a["y"] + dy * t), pt(c["x"] - dx * t, c["y"] - dy * t)
+        d.line((*p1, *p2), fill=(95, 105, 130), width=2)
+        ends = [(p2, p1)] + ([(p1, p2)] if l.get("both") else [])
+        for tip, tail in ends:
+            ux, uy = tip[0] - tail[0], tip[1] - tail[1]
+            ln = (ux * ux + uy * uy) ** 0.5 or 1
+            ux, uy, s = ux / ln, uy / ln, 8 * k
+            d.polygon([tip, (tip[0] - ux * s - uy * s * 0.55, tip[1] - uy * s + ux * s * 0.55),
+                       (tip[0] - ux * s + uy * s * 0.55, tip[1] - uy * s - ux * s * 0.55)], fill=(95, 105, 130))
     nf = font("DMSans-Variable.ttf", round(13 * k), 600)
     for n in nodes.values():
         x, y = pt(n["x"] - 82, n["y"] - 22)

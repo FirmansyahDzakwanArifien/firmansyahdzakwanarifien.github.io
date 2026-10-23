@@ -6,7 +6,9 @@
 # icon: one of the glyph names in assets/js/custom/homelab.js (server, eye, brain, laptop, ...).
 # principles use full Font Awesome classes (fas fa-...) so tools/fa-subset.py picks them up.
 # zone colours the node: edge | security | compute | monitor | client
-# links: from/to node ids, optional label, optional dashed: true (on-demand connections).
+# links: from/to node ids, optional label, optional dashed: true (on-demand connections), optional both: true.
+# boundaries: dashed frames fitted around a list of node ids. Visitors can drag nodes on the page; that
+# layout stays in their browser only, so the positions here remain the published default.
 
 title: Thesis testbed
 summary: >-
@@ -83,15 +85,32 @@ results:
       note: Low-severity alerts archived by the rule-based filter.
       value: ~
 
-canvas: [932, 510]
+canvas: [1012, 520]
 
-# Dashed frame drawn around the nodes that live inside the virtualization cluster.
-boundary:
-  x: 200
-  y: 24
-  width: 724
-  height: 330
-  label: Proxmox cluster · isolated internal network, no public IP
+# Dashed frames around groups of nodes. Each frame is fitted around its nodes (node box + pad, with
+# extra room at the bottom for the label), so it follows when a node is dragged on the page.
+# style: cluster (outer frame) | segment (network segment inside the cluster). List outer frames first.
+boundaries:
+  - label: Proxmox cluster · isolated, no public IP
+    style: cluster
+    nodes: [gateway, targets, librenms, detection, n8n, ollama]
+    pad: 32
+    bottom: 64
+  - label: Target segment
+    style: segment
+    nodes: [targets]
+    pad: 16
+    bottom: 34
+  - label: Management
+    style: segment
+    nodes: [librenms]
+    pad: 16
+    bottom: 34
+  - label: SOC segment · detection and pipeline
+    style: segment
+    nodes: [detection, n8n, ollama]
+    pad: 16
+    bottom: 34
 
 nodes:
   - id: laptop
@@ -99,89 +118,101 @@ nodes:
     icon: laptop
     zone: client
     x: 90
-    y: 90
+    y: 100
     role: Attack simulation and lab access
     details:
-      - Runs the attack scenarios over the VPN, so no separate attacker VM is needed
-      - Attack traffic still passes the gateway, where Suricata inspects it
+      - Runs the scripted attack scenarios over the VPN, so no separate attacker VM is needed
+      - Each run gets a scenario ID and its expected category and severity before it starts (ground truth)
+      - Attack traffic still passes the gateway, where it is mirrored to Suricata
   - id: gateway
     label: Gateway
     icon: shield-halved
     zone: security
-    x: 340
-    y: 90
-    role: pfSense / OPNsense
+    x: 350
+    y: 100
+    role: pfSense / OPNsense · routing between segments
     details:
-      - Single controlled entry point to the lab
-      - VPN endpoint, enabled only for experiment sessions and disabled afterwards
-      - Mirrors network traffic to Suricata for inspection
+      - Single controlled entry point; VPN enabled only for an experiment session
+      - Default deny between segments; targets may only reach the Wazuh manager, never n8n or Ollama
+      - No internet egress for the lab during a session; models and updates are pulled beforehand
+      - Mirrors target-segment traffic to Suricata and serves NTP so every log uses the same clock
   - id: targets
     label: Target VMs
     icon: server
     zone: compute
-    x: 590
-    y: 90
+    x: 620
+    y: 100
     role: One to two Linux targets of the simulated attacks
     details:
+      - Treated as untrusted, since they are the systems being attacked
       - Wazuh agent ships host logs to the detection VM
+      - Snapshot before each scenario and roll back after it, so every run starts from the same state
   - id: librenms
     label: LibreNMS
     icon: chart-line
     zone: monitor
-    x: 830
-    y: 90
-    role: Lab infrastructure monitoring
+    x: 890
+    y: 100
+    role: Lab infrastructure monitoring (management segment)
     details:
       - Dedicated lab instance, separate from the production LibreNMS
+      - Watches CPU, memory, and disk of the lab VMs, so a slow inference can be told apart from a busy host
   - id: detection
     label: Wazuh + Suricata
     icon: eye
     zone: security
-    x: 340
-    y: 270
+    x: 350
+    y: 280
     role: Detection VM (host and network)
     details:
       - Wazuh Manager raises rule-based alerts from agent logs (JSON)
-      - Suricata inspects mirrored traffic with IDS rules
+      - Suricata inspects mirrored traffic; its eve.json alerts are read by Wazuh on the same VM
+      - One Wazuh integration forwards both sources to n8n over a webhook with a secret token
       - Combined on one VM to save resources; can be split if CPU or storage becomes a bottleneck
   - id: n8n
     label: n8n + Postgres
     icon: diagram-project
     zone: compute
-    x: 590
-    y: 270
+    x: 620
+    y: 280
     role: Pipeline VM 1 · orchestration and storage (Docker)
     details:
-      - Webhook intake, normalization, and Sigma-style rule filtering
-      - PostgreSQL stores every incident with its ground-truth label
+      - Authenticated webhook intake, normalization to one schema, and deduplication
+      - Sigma-style rule filtering; only significant incidents go to the LLM
+      - Validates every LLM answer against the output schema before anything is sent
+      - PostgreSQL stores raw and normalized alerts, the LLM output, prompt version, model, latency, and the analyst verdict
   - id: ollama
     label: Ollama LLM
     icon: brain
     zone: compute
-    x: 830
-    y: 270
+    x: 890
+    y: 280
     role: Pipeline VM 2 · LLM inference
     details:
-      - Open-source models (candidates Llama 3 8B, Mistral 7B)
+      - Open-source models (candidates Llama 3 8B, Mistral 7B), pinned to an exact version
+      - Structured output with a JSON schema, temperature 0, and a fixed seed
+      - No tools and no network access beyond n8n; it can only return text
       - Kept apart from n8n so heavy inference does not slow orchestration
   - id: analyst
-    label: Analyst alert
+    label: Analyst
     icon: bell
     zone: client
-    x: 590
-    y: 476
-    role: Slack or email notification
+    x: 620
+    y: 470
+    role: Slack or email notification and review
     details:
-      - Recommendation only; nothing is executed on the targets
+      - Receives the recommendation; nothing is executed on the targets automatically
+      - Accepts or corrects the category and severity; the verdict is stored with the incident
 
+# from/to are node ids; arrows point from -> to. both: true draws an arrow at each end (request and reply).
 links:
   - from: laptop
     to: gateway
-    label: VPN
+    label: VPN (session)
     dashed: true
   - from: gateway
     to: targets
-    label: lab network
+    label: attack traffic
   - from: gateway
     to: detection
     label: traffic mirror
@@ -190,54 +221,65 @@ links:
     label: agent logs
   - from: librenms
     to: targets
-    label: monitoring
+    label: SNMP
   - from: detection
     to: n8n
-    label: webhook
+    label: webhook + token
   - from: n8n
     to: ollama
-    label: inference
+    label: prompt / JSON
+    both: true
   - from: n8n
     to: analyst
-    label: recommendation
+    label: recommendation / verdict
+    both: true
 
 # The five pipeline layers, in order.
 layers:
   - name: Data sources
-    tools: Wazuh · Suricata
-    text: Wazuh watches the target hosts through agents and raises rule-based alerts in JSON; Suricata inspects traffic mirrored from the gateway with intrusion detection rules.
+    tools: Wazuh · Suricata · NTP
+    text: Wazuh watches the target hosts through agents and raises rule-based alerts in JSON; Suricata inspects traffic mirrored from the gateway, and Wazuh reads its eve.json, so both sources leave the detection VM through one integration. Every VM takes its time from the gateway, so host and network events line up.
   - name: Intake and normalization
     tools: n8n webhook · JavaScript
-    text: Wazuh and Suricata alerts have different field schemas, so each one is mapped to a single JSON schema. This step is deterministic code, not an LLM, so results are consistent and repeatable across experiment sessions.
-  - name: Rule-based filtering
+    text: The webhook only accepts requests that carry the shared secret. Wazuh and Suricata fields are mapped to a single JSON schema with UTC timestamps, and the raw alert is kept next to the normalized one. This step is deterministic code, not an LLM, so it is consistent and repeatable across sessions.
+  - name: Triage and deduplication
     tools: Sigma-style rules in n8n
-    text: Each normalized alert gets a severity. Low-severity alerts are archived straight to PostgreSQL; only alerts above the threshold continue, which cuts LLM load and speeds up the whole pipeline.
-  - name: LLM inference
+    text: Repeats of the same rule, host, and source within a short window are grouped into one incident, so the model sees one brute force instead of fifty alerts. Each incident gets a severity; low-severity ones are archived straight to PostgreSQL and only those above the threshold continue, which cuts LLM load.
+  - name: LLM inference and validation
     tools: Ollama · Llama 3 8B / Mistral 7B
-    text: Significant alerts are sent to Ollama with a structured prompt. The model returns structured JSON with the incident category, severity, a short narrative, and suggested mitigation steps, using a low temperature and a fixed seed to limit run-to-run variation.
-  - name: Output and records
+    text: The prompt is versioned and puts alert fields inside a clearly marked data block, because usernames, URLs, and payloads come from the attacker and may try to steer the model. Ollama returns JSON constrained by a schema, at temperature 0 with a fixed seed. n8n then checks the answer (valid JSON, category from a fixed list); after one failed retry the incident falls back to manual triage with its rule-based severity.
+  - name: Review, records, and evaluation
     tools: Slack / email · PostgreSQL
-    text: Recommendations go to the analyst without any automated action on the targets. Every incident, whether processed by the LLM or archived by the filter, is stored with the ground-truth label from the scenario for offline evaluation.
+    text: The analyst receives the recommendation and records a verdict; nothing runs on the targets automatically. Every incident is stored with its prompt version, model, and latency. Ground-truth labels live in a separate table and never enter the prompt, and the same recorded alerts are replayed to each model, so both are compared on identical input.
 
 # Design decisions worth calling out.
 principles:
   - icon: fas fa-lock
-    title: Isolated by design
-    text: No public IPs; the only way in is a VPN that is switched on for an experiment session and off afterwards.
+    title: Isolated and segmented
+    text: No public IPs and a VPN that is on only during a session. Targets, the SOC pipeline, and management sit in separate segments with default-deny rules between them.
   - icon: fas fa-code
     title: Deterministic where it matters
-    text: Normalization and filtering are plain code, so the LLM only sees clean, already-triaged alerts.
+    text: Normalization, deduplication, and filtering are plain code, so the LLM only sees clean, already-triaged incidents.
   - icon: fas fa-filter
     title: LLM only when needed
-    text: Rule-based filtering keeps low-severity noise away from the model and keeps the pipeline fast.
+    text: Rule-based triage keeps low-severity noise away from the model and keeps the pipeline fast.
+  - icon: fas fa-user-secret
+    title: Alert data is untrusted
+    text: Attacker-controlled fields are passed as data, never as instructions, and the model has no tools, so a crafted log line cannot make it act.
+  - icon: fas fa-circle-check
+    title: Validate every answer
+    text: Output must match the JSON schema and a fixed category list; anything else is retried once and then handed to a human.
   - icon: fas fa-user-shield
     title: Human in the loop
-    text: The system recommends; the analyst decides. Nothing is executed on the target systems.
+    text: The system recommends and the analyst decides. That verdict is stored, which shows how often the model was right.
+  - icon: fas fa-flask
+    title: Fair, reproducible evaluation
+    text: Pinned model versions, a versioned prompt, a VM snapshot per scenario, and one recorded alert set replayed to every model.
 
 # One alert followed through the pipeline (Pipeline tab). Illustrative: it shows the shape of the data at
 # each step, not a measured result. Keep it masked: placeholders instead of real IPs or hostnames.
 example:
-  title: "One alert, three steps: an SSH brute force on a target VM"
+  title: "One alert, four steps: an SSH brute force on a target VM"
   note: Illustrative data that shows the shape of each step, with addresses masked. Not an evaluation result.
   steps:
     - name: Raw Wazuh alert
@@ -257,10 +299,12 @@ example:
           "data": { "srcip": "<attacker-ip>", "srcuser": "admin" },
           "full_log": "sshd[2231]: Invalid user admin from <attacker-ip> port 51644"
         }
-    - name: Normalized and filtered
+    - name: Normalized, deduplicated, triaged
       layer: n8n · JavaScript + rules
       code: |
         {
+          "incident_id": "inc-0142",
+          "scenario_id": "S03-ssh-bruteforce-r2",
           "source": "wazuh",
           "event_time": "2026-10-21T02:14:07Z",
           "host": "target-01",
@@ -269,12 +313,13 @@ example:
           "severity": "high",
           "src_ip": "<attacker-ip>",
           "user": "admin",
-          "count": 8,
+          "alert_count": 8,
+          "fingerprint": "5712|target-01|<attacker-ip>",
           "mitre": ["T1110"],
           "route": "llm"
         }
     - name: LLM recommendation
-      layer: Ollama · structured JSON
+      layer: Ollama · schema-constrained JSON
       code: |
         {
           "category": "Credential Access: Brute Force",
@@ -287,6 +332,19 @@ example:
             "Rate-limit sshd (e.g. fail2ban)"
           ],
           "needs_analyst": true
+        }
+    - name: Validated and recorded
+      layer: n8n · PostgreSQL
+      code: |
+        {
+          "incident_id": "inc-0142",
+          "model": "llama3:8b-instruct-q4_K_M",
+          "prompt_version": "v3",
+          "schema_valid": true,
+          "retries": 0,
+          "latency_ms": 6840,
+          "notified": "slack",
+          "analyst_verdict": "accepted"
         }
 
 # Thesis log, newest first: short dated notes shown in the Progress tab and published as an Atom feed
