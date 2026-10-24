@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.10.21",
-  "total": 1754,
+  "catalog_version": "2026.10.23",
+  "total": 1756,
   "items": [
+    {
+      "cve": "CVE-2026-114625",
+      "vendor": "Arista",
+      "product": "VeloCloud Orchestrator",
+      "name": "Arista VeloCloud Orchestrator SQL Injection Vulnerability",
+      "added": "2026-10-23",
+      "due": "2026-10-26",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-110447",
+      "vendor": "Collabora",
+      "product": "Collabora Online – Built-in CODE Server",
+      "name": "Collabora Online – Built-in CODE Server OS Command Injection Vulnerability",
+      "added": "2026-10-23",
+      "due": "2026-10-26",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-96656",
       "vendor": "Plex",
@@ -36,24 +54,6 @@
       "name": "Plex Media Server Server-Side Request Forgery (SSRF) Vulnerability",
       "added": "2026-10-20",
       "due": "2026-11-03",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-110936",
-      "vendor": "Siemens",
-      "product": "Software Center",
-      "name": "Siemens Software Center Uncontrolled Search Path Element Vulnerability",
-      "added": "2026-10-20",
-      "due": "2026-11-03",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-106931",
-      "vendor": "EG Secure Solutions",
-      "product": "SiteGuard Server Edition",
-      "name": "EG Secure Solutions SiteGuard Server Edition OS Command Injection Vulnerability",
-      "added": "2026-10-20",
-      "due": "2026-10-23",
       "ransomware": false
     }
   ]
