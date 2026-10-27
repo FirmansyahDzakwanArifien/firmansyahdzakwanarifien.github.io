@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.10.23",
-  "total": 1756,
+  "catalog_version": "2026.10.26",
+  "total": 1758,
   "items": [
+    {
+      "cve": "CVE-2026-109619",
+      "vendor": "PHP Group",
+      "product": "PHP",
+      "name": "PHP Stale Internal Request-State Vulnerability",
+      "added": "2026-10-26",
+      "due": "2026-10-29",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-109618",
+      "vendor": "PHP Group",
+      "product": "PHP",
+      "name": "PHP Memory Corruption Vulnerability",
+      "added": "2026-10-26",
+      "due": "2026-10-29",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-114625",
       "vendor": "Arista",
@@ -31,24 +49,6 @@
     },
     {
       "cve": "CVE-2026-96655",
-      "vendor": "Plex",
-      "product": "Media Server",
-      "name": "Plex Media Server Server-Side Request Forgery (SSRF) Vulnerability",
-      "added": "2026-10-20",
-      "due": "2026-11-03",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-96654",
-      "vendor": "Plex",
-      "product": "Media Server",
-      "name": "Plex Media Server Improper Neutralization of Encoded URI Schemes in a Web Page Vulnerability",
-      "added": "2026-10-20",
-      "due": "2026-10-23",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-96652",
       "vendor": "Plex",
       "product": "Media Server",
       "name": "Plex Media Server Server-Side Request Forgery (SSRF) Vulnerability",
