@@ -60,6 +60,7 @@ layout: default
   {
     "src": {{ image.path | prepend: item.photos_base | jsonify }},
     "title": {{ item.title | default: '' | jsonify }},
+    "url": {{ item.url | relative_url | jsonify }},
     "alt": {{ image.alt | default: item.title | jsonify }},
     "caption": {{ image.caption | default: '' | jsonify }},
     "date": {{ item.date | date: '%B %-d, %Y' | jsonify }},
@@ -82,6 +83,39 @@ layout: default
   font-weight: 600;
   color: var(--heading-color);
   background: var(--main-bg);
+}
+
+.gphoto-event {
+  margin-bottom: 1.5rem;
+}
+
+.gphoto-event-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin: 0 0 0.6rem;
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--link-color);
+}
+
+.gphoto-event-heading h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.gphoto-event-heading h3 a {
+  color: var(--heading-color);
+}
+
+.gphoto-event-heading h3 a:hover {
+  color: var(--link-color);
+}
+
+.gphoto-event-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted-color);
 }
 
 .gphoto-grid {

@@ -58,20 +58,56 @@
     emptyState.hidden = false;
   } else {
     var currentMonth = null;
+    var currentEvent = null;
     var grid = null;
+
+    /* Photo count per album entry, for the event sub-headings. */
+    var counts = {};
+    data.forEach(function (item) {
+      counts[item.url] = (counts[item.url] || 0) + 1;
+    });
 
     data.forEach(function (item, index) {
       if (item.month !== currentMonth) {
         currentMonth = item.month;
+        currentEvent = null;
 
         var heading = document.createElement('h2');
         heading.className = 'gphoto-date-heading';
         heading.textContent = item.month;
         timeline.appendChild(heading);
+      }
+
+      /* Each album entry gets its own sub-heading and grid within the month. */
+      if (item.url !== currentEvent) {
+        currentEvent = item.url;
+
+        var section = document.createElement('section');
+        section.className = 'gphoto-event';
+
+        var header = document.createElement('div');
+        header.className = 'gphoto-event-heading';
+
+        var title = document.createElement('h3');
+        var link = document.createElement('a');
+        link.href = item.url;
+        link.textContent = item.title;
+        title.appendChild(link);
+        header.appendChild(title);
+
+        var n = counts[item.url];
+        var meta = document.createElement('span');
+        meta.className = 'gphoto-event-meta';
+        meta.textContent = [item.date, item.location, n + (n === 1 ? ' photo' : ' photos')]
+          .filter(Boolean).join(' · ');
+        header.appendChild(meta);
+
+        section.appendChild(header);
 
         grid = document.createElement('div');
         grid.className = 'gphoto-grid';
-        timeline.appendChild(grid);
+        section.appendChild(grid);
+        timeline.appendChild(section);
       }
 
       var tile = document.createElement('button');
