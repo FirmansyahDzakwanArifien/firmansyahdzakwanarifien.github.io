@@ -51,10 +51,11 @@ jobs:
           retention-days: 1
 
       - name: Check internal links and images
+        # jsDelivr URLs are skipped here: tools/check-assets.sh checks them, and html-proofer 5.2.x crashes on remote srcset URLs.
         run: |
           bundle exec htmlproofer _site \
             --disable-external \
-            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/^https:\/\/cdn\.jsdelivr\.net\//"
 
       - name: Check for inline JavaScript
         if: ${{ !cancelled() }}
