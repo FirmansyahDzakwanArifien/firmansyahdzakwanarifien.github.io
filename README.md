@@ -29,7 +29,7 @@ cybersecurity, network infrastructure, and Linux system administration.
 
 ## Run locally
 
-Requires Ruby 3.1+, Bundler, and Node.js 20+.
+Requires Ruby 3.4 (see `.ruby-version`), Bundler, and Node.js 20+.
 
 ```bash
 git clone --recurse-submodules https://github.com/firmansyahdzakwanarifien/firmansyahdzakwanarifien.github.io.git
