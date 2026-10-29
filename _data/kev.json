@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.10.27",
-  "total": 1760,
+  "catalog_version": "2026.10.28",
+  "total": 1762,
   "items": [
+    {
+      "cve": "CVE-2026-46300",
+      "vendor": "Linux",
+      "product": "Kernel",
+      "name": "Linux Kernel Missing Initialization of a Variable Vulnerability",
+      "added": "2026-10-28",
+      "due": "2026-10-31",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-41709",
+      "vendor": "Broadcom",
+      "product": "VMware ESX",
+      "name": "Broadcom VMWare ESX Insufficient Logging Vulnerability",
+      "added": "2026-10-28",
+      "due": "2026-11-11",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-48356",
       "vendor": "Adobe",
@@ -36,24 +54,6 @@
       "name": "PHP Memory Corruption Vulnerability",
       "added": "2026-10-26",
       "due": "2026-10-29",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-114625",
-      "vendor": "Arista",
-      "product": "VeloCloud Orchestrator",
-      "name": "Arista VeloCloud Orchestrator SQL Injection Vulnerability",
-      "added": "2026-10-23",
-      "due": "2026-10-26",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-110447",
-      "vendor": "Collabora",
-      "product": "Collabora Online – Built-in CODE Server",
-      "name": "Collabora Online – Built-in CODE Server OS Command Injection Vulnerability",
-      "added": "2026-10-23",
-      "due": "2026-10-26",
       "ransomware": false
     }
   ]
