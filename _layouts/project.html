@@ -83,10 +83,15 @@ layout: default
     <div class="post-tags">
       <i class="fa fa-tags fa-fw me-1"></i>
       {% for tag in page.tags %}
+        {%- comment -%} jekyll-archives only builds tag pages for posts, so link a tag only when one exists. {%- endcomment -%}
+        {% if site.tags[tag] %}
         <a href="{{ site.baseurl }}/tags/{{ tag | slugify | url_encode }}/"
           class="post-tag no-text-decoration">
           {{- tag -}}
         </a>
+        {% else %}
+        <span class="post-tag">{{- tag -}}</span>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
