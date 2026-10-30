@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.10.28",
-  "total": 1762,
+  "catalog_version": "2026.10.29",
+  "total": 1764,
   "items": [
+    {
+      "cve": "CVE-2026-97229",
+      "vendor": "GitLab",
+      "product": "Community Edition and Enterprise Edition",
+      "name": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
+      "added": "2026-10-29",
+      "due": "2026-11-01",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-76418",
+      "vendor": "Cisco",
+      "product": "Secure Firewall ASA Software and Cisco Secure FTD Software",
+      "name": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
+      "added": "2026-10-29",
+      "due": "2026-11-01",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-46300",
       "vendor": "Linux",
@@ -36,24 +54,6 @@
       "name": "Google Brotli Unchecked Return Value Vulnerability",
       "added": "2026-10-27",
       "due": "2026-11-10",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-109619",
-      "vendor": "PHP Group",
-      "product": "PHP",
-      "name": "PHP Stale Internal Request-State Vulnerability",
-      "added": "2026-10-26",
-      "due": "2026-10-29",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-109618",
-      "vendor": "PHP Group",
-      "product": "PHP",
-      "name": "PHP Memory Corruption Vulnerability",
-      "added": "2026-10-26",
-      "due": "2026-10-29",
       "ransomware": false
     }
   ]
