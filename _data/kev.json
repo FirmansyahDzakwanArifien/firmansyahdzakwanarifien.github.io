@@ -1,7 +1,16 @@
 {
-  "catalog_version": "2026.11.03",
-  "total": 1767,
+  "catalog_version": "2026.11.04",
+  "total": 1768,
   "items": [
+    {
+      "cve": "CVE-2024-27834",
+      "vendor": "Apple",
+      "product": "Multiple Products",
+      "name": "Apple Multiple Products Improper Authentication Vulnerability",
+      "added": "2026-11-04",
+      "due": "2026-11-18",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-119977",
       "vendor": "WordPress",
@@ -45,15 +54,6 @@
       "name": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
       "added": "2026-10-29",
       "due": "2026-11-01",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-46300",
-      "vendor": "Linux",
-      "product": "Kernel",
-      "name": "Linux Kernel Missing Initialization of a Variable Vulnerability",
-      "added": "2026-10-28",
-      "due": "2026-10-31",
       "ransomware": false
     }
   ]
