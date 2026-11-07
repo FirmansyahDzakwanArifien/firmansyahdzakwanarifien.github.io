@@ -1,7 +1,16 @@
 {
-  "catalog_version": "2026.11.04",
-  "total": 1768,
+  "catalog_version": "2026.11.06",
+  "total": 1769,
   "items": [
+    {
+      "cve": "CVE-2026-19868",
+      "vendor": "SonicWall",
+      "product": "SonicOS SSLVPN",
+      "name": "SonicWall SonicOS SSLVPN Use of Single-factor Authentication Vulnerability",
+      "added": "2026-11-06",
+      "due": "2026-11-20",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2024-27834",
       "vendor": "Apple",
@@ -43,15 +52,6 @@
       "vendor": "GitLab",
       "product": "Community Edition and Enterprise Edition",
       "name": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
-      "added": "2026-10-29",
-      "due": "2026-11-01",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-76418",
-      "vendor": "Cisco",
-      "product": "Secure Firewall ASA Software and Cisco Secure FTD Software",
-      "name": "Cisco Secure Firewall ASA Software and Cisco Secure FTD Software Unchecked Return Value to NULL Pointer Dereference Vulnerability",
       "added": "2026-10-29",
       "due": "2026-11-01",
       "ransomware": false
