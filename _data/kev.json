@@ -1,7 +1,43 @@
 {
-  "catalog_version": "2026.11.06",
-  "total": 1769,
+  "catalog_version": "2026.11.09",
+  "total": 1773,
   "items": [
+    {
+      "cve": "CVE-2026-123218",
+      "vendor": "IBM",
+      "product": "Aspera Faspex",
+      "name": "IBM Aspera Faspex Incorrect Authorization Vulnerability",
+      "added": "2026-11-09",
+      "due": "2026-11-12",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-123158",
+      "vendor": "OpenBSD",
+      "product": "OpenSSH",
+      "name": "OpenBSD OpenSSH Unexpected Status Code or Return Value Vulnerability",
+      "added": "2026-11-09",
+      "due": "2026-11-12",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-116779",
+      "vendor": "SignalWire",
+      "product": "FreeSwitch",
+      "name": "SignalWire FreeSwitch Code Injection Vulnerability",
+      "added": "2026-11-09",
+      "due": "2026-11-12",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-102895",
+      "vendor": "GPUStack",
+      "product": "GPUStack",
+      "name": "GPUStack Improper Authentication Vulnerability",
+      "added": "2026-11-09",
+      "due": "2026-11-12",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-19868",
       "vendor": "SonicWall",
@@ -18,42 +54,6 @@
       "name": "Apple Multiple Products Improper Authentication Vulnerability",
       "added": "2026-11-04",
       "due": "2026-11-18",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-119977",
-      "vendor": "WordPress",
-      "product": "WordPress Core",
-      "name": "WordPress WordPress Core Time-of-check Time-of-use (TOCTOU) Race Condition Vulnerability",
-      "added": "2026-11-03",
-      "due": "2026-11-06",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-118527",
-      "vendor": "Ivanti",
-      "product": "Connect Secure",
-      "name": "Ivanti Connect Secure Generation of Predictable Numbers or Identifiers Vulnerability",
-      "added": "2026-10-30",
-      "due": "2026-11-13",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-111357",
-      "vendor": "Ivanti",
-      "product": "Connect Secure",
-      "name": "Ivanti Connect Secure Missing Authentication for Critical Function Vulnerability",
-      "added": "2026-10-30",
-      "due": "2026-11-02",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-97229",
-      "vendor": "GitLab",
-      "product": "Community Edition and Enterprise Edition",
-      "name": "GitLab Community Edition and Enterprise Edition Integer Overflow or Wraparound Vulnerability",
-      "added": "2026-10-29",
-      "due": "2026-11-01",
       "ransomware": false
     }
   ]
