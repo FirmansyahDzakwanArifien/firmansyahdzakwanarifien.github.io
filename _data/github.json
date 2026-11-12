@@ -1,5 +1,5 @@
 {
-  "total": 1743,
+  "total": 1744,
   "first": "2025-11-09",
   "days": [
     [
@@ -1473,6 +1473,10 @@
     [
       "2026-11-11",
       0
+    ],
+    [
+      "2026-11-12",
+      1
     ]
   ],
   "repos": [
@@ -1481,7 +1485,7 @@
       "description": "",
       "language": "Markdown",
       "stars": 0,
-      "pushed": "2026-11-11",
+      "pushed": "2026-11-12",
       "url": "https://github.com/FirmansyahDzakwanArifien/upptime"
     },
     {
@@ -1489,8 +1493,16 @@
       "description": "Github Profile",
       "language": "",
       "stars": 0,
-      "pushed": "2026-11-11",
+      "pushed": "2026-11-12",
       "url": "https://github.com/FirmansyahDzakwanArifien/FirmansyahDzakwanArifien"
+    },
+    {
+      "name": "si-ngacir",
+      "description": "Si Ngacir - Trobos Ajalah! Game kurir capybara (Godot 4.3)",
+      "language": "GDScript",
+      "stars": 0,
+      "pushed": "2026-11-11",
+      "url": "https://github.com/FirmansyahDzakwanArifien/si-ngacir"
     },
     {
       "name": "devsecops-lab-p9",
@@ -1499,14 +1511,6 @@
       "stars": 0,
       "pushed": "2026-11-10",
       "url": "https://github.com/FirmansyahDzakwanArifien/devsecops-lab-p9"
-    },
-    {
-      "name": "it-tools",
-      "description": "",
-      "language": "",
-      "stars": 0,
-      "pushed": "2026-11-08",
-      "url": "https://github.com/FirmansyahDzakwanArifien/it-tools"
     }
   ]
 }
