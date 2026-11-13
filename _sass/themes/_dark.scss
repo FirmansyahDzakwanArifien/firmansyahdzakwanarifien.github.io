@@ -31,6 +31,10 @@
     rgb(255 255 255 / 0%) 100%
   );
 
+  /* Accent (sidebar, guide, focus rings; the home page reuses the same values) */
+  --accent: #7aa7ff;
+  --accent-soft: rgb(122 167 255 / 12%);
+
   /* Sidebar */
   --site-title-color: #717070;
   --site-subtitle-color: #868686;

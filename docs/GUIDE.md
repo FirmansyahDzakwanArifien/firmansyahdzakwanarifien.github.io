@@ -16,7 +16,7 @@ Setiap push ke `main` otomatis di-build dan di-deploy (sekitar 2 menit). Kalau a
 6. [CTF](#6-ctf)
 7. [Homelab](#7-homelab)
 8. [Widget data harian](#8-widget-data-harian)
-9. [Command palette, pintasan, terminal, dan tema](#9-command-palette-pintasan-terminal-dan-tema)
+9. [Sidebar, command palette, pintasan, terminal, dan tema](#9-sidebar-command-palette-pintasan-terminal-dan-tema)
 10. [Aturan JavaScript, CSP, dan SRI](#10-aturan-javascript-csp-dan-sri)
 11. [Gambar dan repo assets](#11-gambar-dan-repo-assets)
 12. [Menjalankan di lokal dan troubleshooting](#12-menjalankan-di-lokal-dan-troubleshooting)
@@ -277,14 +277,22 @@ Workflow `data-refresh.yml` berjalan setiap hari pukul 07.30 WIB, menjalankan `t
 
 ---
 
-## 9. Command palette, pintasan, terminal, dan tema
+## 9. Sidebar, command palette, pintasan, terminal, dan tema
+
+**Sidebar (desktop, lebar ≥ 850px):** tombol **Minimize** di bawah menu mengecilkan sidebar menjadi rail ikon (72px); tombol yang sama (berubah jadi **Maximize**) mengembalikannya. Saat minimize, sidebar terbuka sementara di atas konten ketika kursor diarahkan ke sana (atau saat fokus keyboard masuk), lalu menutup lagi saat kursor pergi. Pintasan: `[`. Pilihan tersimpan di browser pengunjung (`localStorage` key `sidebar`).
+- Status dipasang sebelum halaman tampil oleh `assets/js/custom/theme-variant.js` (atribut `html[data-sidebar='collapsed']`), tombolnya dipasang di `assets/js/custom/site.js` lewat atribut `data-sidebar-toggle` (bisa dipakai di elemen mana pun).
+- Gaya ada di `_sass/layout/_sidebar.scss`; lebar aktif sidebar tersedia sebagai CSS variable `--sb-w`, jadi elemen lain yang perlu menyesuaikan cukup memakai `var(--sb-w)`.
+- Di HP/tablet sidebar tetap berupa drawer (tombol ☰ di topbar); status minimize tidak berpengaruh.
+
+**Halaman Guide** (`/guide/`, file `_tabs/guide.html`, gaya di `_sass/pages/_guide.scss`): panduan pemakaian situs untuk pengunjung. Kalau menambah fitur, pintasan, atau halaman baru, perbarui juga halaman ini. Tombol "Try it" di sana memakai atribut `data-sidebar-toggle`, `data-cmdk-open`, `data-shortcuts-open`, dan `data-term-open`.
+
 
 **Command palette** (`Ctrl+K` / `⌘K`, atau tombol di topbar). Datanya dari `assets/js/data/palette.json`, yang dibuat saat build dari halaman, proyek, Labs, sertifikat, dan post. Konten baru ikut masuk otomatis.
 - Menambah **aksi** baru: array `ACTIONS` di `assets/js/custom/command.js`.
 
 **Pintasan keyboard** (`?` untuk melihat daftarnya):
-- `g` lalu `h` / `l` / `p` / `c` / `a` / `m` / `f` / `k`: pindah ke Home, Labs, Projects, CV, Album, Milestone, CTF, Contact.
-- `d`: light/dark, `x`: tema hacker, `` ` ``: terminal.
+- `g` lalu `h` / `l` / `p` / `c` / `a` / `m` / `f` / `k` / `u`: pindah ke Home, Labs, Projects, CV, Album, Milestone, CTF, Contact, Guide.
+- `d`: light/dark, `x`: tema hacker, `` ` ``: terminal, `[`: minimize/maximize sidebar.
 - Menambah rute: objek `ROUTES` di `command.js`.
 
 **Terminal** (`` ` ``): perintahnya ada di objek `COMMANDS` dalam `assets/js/custom/terminal.js`. Tambahkan `hidden: true` agar perintah tidak tampil di `help`.

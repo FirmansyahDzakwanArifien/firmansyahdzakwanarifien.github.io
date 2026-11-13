@@ -1,8 +1,8 @@
 <!-- The Side Bar -->
 
-<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column">
   <header class="profile-wrapper">
-    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
+    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle" aria-label="{{ site.title }}">
       {%- if site.avatar != empty and site.avatar -%}
         {%- capture avatar_url -%}
           {% include media-url.html src=site.avatar %}
@@ -11,8 +11,10 @@
       {%- endif -%}
     </a>
 
-    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
+    <div class="profile-text">
+      <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
+    </div>
   </header>
   <!-- .profile-wrapper -->
 
@@ -61,7 +63,24 @@
     </ul>
   </nav>
 
-  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+  <!-- minimize / maximize (desktop only); state is restored before first paint by theme-variant.js -->
+  <div class="sidebar-toggle-row w-100">
+    <button
+      type="button"
+      id="sidebar-collapse"
+      class="nav-link"
+      data-sidebar-toggle
+      aria-controls="sidebar"
+      aria-expanded="true"
+      aria-label="Minimize sidebar"
+      title="Minimize sidebar ( [ )"
+    >
+      <i class="fa-fw fas fa-chevron-left"></i>
+      <span>Minimize</span>
+    </button>
+  </div>
+
+  <div class="sidebar-bottom d-flex flex-wrap align-items-center w-100">
     {% unless site.theme_mode %}
       <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
         <i class="fas fa-adjust"></i>

@@ -2,10 +2,36 @@
 @use '../abstracts/mixins' as mx;
 @use '../abstracts/breakpoints' as bp;
 @use '../abstracts/placeholders';
+@use 'sass:selector';
 
 $btn-border-width: 3px;
 $btn-mb: 0.5rem;
-$sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
+$sidebar-display: 'sidebar-display'; /* the attribute for sidebar display (mobile drawer) */
+
+/* Every row shares one icon rail: icons sit centred 36px from the left edge, which is also the
+   centre of the 72px minimized sidebar, so nothing moves sideways when it collapses. */
+$item-pad-x: 0.75rem; /* li padding */
+$link-pad-x: 0.875rem; /* link padding */
+$rail-link-width: calc(#{v.$sidebar-width-collapsed} - 1.5rem); /* link box when minimized */
+$ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+/* minimized (desktop): html[data-sidebar='collapsed'], set by theme-variant.js */
+$collapsed: "html[data-sidebar='collapsed']";
+
+/* While minimized the sidebar expands over the page on hover (with a short intent delay) or keyboard
+   focus. On touch screens a tap gives it :hover, which opens it the same way. Right after the
+   minimize button is clicked, .no-peek keeps it closed until the cursor leaves. */
+$peek: "#{$collapsed} #sidebar:not(.no-peek):hover, #{$collapsed} #sidebar:has(:focus-visible)";
+$rail: "#{$collapsed} #sidebar:not(:has(:focus-visible)):is(.no-peek, :not(:hover))";
+
+/* Styles for the minimized, closed rail. Use inside a #sidebar rule. */
+@mixin rail {
+  @include bp.lg {
+    @at-root #{selector.replace(&, '#sidebar', $rail)} {
+      @content;
+    }
+  }
+}
 
 #sidebar {
   @include mx.pl-pr(0);
@@ -13,9 +39,10 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1030;
   height: 100%;
-  overflow-y: auto;
-  width: v.$sidebar-width;
+  overflow: hidden auto;
+  width: var(--sb-w);
   background: var(--sidebar-bg);
   border-right: 1px solid var(--sidebar-border-color);
 
@@ -31,16 +58,31 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   @include bp.lt(bp.get(lg)) {
     @include mx.slide;
 
+    width: v.$sidebar-width;
     transform: translateX(-#{v.$sidebar-width}); /* hide */
     -webkit-transform: translateX(-#{v.$sidebar-width});
 
     [#{$sidebar-display}] & {
       transform: translateX(0);
+      box-shadow: 0 0 40px rgb(0 0 0 / 18%);
     }
   }
 
-  @include bp.xxxl {
-    width: v.$sidebar-width-large;
+  @include bp.lg {
+    transition:
+      width 0.25s $ease,
+      box-shadow 0.25s ease;
+
+    /* Keep the content at full width while the box is narrow, so labels are clipped, not wrapped. */
+    #{$collapsed} & > * {
+      min-width: v.$sidebar-width;
+    }
+
+    @at-root #{$peek} {
+      width: v.$sidebar-width;
+      box-shadow: 8px 0 32px rgb(0 0 0 / 14%);
+      transition-delay: 0.12s; /* hover intent: a cursor passing by does not open it */
+    }
   }
 
   %sidebar-link-hover {
@@ -55,11 +97,17 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
 
   #avatar {
     display: block;
+    flex-shrink: 0;
     width: 6.5rem;
     height: 6.5rem;
     overflow: hidden;
-    box-shadow: var(--avatar-border-color) 0 0 0 2px;
+    box-shadow:
+      var(--avatar-border-color) 0 0 0 2px,
+      var(--accent-soft) 0 0 0 6px;
     transform: translateZ(0); /* fixed the zoom in Safari */
+    transition:
+      width 0.25s $ease,
+      height 0.25s $ease;
 
     @include bp.sm {
       width: 7rem;
@@ -67,21 +115,24 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     }
 
     img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       transition: transform 0.5s;
 
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.12);
       }
     }
   }
 
   .profile-wrapper {
     @include mx.mt-mb(2.5rem);
-    @extend %clickable-transition;
 
-    padding-left: 2.5rem;
+    padding-left: 1.75rem;
     padding-right: 1.25rem;
     width: 100%;
+    transition: padding 0.25s $ease;
 
     @include bp.lg {
       margin-top: 3rem;
@@ -90,7 +141,47 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     @include bp.xxxl {
       margin-top: 3.5rem;
       margin-bottom: 2.5rem;
-      padding-left: 3.5rem;
+    }
+
+    /* Minimized: a small avatar on the rail; the name shows beside it while peeking. */
+    @include bp.lg {
+      #{$collapsed} & {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin: 1.25rem 0 1.5rem;
+        padding-left: calc(v.$sidebar-width-collapsed / 2 - 1.375rem);
+
+        #avatar {
+          width: 2.75rem;
+          height: 2.75rem;
+          box-shadow:
+            var(--avatar-border-color) 0 0 0 2px,
+            var(--accent-soft) 0 0 0 4px;
+        }
+
+        .site-title {
+          font-size: 1.15rem;
+          margin: 0;
+        }
+
+        .site-subtitle {
+          font-size: 0.78rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 11.5rem;
+        }
+      }
+    }
+  }
+
+  .profile-text {
+    min-width: 0;
+    transition: opacity 0.2s ease;
+
+    @include rail {
+      opacity: 0;
     }
   }
 
@@ -99,10 +190,10 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     @extend %sidebar-link-hover;
 
     font-family: inherit;
-    font-weight: 900;
-    font-size: 1.75rem;
+    font-weight: 800;
+    font-size: 1.6rem;
     line-height: 1.2;
-    letter-spacing: 0.25px;
+    letter-spacing: -0.01em;
     margin-top: 1.25rem;
     margin-bottom: 0.5rem;
     width: fit-content;
@@ -110,7 +201,8 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   }
 
   .site-subtitle {
-    font-size: 95%;
+    font-size: 0.9rem;
+    line-height: 1.45;
     color: var(--site-subtitle-color);
     margin-top: 0.25rem;
     word-spacing: 1px;
@@ -120,64 +212,105 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     user-select: none;
   }
 
+  /* ---------- navigation rows (nav items and the minimize button share this look) ---------- */
+
+  %row-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.6rem $link-pad-x;
+    border: 0;
+    border-radius: 0.75rem;
+    background: none;
+    color: var(--sidebar-muted-color);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      width 0.25s $ease;
+
+    &:hover {
+      color: var(--sidebar-active-color);
+      background-color: var(--sidebar-hover-bg);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    i {
+      flex-shrink: 0;
+      font-size: 95%;
+      opacity: 0.85;
+      margin-right: 1.25rem;
+      transition: transform 0.25s $ease;
+    }
+
+    span {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      transition: opacity 0.2s ease;
+    }
+
+  }
+
+  ul li.nav-item > .nav-link,
+  #sidebar-collapse {
+    @include rail {
+      width: $rail-link-width;
+
+      span {
+        opacity: 0;
+      }
+    }
+  }
+
   ul {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 
     li.nav-item {
-      opacity: 0.9;
       width: 100%;
 
-      @include mx.pl-pr(1.5rem);
-
-      @include bp.xxxl {
-        @include mx.pl-pr(2.75rem);
-      }
+      @include mx.pl-pr($item-pad-x);
 
       a.nav-link,
       summary.nav-link {
-        @include mx.pt-pb(0.6rem);
-
-        display: flex;
-        align-items: center;
-        border-radius: 0.75rem;
-        font-weight: 600;
-
-        &:hover {
-          background-color: var(--sidebar-hover-bg);
-        }
-
-        i {
-          font-size: 95%;
-          opacity: 0.8;
-          margin-right: 1.5rem;
-        }
-
-        span {
-          font-size: 90%;
-          letter-spacing: 0.2px;
-        }
+        @extend %row-link;
       }
 
-      &.active {
-        .nav-link {
-          color: var(--sidebar-active-color);
-          background-color: var(--sidebar-hover-bg);
+      &.active > .nav-link {
+        color: var(--sidebar-active-color);
+        background-color: var(--accent-soft);
 
-          span {
-            opacity: 1;
-          }
+        i {
+          color: var(--accent);
+          opacity: 1;
+        }
+
+        /* accent bar */
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 22%;
+          bottom: 22%;
+          width: 3px;
+          border-radius: 0 3px 3px 0;
+          background: var(--accent);
         }
       }
 
       &:not(:first-child) {
-        margin-top: 0.25rem;
+        margin-top: 0.2rem;
       }
 
       /* collapsible group (e.g. Tools) */
       &.nav-group {
         summary.nav-link {
-          @extend %sidebar-links;
-
           cursor: pointer;
           list-style: none;
 
@@ -188,7 +321,9 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
           .nav-group-chevron {
             margin-right: 0;
             font-size: 70%;
-            transition: transform 0.2s ease-in-out;
+            transition:
+              transform 0.2s ease-in-out,
+              opacity 0.2s ease;
           }
         }
 
@@ -197,36 +332,76 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
         }
 
         .nav-group-list {
-          margin: 0.25rem 0 0;
-          padding-left: 1.25rem;
+          margin: 0.2rem 0 0.35rem 1.6rem;
+          padding-left: 0.6rem;
+          border-left: 1px solid var(--sidebar-border-color);
 
           li:not(:first-child) {
-            margin-top: 0.25rem;
+            margin-top: 0.15rem;
           }
 
           a.nav-link {
-            @include mx.pt-pb(0.45rem);
+            @extend %row-link;
 
+            padding-top: 0.45rem;
+            padding-bottom: 0.45rem;
             font-weight: 500;
 
-            span {
-              font-size: 85%;
+            i {
+              margin-right: 0.9rem;
             }
+
+            span {
+              font-size: 0.85rem;
+              letter-spacing: 0;
+            }
+          }
+        }
+
+        @include rail {
+          .nav-group-chevron {
+            opacity: 0;
+          }
+
+          .nav-group-list {
+            display: none;
           }
         }
       }
     }
   }
 
-  .sidebar-bottom {
-    padding-left: 2rem;
-    padding-right: 1rem;
-    margin-bottom: 1.5rem;
+  /* ---------- minimize / maximize ---------- */
 
-    @include bp.xxxl {
-      padding-left: 2.75rem;
-      margin-bottom: 1.75rem;
+  .sidebar-toggle-row {
+    display: none;
+    padding: 0 $item-pad-x 0.75rem;
+
+    @include bp.lg {
+      display: block;
     }
+
+    #sidebar-collapse {
+      @extend %row-link;
+
+      cursor: pointer;
+      font-weight: 500;
+      opacity: 0.85;
+
+      #{$collapsed} & i {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  /* ---------- mode toggle + social links ---------- */
+
+  .sidebar-bottom {
+    padding-left: calc(v.$sidebar-width-collapsed / 2 - 0.875rem);
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    margin-bottom: 1.25rem;
+    border-top: 1px solid var(--sidebar-border-color);
 
     $btn-size: 1.75rem;
 
@@ -241,6 +416,11 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
       display: flex;
       align-items: center;
       justify-content: center;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
 
       &:not(:focus-visible) {
         box-shadow: var(--sidebar-border-color) 0 0 0 1px;
@@ -248,20 +428,16 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
 
       &:hover {
         background-color: var(--sidebar-hover-bg);
+        transform: translateY(-1px);
       }
     }
 
     a {
       @extend %button;
       @extend %sidebar-link-hover;
-      @extend %clickable-transition;
 
       &:not(:last-child) {
         margin-right: v.$sb-btn-gap;
-
-        @include bp.xxxl {
-          margin-right: v.$sb-btn-gap-lg;
-        }
       }
     }
 
@@ -285,9 +461,14 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
       height: $btn-border-width;
       border-radius: 50%;
       margin-bottom: $btn-mb;
+      transition: opacity 0.2s ease;
+    }
 
-      @include bp.xxxl {
-        @include mx.ml-mr(calc((v.$sb-btn-gap-lg - $btn-border-width) / 2));
+    /* On the rail only the light/dark switch stays visible. */
+    > :not(#mode-toggle) {
+      @include rail {
+        opacity: 0;
+        visibility: hidden;
       }
     }
   } /* .sidebar-bottom */
@@ -298,5 +479,14 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
     @include bp.lt(bp.get(lg)) {
       transform: translateX(v.$sidebar-width);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar,
+  #sidebar *,
+  #main-wrapper {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 }
