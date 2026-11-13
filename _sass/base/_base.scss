@@ -7,6 +7,19 @@
 
 :root {
   font-size: 16px;
+
+  /* Current sidebar width; the minimized rail (html[data-sidebar='collapsed']) only applies on desktop. */
+  --sb-w: #{v.$sidebar-width};
+
+  @include bp.xxxl {
+    --sb-w: #{v.$sidebar-width-large};
+  }
+}
+
+@include bp.lg {
+  html[data-sidebar='collapsed'] {
+    --sb-w: #{v.$sidebar-width-collapsed};
+  }
 }
 
 html {
@@ -34,6 +47,12 @@ html {
 
   @include bp.lg {
     overflow-y: scroll;
+  }
+
+  scroll-padding-top: 1.5rem;
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
   }
 }
 
@@ -423,11 +442,8 @@ mjx-container {
   }
 
   @include bp.lg {
-    margin-left: v.$sidebar-width;
-  }
-
-  @include bp.xxxl {
-    margin-left: v.$sidebar-width-large;
+    margin-left: var(--sb-w);
+    transition: margin-left 0.25s ease;
   }
 
   > .container {
@@ -480,4 +496,25 @@ mjx-container {
   > :not(script) {
     margin-top: 3rem;
   }
+}
+
+/* --- polish --- */
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+/* Visible focus ring for keyboard users only; low specificity so components can restyle it. */
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:where(h1, h2, h3, h4) {
+  text-wrap: balance;
+}
+
+:where(.content p, .post-content p) {
+  text-wrap: pretty;
 }

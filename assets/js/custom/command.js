@@ -12,7 +12,8 @@
     a: {{ '/album/' | relative_url | jsonify }},
     m: {{ '/milestone/' | relative_url | jsonify }},
     f: {{ '/ctf/' | relative_url | jsonify }},
-    k: {{ '/contact/' | relative_url | jsonify }}
+    k: {{ '/contact/' | relative_url | jsonify }},
+    u: {{ '/guide/' | relative_url | jsonify }}
   };
   var GROUP_ORDER = ['Actions', 'Pages', 'Labs', 'Projects', 'Certifications', 'Posts'];
 
@@ -20,6 +21,8 @@
     { t: 'Open terminal', i: 'fas fa-terminal', h: '`', run: function () { if (window.SiteTerminal) { window.SiteTerminal.open(); } } },
     { t: 'Toggle light / dark mode', i: 'fas fa-circle-half-stroke', h: 'd', run: toggleMode },
     { t: 'Toggle hacker theme', i: 'fas fa-user-secret', h: 'x', run: toggleHacker },
+    { t: 'Minimize / maximize sidebar', i: 'fas fa-bars', h: '[', run: toggleSidebar },
+    { t: 'How to use this site', i: 'fas fa-book-open', h: 'Guide', run: function () { location.href = ROUTES.u; } },
     { t: 'Copy email address', i: 'fas fa-envelope', h: EMAIL, run: copyEmail },
     { t: 'Send a message', i: 'fas fa-pen-to-square', h: 'Contact page', run: function () { location.href = ROUTES.k; } },
     { t: 'Print / save CV as PDF', i: 'fas fa-print', h: 'Opens the CV', run: function () { location.href = ROUTES.c + '?print=1'; } },
@@ -49,6 +52,16 @@
   function toggleHacker() {
     if (!window.ThemeVariant) { return; }
     toast(window.ThemeVariant.toggle() === 'hacker' ? 'Hacker theme on' : 'Hacker theme off');
+  }
+
+  function toggleSidebar() {
+    if (!window.SiteSidebar) { return; }
+    if (window.matchMedia && !window.matchMedia('(min-width: 850px)').matches) {
+      var trigger = document.getElementById('sidebar-trigger');
+      if (trigger) { trigger.click(); }
+      return;
+    }
+    toast(window.SiteSidebar.toggle() ? 'Sidebar minimized: hover it to peek' : 'Sidebar maximized');
   }
 
   function copyEmail() {
@@ -216,6 +229,8 @@
         ['<kbd>g</kbd> <kbd>m</kbd>', 'Milestone'],
         ['<kbd>g</kbd> <kbd>f</kbd>', 'CTF'],
         ['<kbd>g</kbd> <kbd>k</kbd>', 'Contact'],
+        ['<kbd>g</kbd> <kbd>u</kbd>', 'Guide (how to use this site)'],
+        ['<kbd>[</kbd>', 'Minimize / maximize sidebar'],
         ['<kbd>d</kbd>', 'Toggle light / dark'],
         ['<kbd>x</kbd>', 'Toggle hacker theme'],
         ['<kbd>Esc</kbd>', 'Close dialogs']
@@ -257,11 +272,13 @@
     if (k === 'g') { pendingG = Date.now(); return; }
     if (k === '?') { e.preventDefault(); openShortcuts(); return; }
     if (k === 'd') { toggleMode(); return; }
-    if (k === 'x') { toggleHacker(); }
+    if (k === 'x') { toggleHacker(); return; }
+    if (k === '[') { toggleSidebar(); }
   });
 
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-cmdk-open]')) { e.preventDefault(); open(); }
+    if (e.target.closest('[data-shortcuts-open]')) { e.preventDefault(); openShortcuts(); }
   });
 
   window.CommandPalette = { open: open, close: close };

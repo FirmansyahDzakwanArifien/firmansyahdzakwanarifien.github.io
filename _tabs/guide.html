@@ -1,0 +1,167 @@
+---
+layout: page
+title: Guide
+icon: fas fa-book-open
+order: 9
+description: How to get around cyphera.my.id — the sidebar, search, command palette, keyboard shortcuts, terminal, themes, and what each section holds.
+---
+
+<div class="guide">
+  <p class="guide-lead">
+    A quick tour of the site: how to move around, the shortcuts that save clicks, and where to find things.
+    Everything below works with a mouse, a keyboard, or a touch screen.
+  </p>
+
+  <nav class="guide-toc" aria-label="On this page">
+    <a href="#navigation"><i class="fas fa-bars"></i>Navigation</a>
+    <a href="#find"><i class="fas fa-magnifying-glass"></i>Search &amp; palette</a>
+    <a href="#keyboard"><i class="fas fa-keyboard"></i>Shortcuts</a>
+    <a href="#terminal"><i class="fas fa-terminal"></i>Terminal</a>
+    <a href="#themes"><i class="fas fa-circle-half-stroke"></i>Themes</a>
+    <a href="#sections"><i class="fas fa-book-open"></i>Sections</a>
+  </nav>
+
+  <section id="navigation" class="guide-section">
+    <h2><i class="fas fa-bars"></i>Navigation &amp; sidebar</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>Minimize / maximize</h3>
+        <p>
+          On a laptop or desktop, the <b>Minimize</b> button at the bottom of the sidebar shrinks it to an icon rail and gives
+          the page more room. Press it again (it now says <b>Maximize</b>) to bring the full sidebar back.
+          Your choice is remembered on this device.
+        </p>
+        <button type="button" class="guide-try" data-sidebar-toggle><i class="fas fa-chevron-left"></i>Try it</button>
+      </div>
+      <div class="guide-card">
+        <h3>Peek while minimized</h3>
+        <p>
+          With the sidebar minimized, rest the cursor on it: it slides open over the page so you can read the labels and open
+          the Blog, Tools, and Playground groups. Move the cursor away and it tucks back in. Keyboard users get the same
+          when <kbd>Tab</kbd> reaches the sidebar.
+        </p>
+      </div>
+      <div class="guide-card">
+        <h3>On phones and tablets</h3>
+        <p>
+          The sidebar becomes a drawer. Tap <i class="fas fa-bars" aria-label="menu"></i> in the top bar to open it, and tap
+          outside it to close it. The top bar also holds search and the
+          <i class="fas fa-bolt" aria-label="command palette"></i> command palette.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="find" class="guide-section">
+    <h2><i class="fas fa-magnifying-glass"></i>Search &amp; command palette</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>Search</h3>
+        <p>
+          Type in the search box in the top bar to search every post by title, tag, and content. Results appear as you
+          type; <kbd>Esc</kbd> or <b>Cancel</b> closes them.
+        </p>
+      </div>
+      <div class="guide-card">
+        <h3>Command palette</h3>
+        <p>
+          <kbd>Ctrl</kbd> <kbd>K</kbd> (<kbd>⌘</kbd> <kbd>K</kbd> on a Mac) jumps to any page, post, project, lab, or
+          certification, and runs actions such as copying my email or printing the CV. Use <kbd>↑</kbd> <kbd>↓</kbd> and
+          <kbd>Enter</kbd>.
+        </p>
+        <button type="button" class="guide-try" data-cmdk-open><i class="fas fa-bolt"></i>Open the palette</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="keyboard" class="guide-section">
+    <h2><i class="fas fa-keyboard"></i>Keyboard shortcuts</h2>
+    <p>Shortcuts work anywhere except while you are typing in a field. Press <kbd>?</kbd> to see them on any page.</p>
+    <div class="guide-keys">
+      <dl>
+        <dt><kbd>Ctrl</kbd> <kbd>K</kbd></dt><dd>Command palette</dd>
+        <dt><kbd>[</kbd></dt><dd>Minimize / maximize sidebar</dd>
+        <dt><kbd>`</kbd></dt><dd>Terminal</dd>
+        <dt><kbd>d</kbd></dt><dd>Light / dark mode</dd>
+        <dt><kbd>x</kbd></dt><dd>Hacker theme</dd>
+        <dt><kbd>?</kbd></dt><dd>Shortcut list</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+      </dl>
+      <dl>
+        <dt><kbd>g</kbd> <kbd>h</kbd></dt><dd>Home</dd>
+        <dt><kbd>g</kbd> <kbd>p</kbd></dt><dd>Projects</dd>
+        <dt><kbd>g</kbd> <kbd>l</kbd></dt><dd>Labs</dd>
+        <dt><kbd>g</kbd> <kbd>a</kbd></dt><dd>Album</dd>
+        <dt><kbd>g</kbd> <kbd>m</kbd></dt><dd>Milestone</dd>
+        <dt><kbd>g</kbd> <kbd>c</kbd></dt><dd>CV</dd>
+        <dt><kbd>g</kbd> <kbd>f</kbd></dt><dd>CTF</dd>
+        <dt><kbd>g</kbd> <kbd>k</kbd></dt><dd>Contact</dd>
+        <dt><kbd>g</kbd> <kbd>u</kbd></dt><dd>This guide</dd>
+      </dl>
+    </div>
+    <p class="guide-note">For the <kbd>g</kbd> shortcuts, press <kbd>g</kbd>, let go, then press the second key.</p>
+    <button type="button" class="guide-try" data-shortcuts-open><i class="fas fa-keyboard"></i>Show the shortcut list</button>
+  </section>
+
+  <section id="terminal" class="guide-section">
+    <h2><i class="fas fa-terminal"></i>Terminal</h2>
+    <p>
+      Press <kbd>`</kbd> (the key left of <kbd>1</kbd>) for a small terminal that answers questions about me.
+      <kbd>Tab</kbd> completes commands, <kbd>↑</kbd> recalls the previous one, and <code>exit</code> or <kbd>Esc</kbd> closes it.
+    </p>
+    <div class="guide-cmds">
+      <code>help</code><span>list every command</span>
+      <code>whoami</code><span>who is behind this site</span>
+      <code>experience</code><span>work history</span>
+      <code>certs</code><span>certifications &amp; training</span>
+      <code>projects</code><span>selected projects</span>
+      <code>labs</code><span>security writeups &amp; labs</span>
+      <code>contact</code><span>how to reach me</span>
+      <code>theme hacker</code><span>switch theme (also <code>default</code>, <code>dark</code>, <code>light</code>)</span>
+      <code>ctf</code><span>start the capture-the-flag</span>
+    </div>
+    <button type="button" class="guide-try" data-term-open><i class="fas fa-terminal"></i>Open the terminal</button>
+  </section>
+
+  <section id="themes" class="guide-section">
+    <h2><i class="fas fa-circle-half-stroke"></i>Themes</h2>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>Light &amp; dark</h3>
+        <p>
+          The site follows your system setting. Switch it with the <i class="fas fa-adjust" aria-label="mode"></i> button at the
+          bottom of the sidebar or with <kbd>d</kbd>.
+        </p>
+      </div>
+      <div class="guide-card">
+        <h3>Hacker theme</h3>
+        <p>
+          A green-on-black terminal look. Turn it on or off with <kbd>x</kbd>, the command palette, or
+          <code>theme hacker</code> in the terminal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sections" class="guide-section">
+    <h2><i class="fas fa-book-open"></i>What is where</h2>
+    <div class="guide-links">
+      <a href="{{ '/' | relative_url }}"><i class="fas fa-home"></i><span><b>About</b><small>Profile, experience, certifications, skills</small></span></a>
+      <a href="{{ '/achievements/' | relative_url }}"><i class="fas fa-medal"></i><span><b>Achievements</b><small>Every post: certifications, training, notes</small></span></a>
+      <a href="{{ '/projects/' | relative_url }}"><i class="fas fa-code"></i><span><b>Projects</b><small>Case studies with stack and outcomes</small></span></a>
+      <a href="{{ '/labs/' | relative_url }}"><i class="fas fa-shield-halved"></i><span><b>Labs</b><small>Homelab, DFIR and CTF writeups, Threat Watch</small></span></a>
+      <a href="{{ '/labs/#homelab' | relative_url }}"><i class="fas fa-server"></i><span><b>Homelab</b><small>Interactive thesis testbed topology</small></span></a>
+      <a href="{{ '/album/' | relative_url }}"><i class="fas fa-images"></i><span><b>Album</b><small>Event and community photos</small></span></a>
+      <a href="{{ '/milestone/' | relative_url }}"><i class="fas fa-flag-checkered"></i><span><b>Milestone</b><small>Timeline of posts and events</small></span></a>
+      <a href="{{ '/cv/' | relative_url }}"><i class="fas fa-file-lines"></i><span><b>CV</b><small>Print-ready; save it as PDF</small></span></a>
+      <a href="{{ '/now/' | relative_url }}"><i class="fas fa-clock"></i><span><b>Now</b><small>What I am working on this month</small></span></a>
+      <a href="{{ '/ctf/' | relative_url }}"><i class="fas fa-flag"></i><span><b>CTF</b><small>Five flags hidden around the site</small></span></a>
+      <a href="{{ '/contact/' | relative_url }}"><i class="fas fa-envelope"></i><span><b>Contact</b><small>Channels and a message composer</small></span></a>
+      <a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-rss"></i><span><b>RSS feed</b><small>Follow new posts in a reader</small></span></a>
+    </div>
+    <p class="guide-note">
+      The <b>Blog</b>, <b>Tools</b>, and <b>Playground</b> groups in the sidebar open with a click and link to my other blogs,
+      self-hosted tools, and side projects (they open in a new tab).
+    </p>
+  </section>
+</div>

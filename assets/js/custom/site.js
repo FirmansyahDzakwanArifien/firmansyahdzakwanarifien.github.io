@@ -40,6 +40,26 @@
     if (e.target.id === 'qris-dialog') { e.target.close(); }
   });
 
+  /* Sidebar minimize / maximize (desktop). State and API live in theme-variant.js (runs before paint). */
+  var sidebar = document.getElementById('sidebar');
+  if (sidebar && window.SiteSidebar) {
+    window.SiteSidebar.sync();
+    sidebar.addEventListener('mouseleave', function () { sidebar.classList.remove('no-peek'); });
+    /* Leaving a link inside the minimized sidebar should not leave it stuck open on touch screens. */
+    sidebar.addEventListener('click', function (e) {
+      if (e.target.closest('a[href]') && window.SiteSidebar.collapsed()) { sidebar.classList.add('no-peek'); }
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-sidebar-toggle]') && window.SiteSidebar) {
+      e.preventDefault();
+      var collapsed = window.SiteSidebar.toggle();
+      if (!e.target.closest('#sidebar')) {
+        window.siteToast(collapsed ? 'Sidebar minimized: hover it to peek' : 'Sidebar maximized');
+      }
+    }
+  });
+
   /* [data-hide-on-error]: hide an image that fails to load (sidebar avatar). */
   document.querySelectorAll('img[data-hide-on-error]').forEach(function (img) {
     function hide() { img.style.display = 'none'; }

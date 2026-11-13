@@ -18,6 +18,7 @@ cybersecurity, network infrastructure, and Linux system administration.
 | Milestone | `_tabs/milestone.md` | Timeline of posts and events |
 | CTF | `ctf.html`, `_data/ctf.yml` | Five flags hidden around the site |
 | Homelab (section of Labs) | `_includes/homelab.html`, `_data/homelab.yml` | Interactive thesis testbed topology at `/labs/#homelab` |
+| Guide | `_tabs/guide.html` | How to use the site: sidebar, search, command palette, shortcuts, terminal, themes |
 | Contact | `_tabs/contact.html` | Channels, copy-email, and a mailto message composer (no third-party form service) |
 
 ## Stack

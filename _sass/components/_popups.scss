@@ -83,7 +83,7 @@
   }
 
   @include bp.lg {
-    left: v.$sidebar-width;
+    left: var(--sb-w);
   }
 
   .header {

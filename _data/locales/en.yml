@@ -21,6 +21,7 @@ tabs:
   tools: Tools
   blog: Blog
   playground: Playground
+  guide: Guide
 
 # Achievements page sections
 home:
