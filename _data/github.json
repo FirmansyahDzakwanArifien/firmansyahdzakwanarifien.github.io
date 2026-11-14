@@ -1,5 +1,5 @@
 {
-  "total": 1769,
+  "total": 1771,
   "first": "2025-11-09",
   "days": [
     [
@@ -1481,6 +1481,10 @@
     [
       "2026-11-13",
       1
+    ],
+    [
+      "2026-11-14",
+      1
     ]
   ],
   "repos": [
@@ -1489,7 +1493,7 @@
       "description": "",
       "language": "Markdown",
       "stars": 0,
-      "pushed": "2026-11-13",
+      "pushed": "2026-11-14",
       "url": "https://github.com/FirmansyahDzakwanArifien/upptime"
     },
     {
@@ -1497,8 +1501,16 @@
       "description": "Github Profile",
       "language": "",
       "stars": 0,
-      "pushed": "2026-11-13",
+      "pushed": "2026-11-14",
       "url": "https://github.com/FirmansyahDzakwanArifien/FirmansyahDzakwanArifien"
+    },
+    {
+      "name": "firmansyahdzakwanarifien-assets",
+      "description": "File, Image, and media assets ",
+      "language": "",
+      "stars": 0,
+      "pushed": "2026-11-14",
+      "url": "https://github.com/FirmansyahDzakwanArifien/firmansyahdzakwanarifien-assets"
     },
     {
       "name": "si-ngacir",
@@ -1507,14 +1519,6 @@
       "stars": 0,
       "pushed": "2026-11-13",
       "url": "https://github.com/FirmansyahDzakwanArifien/si-ngacir"
-    },
-    {
-      "name": "devsecops-lab-p9",
-      "description": "Praktikum DevSecOps P9: Container Security dengan Docker & Trivy",
-      "language": "Python",
-      "stars": 0,
-      "pushed": "2026-11-10",
-      "url": "https://github.com/FirmansyahDzakwanArifien/devsecops-lab-p9"
     }
   ]
 }

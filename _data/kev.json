@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.11.10",
-  "total": 1779,
+  "catalog_version": "2026.11.13",
+  "total": 1781,
   "items": [
+    {
+      "cve": "CVE-2026-123039",
+      "vendor": "Check Point",
+      "product": "Multiple Products",
+      "name": "Check Point Multiple Products Incorrect Permission Assignment for Critical Resource Vulnerability",
+      "added": "2026-11-13",
+      "due": "2026-11-16",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-114713",
+      "vendor": "UnrealIRCd",
+      "product": "UnrealIRCd",
+      "name": "UnrealIRCd Improper Neutralization of Delimiters Vulnerability",
+      "added": "2026-11-13",
+      "due": "2026-11-16",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-20320",
       "vendor": "Cisco",
@@ -34,24 +52,6 @@
       "vendor": "Barracuda Networks",
       "product": "Barracuda Email Security Gateway (ESG)",
       "name": "Barracuda Networks Email Security Gateway (ESG) Authentication Bypass Using an Alternate Path or Channel Vulnerability",
-      "added": "2026-11-10",
-      "due": "2026-11-13",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-111793",
-      "vendor": "Openwave Messaging Limited",
-      "product": "Webtop Media Transcoder",
-      "name": "Openwave Messaging Limited Webtop Media Transcoder Incorrect Resource Transfer Between Spheres Vulnerability",
-      "added": "2026-11-10",
-      "due": "2026-11-24",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-111560",
-      "vendor": "Barracuda Networks",
-      "product": "Multiple Products",
-      "name": "Barracuda Networks Multiple Products OS Command Injection Vulnerability",
       "added": "2026-11-10",
       "due": "2026-11-13",
       "ransomware": false
