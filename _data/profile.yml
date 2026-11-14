@@ -19,14 +19,16 @@ portfolio_pdf: https://drive.google.com/file/d/1oU-sawtMXcT9KY9hnZ-yvS23YbUAoLKl
 # Short version for the home page hero; the full bio is used on /cv/ and in the terminal.
 summary: >-
   Implementation Engineer at PT Jarvis Integrasi Solusi, deploying and securing enterprise network,
-  security, and Linux infrastructure. Fortinet NSE 1–5 certified, BlankOn Linux infrastructure
-  contributor, and researcher in LLM-assisted security incident classification.
+  security, and Linux infrastructure. Google Cloud Professional Security Operations Engineer and
+  Fortinet NSE 1–5 certified, BlankOn Linux infrastructure contributor, and researcher in LLM-assisted
+  security incident classification.
 
 bio: >-
   Implementation Engineer at PT Jarvis Integrasi Solusi, focused on cybersecurity, network infrastructure,
   and system administration. I deploy, secure, and troubleshoot enterprise infrastructure: network and
   security appliances (Fortinet NSE 1–5 certified), Linux servers, virtualization, cloud, monitoring, and
-  incident response. For my undergraduate thesis, I am building a pipeline that automates security incident
+  incident response. I am also a Google Cloud Certified Professional Security Operations Engineer.
+  For my undergraduate thesis, I am building a pipeline that automates security incident
   classification: Wazuh and Suricata alerts are normalized and filtered in n8n, then a self-hosted LLM drafts
   the classification and mitigation steps for a human analyst. I also give back to the community through
   open source and knowledge sharing.

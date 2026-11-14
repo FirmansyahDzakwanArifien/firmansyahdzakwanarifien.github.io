@@ -2,6 +2,14 @@
 # badge: short text on the medal · cat: security | infrastructure | devops (sets the color)
 # icon: Font Awesome class · url: post permalink
 
+- name: Professional Security Operations Engineer
+  issuer: Google Cloud
+  year: 2026
+  badge: GCP
+  cat: security
+  icon: fas fa-cloud
+  url: /posts/gcp-professional-security-operations-engineer/
+
 - name: Fortinet Certified Associate in Cybersecurity
   issuer: Fortinet
   year: 2026

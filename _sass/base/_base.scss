@@ -477,6 +477,14 @@ mjx-container {
 
       @include mx.pl-pr(1.75rem, true);
     }
+
+    /* Minimized sidebar: let the page take the room it frees instead of staying at the
+       expanded-sidebar width with an empty gutter on the left. */
+    @include bp.lg {
+      html[data-sidebar='collapsed'] & {
+        max-width: min(100%, #{v.$main-content-max-width-wide});
+      }
+    }
   }
 }
 

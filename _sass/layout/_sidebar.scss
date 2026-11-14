@@ -76,12 +76,20 @@ $rail: "#{$collapsed} #sidebar:not(:has(:focus-visible)):is(.no-peek, :not(:hove
     /* Keep the content at full width while the box is narrow, so labels are clipped, not wrapped. */
     #{$collapsed} & > * {
       min-width: v.$sidebar-width;
+
+      @include bp.xxxl {
+        min-width: v.$sidebar-width-large;
+      }
     }
 
     @at-root #{$peek} {
       width: v.$sidebar-width;
       box-shadow: 8px 0 32px rgb(0 0 0 / 14%);
       transition-delay: 0.12s; /* hover intent: a cursor passing by does not open it */
+
+      @include bp.xxxl {
+        width: v.$sidebar-width-large;
+      }
     }
   }
 
@@ -259,6 +267,7 @@ $rail: "#{$collapsed} #sidebar:not(:has(:focus-visible)):is(.no-peek, :not(:hove
   }
 
   ul li.nav-item > .nav-link,
+  ul li.nav-group > details > summary.nav-link,
   #sidebar-collapse {
     @include rail {
       width: $rail-link-width;
