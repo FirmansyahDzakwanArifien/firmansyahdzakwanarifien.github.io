@@ -22,7 +22,9 @@ layout: default
         {% assign src = cert.badge | default: cert.image.path | default: cert.image %}
         <li class="hof-card">
           <a href="{{ cert.url | relative_url }}" class="hof-link">
-            {% if src %}
+            {% if cert.badge %}
+              <img class="hof-badge-img" src="{{ cert.badge }}" width="96" height="96" alt="{{ cert.title | xml_escape }} badge" loading="lazy">
+            {% elsif src %}
               <span class="hof-badge" style="background-image: url('{{ src }}')" role="img" aria-label="{{ cert.image.alt | default: cert.title | xml_escape }}"></span>
             {% else %}
               <span class="hof-badge hof-badge-empty"><i class="fas fa-certificate"></i></span>

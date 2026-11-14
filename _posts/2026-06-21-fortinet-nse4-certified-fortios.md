@@ -4,6 +4,7 @@ title: Fortinet NSE 4 — Certified in FortiOS
 date: 2026-06-21 00:00:00 +0800
 description: Fortinet NSE 4 certification from Fortinet Training Institute — hands-on FortiGate administration in FortiOS, covering firewall policies, NAT, authentication, VPN, routing, and security profiles.
 issuer: Fortinet Training Institute
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse4.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse4-certified-fortios.webp
   alt: Fortinet NSE 4 Certified in FortiOS

@@ -4,6 +4,7 @@ title: Google Cloud Certified — Professional Security Operations Engineer
 date: 2026-11-13 00:00:00 +0800
 description: Google Cloud Professional Security Operations Engineer certification — detection engineering, threat hunting, and incident response on Google Security Operations (SIEM and SOAR) and Security Command Center.
 issuer: Google Cloud
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/gcp-pro-secops-engineer.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/gcp-pro-secops-engineer.webp
   alt: Google Cloud Certified Professional Security Operations Engineer certificate
@@ -26,6 +27,10 @@ tags: [Cybersecurity, Google Cloud, Cloud Security, SOC, SIEM]
 | **Credential ID** | 8da60bd987f445e5b338c5bad6b750c3 |
 | **Issued by** | Google Cloud |
 | **Verify** | [Credly badge](https://www.credly.com/badges/91c74d91-b5b0-40a7-8313-329605979e3a/public_url) |
+
+## How I Got Here
+
+The exam voucher was a reward from [Operation Cymbal Cold Room 2026]({% post_url 2026-11-01-HTB-Operation-Cymbal-Cold-Room-2026 %}), the 72-hour blue team CTF by Google Cloud Security and Hack The Box. In that CTF I spent three days investigating breaches in Google Security Operations, so the exam covered the same platform I had just been using.
 
 ## What It Covers
 

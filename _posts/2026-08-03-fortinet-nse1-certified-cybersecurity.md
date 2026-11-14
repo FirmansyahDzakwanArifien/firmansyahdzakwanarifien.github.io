@@ -4,6 +4,7 @@ title: Fortinet NSE 1 — Certified in Cybersecurity
 date: 2026-08-03 00:00:00 +0800
 description: Fortinet NSE 1 certification from Fortinet Training Institute — the entry point of the NSE track, covering today's threat landscape, common attack types, and why cybersecurity matters to the business.
 issuer: Fortinet Training Institute
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse1.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse1-certified-cybersecurity.webp
   alt: Fortinet NSE 1 Certified in Cybersecurity

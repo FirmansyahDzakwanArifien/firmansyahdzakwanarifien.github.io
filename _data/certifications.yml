@@ -1,6 +1,7 @@
 # Certifications & training shown as medals on the home page.
 # badge: short text on the medal · cat: security | infrastructure | devops (sets the color)
 # icon: Font Awesome class · url: post permalink
+# img: optional official badge image; replaces the drawn medal when set
 
 - name: Professional Security Operations Engineer
   issuer: Google Cloud
@@ -9,6 +10,7 @@
   cat: security
   icon: fas fa-cloud
   url: /posts/gcp-professional-security-operations-engineer/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/gcp-pro-secops-engineer.webp
 
 - name: Fortinet Certified Associate in Cybersecurity
   issuer: Fortinet
@@ -17,6 +19,7 @@
   cat: security
   icon: fas fa-shield-halved
   url: /posts/fortinet-certified-associate/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-fca.webp
 
 - name: NSE 5 — Security Operations
   issuer: Fortinet
@@ -25,6 +28,7 @@
   cat: security
   icon: fas fa-shield-halved
   url: /posts/fortinet-nse5-certified-security-operations/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse5.webp
 
 - name: NSE 4 — FortiOS
   issuer: Fortinet
@@ -33,6 +37,7 @@
   cat: security
   icon: fas fa-shield-halved
   url: /posts/fortinet-nse4-certified-fortios/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse4.webp
 
 - name: NSE 1–3 — Cybersecurity
   issuer: Fortinet
@@ -41,6 +46,7 @@
   cat: security
   icon: fas fa-shield-halved
   url: /posts/fortinet-nse3-certified-cybersecurity/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse3.webp
 
 - name: System Integrator
   issuer: BNSP
@@ -73,6 +79,7 @@
   cat: infrastructure
   icon: fab fa-redhat
   url: /posts/Jarvis-Academy-2025/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/redhat-rh134.webp
 
 - name: SMTP 2025 — High Distinction
   issuer: KISIA

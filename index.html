@@ -576,6 +576,28 @@ html[data-mode="dark"] {
 .medal:hover .medal-face,
 .medal:focus-visible .medal-face { transform: translateY(-3px) rotate(-6deg) scale(1.05); }
 
+/* Official badge image instead of the drawn coin and ribbons (certifications.yml `img:`). */
+.medal-coin-img {
+  width: 96px;
+  height: 96px;
+  margin: -9px 0 25px;
+}
+
+.medal-coin-img::before,
+.medal-coin-img::after { content: none; }
+
+.medal-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+  transition: transform 0.25s ease;
+}
+
+.medal:hover .medal-img,
+.medal:focus-visible .medal-img { transform: translateY(-3px) rotate(-4deg) scale(1.05); }
+
 .medal-name {
   font-size: 0.8rem;
   font-weight: 500;
@@ -1487,7 +1509,11 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         {%- for copy in (1..2) -%}
           {%- for cert in site.data.certifications %}
         <a class="medal {{ cert.cat }}" href="{{ cert.url | relative_url }}"{% if copy == 2 %} aria-hidden="true" tabindex="-1"{% endif %}>
+          {%- if cert.img %}
+          <span class="medal-coin medal-coin-img"><img class="medal-img" src="{{ cert.img }}" width="96" height="96" alt="" loading="lazy"></span>
+          {%- else %}
           <span class="medal-coin"><span class="medal-face"><i class="{{ cert.icon }}"></i><b>{{ cert.badge }}</b></span></span>
+          {%- endif %}
           <span class="medal-name">{{ cert.name }}</span>
           <span class="medal-meta">{{ cert.issuer }} · {{ cert.year }}</span>
         </a>

@@ -4,6 +4,7 @@ title: Fortinet NSE 3 — Certified in Cybersecurity
 date: 2026-05-01 12:00:00 +0800
 description: Fortinet NSE 3 certification from Fortinet Training Institute — how the Fortinet Security Fabric and product portfolio fit together, from secure SD-WAN and SASE/ZTNA to endpoint and cloud security.
 issuer: Fortinet Training Institute
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse3.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse3-certified-cybersecurity.webp
   alt: Fortinet NSE 3 Certified in Cybersecurity

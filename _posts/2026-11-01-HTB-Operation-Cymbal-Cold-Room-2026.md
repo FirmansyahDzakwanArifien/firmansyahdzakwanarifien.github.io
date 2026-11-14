@@ -90,6 +90,8 @@ Most of the 72 hours was spent inside Google SecOps. A few things I took away fr
 
 My background includes SOC analyst work, and this CTF felt very close to real incident response: a lot of data, limited time, and a need for findings you can defend. It was also a good complement to my [Fortinet NSE 5 Security Operations]({% post_url 2026-08-09-fortinet-nse5-certified-security-operations %}) certification, this time on a cloud-native SIEM instead of FortiAnalyzer.
 
+The event also came with a reward: an exam voucher for the Google Cloud Professional Security Operations Engineer certification. I used it less than two weeks later and passed. Read about it in [Google Cloud Certified — Professional Security Operations Engineer]({% post_url 2026-11-13-gcp-professional-security-operations-engineer %}).
+
 ## Final Thoughts
 
 Thank you to **Google Cloud Security**, **Hack The Box**, and the **Google Cloud Security Community** for building a CTF that focuses on defense instead of offense. Blue team CTFs like this are still rare, and this one was very well made.

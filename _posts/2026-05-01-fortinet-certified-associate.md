@@ -4,6 +4,7 @@ type: certification
 title: Fortinet Certified Associate in Cybersecurity
 date: 2026-05-01 00:00:00 +0800
 description: Achieved Fortinet Certified Associate in Cybersecurity (FCA) certification from Fortinet Training Institute
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-fca.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/Fortinet_Certified_Associate_in_Cybersecurity.webp
   alt: Fortinet Certified Associate in Cybersecurity

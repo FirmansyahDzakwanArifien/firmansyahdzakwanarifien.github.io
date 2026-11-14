@@ -4,6 +4,7 @@ title: Fortinet NSE 5 — Certified in Security Operations
 date: 2026-08-09 00:00:00 +0800
 description: Fortinet NSE 5 certification from Fortinet Training Institute — centralized logging, analytics, and security operations across a Security Fabric deployment with FortiAnalyzer and FortiManager.
 issuer: Fortinet Training Institute
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/fortinet-nse5.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/fortinet-nse5-certified-secops.webp
   alt: Fortinet NSE 5 Certified in Security Operations
