@@ -1634,18 +1634,24 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": {{ profile.website | append: '/#person' | jsonify }},
   "name": {{ profile.name | jsonify }},
   "alternateName": {{ profile.alias | jsonify }},
+  "description": {{ profile.summary | jsonify }},
   "url": {{ profile.website | jsonify }},
+  "mainEntityOfPage": {{ profile.website | append: '/' | jsonify }},
+  "homeLocation": { "@type": "Place", "name": "Jakarta, Indonesia" },
+  "nationality": { "@type": "Country", "name": "Indonesia" },
   "image": {{ profile.photo | jsonify }},
   "email": {{ profile.email | prepend: 'mailto:' | jsonify }},
   "jobTitle": {{ profile.job_title | jsonify }},
   "worksFor": { "@type": "Organization", "name": {{ profile.employer | jsonify }} },
   "affiliation": { "@type": "CollegeOrUniversity", "name": {{ profile.education.school | jsonify }} },
+  "memberOf": { "@type": "Organization", "name": "BlankOn Linux", "description": "Infrastructure team" },
   "knowsAbout": ["Cybersecurity", "Network Security", "Linux System Administration", "Incident Response", "DevOps", "Security Automation", "LLM-assisted Incident Classification"],
   "hasCredential": [
     {%- for cert in site.data.certifications -%}
-    { "@type": "EducationalOccupationalCredential", "name": {{ cert.name | jsonify }}, "recognizedBy": { "@type": "Organization", "name": {{ cert.issuer | jsonify }} } }{% unless forloop.last %},{% endunless %}
+    { "@type": "EducationalOccupationalCredential", "name": {{ cert.name | jsonify }}{% unless cert.issuer contains 'bootcamp' %}, "recognizedBy": { "@type": "Organization", "name": {{ cert.issuer | jsonify }} }{% endunless %} }{% unless forloop.last %},{% endunless %}
     {%- endfor -%}
   ],
   "sameAs": [
