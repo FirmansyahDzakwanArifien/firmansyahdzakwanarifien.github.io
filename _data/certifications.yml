@@ -55,6 +55,7 @@
   cat: infrastructure
   icon: fas fa-network-wired
   url: /posts/BNSP-System-Integrator/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/bnsp-system-integrator.webp
 
 - name: CDOE — Certified DevOps Engineer
   issuer: Dewacloud Academy
@@ -63,6 +64,7 @@
   cat: devops
   icon: fas fa-infinity
   url: /posts/CDOE-DevOps-Dewacloud/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/dewacloud-cdoe.webp
 
 - name: CP1 — Cloud Foundation
   issuer: Dewacloud Academy
@@ -71,6 +73,7 @@
   cat: devops
   icon: fas fa-cloud
   url: /posts/cp1-cloudfoundation-dewacloud/
+  img: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/dewacloud-cp1.webp
 
 - name: Red Hat System Administration II
   issuer: Red Hat · Jarvis Camp

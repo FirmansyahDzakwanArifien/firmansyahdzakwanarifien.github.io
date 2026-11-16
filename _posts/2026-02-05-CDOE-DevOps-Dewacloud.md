@@ -2,7 +2,9 @@
 type: certification
 title: CDOE - Certified DevOps Engineer
 date: 2026-02-05 15:00:00 +0800
-description: Completed CP1 - Cloud Foundation course from Dewacloud Academy, covering fundamental concepts of cloud computing, platform usage, and operational best practices.
+description: Completed CDOE - Certified DevOps Engineer from Dewacloud Academy, covering essential DevOps principles, practices, and tooling for modern software development and operations.
+issuer: Dewacloud Academy
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/dewacloud-cdoe.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/cdoe-dewacloud.webp
   alt: Dewacloud CDOE - Certified DevOps Engineer

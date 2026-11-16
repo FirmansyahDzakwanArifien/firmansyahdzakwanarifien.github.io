@@ -3,6 +3,8 @@ type: certification
 title: BNSP - System Integrator
 date: 2026-01-12 15:00:00 +0800
 description: Completed BNSP - System Integrator
+issuer: BNSP
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/bnsp-system-integrator.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/bnsp-system-integrator-2026.webp
   alt: BNSP - System Integrator

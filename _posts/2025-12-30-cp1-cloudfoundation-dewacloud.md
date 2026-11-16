@@ -3,6 +3,8 @@ type: certification
 title: CP1 - Cloud Foundation Certification
 date: 2025-12-30 15:00:00 +0800
 description: Completed CP1 - Cloud Foundation course from Dewacloud Academy, covering fundamental concepts of cloud computing, platform usage, and operational best practices.
+issuer: Dewacloud Academy
+badge: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/badges/dewacloud-cp1.webp
 image:
   path: https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/posts/cp1-cloud-foundation-dewacloud.webp
   alt: Dewacloud CP1 Cloud Foundation Certificate
