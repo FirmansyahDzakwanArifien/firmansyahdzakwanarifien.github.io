@@ -73,6 +73,10 @@ projects:
     kind: Product · Web App (beta)
     summary: Event photo-sharing platform built end-to-end; guests upload via QR code, hosts get a live, moderated, print-ready album. Next.js, Express, Prisma, PostgreSQL, Cloudflare R2, Docker.
     url: https://memoir.cyphera.my.id
+  - name: Laras
+    kind: Vibe Coding · Web & Desktop App
+    summary: Local-first daily-rhythm app (focus, calendar, boards, notes, finance, workouts) built through vibe coding; web, Windows, macOS, Linux, and Android. Next.js, TypeScript, IndexedDB, Turso, Tauri, Capacitor.
+    url: https://laras.cyphera.my.id
   - name: IDN Blue Team Capstone
     kind: Security · DFIR
     summary: Investigated SQLi, XSS, LFI/RFI, and a reverse shell on a compromised Apache host by correlating Wazuh SIEM alerts, packet captures, and a memory dump.

@@ -906,6 +906,7 @@ html[data-mode="dark"] .connect-coffee { --brand: #f59e0b; }
 .feat-memoir { --feat-tone: #d9805f; --feat-ink: #a3502b; --feat-on-tone: #1a0f0a; --feat-bg: #16120f; }
 .feat-game   { --feat-tone: #1fb5a8; --feat-ink: #0f766e; --feat-on-tone: #06201d; --feat-bg: #f6ead2; }
 .feat-blue   { --feat-tone: #3b82f6; --feat-ink: #1d4ed8; --feat-bg: #0b1220; }
+.feat-laras  { --feat-tone: #6366f1; --feat-ink: #4f46e5; --feat-on-tone: #fff; --feat-bg: #0e1024; }
 .feat-thesis { --feat-tone: #7c5cd6; --feat-ink: #6243c2; --feat-on-tone: #fff; --feat-bg: #10121c; }
 
 /* --feat-ink: the card tone as readable text (titles, stats, hover). */
@@ -913,15 +914,24 @@ html[data-mode="dark"] .feat-memoir { --feat-ink: #e8976f; }
 html[data-mode="dark"] .feat-game   { --feat-ink: #2fc7b9; }
 html[data-mode="dark"] .feat-blue   { --feat-ink: #7aa7ff; }
 html[data-mode="dark"] .feat-thesis { --feat-ink: #a99ff0; }
+html[data-mode="dark"] .feat-laras  { --feat-ink: #a5b4fc; }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]) .feat-memoir { --feat-ink: #e8976f; }
   html:not([data-mode]) .feat-game   { --feat-ink: #2fc7b9; }
   html:not([data-mode]) .feat-blue   { --feat-ink: #7aa7ff; }
   html:not([data-mode]) .feat-thesis { --feat-ink: #a99ff0; }
+  html:not([data-mode]) .feat-laras  { --feat-ink: #a5b4fc; }
 }
 
 .feat-blue .feat-btn.primary { background: #2563eb; border-color: #2563eb; }
+.feat-laras .feat-btn.primary { background: #4f46e5; border-color: #4f46e5; }
+.feat-laras .feat-shot {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.4), transparent 55%),
+    radial-gradient(circle at 15% 90%, rgba(34, 211, 238, 0.18), transparent 50%),
+    var(--feat-bg);
+}
 .feat-thesis .feat-btn.primary { background: #6243c2; border-color: #6243c2; }
 .feat-status.progress { background: rgba(124, 92, 214, 0.13); color: #5b3fb8; }
 html[data-mode="dark"] .feat-status.progress { color: #b9adf5; }
@@ -1359,7 +1369,38 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
         </div>
       </article>
 
-      <article class="feat-card feat-game reverse">
+      <article class="feat-card feat-laras reverse">
+        <a class="feat-shot" href="https://laras.cyphera.my.id" target="_blank" rel="noopener noreferrer">
+          <div class="feat-window">
+            <div class="feat-window-bar"><i></i><i></i><i></i><span>laras.cyphera.my.id</span></div>
+            <img src="https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/laras/landing.webp"{% include srcset.html src='https://cdn.jsdelivr.net/gh/firmansyahdzakwanarifien/firmansyahdzakwanarifien-assets@main/blog/img/projects/laras/landing.webp' sizes='(min-width: 860px) 360px, calc(100vw - 3.5rem)' %} alt="Laras landing page with its robot fox mascot" loading="lazy" data-no-popup />
+          </div>
+          <span class="feat-shot-hint">Visit live ↗</span>
+        </a>
+        <div class="feat-body">
+          <div class="feat-meta">
+            <span class="feat-status live"><span class="pulse"></span>v1.3 · Live</span>
+            <span class="feat-kind">Vibe Coding · Web &amp; Desktop App</span>
+          </div>
+          <h3 class="feat-title"><em>laras</em></h3>
+          <p class="feat-tagline">One space to bring your time, work, money, and body into tune.</p>
+          <p class="feat-desc">A daily-rhythm app I built through vibe coding, from first idea to v1.3 in under a month. Focus sessions, a calendar, Trello-style boards, notes, personal finance, and workouts all link together. It is local-first, so it works offline and syncs to your own account, free and without ads.</p>
+          <div class="feat-stats">
+            <div class="feat-stat"><b>6</b><span>connected spaces, from focus to finance</span></div>
+            <div class="feat-stat"><b>5</b><span>platforms: web, Windows, macOS, Linux, Android</span></div>
+            <div class="feat-stat"><b>0</b><span>ads or trackers, data stays yours</span></div>
+          </div>
+          <div class="feat-stack">
+            <span>Next.js 16</span><span>React 19</span><span>TypeScript</span><span>IndexedDB</span><span>Turso</span><span>Better Auth</span><span>Tauri 2</span><span>Capacitor</span>
+          </div>
+          <div class="feat-actions">
+            <a class="feat-btn primary" href="https://laras.cyphera.my.id" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i> Try it free</a>
+            <a class="feat-btn" href="{{ '/projects/laras/' | relative_url }}"><i class="fas fa-book-open"></i> Case study</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="feat-card feat-game">
         <a class="feat-shot" href="https://cyphera-game.itch.io/si-ngacir" target="_blank" rel="noopener noreferrer">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>cyphera-game.itch.io/si-ngacir</span></div>
@@ -1393,7 +1434,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
       </article>
 
       {%- assign thesis = site.projects | where_exp: "p", "p.title contains 'Tugas Akhir'" | first -%}
-      <article class="feat-card feat-thesis">
+      <article class="feat-card feat-thesis reverse">
         <a class="feat-shot" href="{{ '/labs/#homelab' | relative_url }}">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>proxmox · isolated thesis testbed</span></div>
@@ -1428,7 +1469,7 @@ html[data-mode="dark"] .feat-status.done { color: #86b0ff; }
 
       {%- assign capstone = site.projects | where_exp: "p", "p.title contains 'IDN Blue Team'" | first -%}
       {%- assign capstone_url = capstone.url | relative_url -%}
-      <article class="feat-card feat-blue reverse">
+      <article class="feat-card feat-blue">
         <a class="feat-shot" href="{{ capstone_url }}">
           <div class="feat-window">
             <div class="feat-window-bar"><i></i><i></i><i></i><span>investigation · metasploitable / apache2</span></div>
