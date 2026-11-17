@@ -1,5 +1,5 @@
 {
-  "total": 1746,
+  "total": 1758,
   "first": "2025-11-16",
   "days": [
     [
@@ -1465,6 +1465,10 @@
     [
       "2026-11-16",
       1
+    ],
+    [
+      "2026-11-17",
+      0
     ]
   ],
   "repos": [
@@ -1473,7 +1477,7 @@
       "description": "",
       "language": "Markdown",
       "stars": 0,
-      "pushed": "2026-11-16",
+      "pushed": "2026-11-17",
       "url": "https://github.com/FirmansyahDzakwanArifien/upptime"
     },
     {
@@ -1481,8 +1485,16 @@
       "description": "Github Profile",
       "language": "",
       "stars": 0,
-      "pushed": "2026-11-16",
+      "pushed": "2026-11-17",
       "url": "https://github.com/FirmansyahDzakwanArifien/FirmansyahDzakwanArifien"
+    },
+    {
+      "name": "firmansyahdzakwanarifien-assets",
+      "description": "File, Image, and media assets ",
+      "language": "",
+      "stars": 0,
+      "pushed": "2026-11-16",
+      "url": "https://github.com/FirmansyahDzakwanArifien/firmansyahdzakwanarifien-assets"
     },
     {
       "name": "tldr",
@@ -1491,14 +1503,6 @@
       "stars": 0,
       "pushed": "2026-11-15",
       "url": "https://github.com/FirmansyahDzakwanArifien/tldr"
-    },
-    {
-      "name": "it-tools",
-      "description": "",
-      "language": "",
-      "stars": 0,
-      "pushed": "2026-11-15",
-      "url": "https://github.com/FirmansyahDzakwanArifien/it-tools"
     }
   ]
 }
