@@ -1,7 +1,16 @@
 {
-  "catalog_version": "2026.11.13",
-  "total": 1781,
+  "catalog_version": "2026.11.17",
+  "total": 1782,
   "items": [
+    {
+      "cve": "CVE-2026-115731",
+      "vendor": "Perforce",
+      "product": "Puppet Enterprise",
+      "name": "Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability",
+      "added": "2026-11-17",
+      "due": "2026-12-01",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-123039",
       "vendor": "Check Point",
@@ -45,15 +54,6 @@
       "name": "Microsoft Office Outlook Missing User Interaction for Potentially Unsafe Action Vulnerability",
       "added": "2026-11-10",
       "due": "2026-11-24",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-116606",
-      "vendor": "Barracuda Networks",
-      "product": "Barracuda Email Security Gateway (ESG)",
-      "name": "Barracuda Networks Email Security Gateway (ESG) Authentication Bypass Using an Alternate Path or Channel Vulnerability",
-      "added": "2026-11-10",
-      "due": "2026-11-13",
       "ransomware": false
     }
   ]
