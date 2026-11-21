@@ -1,7 +1,43 @@
 {
-  "catalog_version": "2026.11.18",
-  "total": 1786,
+  "catalog_version": "2026.11.20",
+  "total": 1790,
   "items": [
+    {
+      "cve": "CVE-2026-76466",
+      "vendor": "Cisco",
+      "product": "Expressway Series",
+      "name": "Cisco Expressway Series Use of Hard-coded Credentials Vulnerability",
+      "added": "2026-11-20",
+      "due": "2026-11-23",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-129448",
+      "vendor": "Apache",
+      "product": "Roller",
+      "name": "Apache Roller Deserialization of Untrusted Data Vulnerability",
+      "added": "2026-11-20",
+      "due": "2026-11-23",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-123890",
+      "vendor": "Broadcom",
+      "product": "VMware vCenter",
+      "name": "VMWare vCenter Authentication Bypass Using an Alternate Path or Channel Vulnerability",
+      "added": "2026-11-20",
+      "due": "2026-11-23",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2025-42884",
+      "vendor": "SAP",
+      "product": "NetWeaver",
+      "name": "SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability",
+      "added": "2026-11-20",
+      "due": "2026-11-23",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-90817",
       "vendor": "Vanderbilt University",
@@ -18,42 +54,6 @@
       "name": "Apache Axis Unsafe Reflection Vulnerability",
       "added": "2026-11-18",
       "due": "2026-11-21",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-40217",
-      "vendor": "BerriAI",
-      "product": "LiteLLM",
-      "name": "BerriAI LiteLLM Unprotected Alternate Channel Vulnerability",
-      "added": "2026-11-18",
-      "due": "2026-12-02",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2024-10441",
-      "vendor": "Synology",
-      "product": "DiskStation Manager (DSM)",
-      "name": "Synology DiskStation Manager (DSM) Improper Encoding or Escaping of Output Vulnerability",
-      "added": "2026-11-18",
-      "due": "2026-11-21",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-115731",
-      "vendor": "Perforce",
-      "product": "Puppet Enterprise",
-      "name": "Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability",
-      "added": "2026-11-17",
-      "due": "2026-12-01",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-123039",
-      "vendor": "Check Point",
-      "product": "Multiple Products",
-      "name": "Check Point Multiple Products Incorrect Permission Assignment for Critical Resource Vulnerability",
-      "added": "2026-11-13",
-      "due": "2026-11-16",
       "ransomware": false
     }
   ]
