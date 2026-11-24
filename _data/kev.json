@@ -1,7 +1,25 @@
 {
-  "catalog_version": "2026.11.20",
-  "total": 1790,
+  "catalog_version": "2026.11.23",
+  "total": 1792,
   "items": [
+    {
+      "cve": "CVE-2026-134624",
+      "vendor": "N-able",
+      "product": "MailAssure",
+      "name": "N-able MailAssure (SpamExperts) Server-Side Request Forgery (SSRF) Vulnerability",
+      "added": "2026-11-23",
+      "due": "2026-11-26",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-133968",
+      "vendor": "Project MONAI",
+      "product": "MONAI Label",
+      "name": "Project MONAI MONAI Label Path Traversal Vulnerability",
+      "added": "2026-11-23",
+      "due": "2026-11-26",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-76466",
       "vendor": "Cisco",
@@ -36,24 +54,6 @@
       "name": "SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability",
       "added": "2026-11-20",
       "due": "2026-11-23",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-90817",
-      "vendor": "Vanderbilt University",
-      "product": "Research Electronic Data Capture (REDCap)",
-      "name": "Vanderbilt University Research Electronic Data Capture (REDCap) Code Injection Vulnerability",
-      "added": "2026-11-18",
-      "due": "2026-11-21",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-90436",
-      "vendor": "Apache",
-      "product": "Axis",
-      "name": "Apache Axis Unsafe Reflection Vulnerability",
-      "added": "2026-11-18",
-      "due": "2026-11-21",
       "ransomware": false
     }
   ]
