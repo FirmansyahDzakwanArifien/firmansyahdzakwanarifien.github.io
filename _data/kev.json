@@ -1,7 +1,34 @@
 {
-  "catalog_version": "2026.11.23",
-  "total": 1792,
+  "catalog_version": "2026.11.24",
+  "total": 1795,
   "items": [
+    {
+      "cve": "CVE-2026-132224",
+      "vendor": "Optimizely",
+      "product": "Web Experimentation",
+      "name": "Optimizely Web Experimentation External Control of Critical State Data Vulnerability",
+      "added": "2026-11-24",
+      "due": "2026-11-27",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-132165",
+      "vendor": "Drupal",
+      "product": "Core",
+      "name": "Drupal Core Remote Code Execution Vulnerability",
+      "added": "2026-11-24",
+      "due": "2026-11-27",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-131914",
+      "vendor": "Idunno",
+      "product": "AntiCsrf",
+      "name": "Idunno AntiCsrf Deserialization of Untrusted Data Vulnerability",
+      "added": "2026-11-24",
+      "due": "2026-11-27",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-134624",
       "vendor": "N-able",
@@ -25,33 +52,6 @@
       "vendor": "Cisco",
       "product": "Expressway Series",
       "name": "Cisco Expressway Series Use of Hard-coded Credentials Vulnerability",
-      "added": "2026-11-20",
-      "due": "2026-11-23",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-129448",
-      "vendor": "Apache",
-      "product": "Roller",
-      "name": "Apache Roller Deserialization of Untrusted Data Vulnerability",
-      "added": "2026-11-20",
-      "due": "2026-11-23",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-123890",
-      "vendor": "Broadcom",
-      "product": "VMware vCenter",
-      "name": "VMWare vCenter Authentication Bypass Using an Alternate Path or Channel Vulnerability",
-      "added": "2026-11-20",
-      "due": "2026-11-23",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2025-42884",
-      "vendor": "SAP",
-      "product": "NetWeaver",
-      "name": "SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability",
       "added": "2026-11-20",
       "due": "2026-11-23",
       "ransomware": false
