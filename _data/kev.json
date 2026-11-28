@@ -1,7 +1,34 @@
 {
-  "catalog_version": "2026.11.25",
-  "total": 1805,
+  "catalog_version": "2026.11.27",
+  "total": 1808,
   "items": [
+    {
+      "cve": "CVE-2026-136716",
+      "vendor": "Drupal",
+      "product": "Core",
+      "name": "Drupal Core Improper Check for Unusual or Exceptional Conditions Vulnerability",
+      "added": "2026-11-27",
+      "due": "2026-11-30",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-129243",
+      "vendor": "OSGeo",
+      "product": "GeoServer",
+      "name": "OSGeo GeoServer Incorrect Authorization Vulnerability",
+      "added": "2026-11-27",
+      "due": "2026-11-30",
+      "ransomware": false
+    },
+    {
+      "cve": "CVE-2026-120705",
+      "vendor": "OSGeo",
+      "product": "GeoServer",
+      "name": "OSGeo GeoServer XML Injection Vulnerability",
+      "added": "2026-11-27",
+      "due": "2026-11-30",
+      "ransomware": false
+    },
     {
       "cve": "CVE-2026-133469",
       "vendor": "Vates",
@@ -25,33 +52,6 @@
       "vendor": "Mitel",
       "product": "MiCollab",
       "name": "Mitel MiCollab OS Command Injection Vulnerability",
-      "added": "2026-11-25",
-      "due": "2026-11-28",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-133311",
-      "vendor": "Mitel",
-      "product": "MiCollab",
-      "name": "Mitel MiCollab Weak Authentication Vulnerability",
-      "added": "2026-11-25",
-      "due": "2026-12-09",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-133303",
-      "vendor": "Mitel",
-      "product": "MiCollab",
-      "name": "Mitel MiCollab XML Injection Vulnerability",
-      "added": "2026-11-25",
-      "due": "2026-11-28",
-      "ransomware": false
-    },
-    {
-      "cve": "CVE-2026-133275",
-      "vendor": "Mitel",
-      "product": "MiCollab",
-      "name": "Mitel MiCollab Unrestricted Upload of File with Dangerous Type Vulnerability",
       "added": "2026-11-25",
       "due": "2026-11-28",
       "ransomware": false
